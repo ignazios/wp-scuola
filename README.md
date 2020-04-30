@@ -21,5 +21,5 @@ facebook: https://www.facebook.com/wpscuola/
 ## Change log
 - **0.0.2**
   - ***Messa*** a punto dell'installazione e delle componenti della Home Page
- - **0.0.1**
+- **0.0.1**
   - ***Pubblicazione del tema***
