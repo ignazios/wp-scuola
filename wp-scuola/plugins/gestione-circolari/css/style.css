@@ -1,0 +1,93 @@
+/*
+* Foglio di stile delle circolari
+*/
+.circpaging{
+    box-shadow: 10px 10px 5px #888888;
+    border-radius: 21px 21px 21px 21px;
+    -moz-border-radius: 21px 21px 21px 21px;
+    -webkit-border-radius: 21px 21px 21px 21px;
+    border: 1px solid #000000;
+    float: left;
+    width: auto;
+}
+.circpaging li a, .circpaging li a:hover, .circpaging li.active a, .circpaging li.disabled {
+    cursor: pointer;
+    padding: 6px;
+    color: #006;
+    box-shadow: 0 0 black;
+}
+.circpaging ul{
+    list-style: none;
+}
+.circpaging li{
+    display:inline;
+}
+.postentry ul.paginazione {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+.disabled{
+    color:#B0B5FF;
+}
+.circolari-config th{
+    width:250px;
+    text-align:right;
+}
+.wp-list-table a.nolink {
+    color:#000000;
+    cursor:help;
+}
+.wp-list-table a.function {
+    color:#000000;
+    cursor:pointer;
+}
+.wp-list-table a.functionAv {
+    color:#090;
+    cursor:pointer;
+}
+.wp-list-table a.functionNAv {
+    color:#7F0000;
+    cursor:pointer;
+}
+ .ui-tooltip, .arrow:after {
+    background: #fff;
+    border: 2px solid white;
+  }
+  .ui-tooltip {
+    padding: 10px 20px;
+    color: #000;
+    border-radius: 20px;
+    box-shadow: 0 0 7px black;
+  }
+  .arrow {
+    width: 70px;
+    height: 16px;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    margin-left: -35px;
+    bottom: -16px;
+  }
+  .arrow.top {
+    top: -16px;
+    bottom: auto;
+  }
+  .arrow.left {
+    left: 20%;
+  }
+  .arrow:after {
+    content: "";
+    position: absolute;
+    left: 20px;
+    top: -20px;
+    width: 25px;
+    height: 25px;
+    box-shadow: 6px 5px 9px -9px black;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  .arrow.top:after {
+    bottom: -20px;
+    top: auto;
+  }
