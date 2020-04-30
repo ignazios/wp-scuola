@@ -1,5 +1,6 @@
 # wp-scuola
-tema Wordpress indicato per le scuole basato sulla libreria Bootstrap Italia che usa i pattern e i componenti definiti nello UI Kit di Designers Italia
+WPScuola è un tema di WordPress realizzato principalmente per le scuole italiane. Il tema è basata sul tema originale Design Italia Versione: 0.32 https://github.com/italia/design-wordpress-theme autore Marco Gargano http://marcogargano.com/. 
+Il tema utilizza la libreria Bootstrap Italia basata su Bootstrap 4.3.1, di cui eredita tutte le funzionalità, componenti, griglie e classi di utilità, personalizzandole secondo le Linee Guida di Design per i siti web della Pubblica Amministrazione. ![Logo](https://github.com/ignazios/wp-scuola/blob/master/screenshot.png)
 ## Manuale
 ## Tema WPScuola
 https://github.com/ignazios/wp-scuola
