@@ -1,9 +1,9 @@
 # WPScuola
-è un tema per [**WordPress 5**](https://it.wordpress.org/) (CMS open-source) specifico per le scuole italiane. 
+è un tema per **WordPress 5**(https://it.wordpress.org/) (CMS open-source) specifico per le scuole italiane. 
 
-Il tema è basata sul tema originale [**Design Italia Versione: 0.32**] (https://github.com/italia/design-wordpress-theme) autore [**Marco Gargano**] (http://marcogargano.com/). 
+Il tema è basata sul tema originale **Design Italia Versione: 0.32** (https://github.com/italia/design-wordpress-theme) autore **Marco Gargano** (http://marcogargano.com/). 
 
-WPScuola utilizza la libreria [**Bootstrap Italia**](https://italia.github.io/bootstrap-italia/) basata su [**Bootstrap 4.3.1**](https://getbootstrap.com/),di cui eredita tutte le funzionalità, componenti, griglie e classi di utilità, personalizzandole secondo le Linee Guida di Design per i siti web della Pubblica Amministrazione. 
+WPScuola utilizza la libreria **Bootstrap Italia**(https://italia.github.io/bootstrap-italia/) basata su **Bootstrap 4.3.1**(https://getbootstrap.com/),di cui eredita tutte le funzionalità, componenti, griglie e classi di utilità, personalizzandole secondo le Linee Guida di Design per i siti web della Pubblica Amministrazione. 
 
 ![Logo](https://github.com/ignazios/wp-scuola/blob/master/screenshot.png)
 ## Manuale
