@@ -10,6 +10,14 @@
  * License URI: 		https://opensource.org/licenses/AGPL-3.0
  * Text Domain:       	wpscuola
 */
+
+/* UPDATER THEME VERSION */
+require 'inc/theme-update-checker.php';
+$update_checker = new ThemeUpdateChecker(
+    'wp-scuola',
+    'https://raw.githubusercontent.com/ignazios/wp-scuola/master/wp-scuola.json'
+);
+
 $mesi = array(1=>__( 'Gennaio', 'wpscuola' ), 
                  __( 'Febbraio', 'wpscuola' ), 
                  __( 'Marzo', 'wpscuola' ), 
@@ -576,4 +584,15 @@ global $post;
 			  </div>
 		  </form>';
   	return $content;
+ }
+ function scuola_get_thumbnail($IDogg){
+ 	$img_thumbnail=get_the_post_thumbnail($IDogg,'img-wrapper-thumb');
+   	if(!isset($img_thumbnail) Or $img_thumbnail==""){
+		$IDImgEvidenza=get_theme_mod('scuola_comeevidenza_DefautlImg');
+		$Image=wp_get_attachment_url(get_theme_mod('scuola_comeevidenza_DefautlImg'));
+		$ImageTitle = get_post($IDImgEvidenza)->post_title; //The Title
+		$ImageAlt = get_post_meta($IDImgEvidenza, '_wp_attachment_image_alt', TRUE); //The Caption
+		$ImageDescription = get_post($IDImgEvidenza)->post_content; // The Description	
+     	return '<img src="'.$Image.'" title="'.$ImageTitle.'" alt="'.$ImageAlt.'" longdesc="'.$ImageDescription.'">';
+	}else return $img_thumbnail;
  }

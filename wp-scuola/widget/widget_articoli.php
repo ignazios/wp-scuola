@@ -73,19 +73,7 @@
 					    <li>
 					      <a href="<?php echo get_permalink($Articolo->ID);?>">
 				          	<div class="it-thumb">
-		             <?php   
-		             $img_thumbnail=get_the_post_thumbnail($Articolo->ID,'img-wrapper-thumb');
- 	             	 if(isset($img_thumbnail) And $img_thumbnail!==FALSE){
-						$IDImgEvidenza=get_theme_mod('scuola_comeevidenza_DefautlImg');
-						$Image=wp_get_attachment_url(get_theme_mod('scuola_comeevidenza_DefautlImg'));
-						$ImageTitle = get_post($IDImgEvidenza)->post_title; //The Title
-						$ImageAlt = get_post_meta($IDImgEvidenza, '_wp_attachment_image_alt', TRUE); //The Caption
-						$ImageDescription = get_post($IDImgEvidenza)->post_content; // The Description	
-		             	echo '<img src="'.$Image.'" title="'.$ImageTitle.'" alt="'.$ImageAlt.'" longdesc="'.$ImageDescription.'">';
-		             }else{
-		             	echo $img_thumbnail;
-		             }
-		             ?>					          
+		             <?php   echo scuola_get_thumbnail($Articolo->ID);?>					          
 					        </div>
 				        	<div class="it-right-zone  border-0">
 				        		<span class="text"><?php echo $Articolo->post_title;?></span>
@@ -118,19 +106,7 @@
 					    <li>
 					      <a href="<?php echo get_permalink($Articolo->ID);?>">
 				          	<div class="it-thumb">
-		             <?php   
-		             $img_thumbnail=get_the_post_thumbnail($Articolo->ID,'img-wrapper-thumb');
-		             if($img_thumbnail==""){
-						$IDImgEvidenza=get_theme_mod('scuola_comeevidenza_DefautlImg');
-						$Image=wp_get_attachment_url(get_theme_mod('scuola_comeevidenza_DefautlImg'));
-						$ImageTitle = get_post($IDImgEvidenza)->post_title; //The Title
-						$ImageAlt = get_post_meta($IDImgEvidenza, '_wp_attachment_image_alt', TRUE); //The Caption
-						$ImageDescription = get_post($IDImgEvidenza)->post_content; // The Description	
-		             	echo '<img src="'.$Image.'" title="'.$ImageTitle.'" alt="'.$ImageAlt.'" longdesc="'.$ImageDescription.'">';
-		             }else{
-		             	echo $img_thumbnail;
-		             }
-		             ?>					          
+		             <?php   echo scuola_get_thumbnail($Articolo->ID);?>    
 					        </div>
 				        	<div class="it-right-zone  border-0">
 				        		<span class="text"><?php echo $Articolo->post_title;?></span>

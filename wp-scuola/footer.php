@@ -52,13 +52,14 @@ function myFunction() {
           <div class="col-sm-12">
             <div class="it-brand-wrapper">
               <a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_html( get_bloginfo( 'name' ) ); ?>" rel="home">
-        <?php 	$custom_logo_id = get_theme_mod( 'custom_logo' );
-              	$logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
-				if(FALSE!== $logo){
-				   	$ImgLogo=esc_url( $logo[0] );
-				} else {
-					$ImgLogo=get_template_directory_uri() . '-child/img/logoStato.png';
-			    } ?>
+              <?php 
+				    $custom_logo_id = get_theme_mod( 'custom_logo' );
+                  	$logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
+				    if(FALSE!== $logo){
+				    	$ImgLogo=esc_url( $logo[0] );
+					} else {
+						$ImgLogo=get_template_directory_uri() . '/img/logoStato.png';
+			        } ?>
 					<img class="icon" src="<?php echo $ImgLogo;?>" alt="<?php echo esc_html( get_bloginfo( 'name' ) );?>">
 	                <div class="it-brand-text">
 	                  <h4><?php echo esc_html( get_bloginfo( 'name' ) ); ?></h4>

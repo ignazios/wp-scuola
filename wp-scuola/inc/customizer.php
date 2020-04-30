@@ -195,7 +195,7 @@ $wp_customize->add_control( 'scuola_social_linkedin', array(
     'priority'	=> 6));         
 // Campo Titolo Sezione Footer
 $wp_customize->add_setting( 'scuola_social_footersectionTesto' , array(
-	'default'	=> '<i class="fas fa-hashtag"></i> Seguici su',
+	'default'	=> 'Seguici su',
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_social_footersectionTesto', array(
     'type' 		=> 'text',

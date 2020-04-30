@@ -94,19 +94,7 @@ class Articoli_Griglia extends WP_Widget {
 		          <div class="img-responsive-wrapper">
 		            <div class="img-responsive">
 		                <div class="img-wrapper">
-		             <?php   
-		             $img_thumbnail=get_the_post_thumbnail(null,'img-wrapper-thumb');
-		             	if(!isset($img_thumbnail) And $img_thumbnail===FALSE){
-							$IDImgEvidenza=get_theme_mod('scuola_comeevidenza_DefautlImg');
-							$Image=wp_get_attachment_url(get_theme_mod('scuola_comeevidenza_DefautlImg'));
-							$ImageTitle = get_post($IDImgEvidenza)->post_title; //The Title
-							$ImageAlt = get_post_meta($IDImgEvidenza, '_wp_attachment_image_alt', TRUE); //The Caption
-							$ImageDescription = get_post($IDImgEvidenza)->post_content; // The Description	
-		             		echo '<img src="'.$Image.'" title="'.$ImageTitle.'" alt="'.$ImageAlt.'" longdesc="'.$ImageDescription.'">';
-		             	}else{
-		             		echo $img_thumbnail;
-		             	}
-		             ?>
+		                <?php   echo scuola_get_thumbnail($q->get_the_ID());?>
 		                </div>
 		            </div>
 		          </div>
