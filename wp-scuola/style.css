@@ -27,8 +27,8 @@ You should have received a copy of the GNU Affero General Public License along w
 
 /* WordPress WYSIWYG Editor Styles */
 .entry-content {
-	margin-top: 45px;
-	margin-bottom: 60px;
+	margin-top: 40px;
+	margin-bottom: 40px;
 }
 .entry-content [href$=".pdf"]:after, 
 .entry-content [href$=".doc"]:after, 

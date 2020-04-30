@@ -30,6 +30,7 @@ get_header();
 <?php 				if ( ! post_password_required() ) comments_template( '', true );
 			endwhile; 
 		endif;?>
+        <?php dynamic_sidebar("single-footer-widget-area"); ?>
 	   </div>
 
       <div class="col-lg-3">

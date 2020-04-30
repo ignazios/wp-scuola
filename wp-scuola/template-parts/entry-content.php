@@ -1,6 +1,6 @@
-<section class="entry-content">
+<section class="entry-content clearfix">
 	<?php if ( has_post_thumbnail() And  ! post_password_required()) { 
-			the_post_thumbnail('medium', array( 'class' => 'float-left pr-2 pb-1' )); 
+			the_post_thumbnail('medium', array( 'class' => 'float-left pr-2' )); 
 		} ?>
 	<?php the_content(); ?>
 	<div>

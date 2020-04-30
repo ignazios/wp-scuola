@@ -16,7 +16,6 @@
 <section id="content" role="main" class="container mt-4 mb-4">
 	<div class="container">
     	<div class="row">
-
 	    	<div class="col-12">
 <?php 	if ( have_posts() ) : 
 			while ( have_posts() ) : the_post();?> 
@@ -32,7 +31,7 @@
 			endwhile; 
 		endif;?>
 	   		</div>
-
+			<?php dynamic_sidebar("single-footer-widget-area"); ?>
 		</div>
 	</div>
 </section>
