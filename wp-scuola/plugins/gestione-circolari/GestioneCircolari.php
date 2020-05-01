@@ -186,9 +186,13 @@ function circolari_Inizializzazione(){
 */
 	if(FALSE!==($TestiRisposte=get_option('Circolari_TestiRisposte'))){
     	$TestiRisposte= unserialize($TestiRisposte);
+    }else{
+    	$TestiRisposte=circolari_CreaTestiRisposta();
     }
    	if(FALSE!==($Testi=get_option('Circolari_Tipo'))){
     	$Testi=unserialize($Testi);
+    }else{
+    	$Testi=circolari_CreaTesti();
     }
 /**
 * Operazione eseguite per la memorizzazione dei parametri delle Circoalri
@@ -502,6 +506,7 @@ $TestiRisposte=array(new Circolari_Risposta(0,"Non Firmata","Non Firmare la"),
                  new Circolari_Risposta(3,"Presa Visione","Prendere Visione in merito alla"),
                  new Circolari_Risposta(4,"Firma","Firmare la"));
 add_option('Circolari_TestiRisposte', serialize($TestiRisposte));
+return $TestiRisposte;
 }
 function circolari_CreaTesti(){
 $Testi=array(new Circolari_Tipo("NoFirma","Informativa","","La circolare non richiede conferma","Firma non prevista","",array()),
@@ -509,6 +514,7 @@ $Testi=array(new Circolari_Tipo("NoFirma","Informativa","","La circolare non ric
         new Circolari_Tipo("Firma","Firme","Circolare ordinaria","Da Firmare","&Egrave; richiesta la firma alla circolare ordinaria","Firma la circolare ordinaria",array(4)),
         new Circolari_Tipo("Assemblea","Partecipazioni all\'assemblea","Assembea Sindacale","Partecipazione","La circolare si riferisce ad una assemblea sindacale.<br />Bisogna indicare Si/No","Partecipazione all\'assemblea",array(1,2)));
 add_option('Circolari_Tipo', serialize($Testi));
+return $Testi;
 }
 function circolari_create_Testi_Risposte(){
 	global $TestiRisposte,$Testi;
@@ -1468,6 +1474,10 @@ function circolari_NuoveColonneContenuto($column_name, $post_ID) {
  	if ($_GET['post_type']=="circolari_scuola"){
 		$sign=get_post_meta($post_ID, "_sign",TRUE);
 		$tipo=Circolari_find_Tipo($sign);
+		if($tipo===FALSE){
+			 echo "<span style=\"color:red;\">ERRORE!<br />Tipo di circolare non definito</span>";
+			 return;
+		}
 		if ($column_name == 'gestionecircolari' And current_user_can( 'edit_others_posts')) {  
 			$LinkNL="";			
 			if (current_user_can( "manage_adesioni" ) Or get_option('Circolari_GestPerm')=="int")

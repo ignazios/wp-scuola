@@ -871,47 +871,84 @@ $wp_customize->add_control('scuola_scuola_TerzaTabLeggiTutto', array(
     'section' => 'scuola_scuola_settings_home', 
     'settings' => 'scuola_scuola_TerzaTabLeggiTutto',
     'priority'	=> 23));
-  $wp_customize->add_setting( 'wppa_head_color', array(
-    'default' => '#0066cc',
+/**
+*  Pannello Colori
+*/ 
+$wp_customize->add_setting( 'scuola_text_color' , array(
+    'default'     => "#000000",
     'sanitize_callback' => 'sanitize_hex_color',
   ) );
-  $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'wppa_custom_accent_color', array(
-    'label'      => __( 'Colore della testata', 'wppa' ),
-    'section'    => 'colors',
-    'settings'   => 'wppa_head_color'
+  $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'scuola_text_color', array(
+    'label'       => __( 'Colore del testo', 'scuola' ),
+    'section'     => 'colors',
+    'settings'     => 'scuola_text_color'
   ) ) );
-
-  $wp_customize->add_setting( 'wppa_link_color' , array(
+ 
+  $wp_customize->add_setting( 'scuola_link_color' , array(
     'default'     => "#0066cc",
     'sanitize_callback' => 'sanitize_hex_color',
   ) );
   $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'header_textcolor', array(
-    'label'       => __( 'Colore dei link', 'wppa' ),
+    'label'       => __( 'Colore dei link', 'scuola' ),
     'section'     => 'colors',
-    'settings'     => 'wppa_link_color'
+    'settings'     => 'scuola_link_color'
   ) ) );
-/**
-*  Pannello Colori
-*/ 
-  $wp_customize->add_setting( 'wppa_footer_color' , array(
-    'default'     => "#00264d",
+//Colori dell'Head
+ $wp_customize->add_setting( 'scuola_head_color', array(
+    'default' => '#0066cc',
     'sanitize_callback' => 'sanitize_hex_color',
   ) );
-  $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'wppa_custom_footer_color', array(
-    'label'       => __( 'Colore del footer', 'wppa' ),
-    'section'     => 'colors',
-    'settings'     => 'wppa_footer_color'
+  $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'scuola_head_color', array(
+    'label'      => __( 'Header Colore di sfondo', 'scuola' ),
+    'section'    => 'colors',
+    'settings'   => 'scuola_head_color'
   ) ) );
-
-
-  $wp_customize->add_setting( 'wppa_footer_link' , array(
+  $wp_customize->add_setting( 'scuola_head_text_color' , array(
+    'default'     => "#fff",
+    'sanitize_callback' => 'sanitize_hex_color',
+  ) );
+  $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'scuola_head_text_color', array(
+    'label'       => __( 'Header Colore del testo', 'scuola' ),
+    'section'     => 'colors',
+    'settings'     => 'scuola_head_text_color'
+  ) ) );
+  $wp_customize->add_setting( 'scuola_head_link_color' , array(
     'default'     => "#65dcdf",
     'sanitize_callback' => 'sanitize_hex_color',
   ) );
-  $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'wppa_custom_footer_link', array(
-    'label'       => __( 'Colore dei link nel footer', 'wppa' ),
+  $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'scuola_head_link_color', array(
+    'label'       => __( 'Header Colore dei link', 'scuola' ),
     'section'     => 'colors',
-    'settings'     => 'wppa_footer_link'
+    'settings'     => 'scuola_head_link_color'
+  ) ) );
+//Colori del Corpo  
+  $wp_customize->add_setting( 'scuola_footer_color' , array(
+    'default'     => "#00264d",
+    'sanitize_callback' => 'sanitize_hex_color',
+  ) );
+ // Colori del Footer
+  $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'scuola_footer_color', array(
+    'label'       => __( 'Footer Colore di sfondo', 'scuola' ),
+    'section'     => 'colors',
+    'settings'     => 'scuola_footer_color'
+  ) ) );
+  $wp_customize->add_setting( 'scuola_footer_text_color' , array(
+    'default'     => "#00264d",
+    'sanitize_callback' => 'sanitize_hex_color',
+  ) );
+  $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'scuola_footer_text_color', array(
+    'label'       => __( 'Footer Colore del testo', 'scuola' ),
+    'section'     => 'colors',
+    'settings'     => 'scuola_footer_text_color'
+  ) ) );
+  $wp_customize->add_setting( 'scuola_footer_link_color' , array(
+    'default'     => "#65dcdf",
+    'sanitize_callback' => 'sanitize_hex_color',
+  ) );
+  $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'scuola_footer_link_color', array(
+    'label'       => __( 'Footer Colore dei link', 'scuola' ),
+    'section'     => 'colors',
+    'settings'     => 'scuola_footer_link_color'
   ) ) );
 
 }

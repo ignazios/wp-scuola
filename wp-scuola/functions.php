@@ -471,21 +471,28 @@ function scuola_customize_head() {
 	}?>
 <!-- Custom <head> content -->
   <style type="text/css">
+  body {color: <?php echo get_theme_mod( 'scuola_text_color', "#000000" ); ?>;}
+  .it-header-center-wrapper .it-header-center-content-wrapper .it-brand-wrapper a, .it-header-center-wrapper .it-header-center-content-wrapper .it-right-zone, .it-right-zone .nav li a,{color: <?php echo get_theme_mod( 'scuola_head_link_color', "#fff" );!important ?> }
+   .mysearchform input[type="text"], .it-header-wrapper .mysearchform input[type="text"], .mysearchform [type="submit"]{color: <?php echo get_theme_mod( 'scuola_head_text_color', "#fff" );!important ?> }
+    .mysearchform input[type="text"], .it-header-wrapper .mysearchform input[type="text"]{box-shadow: 0 1px 0px <?php echo get_theme_mod( 'scuola_head_text_color', "#fff" );!important ?>;}
+    .it-footer-main{color: <?php echo get_theme_mod( 'scuola_footer_text_color', "#000000" ); ?>;}
   	#content {background-color:#<?php echo get_theme_mod( 'background_color' ); ?>;}
-  	<?php echo $Regole; ?>
-    .it-header-center-wrapper, .it-header-navbar-wrapper, .it-header-wrapper { background-color: <?php echo get_theme_mod( 'wpscuola_head_color', "#0066cc" ); ?>; }
-    a, a:hover, a.read-more, .menu-main .nav li ul a, .menu-main .nav li ul a:hover, .menu-main .nav li:hover ul a { color: <?php echo get_theme_mod('wpscuola_link_color', "#0066cc"); ?>; }
-    button, input[type="submit"], .btn-primary { background-color: <?php echo get_theme_mod( 'wpscuola_link_color', "#0066cc" ); ?>; }
-    .btn-primary:hover, .btn-primary:not(:disabled):not(.disabled):active { background-color: <?php echo get_theme_mod( 'wpscuola_link_color', "#0066cc" ); ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1); }
-    .btn-outline-primary { color: <?php echo get_theme_mod( 'wpscuola_link_color', "#0066cc" ); ?>; box-shadow: inset 0 0 0 1px <?php echo get_theme_mod( 'wpscuola_link_color', "#0066cc" ); ?>; }
-    .btn-outline-primary:hover, .btn-outline-primary:not(:disabled):not(.disabled):active { color: <?php echo get_theme_mod( 'wpscuola_link_color', "#0066cc" ); ?>; box-shadow: inset 0 0 0 2px <?php echo get_theme_mod( 'wpscuola_link_color', "#0066cc" ); ?>; }
-    html, #footer, .it-footer-main { background-color: <?php echo get_theme_mod( 'wpscuola_footer_color', '#004080' ); ?>; }
-    #footer a { color: <?php echo get_theme_mod('wpscuola_footer_link', "#ffffff"); ?>!important; }
-	.my-bg-primary { background-color: <?php echo get_theme_mod( 'wpscuola_head_color', "#0066cc" ); ?>; }
+    .it-header-center-wrapper, .it-header-navbar-wrapper, .it-header-wrapper { background-color: <?php echo get_theme_mod( 'scuola_head_color', "#0066cc" ); ?>;}
+    a, a:hover, a.read-more, .menu-main .nav li ul a, .menu-main .nav li ul a:hover, .menu-main .nav li:hover ul a { color: <?php echo get_theme_mod('scuola_link_color', "#0066cc"); ?>; }
+    button, input[type="submit"], .btn-primary { background-color: <?php echo get_theme_mod( 'scuola_link_color', "#0066cc" ); ?>; }
+    .btn-primary:hover, .btn-primary:not(:disabled):not(.disabled):active { background-color: <?php echo get_theme_mod( 'scuola_link_color', "#0066cc" ); ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1); }
+    .btn-outline-primary { color: <?php echo get_theme_mod( 'scuola_link_color', "#0066cc" ); ?>; box-shadow: inset 0 0 0 1px <?php echo get_theme_mod( 'scuola_link_color', "#0066cc" ); ?>; }
+    .btn-outline-primary:hover, .btn-outline-primary:not(:disabled):not(.disabled):active { color: <?php echo get_theme_mod( 'scuola_link_color', "#0066cc" ); ?>; box-shadow: inset 0 0 0 2px <?php echo get_theme_mod( 'scuola_link_color', "#0066cc" ); ?>; }
+    html, #footer, .it-footer-main { background-color: <?php echo get_theme_mod( 'scuola_footer_color', '#004080' ); ?>; }
+    #footer a { color: <?php echo get_theme_mod('scuola_footer_link_color', "#ffffff"); ?>!important; }
+    #footer {background-color: #004080; color: <?php echo get_theme_mod('scuola_footer_text_color', "#ffffff"); ?>!important; 
+}
+	.my-bg-primary { background-color: <?php echo get_theme_mod( 'scuola_head_color', "#0066cc" ); ?>; }
 	@media (min-width:1200px) {
-	     .it-list-wrapper .it-list a:hover {color: <?php echo get_theme_mod( 'wpscuola_link_color', "#0066cc" ); ?>;}
+	     .it-list-wrapper .it-list a:hover {color: <?php echo get_theme_mod( 'scuola_link_color', "#0066cc" ); ?>;}
 	}   
-  </style>
+   	<?php echo $Regole; ?>
+ </style>
 <!-- Fine Custom <head> content -->
   <?php 
   }
@@ -523,7 +530,7 @@ function scuola_SearchFilter($query) {
 }
 /* Enqueue WordPress theme styles within Gutenberg. */
 function gutenberg_styles() {
-	 wp_enqueue_style( 'wpscuola-gutenberg', get_template_directory_uri() . '/lib/block/block.css', false, '@@pkg.version', 'all' );
+	 wp_enqueue_style( 'scuola-gutenberg', get_template_directory_uri() . '/lib/block/block.css', false, '@@pkg.version', 'all' );
 }
 
 function custom_excerpt_length( $length ) {
