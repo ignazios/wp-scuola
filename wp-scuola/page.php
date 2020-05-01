@@ -10,7 +10,22 @@
  * License URI: 		https://opensource.org/licenses/AGPL-3.0
  * Text Domain:       	wpscuola
 */
- 
+   $args = array(
+        'posts_per_page' => -1,
+        'child_of'    	 => $post->ID,
+        'order'          => 'ASC',
+        'orderby'        => 'post_title',
+        'hierarchical'	 => TRUE,
+        'echo'			 => FALSE,
+        'title_li'		 => "");
+
+    $figli = wp_list_pages( $args );
+
+	$Are_Child=FALSE;
+    if ( $figli!="" ){
+    	$Are_Child=TRUE; 
+    }   
+    
 get_header(); 
 ?>
 <section id="content" role="main" class="container-fluid">
@@ -37,7 +52,7 @@ get_header();
 	      </div>     
 	      <div class="col-sm-3">
 <?php	if($Are_Child){
-	    	get_template_part('template-parts/navigazione-page');
+	    	get_template_part('template-parts/nav',"subpage");
 	    }
 	   	if ( is_active_sidebar( 'page-widget-area' ) ) : ?>
    			<div class="container-fluid widget-area page-widget-area">
