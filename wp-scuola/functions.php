@@ -595,8 +595,11 @@ global $post;
  function scuola_get_thumbnail($IDogg){
  	$img_thumbnail=get_the_post_thumbnail($IDogg,'img-wrapper-thumb');
    	if(!isset($img_thumbnail) Or $img_thumbnail==""){
-		$IDImgEvidenza=get_theme_mod('scuola_comeevidenza_DefautlImg');
-		$Image=wp_get_attachment_url(get_theme_mod('scuola_comeevidenza_DefautlImg'));
+		$IDImgEvidenza=get_theme_mod('scuola_DefautlImg');
+		if($IDImgEvidenza===FALSE){
+			return '<img src="'.get_template_directory_uri().'/img/thumbnail-default.png" title="Immagine di default" alt="Immagine di default">'; 
+		}
+		$Image=wp_get_attachment_url($IDImgEvidenza);
 		$ImageTitle = get_post($IDImgEvidenza)->post_title; //The Title
 		$ImageAlt = get_post_meta($IDImgEvidenza, '_wp_attachment_image_alt', TRUE); //The Caption
 		$ImageDescription = get_post($IDImgEvidenza)->post_content; // The Description	

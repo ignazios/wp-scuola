@@ -203,8 +203,23 @@ $wp_customize->add_control( 'scuola_social_footersectionTesto', array(
     'section' 	=> 'Scuola_Social_Settings',
     'settings' => 'scuola_social_footersectionTesto',
     'priority'	=> 7));         
-        
-                  
+/**
+*  Sotto Pannello Default
+*/
+$wp_customize->add_section('Scuola_Default_Settings',array(
+    'title'			 =>'Default',
+    'priority'		 =>5,
+    'description'	 => 'Miscellanea di impostazioni di default',
+    'panel'			 =>'scuola_settings'));   
+$wp_customize->add_setting('scuola_DefautlImg', array(
+    'type' => 'theme_mod',
+    'capability' => 'edit_theme_options',
+    'sanitize_callback' => 'absint'));
+$wp_customize->add_control(new WP_Customize_Cropped_Image_Control($wp_customize, 'scuola_DefautlImg', array(
+    'section' => 'Scuola_Default_Settings',
+    'label' => 'Immagine che verrà visualizzata se l\'articolo non possiede l\'immagine in Evidenza',
+    'height' => 150,
+    'priority'	=> 5)));
 /**
 *  Sotto Pannello Dati Amministrazione
 */
@@ -482,62 +497,6 @@ $wp_customize->add_control(new WP_Customize_Cropped_Image_Control($wp_customize,
     'height' => 40,
     'priority'	=> 5)));     
 /**
-*  Sotto Pannello Social
-
-$wp_customize->add_section('Scuola_Social_Settings',array(
-    'title'			 =>'Social',
-    'priority'		 =>10,
-    'description'	 => '<h2>Social</h2>
-    					Impostazione parametri dei social dell\'amministrazione',
-    'panel'			 =>'scuola_settings_home',
-));
-// Campo Facebook
-    $wp_customize->add_setting( 'Scuola_Social_Facebook' , array(
-		'capability' => 'edit_theme_options') );
-	$wp_customize->add_control( 'Scuola_Social_Facebook', array(
-        'type' 		=> 'text',
-        'label' 	=> 'Facebook:',
-        'section' 	=> 'Scuola_Social_Settings',
-        'settings'  => 'Scuola_Social_Facebook',
-        'priority'	=> 28));
-// Campo Twitter
-    $wp_customize->add_setting( 'Scuola_Social_Twitter' , array(
-		'capability' => 'edit_theme_options') );
-	$wp_customize->add_control( 'Scuola_Social_Twitter', array(
-        'type' 		=> 'text',
-        'label' 	=> 'Twitter:',
-        'section' 	=> 'Scuola_Social_Settings',
-        'settings'  => 'Scuola_Social_Twitter',
-        'priority'	=> 29));
-// Campo YouTube
-    $wp_customize->add_setting( 'Scuola_Social_Youtube' , array(
-		'capability' => 'edit_theme_options') );
-	$wp_customize->add_control( 'Scuola_Social_Youtube', array(
-        'type' 		=> 'text',
-        'label' 	=> 'YouTube:',
-        'section' 	=> 'Scuola_Social_Settings',
-        'settings'  => 'Scuola_Social_Youtube',
-        'priority'	=> 30));
-// Campo Instagram
-    $wp_customize->add_setting( 'Scuola_Social_Instagram' , array(
-		'capability' => 'edit_theme_options') );
-	$wp_customize->add_control( 'Scuola_Social_Instagram', array(
-        'type' 		=> 'text',
-        'label' 	=> 'Instagram:',
-        'section' 	=> 'Scuola_Social_Settings',
-        'settings'  => 'Scuola_Social_Instagram',
-        'priority'	=> 31));
-// Campo Telegram
-    $wp_customize->add_setting( 'Scuola_Social_Telegram' , array(
-		'capability' => 'edit_theme_options') );
-	$wp_customize->add_control( 'Scuola_Social_Telegram', array(
-        'type' 		=> 'text',
-        'label' 	=> 'Telegram:',
-        'section' 	=> 'Scuola_Social_Settings',
-        'settings'  => 'Scuola_Social_Telegram',
-        'priority'	=> 31));
-*/
-/**
 *  Sotto Pannello Hero
 */
 $wp_customize->add_section('scuola_hero_settings',array(
@@ -546,9 +505,10 @@ $wp_customize->add_section('scuola_hero_settings',array(
     'description'	 => '<h2>Blocco Hero</h2>
     Opzioni valide solo se si utilizza il template di pagina Home Page	
     <ul>
-    	<li>Il titolo della pagina verrà utilizzato come titolo del blocco</li>
-    	<li>Il riassunto verrà utilizzato come testo della notizia</li>
-    	<li>L\'immagine in evidenza verrà utilizzata come sfondo</li>
+    	<li>Attivazione del blocco</li>
+    	<li>La pagina da cui verrà presa l\'immagine in evidenza ed impostata come sfondo, il Titolo ed il riassunto</li>
+    	<li>Il testo del pulsante che rimanda alla pagina</li>
+    	<li>L\'effetto di Overlay</li>
     </ul>',
     'panel'			 =>'scuola_settings_home',
 ));
@@ -562,17 +522,6 @@ $wp_customize->add_control('Scuola_Hero_Active', array(
     'settings' => 'Scuola_Hero_Active',
     'priority'	=> 1,
 ));
-/*$wp_customize->add_setting('Scuola_Hero_Image', array(
-    'type' => 'theme_mod',
-    'capability' => 'edit_theme_options',
-    'sanitize_callback' => 'absint'
-));
-$wp_customize->add_control(new WP_Customize_Cropped_Image_Control($wp_customize, 'Scuola_Hero_Image', array(
-    'section' => 'scuola_hero_settings',
-    'label' => 'Immagine Hero Home Pag max:1920x1080',
-    'priority'	=> 2,
-    'width' => 1920,
-    'height' => 1080)));    */ 
 $wp_customize->add_setting( 'Scuola_Hero_Page' , array(
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'Scuola_Hero_Page', array(
@@ -640,15 +589,6 @@ $wp_customize->add_control( 'scuola_comeevidenza_numart', array(
     'settings' => 'scuola_comeevidenza_numart',
     'priority'	=> 3,
     'choices'   => 4));	
-$wp_customize->add_setting('scuola_comeevidenza_DefautlImg', array(
-    'type' => 'theme_mod',
-    'capability' => 'edit_theme_options',
-    'sanitize_callback' => 'absint'));
-$wp_customize->add_control(new WP_Customize_Cropped_Image_Control($wp_customize, 'scuola_comeevidenza_DefautlImg', array(
-    'section' => 'scuola_comeevidenza_settings',
-    'label' => 'Immagine che verrà visualizzata se l\'articolo non possiede l\'immagine in Evidenza',
-    'height' => 150,
-    'priority'	=> 5)));
 /**
 *  Sotto Pannello Blocco scuola
 */
@@ -874,6 +814,7 @@ $wp_customize->add_control('scuola_scuola_TerzaTabLeggiTutto', array(
 /**
 *  Pannello Colori
 */ 
+//Colori del Corpo  
 $wp_customize->add_setting( 'scuola_text_color' , array(
     'default'     => "#000000",
     'sanitize_callback' => 'sanitize_hex_color',
@@ -883,12 +824,11 @@ $wp_customize->add_setting( 'scuola_text_color' , array(
     'section'     => 'colors',
     'settings'     => 'scuola_text_color'
   ) ) );
- 
   $wp_customize->add_setting( 'scuola_link_color' , array(
     'default'     => "#0066cc",
     'sanitize_callback' => 'sanitize_hex_color',
   ) );
-  $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'header_textcolor', array(
+   $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'header_textcolor', array(
     'label'       => __( 'Colore dei link', 'scuola' ),
     'section'     => 'colors',
     'settings'     => 'scuola_link_color'
@@ -921,12 +861,11 @@ $wp_customize->add_setting( 'scuola_text_color' , array(
     'section'     => 'colors',
     'settings'     => 'scuola_head_link_color'
   ) ) );
-//Colori del Corpo  
+//Colori del Footer  
   $wp_customize->add_setting( 'scuola_footer_color' , array(
     'default'     => "#00264d",
     'sanitize_callback' => 'sanitize_hex_color',
   ) );
- // Colori del Footer
   $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'scuola_footer_color', array(
     'label'       => __( 'Footer Colore di sfondo', 'scuola' ),
     'section'     => 'colors',

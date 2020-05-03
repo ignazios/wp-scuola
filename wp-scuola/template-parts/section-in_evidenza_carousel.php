@@ -45,8 +45,8 @@
 		array_shift($Posts);		
 	}
 	if(isset($Image) And $Image===FALSE){
-		$IDImgEvidenza=get_theme_mod('scuola_comeevidenza_DefautlImg');
-		$Image=wp_get_attachment_url(get_theme_mod('scuola_comeevidenza_DefautlImg'));
+		$IDImgEvidenza=get_theme_mod('scuola_DefautlImg');
+		$Image=wp_get_attachment_url(get_theme_mod('scuola_DefautlImg'));
 	}
 	$ImageTitle = get_post($IDImgEvidenza)->post_title; //The Title
 	$ImageAlt = get_post_meta($IDImgEvidenza, '_wp_attachment_image_alt', TRUE); //The Caption
@@ -96,8 +96,8 @@
 		foreach($Posts as $Post){
 			$Image=get_the_post_thumbnail_url($Post->ID);
 			if(isset($Image) And $Image===FALSE){
-					$IDImgEvidenza=get_theme_mod('scuola_comeevidenza_DefautlImg');
-					$Image=wp_get_attachment_url(get_theme_mod('scuola_comeevidenza_DefautlImg'));
+					$IDImgEvidenza=get_theme_mod('scuola_DefautlImg');
+					$Image=wp_get_attachment_url(get_theme_mod('scuola_DefautlImg'));
 			}else{
 				$IDImgEvidenza=get_post_thumbnail_id($Post->ID);
 			}

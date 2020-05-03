@@ -107,14 +107,16 @@ function gruppi_add_custom_user_columns($value, $column_name, $id) {
 	  	if(($IDG=get_the_author_meta( 'gruppo', $id ))==NULL)
 	  		$IDGruppo[]=-1;
 	  	else
-	  		$IDGruppo[]=$IDG;
+	  		$IDGruppo=$IDG;
 //	  	echo "U=".$id." - g=".get_the_author_meta( 'gruppo', $id )."<br />";
+//echo "<pre>";var_dump($IDGruppo);echo "</pre>";
 		$gruppiutenti=get_terms('gruppiutenti', array('hide_empty' => FALSE,'include'=>$IDGruppo));
+//		echo "<pre>";var_dump($gruppiutenti);echo "</pre>";
 		$GruppiUtente="";
 		foreach($gruppiutenti as $gruppo){
 			$GruppiUtente.=$gruppo->name.", ";
 		}
-		return substr($GruppiUtente,0,-2);
+		return $GruppiUtente==""?"--":substr($GruppiUtente,0,-2);
       }
  }
 

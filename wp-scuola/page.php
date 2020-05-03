@@ -10,20 +10,22 @@
  * License URI: 		https://opensource.org/licenses/AGPL-3.0
  * Text Domain:       	wpscuola
 */
-   $args = array(
-        'posts_per_page' => -1,
-        'child_of'    	 => $post->ID,
-        'order'          => 'ASC',
-        'orderby'        => 'post_title',
-        'hierarchical'	 => TRUE,
-        'echo'			 => FALSE,
-        'title_li'		 => "");
-
-    $figli = wp_list_pages( $args );
-
-	$Are_Child=FALSE;
-    if ( $figli!="" ){
-    	$Are_Child=TRUE; 
+   	$Primo_Livello=get_ancestors( $post->ID, 'page' ); 	
+   	$Are_Child=FALSE;
+	$Figli=array();
+   if (count($Primo_Livello)>0){
+//echo "<pre>";var_dump($Primo_Livello);echo "</pre>";
+	   $args = array(
+	        'posts_per_page' => -1,
+	        'child_of'    	 => end($Primo_Livello),
+	        'order'          => 'ASC',
+	        'orderby'        => 'post_title',
+	        'hierarchical'	 => TRUE,
+	        'echo'			 => FALSE,
+	        'title_li'		 => "",
+	        'depth'			=>0,);
+	    $figli = wp_list_pages( $args );
+	    $Are_Child=TRUE; 
     }   
     
 get_header(); 

@@ -132,15 +132,9 @@ add_filter('posts_where', function ($where, $query) {
 		$GruppoUtente= substr($GruppiU, 0, strlen($GruppiU)-1).")";		
 	}
 	global $wpdb;
-//	echo ">".$where."<<br /><br /><br />";
-//	AND ( iswplia_term_relationships.term_taxonomy_id IN (2599,2600,2606) )
-//	AND ( iswplia_term_relationships.term_taxonomy_id IN (2600,2599,2606) )
 	$CondPrivati= " OR ( ".$wpdb->term_relationships.".term_taxonomy_id IN ".$GruppoUtente." And ".$wpdb->postmeta.".meta_value ='d' )";
 	$where=substr($where,strpos($where, "AND",3));
-//	echo $where."<br /><br /><br />";
 	$where=$where." ".$CondPrivati;
-//	echo $where."<br /><br /><br />";wp_die();
-//	var_dump($where);	wp_die();
 	return $where;
 }, 10, 2);
 
@@ -332,8 +326,26 @@ function VisualizzaCircolariHome(){
 }
 
 function FiltroVisualizzaCircolare( $content ){
-global $TestiRisposte,$Testi;
+/*
+ * Se l'articolo non appartiene al CustomPostType circolari_scuola rimando il contenuto
+ */
+	if (get_post_type( $PostID) !="circolari_scuola")
+		return $content;
+
+	if(FALSE!==($TestiRisposte=get_option('Circolari_TestiRisposte'))){
+		$TestiRisposte= unserialize($TestiRisposte);
+	}else{
+		return $content;
+	}
+	if(FALSE!==($Testi=get_option('Circolari_Tipo'))){
+		$Testi=unserialize($Testi);
+	}else{
+		return $content;
+	}
 $PostID= get_the_ID();
+$sign=get_post_meta($PostID, "_sign",TRUE);
+if(!isset($sign) or $sign=="") return $content;
+	
 /*
  * Se l'articolo non appartiene al CustomPostType circolari_scuola rimando il contenuto
  */
@@ -382,7 +394,6 @@ $PostID= get_the_ID();
 	else{ 
 		$Campo_Firma="";
 		if (Is_Circolare_per_User($PostID)){	
-			$sign=get_post_meta($PostID, "_sign",TRUE);
 			if($sign=="NoFirma"){
 				return $content;
 			}else{
@@ -1030,7 +1041,6 @@ if($azione){
 				foreach($Posts as $post){
 					$Adesione=get_post_meta($post->ID, "_sciopero",TRUE);
 					$firma=get_post_meta($post->ID, "_sign",TRUE);
-					var_dump($firma);wp_die();
 					if (($firma!="NoFirma") and empty($scadenza)){
 						$lista.="			<li>$post->ID $post->post_title $post->post_date_gmt";
 						if (isset($_GET['opt']) && $_GET['opt']=="aggsca"){
@@ -1598,7 +1608,7 @@ function circolari_salva_dettagli( $post_id ){
 			delete_post_meta( $post_id, '_numero' );
 			delete_post_meta( $post_id, '_anno' );
 			delete_post_meta( $post_id, '_visibilita' );
-			wp_set_post_categories( $post_id, array($Circolari) );
+			//wp_set_post_categories( $post_id, array($Circolari) );
 			$term_list = wp_get_post_terms($post_id, 'gruppiutenti', array("fields" => "names"));
 			if (count($term_list)==0) {
 				$DestTutti=get_option('Circolari_Visibilita_Pubblica');

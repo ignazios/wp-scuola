@@ -19,6 +19,9 @@ https://github.com/ignazios/wp-scuola
 ## Supporto
 facebook: https://www.facebook.com/wpscuola/
 ## Change log
+- **0.0.4**
+  - ***Implementato*** la gestione delle lingue
+  - ***Corretti*** alcuni bug del modulo Circolari
 - **0.0.3**
   - ***Sistemata*** la gestione dei colori nella personalizzazione del tema Aspetto > Personalizza > Colori
   - ***Sistemato*** modulo Circolari: testi e risposte delle circolari
