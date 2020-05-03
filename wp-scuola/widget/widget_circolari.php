@@ -65,12 +65,10 @@
 					$visibilita=$visibilita[0];
      			if ((Is_Circolare_per_User($Circolare->ID) and $visibilita=="d") or $visibilita=="p"){
      				$NunEleVis++;
-     				if ($NunEleVis>$numelementi){
-						exit;
-					}
-				$numero=get_post_meta($Circolare->ID, "_numero",TRUE);
-				$anno=get_post_meta($Circolare->ID, "_anno",TRUE);
-				$Elenco=GetEencoDestinatari($Circolare->ID);
+     				if ($NunEleVis<=$numelementi){
+						$numero=get_post_meta($Circolare->ID, "_numero",TRUE);
+						$anno=get_post_meta($Circolare->ID, "_anno",TRUE);
+						$Elenco=GetEencoDestinatari($Circolare->ID);
 ?>
  			<div class="col-12 col-sm-6 col-lg-4">
       			<div class="it-grid-item-wrapper shadow>
@@ -130,8 +128,9 @@
 				    </div>
     			<!--end card-->
       		</div>
-<?php		}
-			} ?>
+<?php			}
+			}
+		} ?>
 			</div>
 <?php		if($linkLT){?>							
 			<div class="it-card-footer">
