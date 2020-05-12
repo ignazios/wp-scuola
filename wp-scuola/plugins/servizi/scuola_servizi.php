@@ -157,7 +157,7 @@ class ScuolaServizi {
 		'parent_item_colon'     => __( 'Servizio Padre:', 'wpscuola' ),
 		'all_items'             => __( 'Tutti i Servizi', 'wpscuola' ),
 		'add_new_item'          => __( 'Aggiungi nuovo Servizio', 'wpscuola' ),
-		'add_new'               => __( 'Aggiungi Nuovo', 'wpscuola' ),
+		'add_new'               => __( 'Aggiungi Servizio', 'wpscuola' ),
 		'new_item'              => __( 'Nuovo Servizio', 'wpscuola' ),
 		'edit_item'             => __( 'Modifica Servizio', 'wpscuola' ),
 		'update_item'           => __( 'Aggiorna Servizio', 'wpscuola' ),

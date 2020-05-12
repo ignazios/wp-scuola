@@ -48,7 +48,7 @@ if ($bar) {
         echo do_shortcode( '[at-desc]' );
     }
     if ($bar > 1) {
-        echo '<span style="float:right;"><a href="'.get_post_type_archive_link( 'amm-trasparente' ).'"><small>Ultimi inseriti</small></a></span>';
+        echo '<span style="float:right;"><a href="'.get_post_type_archive_link( 'amm-trasparente' ).'"><small>'.__("Ultimi inseriti", 'wpscuola').'</small></a></span>';
     }
     echo do_shortcode( '[at-search]' ).'</div>';
 }
@@ -96,7 +96,7 @@ if ( at_option('show_love') ) {
         <span style="float:right;">
             <a href="http://www.wpgov.it" target="_blank" alt="Software WPGov" title="Software WPGov">wpgov.it</a>
         </span>
-        Powered by <a href="http://wordpress.org/plugins/amministrazione-trasparente/" rel="nofollow" title="Plugin Amministrazione Trasparente per Wordpress">Amministrazione Trasparente</a>
+        Powered by <a href="http://wordpress.org/plugins/amministrazione-trasparente/" rel="nofollow" title="'.__("Plugin Amministrazione Trasparente per Wordpress", 'wpscuola').'">'.__("Amministrazione Trasparente", 'wpscuola').'</a>
         </span>';
 }
  echo '<div class="clear"></div>';

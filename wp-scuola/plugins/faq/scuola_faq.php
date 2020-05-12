@@ -42,7 +42,7 @@ class ScuolaFAQ {
 		'parent_item_colon'     => __( 'FAQ Padre:', 'wpscuola' ),
 		'all_items'             => __( 'Tutte le FAQs', 'wpscuola' ),
 		'add_new_item'          => __( 'Aggiungi nuova FAQ', 'wpscuola' ),
-		'add_new'               => __( 'Aggiungi Nuova', 'wpscuola' ),
+		'add_new'               => __( 'Aggiungi FAQ', 'wpscuola' ),
 		'new_item'              => __( 'Nuova FAQ', 'wpscuola' ),
 		'edit_item'             => __( 'Modifica FAQ', 'wpscuola' ),
 		'update_item'           => __( 'Aggiorna FAQ', 'wpscuola' ),
@@ -122,16 +122,16 @@ class ScuolaFAQ {
 
         $messages[$post_type] = array(
             0  => '', // Unused. Messages start at index 1.
-            1  => sprintf($singular . ' aggiornato. <a href="%s">Visualizza ' . strtolower( $singular ) . '</a>', esc_url( get_permalink( $post_ID ) ) ),
-            2  =>'Campo personalizzato Aggiornato',
-            3  =>'Campo personalizzato cancellato',
-            4  =>$singular . ' aggiornato.',
-            5  => isset($_GET['revision'] ) ? sprintf( ' recuperato dalla revisione da %s', wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
-            6  => sprintf($singular . ' pubblicato. <a href="%s">Visualizza ' . strtolower( $singular ) . '</a>', esc_url( get_permalink( $post_ID ) ) ),
+            1  => sprintf($singular . ' '.__( 'aggiornato', 'wpscuola' ).'. <a href="%s">'.__( 'Visualizza', 'wpscuola' ).' ' . strtolower( $singular ) . '</a>', esc_url( get_permalink( $post_ID ) ) ),
+            2  =>__( 'Campo personalizzato Aggiornato', 'wpscuola' ),
+            3  =>__( 'Campo personalizzato cancellato', 'wpscuola' ),
+            4  =>$singular . ' '.__( 'aggiornato', 'wpscuola' ),
+            5  => isset($_GET['revision'] ) ? sprintf( ' '.__( 'recuperato dalla revisione da %s', 'wpscuola' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+            6  => sprintf($singular . ' '.__( 'pubblicato', 'wpscuola' ).'. <a href="%s">'.__( 'Visualizza', 'wpscuola' ).' ' . strtolower( $singular ) . '</a>', esc_url( get_permalink( $post_ID ) ) ),
             7  => 'Pagina salvata.',
-            8  => sprintf($singular . ' inviata. <a target="_blank" href="%s">Anteprima ' . strtolower( $singular ) . '</a>', esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
-            9  => sprintf($singular . ' schedulato per: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Anteprima ' . strtolower( $singular ) . '</a>', date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
-            10 => sprintf($singular . ' elemento aggiornato. <a target="_blank" href="%s">Anteprima ' . strtolower( $singular ) . '</a>', esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+            8  => sprintf($singular . ' '.__( 'inviata', 'wpscuola' ).'. <a target="_blank" href="%s">'.__( 'Anteprima', 'wpscuola' ).' ' . strtolower( $singular ) . '</a>', esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
+            9  => sprintf($singular . ' '.__( 'schedulato per: <strong>%1$s</strong>', 'wpscuola' ).'. <a target="_blank" href="%2$s">'.__( 'Anteprima', 'wpscuola' ).' ' . strtolower( $singular ) . '</a>', date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink( $post_ID ) ) ),
+            10 => sprintf($singular . ' '.__( 'elemento aggiornato', 'wpscuola' ).'. <a target="_blank" href="%s">'.__( 'Anteprima', 'wpscuola' ).' ' . strtolower( $singular ) . '</a>', esc_url( add_query_arg( 'preview', 'true', get_permalink( $post_ID ) ) ) ),
         );
 
         return $messages;
@@ -141,11 +141,11 @@ class ScuolaFAQ {
 		if (get_post_type()=="tipo_faq"){
 	        $columns = array(
 	            "cb"          => '<input type="checkbox" />',
-	            "title"      => 'Titolo FAQ',
-	            "contenuto"   => 'Risposta',
-	            'gruppo'      => 'Gruppi', 
-	            'shortcode'   => 'Shortcode', 
-	            "date"        => 'Data', 
+	            "title"      => __( 'Titolo FAQ', 'wpscuola' ),
+	            "contenuto"   => __( 'Risposta', 'wpscuola' ),
+	            'gruppo'      => __( 'Gruppi', 'wpscuola' ), 
+	            'shortcode'   => __( 'Shortcode', 'wpscuola' ), 
+	            "date"        => __( 'Data', 'wpscuola' ), 
 	        );
 		}
         return $columns;
@@ -178,7 +178,7 @@ class ScuolaFAQ {
  		add_action( 'admin_menu', 								array( $this, 'add_faq_metabox' ) );
         add_shortcode( 'FAQ',                       			array( $this, 'visualizza_faq' ) );
      }
-    private function return_to_top( $link ) {
+/*    private function return_to_top( $link ) {
         $html = '';
 
         // Grab our metadata
@@ -190,6 +190,7 @@ class ScuolaFAQ {
         }
         return $html;
     }
+ */
  // Add Shortcode
 	function visualizza_faq( $atts ) {
 
@@ -265,7 +266,7 @@ class ScuolaFAQ {
         global $post_ID;
         ?>
         <p class="howto">
-            <?php echo 'Per visualizzare questa domanda, bisogna copiare il codice di seguito riportato ed incollarlo in un post, pagina o nell\'area testo di un Widget Testo'; ?>
+            <?php _e( "Per visualizzare questa domanda, bisogna copiare il codice di seguito riportato ed incollarlo in un post, pagina o nell'area testo di un Widget Testo", 'wpscuola' ); ?>
         </p>
         <p><input type="text" value="[faq p=<?php echo $post_ID; ?>]" readonly="readonly" class="widefat wp-ui-text-highlight code"></p>
         <?php

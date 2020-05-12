@@ -32,8 +32,6 @@ define("Circolari_Dir_Servizio",WP_CONTENT_DIR."/Circolari");
 include_once(Circolari_DIR."/admin/gruppi.php");
 include_once(Circolari_DIR."/admin/firme.php");
 include_once(Circolari_DIR."/functions.inc.php");
-include_once(Circolari_DIR."/GestioneCircolari.widget.php");
-include_once(Circolari_DIR."/GestioneNavigazioneCircolari.widget.php");
 include_once(Circolari_DIR."/GestioneCircolari_CustomPostType.php");
 include_once(Circolari_DIR."/admin/testi.php");
 if((get_option('Circolari_ModuloCircolari')!= 'Si'||!get_option('Circolari_ModuloCircolari')) And get_theme_mod("scuola_circolari_attiva")){
@@ -72,7 +70,7 @@ if(isset($_REQUEST["op"])){
 }
 
 function post_type_archive( $query ) {  
-	if(current_user_can('administrator')) return $where;
+	if(current_user_can('administrator')) return $query;
 	if($query->is_post_type_archive('circolari_scuola' ) and ($query->is_admin==FALSE)){  
 		$current_user = wp_get_current_user();
 		if ( 0 == $current_user->ID ) {
@@ -158,7 +156,8 @@ add_action( 'init', 'circolari_scuola_rewrite_rules' );
 
 if (isset($_GET['update']) And $_GET['update'] == 'true')
 	$stato="<div id='setting-error-settings_updated' class='updated settings-error'> 
-			<p><strong>Impostazioni salvate.</strong></p></div>";
+			<p><strong>".__( 'Impostazioni salvate', 'wpscuola' ).".</strong></p></div>";
+
 add_filter('post_updated_messages', 'circolari_updated_messages');
 add_action('save_post', 'circolari_salva_dettagli');
 add_action('add_meta_boxes','circolari_crea_box');
@@ -261,7 +260,7 @@ function remove_quick_edit( $actions ) {
 
 function circolari_disable_feed() {
 	if ( get_post_type()=='circolari_scuola') {
-        wp_die( 'Non ci sono feed disponibili per le Circolari, per visualizzarle naviga la  <a href="'. get_bloginfo('url') .'">Home</a> del sito!');
+        wp_die( __( 'Non ci sono feed disponibili per le Circolari, per visualizzarle naviga la', 'wpscuola' ).'  <a href="'. get_bloginfo('url') .'">'.__( 'Home', 'wpscuola' ).'</a> '.__( 'del sito', 'wpscuola' ).'!');
     }
 }
 
@@ -326,6 +325,7 @@ function VisualizzaCircolariHome(){
 }
 
 function FiltroVisualizzaCircolare( $content ){
+$PostID= get_the_ID();
 /*
  * Se l'articolo non appartiene al CustomPostType circolari_scuola rimando il contenuto
  */
@@ -342,7 +342,6 @@ function FiltroVisualizzaCircolare( $content ){
 	}else{
 		return $content;
 	}
-$PostID= get_the_ID();
 $sign=get_post_meta($PostID, "_sign",TRUE);
 if(!isset($sign) or $sign=="") return $content;
 	
@@ -368,10 +367,10 @@ if(!isset($sign) or $sign=="") return $content;
 	if ((!is_user_logged_in() Or !Is_Circolare_per_User($PostID)) And $seld=="Pr")	
 		return '
 	<div class="alert alert-success" role="alert">
-  		<h4 class="alert-heading">Avviso di sicurezza!</h4>
-  		<p>Circolare riservata a specifici gruppi di utenti registrati.</p>
+  		<h4 class="alert-heading">'.__( 'Avviso di sicurezza', 'wpscuola' ).'!</h4>
+  		<p>'.__( 'Circolare riservata a specifici gruppi di utenti registrati', 'wpscuola' ).'.</p>
   		<hr>
-  		<p class="mb-0">Loggati per accedere alla circolare.</p>
+  		<p class="mb-0">'.__( 'Loggati per accedere alla circolare', 'wpscuola' ).'.</p>
 	</div>';
 /*
  * Se la circolare è per l'utente ed è da firmare visualizzo la gestione della firma 
@@ -390,7 +389,7 @@ if(!isset($sign) or $sign=="") return $content;
  color: #fff;
  padding: 10px 20px;
  border: solid 1px #0076a3;
- background: #0095cd;' onclick='javascript:history.back()'>Torna alla Firma</button>".$content;
+ background: #0095cd;' onclick='javascript:history.back()'>".__( 'Torna alla Firma', 'wpscuola' )."</button>".$content;
 	else{ 
 		$Campo_Firma="";
 		if (Is_Circolare_per_User($PostID)){	
@@ -399,12 +398,9 @@ if(!isset($sign) or $sign=="") return $content;
 			}else{
 				$BaseUrl=admin_url()."edit.php";
 				if (Is_Circolare_Firmata($PostID)){
-					//$Campo_Firma="Firmata".$TestiRisposte[get_Circolare_Adesione($PostID)]->get_Risposta;
 					return  $content;
 				}else{
 					if ($sign!="Firma"){
-							//$TipoC=new Circolari_Tipo();
-//							echo "<pre>";var_dump(Circolari_find_Tipo($sign));	echo "</pre>";
 						$Campo_Firma='<form action=""  method="get" style="display:inline;">
 							<div>
 								<div class="row">
@@ -421,12 +417,12 @@ if(!isset($sign) or $sign=="") return $content;
     				$Primo=false;
 					}
 					$Campo_Firma.='
-									<button class="btn btn-primary btn-icon inviaadesione" type="submit" name="inviaadesione" id="'.$PostID.'" value="Firma" rel="'.get_the_title($PostID).'"><i class="fas fa-signature pr-2"></i> <span>Esprimi scelta</span>
+									<button class="btn btn-primary btn-icon inviaadesione" type="submit" name="inviaadesione" id="'.$PostID.'" value="Firma" rel="'.get_the_title($PostID).'"><i class="fas fa-signature pr-2"></i> <span>'.__( 'Esprimi scelta', 'wpscuola' ).'</span>
 								</div>
 							</div>
 						</form>';
 					}else
-						$Campo_Firma='<button class="btn btn-primary btn-icon" onclick="window.location.href=\''.get_permalink($PostID).'?op=Firma&pid='.$PostID.'&circoFir='.wp_create_nonce('FirmaCircolare').'\'"><i class="fas fa-signature pr-2"></i> <span>Firma la Circolare</span>';					
+						$Campo_Firma='<button class="btn btn-primary btn-icon" onclick="window.location.href=\''.get_permalink($PostID).'?op=Firma&pid='.$PostID.'&circoFir='.wp_create_nonce('FirmaCircolare').'\'"><i class="fas fa-signature pr-2"></i> <span>'.__( 'Firma la Circolare', 'wpscuola' ).'</span>';					
 				}
 			}
 		}
@@ -441,7 +437,7 @@ function FiltroVisualizzaRiassuntoCircolare( $excerpt ){
  * Se l'articolo richiede la password rimando tutto il contenuto con la richiesta della password
  */
 	if (post_password_required( $PostID ))
-		return "Contenuto protetto da Password";
+		return __( 'Contenuto protetto da Password', 'wpscuola' );
 /*
  * Se l'articolo non appartiene al CustomPostType Circolari rimando il contenuto
  */
@@ -461,7 +457,7 @@ function FiltroVisualizzaRiassuntoCircolare( $excerpt ){
 		else	
 			$seld="Pr";
 			if ((!is_user_logged_in() Or !Is_Circolare_per_User($PostID)) And $seld=="Pr")	
-		return "Contenuto riservato a specifici gruppi di utenti registrati";
+		return __( 'Contenuto riservato a specifici gruppi di utenti registrati', 'wpscuola' );
 	else
 		return $excerpt;
 //	return $excerpt;
@@ -491,17 +487,17 @@ function circolari_activate() {
 		add_option('Circolari_NotificaFirma', 'No');
 	}
 	if(get_option('Circolari_From_NotificaFirma')== ''||!get_option('Circolari_From_NotificaFirma')){
-		add_option('Circolari_From_NotificaFirma', 'Servizio di Notifica firma delle circolari <indirizzo_email@dominio.it>');
+		add_option('Circolari_From_NotificaFirma', __( 'Servizio di Notifica firma delle circolari <indirizzo_email@dominio.it>', 'wpscuola' ));
 	}
 	if(get_option('Circolari_Oggetto_NotificaFirma')== ''||!get_option('Circolari_Oggetto_NotificaFirma')){
-		add_option('Circolari_Oggetto_NotificaFirma', 'Notifica firma circolare');
+		add_option('Circolari_Oggetto_NotificaFirma', __( 'Notifica firma circolare', 'wpscuola' ));
 	}
 	if(get_option('Circolari_Messaggio_NotificaFirma')== ''||!get_option('Circolari_Messaggio_NotificaFirma')){
-		add_option('Circolari_Messaggio_NotificaFirma', 'Caro  {Dati_Utente}
+		add_option('Circolari_Messaggio_NotificaFirma', sprintf(__( 'Caro  %s
 
-con la presente email ti confermiamo di aver registrato, in data {Data},  la tua scelta di {Operazione} circolare {Link_Circolare}.
+con la presente email ti confermiamo di aver registrato, in data %s,  la tua scelta di %s circolare %s.
 
-Grazie per la collaborazione      ');
+Grazie per la collaborazione', 'wpscuola' ),"{Dati_Utente}","{Data}","{Operazione}","{Link_Circolare}").'    ');
 	}
 	if(get_option('Circolari_TestiRisposte')== ''||!get_option('Circolari_TestiRisposte') ){			
 		circolari_CreaTestiRisposta();
@@ -511,19 +507,19 @@ Grazie per la collaborazione      ');
 	}
 }
 function circolari_CreaTestiRisposta(){
-$TestiRisposte=array(new Circolari_Risposta(0,"Non Firmata","Non Firmare la"),
-				 new Circolari_Risposta(1,"Si","Aderire alla"),
-                 new Circolari_Risposta(2,"No","Non Aderire alla"),
-                 new Circolari_Risposta(3,"Presa Visione","Prendere Visione in merito alla"),
-                 new Circolari_Risposta(4,"Firma","Firmare la"));
+$TestiRisposte=array(new Circolari_Risposta(0,__( "Non Firmata", 'wpscuola' ),__( "Non Firmare la, 'wpscuola' )"),
+				 new Circolari_Risposta(1,__( "Si", 'wpscuola' ),__( "Aderire alla", 'wpscuola' )),
+                 new Circolari_Risposta(2,__( "No", 'wpscuola' ),__( "Non Aderire alla", 'wpscuola' )),
+                 new Circolari_Risposta(3,__( "Presa Visione", 'wpscuola' ),__( "Prendere Visione in merito alla", 'wpscuola' )),
+                 new Circolari_Risposta(4,__( "Firma", 'wpscuola' ),__( "Firmare la", 'wpscuola' ))));
 add_option('Circolari_TestiRisposte', serialize($TestiRisposte));
 return $TestiRisposte;
 }
 function circolari_CreaTesti(){
-$Testi=array(new Circolari_Tipo("NoFirma","Informativa","","La circolare non richiede conferma","Firma non prevista","",array()),
-		new Circolari_Tipo("Sciopero","Adesioni allo sciopero","Sciopero","Adesione","La circolare si riferisce ad uno sciopero.<br />Bisogna indicare Si/No/Presa Visione","Adesione allo sciopero",array(1,2,3)),
-        new Circolari_Tipo("Firma","Firme","Circolare ordinaria","Da Firmare","&Egrave; richiesta la firma alla circolare ordinaria","Firma la circolare ordinaria",array(4)),
-        new Circolari_Tipo("Assemblea","Partecipazioni all\'assemblea","Assembea Sindacale","Partecipazione","La circolare si riferisce ad una assemblea sindacale.<br />Bisogna indicare Si/No","Partecipazione all\'assemblea",array(1,2)));
+$Testi=array(new Circolari_Tipo(__( "NoFirma", 'wpscuola' ),__( "Informativa", 'wpscuola' ),"",__( "La circolare non richiede conferma", 'wpscuola' ),__( "Firma non prevista", 'wpscuola' ),"",array()),
+		new Circolari_Tipo(__( "Sciopero", 'wpscuola' ),__( "Adesioni allo sciopero", 'wpscuola' ),__( "Sciopero", 'wpscuola' ),__( "Adesione", 'wpscuola' ),__( "La circolare si riferisce ad uno sciopero.<br />Bisogna indicare Si/No/Presa Visione", 'wpscuola' ),__( "Adesione allo sciopero", 'wpscuola' ),array(1,2,3)),
+        new Circolari_Tipo(__( "Firma", 'wpscuola' ),__( "Firme", 'wpscuola' ),__( "Circolare ordinaria", 'wpscuola' ),__( "Da Firmare", 'wpscuola' ),__( "&Egrave; richiesta la firma alla circolare ordinaria", 'wpscuola' ),__( "Firma la circolare ordinaria", 'wpscuola' ),array(4)),
+        new Circolari_Tipo(__( "Assemblea", 'wpscuola' ),__( "Partecipazioni all'assemblea", 'wpscuola' ),__( "Assembea Sindacale", 'wpscuola' ),__( "Partecipazione", 'wpscuola' ),__( "La circolare si riferisce ad una assemblea sindacale.<br />Bisogna indicare Si/No", 'wpscuola' ),__( "Partecipazione all'assemblea", 'wpscuola' ),array(1,2)));
 add_option('Circolari_Tipo', serialize($Testi));
 return $Testi;
 }
@@ -597,15 +593,15 @@ $DaFirmare=GetCircolariDaFirmare("N");
 }
 
 function circolari_add_menu(){
-   add_submenu_page( 'edit.php?post_type=circolari_scuola', 'Parametri',  'Parametri', 'edit_others_posts', 'circolari', 'circolari_MenuPagine');
-   $pageFirma=add_submenu_page( 'edit.php?post_type=circolari_scuola', 'Firma',  'Firma', 'read', 'Firma', 'circolari_GestioneFirme');
+   add_submenu_page( 'edit.php?post_type=circolari_scuola', 'Parametri',  __( 'Parametri', 'wpscuola' ), 'edit_others_posts', 'circolari', 'circolari_MenuPagine');
+   $pageFirma=add_submenu_page( 'edit.php?post_type=circolari_scuola', 'Firma',  __( 'Firma', 'wpscuola' ), 'read', 'Firma', 'circolari_GestioneFirme');
    add_action( 'admin_head-'. $pageFirma, 'TestataCircolari' );
 //   add_action( 'admin_head-'. $pagenFirmate, 'TestataCircolari' );
-   $pageArchivio=add_submenu_page( 'edit.php?post_type=circolari_scuola', 'Archivio Circolari', 'Archivio Circolari', 'read', 'Archivio', 'circolari_VisualizzaArchivio');
+   $pageArchivio=add_submenu_page( 'edit.php?post_type=circolari_scuola', 'Archivio Circolari', __( 'Archivio Circolari', 'wpscuola' ), 'read', 'Archivio', 'circolari_VisualizzaArchivio');
    add_action( 'admin_head-'. $pageArchivio, 'TestataCircolari' );
-   $gestionetesti=add_submenu_page( 'edit.php?post_type=circolari_scuola', 'Testi',  'Tipi di circolari', 'edit_published_posts', 'Testi', 'circolari_MenuTesti');
+   $gestionetesti=add_submenu_page( 'edit.php?post_type=circolari_scuola', 'Testi',  __( 'Tipi di circolari', 'wpscuola' ), 'edit_published_posts', 'Testi', 'circolari_MenuTesti');
    add_action( 'admin_head-'. $gestionetesti, 'TestataCircolari' );  
-   $utility=add_submenu_page( 'edit.php?post_type=circolari_scuola', 'Utility',  'Utility', 'edit_others_posts', 'Utility', 'circolari_Utility');
+   $utility=add_submenu_page( 'edit.php?post_type=circolari_scuola', 'Utility',  __( 'Utility', 'wpscuola' ), 'edit_others_posts', 'Utility', 'circolari_Utility');
    add_action( 'admin_head-'. $utility, 'TestataCircolari' );
 }
 function circolari_MenuTesti(){
@@ -626,12 +622,12 @@ function circolari_MenuTesti(){
 					unset($Testi[Circolari_find_Index_Tipo($_REQUEST['id'])]);
 					update_option('Circolari_Tipo', serialize($Testi));
 				echo'<div class="updated">
-	<p></p><em><strong>Cancellazione avvenuta con successo!</em></strong><p> </p>
+	<p></p><em><strong>'.__( 'Cancellazione avvenuta con successo!', 'wpscuola' ).'</em></strong><p> </p>
 </div>
 	<meta http-equiv="refresh" content="5;url=edit.php?post_type=circolari_scuola&page=Testi"/>';
 				}else{
 				echo'<div class="updated">
-	<p></p><em><strong>Cancellazione non effettuata:<br />Ci sono '.$Num.' Circolari che utilizzano questo Tipo<br />Bisogna prima disassociare le circolari e poi si può cancellare il Tipo</em></strong><p> </p>
+	<p></p><em><strong>'.sprintf(__( 'Cancellazione non effettuata:<br />Ci sono %s Circolari che utilizzano questo Tipo<br />Bisogna prima disassociare le circolari e poi si può cancellare il Tipo', 'wpscuola' ),$Num).'</em></strong><p> </p>
 </div>
 	<meta http-equiv="refresh" content="3;url=edit.php?post_type=circolari_scuola&page=Testi"/>';				
 				}
@@ -641,7 +637,7 @@ function circolari_MenuTesti(){
 					if (wp_verify_nonce($_REQUEST["circoTesti"],'GestioneTestiCircolari')){
 						circolari_create_Testi_Risposte();
 						echo'<div class="updated">
-	<p></p><em><strong>Creazione avvenuta con successo!</em></strong><p> </p>
+	<p></p><em><strong>'.__( 'Creazione avvenuta con successo!', 'wpscuola' ).'</em></strong><p> </p>
 </div>
 	<meta http-equiv="refresh" content="3;url=edit.php?post_type=circolari_scuola&page=Testi"/>';
 					}
@@ -652,7 +648,7 @@ function circolari_MenuTesti(){
 					if (wp_verify_nonce($_REQUEST["circoTesti"],'GestioneTestiCircolari')){
 						circolari_update_Testi_Risposte();
 						echo'<div class="updated">
-	<p></p><em><strong>Memorizzazione avvenuta con successo!</em></strong><p> </p>
+	<p></p><em><strong>'.__( 'Memorizzazione avvenuta con successo!', 'wpscuola' ).'</em></strong><p> </p>
 </div>
 	<meta http-equiv="refresh" content="3;url=edit.php?post_type=circolari_scuola&page=Testi"/>';
 					}
@@ -660,7 +656,7 @@ function circolari_MenuTesti(){
 				break;
 			default:
 				echo'<div class="updated">
-	<p></p><em><strong>Operazione non eseguita!</em></strong><p> </p>
+	<p></p><em><strong>'.__( 'Operazione non eseguita!', 'wpscuola' ).'</em></strong><p> </p>
 </div>
 	<meta http-equiv="refresh" content="3;url=edit.php?post_type=circolari_scuola&page=Testi"/>';
 				break;
@@ -677,12 +673,12 @@ function circolari_MenuTesti(){
 					unset($TestiRisposte[Circolari_find_Index_Risposta($_REQUEST['id'])]);
 					update_option('Circolari_TestiRisposte', serialize($TestiRisposte));
 				echo'<div class="updated">
-	<p></p><em><strong>Cancellazione avvenuta con successo!</em></strong><p> </p>
+	<p></p><em><strong>'.__( 'Cancellazione avvenuta con successo!', 'wpscuola' ).'</em></strong><p> </p>
 </div>
 	<meta http-equiv="refresh" content="5;url=edit.php?post_type=circolari_scuola&page=Testi"/>';
 				}else{
 				echo'<div class="updated">
-	<p></p><em><strong>Cancellazione non effettuata:<br />Ci sono '.$Num.' di Tipi di Circolare che utilizzano questa Risposta<br />Bisogna prima disassociare la risposta dalle circolari e poi si può cancellare la risposta</em></strong><p> </p>
+	<p></p><em><strong>'.sprintf(__( 'Cancellazione non effettuata:<br />Ci sono %s di Tipi di Circolare che utilizzano questa Risposta<br />Bisogna prima disassociare la risposta dalle circolari e poi si può cancellare la risposta', 'wpscuola' ),$Num).'</em></strong><p> </p>
 </div>
 	<meta http-equiv="refresh" content="3;url=edit.php?post_type=circolari_scuola&page=Testi"/>';				
 				}		
@@ -695,7 +691,7 @@ function circolari_MenuTesti(){
 					if (wp_verify_nonce($_REQUEST["circoTesti"],'GestioneTestiCircolari')){
 						circolari_create_Testi_Risposte();
 						echo'<div class="updated">
-	<p></p><em><strong>Creazione avvenuta con successo!</em></strong><p> </p>
+	<p></p><em><strong>'.__( 'Cancellazione avvenuta con successo!', 'wpscuola' ).'</em></strong><p> </p>
 </div>
 	<meta http-equiv="refresh" content="3;url=edit.php?post_type=circolari_scuola&page=Testi"/>';
 					}
@@ -706,7 +702,7 @@ function circolari_MenuTesti(){
 					if (wp_verify_nonce($_REQUEST["circoTesti"],'GestioneTestiCircolari')){
 						circolari_update_Testi_Risposte();
 						echo'<div class="updated">
-	<p></p><em><strong>Memorizzazione avvenuta con successo!</em></strong><p> </p>
+	<p></p><em><strong>'.__( 'Memorizzazione avvenuta con successo!', 'wpscuola' ).'</em></strong><p> </p>
 </div>
 	<meta http-equiv="refresh" content="3;url=edit.php?post_type=circolari_scuola&page=Testi"/>';
 					}
@@ -726,28 +722,28 @@ function circolari_GestioneRisposteTesti(){
 	$UrlB=get_site_url()."/wp-admin/edit.php";
 echo '<div class="wrap">
 	<i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i>
-		<h2 style="display:inline;margin-left:10px;vertical-align:super;">Gestione Risposte</h2>
+		<h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Gestione Risposte', 'wpscuola' ).'</h2>
 	</div> 
 		<br />
 		<table class="widefat">
 			<tr class="intestariga">
-				<th width="20%" class="intestariga">Tipo</th>
+				<th width="20%" class="intestariga">'.__( 'Tipo', 'wpscuola' ).'</th>
 				<td>'.$Testo->get_Tipo().'</td>
 			</tr>
 			<tr class="intestariga">
-				<th class="intestariga">Descrizione Tipo</th>
+				<th class="intestariga">'.__( 'Descrizione Tipo', 'wpscuola' ).'</th>
 				<td>'.$Testo->get_DescrizioneTipo().'</td>
 			</tr>
 			<tr class="intestariga">
-				<th width="20%" class="intestariga">Prefisso risposta</th>
+				<th width="20%" class="intestariga">'.__( 'Prefisso risposta', 'wpscuola' ).'</th>
 				<td>'.$Testo->get_Prefisso().'</td>
 			</tr>
 			<tr class="intestariga">
-				<th width="20%" class="intestariga">Descrizione</th>
+				<th width="20%" class="intestariga">'.__( 'Descrizione', 'wpscuola' ).'</th>
 				<td>'.$Testo->get_Descrizione().'</td>
 			</tr>
 			<tr class="intestariga">
-				<th width="20%" class="intestariga">Testo Elenco</th>
+				<th width="20%" class="intestariga">'.__( 'Testo Elenco', 'wpscuola' ).'</th>
 				<td>'.$Testo->get_TestoElenco().'</td>
 			</tr>
 		</table>
@@ -758,7 +754,7 @@ echo '<div class="wrap">
 		<input type="hidden" name="tipo" value="'.$Testo->get_Tipo().'"/>
 		<input type="hidden" name="circoTesti" value="'.wp_create_nonce('GestioneTestiCircolari').'"/>
 		<div style="margin:20px;border: thin groove Blue;background-color: #ECECEC;padding:20px;width:400px;margin-left:auto;margin-right:auto;">
-		<p style="font-weight: bold;font-size: 1.3em;text-align: center;margin-bottom: 15px;">Risposte assegnate a questo tipo di corcolare</p>';	
+		<p style="font-weight: bold;font-size: 1.3em;text-align: center;margin-bottom: 15px;">'.__( 'Risposte assegnate a questo tipo di corcolare', 'wpscuola' ).'</p>';	
 		foreach($TestiRisposte as $TRisposte){
 				if($Testo->is_set_Risposta($TRisposte->get_IDRisposta()))
 					$chk="checked='checked'";
@@ -771,7 +767,7 @@ echo '<div class="wrap">
 		</div>
 		<p style="text-align:center;">
 <input type="submit" value="Memorizza Modifiche" name="MemoTesto"/>
-<a href=\''.$UrlB.'?post_type=circolari_scuola&page=Testi'.'\'>Annulla Modifiche</a>
+<a href=\''.$UrlB.'?post_type=circolari_scuola&page=Testi'.'\'>'.__( 'Annulla Modifiche', 'wpscuola' ).'</a>
 		</p>
 		</form>';
 							
@@ -783,12 +779,12 @@ function circolari_GestioneTesti(){
 			break;
 	}	
 	if($_GET['opT']=="Edit")
-		$Operazione="Modifica";
+		$Operazione=__( 'Modifica', 'wpscuola' );
 	else 
-		$Operazione="Nuovo";
+		$Operazione=__( 'Nuovo', 'wpscuola' );
 	$UrlB=get_site_url()."/wp-admin/edit.php";
 echo '<div class="wrap">
-	<i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.$Operazione.'Testo Circolare</h2>
+	<i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.$Operazione.' '.__( 'Testo Circolare', 'wpscuola' ).'</h2>
 	</div> 
 		<form action="'.$UrlB.'" name="MTesti" metod="post">
 		<input type="hidden" name="opT" value="Memorizza"/>
@@ -799,36 +795,36 @@ echo '<div class="wrap">
 		<p style="text-align:left;font-size:1em;font-style: italic;margin-top:30px;">
 		<table class="widefat">
 			<tr class="intestariga">
-				<th width="20%" class="intestariga">Tipo</th>
+				<th width="20%" class="intestariga">'.__( 'Tipo', 'wpscuola' ).'</th>
 				<td>'.$Testo->get_Tipo().'</td>
 			</tr>
 			<tr class="intestariga">
-				<th width="20%" class="intestariga">Popup</th>
+				<th width="20%" class="intestariga">'.__( 'Popup', 'wpscuola' ).'</th>
 				<td><input type="text" name="popup" value="'.$Testo->get_Popup().'"" size="100" id="popup"/><br />
-				<span style="font-style: italic;font-weight: bold;">Testo che viene riportato nel Popup dell\'elenco delle circolari</span></td>
+				<span style="font-style: italic;font-weight: bold;">'.__( "Testo che viene riportato nel Popup dell'elenco delle circolari", 'wpscuola' ).'</span></td>
 			</tr>
 			<tr class="intestariga">
-				<th class="intestariga">Descrizione Tipo</th>
-				<td><input type="text" name="des_tipo" value="'.$Testo->get_DescrizioneTipo().'"" size="100" id="descrizioneTipo"/><br />
-				<span style="font-style: italic;font-weight: bold;">Testo che viene riportato nella seconda parte del messaggio di richiesta di adesione da parte dell\'utente</span></td>
+				<th class="intestariga">'.__( 'Descrizione Tipo', 'wpscuola' ).'</th>
+				<td><input type="text" name="des_tipo" value="'.$Testo->get_DescrizioneTipo().'" size="100" id="descrizioneTipo"/><br />
+				<span style="font-style: italic;font-weight: bold;">'.__( "Testo che viene riportato nella seconda parte del messaggio di richiesta di adesione da parte dell'utente", 'wpscuola' ).'</span></td>
 			</tr>
 			<tr class="intestariga">
-				<th width="20%" class="intestariga">Prefisso risposta</th>
+				<th width="20%" class="intestariga">'.__( 'Prefisso risposta', 'wpscuola' ).'</th>
 				<td><input type="text" name="pref_risposta" value="'.$Testo->get_Prefisso().'" size="100" id="descrizioneTipo"/><br />
-				<span style="font-style: italic;font-weight: bold;">Testo che viene riportato nella prima parte del messaggio di richiesta di adesione da parte dell\'utente</span></td>
+				<span style="font-style: italic;font-weight: bold;">'.__( "Testo che viene riportato nella prima parte del messaggio di richiesta di adesione da parte dell'utente", 'wpscuola' ).'</span></td>
 			</tr>
 			<tr class="intestariga">
-				<th width="20%" class="intestariga">Descrizione</th>
-				<td><input type="text" name="descrizione" value="'.$Testo->get_Descrizione().'" size="100" id="descrizione"/><br /><span style="font-style: italic;font-weight: bold;">Testo che viene riportato nel Box di Creazione/Modifica delle circolari in cui si selezione il tipo di circolare</span></td>
+				<th width="20%" class="intestariga">'.__( 'Descrizione', 'wpscuola' ).'</th>
+				<td><input type="text" name="descrizione" value="'.$Testo->get_Descrizione().'" size="100" id="descrizione"/><br /><span style="font-style: italic;font-weight: bold;">'.__( "Testo che viene riportato nel Box di Creazione/Modifica delle circolari in cui si selezione il tipo di circolare", 'wpscuola' ).'</span></td>
 			</tr>
 			<tr class="intestariga">
-				<th width="20%" class="intestariga">Testo Elenco</th>
-				<td><input type="text" name="testo_elenco" value="'.$Testo->get_TestoElenco().'" size="100" id="testoelenco"/><br /><span style="font-style: italic;font-weight: bold;">Testo che viene riportato nell\'intestazione della colonna che riporta la scelta dell\'utente nel report delle Firme/Adesioni</span></td>
+				<th width="20%" class="intestariga">'.__( 'Testo Elenco', 'wpscuola' ).'</th>
+				<td><input type="text" name="testo_elenco" value="'.$Testo->get_TestoElenco().'" size="100" id="testoelenco"/><br /><span style="font-style: italic;font-weight: bold;">'.__( "Testo che viene riportato nell'intestazione della colonna che riporta la scelta dell'utente nel report delle Firme/Adesioni", 'wpscuola' ).'</span></td>
 			</tr>
 		</table>
 		<p style="text-align:center;">
 <input type="submit" value="Memorizza Modifiche" name="MemoTesto"/>
-<a href=\''.$UrlB.'?post_type=circolari_scuola&page=Testi'.'\'>Annulla Modifiche</a>
+<a href=\''.$UrlB.'?post_type=circolari_scuola&page=Testi'.'\'>'.__( 'Annulla Modifiche', 'wpscuola' ).'</a>
 		</p>
 		</form>';
 							
@@ -845,7 +841,7 @@ function circolari_GestioneRisposte(){
 		$Operazione="Nuovo";
 	$UrlB=get_site_url()."/wp-admin/edit.php";
 echo '<div class="wrap">
-	<i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.$Operazione.' Risposta Circolare</h2>
+	<i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.$Operazione.' '.__( 'Risposta Circolare', 'wpscuola' ).'</h2>
 	</div> 
 		<form action="'.$UrlB.'" name="MRisposte" metod="post">
 		<input type="hidden" name="opR" value="Memorizza"/>
@@ -856,17 +852,17 @@ echo '<div class="wrap">
 		<p style="text-align:left;font-size:1em;font-style: italic;margin-top:30px;">
 		<table class="widefat">
 			<tr class="intestariga">
-				<th width="20%" class="intestariga">Risposta</th>
+				<th width="20%" class="intestariga">'.__( 'Risposta', 'wpscuola' ).'</th>
 				<td><input type="text" name="risposta" value="'.$Risposta->get_Risposta().'" size="100" id="risposta"/></td>
 			</tr>
 			<tr class="intestariga">
-				<th width="20%" class="intestariga">Testo email</th>
+				<th width="20%" class="intestariga">'.__( 'Testo email', 'wpscuola' ).'</th>
 				<td><input type="text" name="rispostamail" value="'.$Risposta->get_RispostaMail().'" size="100" id="rispostamail"/></td>
 			</tr>
 		</table>
 		<p style="text-align:center;">
 <input type="submit" value="Memorizza Modifiche" name="MemoRisposta"/>&nbsp;
-<a href=\''.$UrlB.'?post_type=circolari_scuola&page=Testi'.'\'>Annulla Modifiche</a>
+<a href=\''.$UrlB.'?post_type=circolari_scuola&page=Testi'.'\'>'.__( 'Annulla Modifiche', 'wpscuola' ).'</a>
 		</p>
 		</form>';
 							
@@ -874,7 +870,7 @@ echo '<div class="wrap">
 function circolari_NewTesto(){
 	$UrlB=get_site_url()."/wp-admin/edit.php";
 echo '<div class="wrap">
-	<i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">Nuovo Tipo Circolare</h2>
+	<i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Nuovo Tipo Circolare', 'wpscuola' ).'</h2>
 	</div> 
 		<form action="'.$UrlB.'" name="MTesti" metod="post">
 		<input type="hidden" name="opT" value="MemorizzaNew"/>
@@ -884,37 +880,37 @@ echo '<div class="wrap">
 		<p style="text-align:left;font-size:1em;font-style: italic;margin-top:30px;">
 		<table class="widefat">
 			<tr class="intestariga">
-				<th width="20%" class="intestariga">Tipo</th>
+				<th width="20%" class="intestariga">'.__( 'Tipo', 'wpscuola' ).'</th>
 				<td><input type="text" name="tipo" size="10" id="Tipo"/><br />
-				<span style="font-style: italic;font-weight: bold;">Codice Univoco che identificher&agrave; il tipo di circolare</span></td>
+				<span style="font-style: italic;font-weight: bold;">'.__( 'Codice Univoco che identificherà; il tipo di circolare', 'wpscuola' ).'</span></td>
 			</tr>
 			<tr class="intestariga">
-				<th width="20%" class="intestariga">Popup</th>
+				<th width="20%" class="intestariga">'.__( 'Popup', 'wpscuola' ).'</th>
 				<td><input type="text" name="popup" size="10" id="Popup"/><br />
-				<span style="font-style: italic;font-weight: bold;">Testo del Popup dell\'elenco delle circolari</span></td>
+				<span style="font-style: italic;font-weight: bold;">'.__( "Testo del Popup dell'elenco delle circolari", 'wpscuola' ).'</span></td>
 			</tr>
 			<tr class="intestariga">
-				<th class="intestariga">Descrizione Tipo</th>
+				<th class="intestariga">'.__( 'Descrizione Tipo', 'wpscuola' ).'</th>
 				<td><input type="text" name="des_tipo" size="100" id="descrizioneTipo"/><br />
-				<span style="font-style: italic;font-weight: bold;">Testo che viene riportato nella seconda parte del messaggio di richiesta di adesione da parte dell\'utente</span></td>
+				<span style="font-style: italic;font-weight: bold;">'.__( "Testo che viene riportato nella seconda parte del messaggio di richiesta di adesione da parte dell'utente", 'wpscuola' ).'</span></td>
 			</tr>
 			<tr class="intestariga">
-				<th width="20%" class="intestariga">Prefisso risposta</th>
+				<th width="20%" class="intestariga">'.__( 'Prefisso risposta', 'wpscuola' ).'</th>
 				<td><input type="text" name="pref_risposta" size="100" id="descrizioneTipo"/><br />
-				<span style="font-style: italic;font-weight: bold;">Testo che viene riportato nella prima parte del messaggio di richiesta di adesione da parte dell\'utente</span></td>
+				<span style="font-style: italic;font-weight: bold;">'.__( "Testo che viene riportato nella prima parte del messaggio di richiesta di adesione da parte dell'utente", 'wpscuola' ).'</span></td>
 			</tr>
 			<tr class="intestariga">
-				<th width="20%" class="intestariga">Descrizione</th>
-				<td><input type="text" name="descrizione" size="100" id="descrizione"/><br /><span style="font-style: italic;font-weight: bold;">Testo che viene riportato nel Box di Creazione/Modifica delle circolari in cui si selezione il tipo di circolare</span></td>
+				<th width="20%" class="intestariga">'.__( 'Descrizione', 'wpscuola' ).'</th>
+				<td><input type="text" name="descrizione" size="100" id="descrizione"/><br /><span style="font-style: italic;font-weight: bold;">'.__( 'Testo che viene riportato nel Box di Creazione/Modifica delle circolari in cui si selezione il tipo di circolare', 'wpscuola' ).'</span></td>
 			</tr>
 			<tr class="intestariga">
-				<th width="20%" class="intestariga">Testo Elenco</th>
-				<td><input type="text" name="testo_elenco" size="100" id="testoelenco"/><br /><span style="font-style: italic;font-weight: bold;">Testo che viene riportato nell\'intestazione della colonna che riporta la scelta dell\'utente nel report delle Firme/Adesioni</span></td>
+				<th width="20%" class="intestariga">'.__( 'Testo Elenco', 'wpscuola' ).'</th>
+				<td><input type="text" name="testo_elenco" size="100" id="testoelenco"/><br /><span style="font-style: italic;font-weight: bold;">'.__( "Testo che viene riportato nell'intestazione della colonna che riporta la scelta dell'utente nel report delle Firme/Adesioni", 'wpscuola' ).'</span></td>
 			</tr>
 		</table>
 		<p style="text-align:center;">
 <input type="submit" value="Creazione Tipo Circolare" name="MemoTesto"/>
-<a href=\''.$UrlB.'?post_type=circolari_scuola&page=Testi'.'\'>Annulla Creazione</a>
+<a href=\''.$UrlB.'?post_type=circolari_scuola&page=Testi'.'\'>'.__( 'Annulla Creazione', 'wpscuola' ).'</a>
 		</p>
 		</form>';							
 }
@@ -922,7 +918,7 @@ function circolari_NewRisposta(){
 	global $TestiRisposte;
 	$UrlB=get_site_url()."/wp-admin/edit.php";
 echo '<div class="wrap">
-	<i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">Nuova Risposta Circolare</h2>
+	<i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Nuova Risposta Circolare', 'wpscuola' ).'</h2>
 	</div> 
 		<form action="'.$UrlB.'" name="MRisposte" metod="post">
 		<input type="hidden" name="opR" value="MemorizzaNew"/>
@@ -933,17 +929,17 @@ echo '<div class="wrap">
 		<p style="text-align:left;font-size:1em;font-style: italic;margin-top:30px;">
 		<table class="widefat">
 			<tr class="intestariga">
-				<th width="20%" class="intestariga">Risposta</th>
+				<th width="20%" class="intestariga">'.__( 'Risposta', 'wpscuola' ).'</th>
 				<td><input type="text" name="risposta" size="100" id="risposta"/></td>
 			</tr>
 			<tr class="intestariga">
-				<th width="20%" class="intestariga">Testo email</th>
+				<th width="20%" class="intestariga">'.__( 'Testo email', 'wpscuola' ).'</th>
 				<td><input type="text" name="testomail" size="100" id="testomail"/></td>
 			</tr>
 		</table>
 		<p style="text-align:center;">
 <input type="submit" value="Crea Nuova Risposta" name="MemoRisposta"/>&nbsp;
-<a href=\''.$UrlB.'?post_type=circolari_scuola&page=Testi'.'\'>Annulla Creazione</a>
+<a href=\''.$UrlB.'?post_type=circolari_scuola&page=Testi'.'\'>'.__( 'Annulla Creazione', 'wpscuola' ).'</a>
 		</p>
 		</form>';
 							
@@ -953,32 +949,32 @@ function circolari_Testi(){
 	global $TestiRisposte,$Testi;
 	$UrlB=get_site_url()."/wp-admin/edit.php?post_type=circolari_scuola&page=Testi";
 echo '<div class="wrap">
-	<i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">Tipi di Circolari</h2>
+	<i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Tipi di Circolari', 'wpscuola' ).'</h2>
 	</div> 
 		<p></p>
 		<div class="widefat">
 <div style="width:100px;margin:0 auto;font-size:1.5em;font-weight: bold;">
-			Tipi <a href="'.$UrlB.'&opT=NewTipo"><i class="fa fa-plus-square" aria-hidden="true"></i></a>
+			'.__( 'Tipi', 'wpscuola' ).' <a href="'.$UrlB.'&opT=NewTipo"><i class="fa fa-plus-square" aria-hidden="true"></i></a>
 			</div>
 			<p style="text-align:left;font-size:1em;font-style: italic;">
 			<table class="widefat">
 				<tr class="border_bottom">
-					<th>Tipo</th>
-					<th>Popup</th>
-					<th>Descrizione Tipo</th>
-					<th>Prefisso risposta</th>
-					<th>Descrizione</th>
-					<th>Testo Elenco</th>
-					<th>Operazioni</th>
+					<th>'.__( 'Tipo', 'wpscuola' ).'</th>
+					<th>'.__( 'Popup', 'wpscuola' ).'</th>
+					<th>'.__( 'Descrizione Tipo', 'wpscuola' ).'</th>
+					<th>'.__( 'Prefisso risposta', 'wpscuola' ).'</th>
+					<th>'.__( 'Descrizione', 'wpscuola' ).'</th>
+					<th>'.__( 'Testo Elenco', 'wpscuola' ).'</th>
+					<th>'.__( 'Operazioni', 'wpscuola' ).'</th>
 				</tr>';
 	foreach($Testi as $Testo){
-		$RisposteModifica="<a href='".$UrlB."&opT=Edit&id=".$Testo->get_Tipo()."' title='Modifica Testi Tipo Circolare'><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a> ";
-		$RisposteCancella="<a href='".$UrlB."&opT=Canc&id=".$Testo->get_Tipo()."' title='Cancella Tipo Circolare'><i class=\"fa fa-eraser\" aria-eraser=\"true\" style=\"color:red;\"></i></a> ";
-		$Risposte="<a href='".$UrlB."&opT=Risp&id=".$Testo->get_Tipo()."' title='Modifica le risposte'><i class=\"fa fa-child\" aria-eraser=\"true\" style=\"color:green;\"></i></a> ";
+		$RisposteModifica="<a href='".$UrlB."&opT=Edit&id=".$Testo->get_Tipo()."' title='".__( 'Modifica Testi Tipo Circolare', 'wpscuola' )."'><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a> ";
+		$RisposteCancella="<a href='".$UrlB."&opT=Canc&id=".$Testo->get_Tipo()."' title='".__( 'Cancella Tipo Circolare', 'wpscuola' )."'><i class=\"fa fa-eraser\" aria-eraser=\"true\" style=\"color:red;\"></i></a> ";
+		$Risposte="<a href='".$UrlB."&opT=Risp&id=".$Testo->get_Tipo()."' title='".__( 'Modifica le risposte', 'wpscuola' )."'><i class=\"fa fa-child\" aria-eraser=\"true\" style=\"color:green;\"></i></a> ";
 		if($Testo->get_Tipo()=="NoFirma"){
 			$RisposteCancella=$Risposte="";
 		}
-		if(in_array($Testo->get_Tipo(),array("NoFirma","Sciopero","Firma","Assemblea"))){
+		if(in_array($Testo->get_Tipo(),array('NoFirma','Sciopero', 'Firma', 'Assemblea'))){
 			$RisposteCancella="";
 		}
 		echo "			<tr class='border_bottom'>
@@ -1001,9 +997,9 @@ echo '
 			<table class="widefat">
 				<tr class="border_bottom">
 					<th>ID</th>
-					<th>Testo</th>
-					<th>Testo Mail</th>
-					<th>Operazioni</th>
+					<th>'.__( 'Testo', 'wpscuola' ).'</th>
+					<th>'.__( 'Testo Mail', 'wpscuola' ).'</th>
+					<th>'.__( 'Operazioni', 'wpscuola' ).'</th>
 				</tr>';
 	foreach($TestiRisposte as $TestoRisposta){
 		$RisposteModifica="
@@ -1029,13 +1025,13 @@ echo '
 }
 function circolari_Utility($Stato=""){
 echo '<div class="wrap">
-		<i class="fa fa-cogs fa-3x" aria-hidden="true"></i> <h2 style="display:inline;margin-left:10px;vertical-align:super;">Utility Circolari</h2>';
+		<i class="fa fa-cogs fa-3x" aria-hidden="true"></i> <h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Utility Circolari', 'wpscuola' ).'</h2>';
 $lista="";
 $azione= filter_input(INPUT_GET, "action");
 if($azione){
 	switch ($azione){
 		case "versca":			
-			echo "<p style='text-align:center;font-size:1.5em;font-weight: bold;'>Stato Operazioni:</p>";
+			echo "<p style='text-align:center;font-size:1.5em;font-weight: bold;'>'.__( 'Stato Operazioni', 'wpscuola' ).':</p>";
 				$GGscadenza=get_option("Circolari_GGScadenza");
 				$Posts = get_posts('post_type=circolari_scuola&numberposts=-1');
 				foreach($Posts as $post){
@@ -1048,26 +1044,26 @@ if($azione){
 							if (update_post_meta($post->ID,"_scadenza",$Scadenza ))
 								$lista.= ' <img src="'.Circolari_URL.'/img/verificato.png" alt="Icona Permessi" style="display:inline;margin-left:5px;"/>';
 						}else
-						$lista.=" la data verrà aggiornata a:".date('Y-m-d', strtotime(substr($post->post_date_gmt,0,10). " + $GGscadenza days"));
+						$lista.=" ".__( 'la data verrà aggiornata a', 'wpscuola' ).":".date('Y-m-d', strtotime(substr($post->post_date_gmt,0,10). " + $GGscadenza days"));
 					$lista.= "</li>";					
 					}
 				}
 				if (!empty($lista)){
-					echo "<h4>Circolari da firmare senza data di scadenza</h4>
+					echo "<h4>".__( 'Circolari da firmare senza data di scadenza', 'wpscuola' )."</h4>
 			<ul>
 					$lista
 			</ul>";
 			if (isset($_GET['opt']) && $_GET['opt']=="aggsca")
-				echo "Aggiornamento effettuato";
+				_e( 'Aggiornamento effettuato', 'wpscuola' );
 			else
-				echo '<p style="text-align:left;font-size:1em;font-style: italic;">Aggiorna la Data entro cui firmare = aggiunngendo '.$GGscadenza.' giorni alla data di pubblicazione <spam style="text-align:center;font-size:1.5em;font-weight: bold;"> <a href="edit.php?post_type=circolari_scuola&page=Utility&action=versca&opt=aggsca">Aggiorna</a></spam>
+				echo '<p style="text-align:left;font-size:1em;font-style: italic;">'.sprintf(__( 'Aggiorna la Data entro cui firmare = aggiunngendo %s giorni alla data di pubblicazione', 'wpscuola' ),$GGscadenza).' <spam style="text-align:center;font-size:1.5em;font-weight: bold;"> <a href="edit.php?post_type=circolari_scuola&page=Utility&action=versca&opt=aggsca">'.__( 'Aggiorna', 'wpscuola' ).'</a></spam>
 	</p>
 	</div>';			
 			}else
-				echo "<h4>Tutte le circolari da firmare hanno la data di scadenza</h4>";
+				echo "<h4>".__( 'Tutte le circolari da firmare hanno la data di scadenza', 'wpscuola' )."</h4>";
 			break;
 		case "verforsca":
-				echo "<p style='text-align:center;font-size:1.5em;font-weight: bold;'>Stato Operazioni:</p>";
+				echo "<p style='text-align:center;font-size:1.5em;font-weight: bold;'>".__( 'Stato Operazioni', 'wpscuola' ).":</p>";
 				$Posts = get_posts('post_type=circolari_scuola&numberposts=-1');
 				foreach($Posts as $post){
 					$scadenza=get_post_meta($post->ID, "_scadenza",TRUE);
@@ -1078,23 +1074,23 @@ if($azione){
 							if (update_post_meta($post->ID,"_scadenza",NormalData($scadenza)))
 								$lista.= ' <img src="'.Circolari_URL.'/img/verificato.png" alt="Icona Permessi" style="display:inline;margin-left:5px;"/>';
 						}else
-						$lista.="<spam style='font-weight: bold;'>".$scadenza ."</spam> la data verrà aggiornata a:<spam style='font-weight: bold;'>".NormalData($scadenza)."</spam>";
+						$lista.="<spam style='font-weight: bold;'>".$scadenza ."</spam> ".__( 'la data verrà aggiornata a', 'wpscuola' ).":<spam style='font-weight: bold;'>".NormalData($scadenza)."</spam>";
 					$lista.= "</li>";					
 					}
 				}
 				if (!empty($lista)){
-					echo "<h4>Circolari da firmare con formato data di scadenza errata</h4>
+					echo "<h4>".__( 'Circolari da firmare con formato data di scadenza errata', 'wpscuola' )."</h4>
 			<ul>
 					$lista
 			</ul>";
 			if (isset($_GET['opt']) && $_GET['opt']=="aggsca")
-				echo "Aggiornamento effettuato";
+				_e("Aggiornamento effettuato", 'wpscuola' );
 			else
-				echo '<p style="text-align:left;font-size:1em;font-style: italic;">Aggiorna il formato della Data entro cui firmare <spam style="text-align:center;font-size:1.5em;font-weight: bold;"> <a href="edit.php?post_type=circolari_scuola&page=Utility&action=verforsca&opt=aggsca">Aggiorna</a></spam>
+				echo '<p style="text-align:left;font-size:1em;font-style: italic;">'.__( 'Aggiorna il formato della Data entro cui firmare', 'wpscuola' ).' <spam style="text-align:center;font-size:1.5em;font-weight: bold;"> <a href="edit.php?post_type=circolari_scuola&page=Utility&action=verforsca&opt=aggsca">'.__( 'Aggiorna', 'wpscuola' ).'</a></spam>
 	</p>
 	</div>';			
 			}else
-				echo "<h4>Tutte le circolari da firmare hanno la data di scadenza in formato corretto</h4>";
+				echo "<h4>".__( 'Tutte le circolari da firmare hanno la data di scadenza in formato corretto', 'wpscuola' )."</h4>";
 			break;
 		case "updfirme":
 			if (!isset($_GET["CircoUtility"])) {
@@ -1113,32 +1109,32 @@ if($azione){
 				$NC1=get_post_meta($post->ID,"_numero");
 				$NC2=get_post_meta($post->ID,"_anno");
 				if (isset($sign[0]))
-					echo "<strong><em>Circolare ".$post->ID."  N. ".$NC1[0]."_".$NC2[0]." gi&aacute; Aggiornato</strong></em> ";
+					echo "<strong><em>".sprintf(__( 'Circolare %s N. %s_$s già Aggiornato', 'wpscuola' ),$post->ID,$NC1[0],$NC2[0])."</strong></em> ";
 				else{
-					echo "Circolare ".$post->ID."  N. ".$NC1[0]."_".$NC2[0]." Aggiornata a:";
+					echo sprintf(__( 'Circolare %s N. %s_$s Aggiornata a:', 'wpscuola' ),$post->ID,$NC1[0],$NC2[0]);
 					if ($sciopero[0]=="Si"){
 						update_post_meta($post->ID,"_sign","Sciopero" );
-						echo "Sciopero";
+						_e("Sciopero", 'wpscuola' );
 					}else
 						if($firma[0]=="Si"){
 							update_post_meta($post->ID,"_sign","Firma" );
-							echo "Firma";				
+							_e("Firma", 'wpscuola' );				
 						}
 						else{
 							update_post_meta($post->ID,"_sign","NoFirma" );
-							echo "NoFirma";
+							_e("NoFirma", 'wpscuola' );
 						}
 					$Calcellata="";
 					if(delete_post_meta($post->ID, "_firma")==TRUE)
 						$Calcellata= " Firma ";
 					if(delete_post_meta($post->ID, "_sciopero")==TRUE)
-						$Calcellata= " Sciopero";
+						$Calcellata= " ".__("Sciopero", 'wpscuola' );
 					if($Calcellata!="")
-						echo "<strong> Cancellata per questa circolare l'impostazione ".$Calcellata."</strong>"; 
+						echo "<strong> ".__("Cancellata per questa circolare l'impostazione", 'wpscuola' )." ".$Calcellata."</strong>"; 
 				}
 				echo "<br />";
 			}
-			echo "<div class='update-nag'><em><strong>Operazione conclusa con successo!</em></strong></div>";
+			echo "<div class='update-nag'><em><strong>".__("Operazione conclusa con successo!", 'wpscuola' )."</em></strong></div>";
 			echo '<meta http-equiv="refresh" content="5;url=edit.php?post_type=circolari_scuola&page=Utility"/>';
 			break;
 		}
@@ -1150,41 +1146,15 @@ if($azione){
 	echo '		</div> 
 			<p></p>
 			<div class="widefat" style="padding:10px;">
-				<p style="text-align:center;font-size:1.5em;font-weight: bold;">Verifica procedura</p>
+				<p style="text-align:center;font-size:1.5em;font-weight: bold;">'.__("Verifica procedura", 'wpscuola' ).'</p>
 				<ul>
-					<li> Questa procedura esegue un test generale della procedura e riporta eventuali anomalie nei dati e nelle impostazioni.</spam><br /><spam style="font-size:1em;font-style: italic;margin-left:10px;font-weight: bold;">
-		Verifica Presenza data scadenza firma <spam style="text-align:center;font-size:1.5em;font-weight: bold;"> <a href="edit.php?post_type=circolari_scuola&page=Utility&action=versca">Verifica</a></spam>
+					<li> '.__("Questa procedura esegue un test generale della procedura e riporta eventuali anomalie nei dati e nelle impostazioni.", 'wpscuola' ).'</spam><br /><spam style="font-size:1em;font-style: italic;margin-left:10px;font-weight: bold;">
+		'.__("Verifica Presenza data scadenza firma", 'wpscuola' ).' <spam style="text-align:center;font-size:1.5em;font-weight: bold;"> <a href="edit.php?post_type=circolari_scuola&page=Utility&action=versca">'.__("Verifica", 'wpscuola' ).'</a></spam>
 					</li>
-					<li style="text-align:left;font-size:1em;">Questa procedura verifica il formato delle date di scadenza.<br /><spam style="font-size:1em;font-style: italic;margin-left:10px;font-weight: bold;">
-		Verifica Formato data scadenza firma <spam style="text-align:center;font-size:1.5em;font-weight: bold;"> <a href="edit.php?post_type=circolari_scuola&page=Utility&action=verforsca">Verifica</a></spam>
+					<li style="text-align:left;font-size:1em;">'.__("Questa procedura verifica il formato delle date di scadenza.", 'wpscuola' ).'<br /><spam style="font-size:1em;font-style: italic;margin-left:10px;font-weight: bold;">
+		'.__("Verifica Formato data scadenza firma", 'wpscuola' ).' <spam style="text-align:center;font-size:1.5em;font-weight: bold;"> <a href="edit.php?post_type=circolari_scuola&page=Utility&action=verforsca">'.__("Verifica", 'wpscuola' ).'</a></spam>
 					</li>
-				</ul>
-				<p style="text-align:center;font-size:1.5em;font-weight: bold;">Importa Gruppi ed impostazioni da Circolari Groups</p>
-					<ul>
-						<li style="text-align:left;font-size:1em;">
-						<p>Questa procedura deve essere eseguita solo una volta dopo la migrazione da Circolari Groups.</p>
-						<p>Azioni da eseguire per la migrazione:
-						<ol>
-							<li><span style="color:red;font-weight: bold;">Aggiornare il plugin Circolari Groups</span></li>
-							<li>Disinstallare Circolari Groups</li>
-							<li>Installare Circolari</li>
-							<li>Lanciare la seguente procedura di importazione dei dati da Circolari Groups</li>
-							<li>A questo punto, se non utilizzato per altri scopi, si può disinstallare il plugin Groups</li>
-						</ol>
-						</p>
-						<p>
-						Le oprazioni che verranno eseguite sono:
-						<ol>
-							<li>Importazione dei Gruppi</li>
-							<li>Aggiornamento delle impostazioni delle circolari</li>
-						</ol>
-						</li>
-						</p>
-					</ul>
-					<spam style="text-align:center;font-size:1.5em;font-weight: bold;">
-						<a href="edit.php?post_type=circolari_scuola&page=Utility&action=importa">Importa da Circolari Groups</a>
-					</spam>	
-	';
+				</ul>';
 }
 function TestataCircolari() {
 global $TestiRisposte,$post;
@@ -1207,7 +1177,7 @@ jQuery.noConflict();
 		$('.inviaadesione').click(function(){
 			<?php echo $sele;?>
 			var to=$("#to").val();
-			var answer = confirm("Circolare "+$(this).attr('rel') +"\nConfermi la scelta: " + s +"?")
+			var answer = confirm("Circolare "+$(this).attr('rel') +"\n<?php _e('Confermi la scelta', 'wpscuola' );?>: " + s +"?")
 			if (answer){
 				return true;
 			}
@@ -1266,14 +1236,14 @@ function circolari_VisualizzaLog($IDPost){
 ?>	
 	<div class="wrap">
 		<i class="fa fa-th-list fa-3x" aria-hidden="true"></i>
-		<h2 style="display:inline;margin-left:10px;vertical-align:super;">Log Firme Circolare n° <?php echo $numero[0].'_'.$anno[0];?></h2>
+		<h2 style="display:inline;margin-left:10px;vertical-align:super;"><?php _e("Log Firme Circolare n°", 'wpscuola' );?> <?php echo $numero[0].'_'.$anno[0];?></h2>
 		<h3><?php echo $circolare->post_title;?></h3>
 			<table  id="TabellaCircolari" class="widefat"  cellspacing="0" width="99%">
 			<thead>
-				<th>Utente</th>
-				<th>Data Ora</th>
-				<th>Operazione</th>
-				<th>Espressione</th>
+				<th><?php _e("Utente", 'wpscuola' );?></th>
+				<th><?php _e("Data Ora", 'wpscuola' );?></th>
+				<th><?php _e("Operazione", 'wpscuola' );?></th>
+				<th><?php _e("Espressione", 'wpscuola' );?></th>
 			</thead>
 			<tbody>
 <?php foreach($Dati as $Riga){ ?>
@@ -1300,7 +1270,7 @@ $DatiPost=get_post( $IDPost,  ARRAY_A);
 		$attachments = get_posts($args);
 		$LinkAllegati="";
 		if ($attachments) {
-			$LinkAllegati.="<p>Allegati
+			$LinkAllegati.="<p>".__("Allegati", 'wpscuola' )."
 			<ul>";
 			foreach ($attachments as $attachment) {
 				$LinkAllegati.="		<li><a href='$attachment->guid'>$attachment->post_title</a></li>";
@@ -1310,11 +1280,11 @@ $DatiPost=get_post( $IDPost,  ARRAY_A);
 		}
 $my_post = array(
   		'post_title'    => $DatiPost['post_title'],
-  		'post_content'  => "<p>Ciao [USER-NAME]</p>
-<p>in data odierna è stata inserita la seguente circolare nel sito [SITE-NAME]</p>
-<p>[POST-EXCERPT]</p>
-<p>[POST-CONTENT]</p>
-<p><a href='".get_permalink($IDPost)."'>Visualizza la circolare sul sito</a> ".$LinkAllegati,
+  		'post_content'  => "<p>".sprintf(__("Ciao [USER-NAME]</p>
+%sin data odierna è stata inserita la seguente circolare nel sito [SITE-NAME]%s
+%s[POST-EXCERPT]%s
+%s[POST-CONTENT]%s", 'wpscuola' ),"<p>","</p>","<p>","</p>","<p>","</p>")."
+<p><a href='".get_permalink($IDPost)."'>".__("Visualizza la circolare sul sito", 'wpscuola' )."</a> ".$LinkAllegati,
   		'post_status'   => 'publish',
   		'comment_status'   => 'closed',
   		'ping_status' => 'closed',
@@ -1323,8 +1293,8 @@ $my_post = array(
   		'post_type' => 'newsletter');
 $post_id =wp_insert_post( $my_post );
 echo '<div class="wrap">
-	  	<i class="fa fa-envelope fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">Crea NewsLetter 
-	  	<a href="'.site_url().'/wp-admin/edit.php?post_type=circolari_scuola" class="add-new-h2 tornaindietro">Torna indietro</a></h2>';
+	  	<i class="fa fa-envelope fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__("Crea NewsLetter", 'wpscuola' ).'
+	  	<a href="'.site_url().'/wp-admin/edit.php?post_type=circolari_scuola" class="add-new-h2 tornaindietro">'.__("Torna indietro", 'wpscuola' ).'</a></h2>';
 
 	if($post_id>0){
 		$recipients=Array();
@@ -1335,18 +1305,18 @@ echo '<div class="wrap">
 		add_post_meta ( $post_id, "_placeholder_post_imgsize", 'thumbnail' );	
 		add_post_meta ( $post_id, "_placeholder_newsletter_imgsize", 'thumbnail' );	
 		add_post_meta ( $post_id, "_easymail_theme", 'campaignmonitor_elegant.html' );	
-		echo "<p style='font-weight: bold;font-size: medium;color:green;'>NewsLetter Creata correttamente</p> 
-		<p style='font-weight: bold;font-style: italic;font-size: medium;'>Adesso dovete completare le operazioni di invio seguendo pochi e semplici passi:<ul style='list-style: circle outside;margin-left:20px;'>
-			<li>Entrare in modifica nella <a class='function' href='".admin_url()."post.php?post=".$post_id."&action=edit'>circolare appena creata</a> (l'ultima, quella in cima alla lista)</li>
-			<li>Selezionate i destinatari</li>
-			<li>Memorizzare le modifiche</li>
-			<li>Dall'elenco delle NewsLetter, sulla riga corrente cliccare su <em>Richiesto: Crea la lista dei destinatari</em></li>
+		echo "<p style='font-weight: bold;font-size: medium;color:green;'>".__("NewsLetter Creata correttamente", 'wpscuola' )."</p> 
+		<p style='font-weight: bold;font-style: italic;font-size: medium;'>".__("Adesso dovete completare le operazioni di invio seguendo pochi e semplici passi", 'wpscuola' ).":<ul style='list-style: circle outside;margin-left:20px;'>
+			<li>".__("Entrare in modifica nella", 'wpscuola' )." <a class='function' href='".admin_url()."post.php?post=".$post_id."&action=edit'>".__("circolare appena creata", 'wpscuola' )."</a> ".__("(l'ultima, quella in cima alla lista)", 'wpscuola' )."</li>
+			<li>".__("Selezionate i destinatari", 'wpscuola' )."</li>
+			<li>".__("Memorizzare le modifiche", 'wpscuola' )."</li>
+			<li>".__("Dall'elenco delle NewsLetter, sulla riga corrente cliccare su <em>Richiesto: Crea la lista dei destinatari", 'wpscuola' )."</em></li>
 		</ul>
 		</p>";
 		add_post_meta ( $IDPost, "_sendNewsLetter",date("d/m/y g:i O"));
 		add_post_meta ( $IDPost, "_placeholder_easymail_post",$post_id);
 	}else{
-		echo "<p  style='font-weight: bold;font-size: medium;color:red;'>NewsLetter Non Creata correttamente, errore riportato:</p>";
+		echo "<p  style='font-weight: bold;font-size: medium;color:red;'>".__("NewsLetter Non Creata correttamente, errore riportato", 'wpscuola' ).":</p>";
 				print_r($errore);			
 	}
 }
@@ -1370,12 +1340,12 @@ function circolari_Parametri(){
 	}
 	echo'
 <div class="wrap">
-	  <i class="fa fa-magic fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">Configurazione Circolari</h2>
+	  <i class="fa fa-magic fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__("Configurazione Circolari", 'wpscuola' ).'</h2>
 	  <form name="Circolari_cnf" action="'.get_bloginfo('wpurl').'/wp-admin/index.php" method="post">
 	  <input type="hidden" name="circoPar" value="'.wp_create_nonce('ParametriCircolare').'" />
 	  <table class="form-table circolari-config">
 		<tr valign="top">
-			<th scope="row"><label for="pubblica">Gruppo Pubblico Circolari</label></th>
+			<th scope="row"><label for="pubblica">'.__("Gruppo Pubblico Circolari", 'wpscuola' ).'</label></th>
 			<td><select name="pubblica" id="pubblica" >';
 			$bloggroups =get_terms('gruppiutenti',array('orderby'=> 'name','hide_empty'=> false));
 			foreach ($bloggroups as $gruppo) {
@@ -1388,14 +1358,14 @@ function circolari_Parametri(){
 echo'</select></td>				
 		</tr>
 		<tr valign="top">
-			<th scope="row"><label for="GGScadenza">N. giorni entro cui firmare di default</label></th>
+			<th scope="row"><label for="GGScadenza">'.__("N. giorni entro cui firmare di default", 'wpscuola' ).'</label></th>
 			<td>
 				<input type="text" name="GGScadenza" id="GGScadenza" size="3" maxlength="3" value="'.$GiorniScadenza.'" />
 			</td>				
 		</tr>
 		<tr valign="top">
 			<th scope="row">
-				<label for="NotificaFirma">Notifica firma tramite @mail</label>
+				<label for="NotificaFirma">'.__("Notifica firma tramite @mail", 'wpscuola' ).'</label>
 			</th>
 			<td>		
 				<input type="checkbox" name="NotificaFirma" id="NotificaFirma" value="Si" '.($NotificaFirma=="Si"?"checked":"").'/> Attiva
@@ -1403,16 +1373,16 @@ echo'</select></td>
 		</tr>					
 		<tr valign="top">
 			<th scope="row">
-				<label for="FromNotificaFirma">Mittente @mail</label>
+				<label for="FromNotificaFirma">'.__("Mittente @mail", 'wpscuola' ).'</label>
 			</th>
 			<td>		
 				<input type="text" name="FromNotificaFirma" id="FromNotificaFirma" value="'.$MittenteNotifica.'" size="65"/><br />
-					<em>Indicare il mittente nel formato: Nome del mittente &lt;indirizzo@dminio.estensione&gt;</em>
+					<em>'.__("Indicare il mittente nel formato: Nome del mittente <indirizzo@dminio.estensione>", 'wpscuola' ).'</em>
 			</td>				
 		</tr>					
 		<tr valign="top">
 			<th scope="row">
-				<label for="OggettoNotificaFirma">Oggetto @mail</label>
+				<label for="OggettoNotificaFirma">'.__("Oggetto @mail", 'wpscuola' ).'</label>
 			</th>
 			<td>		
 				<input type="text" name="OggettoNotificaFirma" id="OggettoNotificaFirma" value="'.$OggettoNotifica.'" size="65"/>
@@ -1421,24 +1391,25 @@ echo'</select></td>
 
 		<tr valign="top">
 			<th scope="row">
-				<label for="$MessaggioNotifica">Messaggio @mail</label>
+				<label for="$MessaggioNotifica">'.__("Messaggio @mail", 'wpscuola' ).'</label>
 			</th>
 			<td>		
 				<textarea name="MessaggioNotifica" id="MessaggioNotifica" cols="150" rows="10">'.$MessaggioNotifica.' </textarea><br />
-				{Link_Circolare} aggiunge il link alla circolare firmata<br />
-				{Dati_Utente} visualizza una stringa nel formato &quot;None Cognome&quot; dell\'utente che ha firmato la circolare<br />
-				{Data} visualizza una stringa nel formato &quot;gg/mm/aaaa - hh:mm&quot; del momento in cui viene firmata la circolare<br />
-				{Operazione} Visualizza l\'operazione effettuata : riportando il testo impostato in Tipi di circolari > Risposte
+				'.__("{Link_Circolare} aggiunge il link alla circolare firmata<br />
+				{Dati_Utente} visualizza una stringa nel formato <strong>None Cognome</strong> dell'utente che ha firmato la circolare<br />
+				{Data} visualizza una stringa nel formato <strong>gg/mm/aaaa - hh:mm</strong> del momento in cui viene firmata la circolare<br />
+				{Operazione} Visualizza l'operazione effettuata : riportando il testo impostato in Tipi di circolari > Risposte", 'wpscuola' ).'
+				
 			</td>				
 		</tr>					
 		<tr valign="top">
-			<th scope="row"><label for="GestPerm">Tipologia gestione permessi</label></th>
+			<th scope="row"><label for="GestPerm">'.__("Tipologia gestione permessi", 'wpscuola' ).'</label></th>
 			<td>
-				<input type="radio" name="GestPerm" id="GestPerm" value="int" '.$GPP.'" />Standard
-				<input type="radio" name="GestPerm" id="GestPerm" value="ext" '.$GPE.'" />Esteso
+				<input type="radio" name="GestPerm" id="GestPerm" value="int" '.$GPP.'" />'.__("Standard", 'wpscuola' ).'
+				<input type="radio" name="GestPerm" id="GestPerm" value="ext" '.$GPE.'" />'.__("Esteso", 'wpscuola' ).'
 				<ul style="list-style: disc;font-style: italic;">
-					<li>Standard: vengono mantenuti le capabilities standard dei Posts</li>
-					<li>Esteso: vengono creati capabilities
+					<li>'.__("Standard: vengono mantenuti le capabilities standard dei Posts", 'wpscuola' ).'</li>
+					<li>'.__("Esteso: vengono creati capabilities", 'wpscuola' ).'
 						<p>Capabilities
 						<ul style="margin-left:30px;list-style: circle;font-style: italic;">
 							<li>delete_circolares</li>
@@ -1451,10 +1422,10 @@ echo'</select></td>
 							<li>edit_published_circolares</li>
 							<li>publish_circolares</li>
 							<li>read_private_circolares</li>
-							<li>send_circ@mail; <strong>permette di gestire le newsletter</strong></li>
-							<li>manage_adesioni; <strong>permette la gestione delle adesioni/firme</strong></li>
+							<li>send_circ@mail; <strong>'.__("permette di gestire le newsletter", 'wpscuola' ).'</strong></li>
+							<li>manage_adesioni; <strong>'.__("permette la gestione delle adesioni/firme", 'wpscuola' ).'</strong></li>
 						</ul>
-						<em><strong>Per la gestione delle capabilities si consiglia l\'uso del plugin <a href="https://wordpress.org/plugins/user-role-editor">User Role Editor</a></strong></em> 
+						<em><strong>'.__("Per la gestione delle capabilities si consiglia l'uso del plugin", 'wpscuola' ).' <a href="https://wordpress.org/plugins/user-role-editor">User Role Editor</a></strong></em> 
 						</p>
 					</li>
 				</ul>
@@ -1485,7 +1456,7 @@ function circolari_NuoveColonneContenuto($column_name, $post_ID) {
 		$sign=get_post_meta($post_ID, "_sign",TRUE);
 		$tipo=Circolari_find_Tipo($sign);
 		if($tipo===FALSE){
-			 echo "<span style=\"color:red;\">ERRORE!<br />Tipo di circolare non definito</span>";
+			 echo "<span style=\"color:red;\">".__("ERRORE!<br />Tipo di circolare non definito", 'wpscuola' )."</span>";
 			 return;
 		}
 		if ($column_name == 'gestionecircolari' And current_user_can( 'edit_others_posts')) {  
@@ -1526,12 +1497,12 @@ function circolari_NuoveColonneContenuto($column_name, $post_ID) {
 			$Dati="Circolare N° ".$numero.'_'.$anno."<br />"; 
 			if(get_post_meta($post_ID, "_visibilita", "d")=="d"){
 				$Info.= '<i class="fa fa-lock" aria-hidden="true"></i><br />';
-				$Dati.="Visibilità:Riservata <br />";
+				$Dati.=__("Visibilità:Riservata", 'wpscuola' )." <br />";
 			}else{
 				$Info.= '<i class="fa fa-unlock" aria-hidden="true"></i><br />';
-				$Dati.="Visibilità:Pubblica <br />";
+				$Dati.=__("Visibilità:Pubblica", 'wpscuola' )." <br />";
 			}
-			$Dati.="Tipo: <strong>".$tipo->get_Tipo()."</strong> <br />";
+			$Dati.=__("Tipo", 'wpscuola' ).": <strong>".$tipo->get_Tipo()."</strong> <br />";
 			$Info.= '<i class="fa fa-hand-pointer-o" aria-hidden="true"></i> '.$tipo->get_Tipo().'<br />';
 			if (Is_da_Firmare($post_ID)){
 				if(Is_Circolare_Scaduta($post_ID)){
@@ -1558,11 +1529,11 @@ function circolari_NuoveColonneContenuto($column_name, $post_ID) {
 					$DaVisDati=" Firmate ".$Firmate." su ".$NU."<br />";
 				}
 				$Info.= ' <i class="fa fa-pencil" aria-hidden="true" style="color:'.$Color.'"></i> '.FormatDataItalianoBreve(get_post_meta($post_ID, "_scadenza",TRUE)).$DaVis."<br />";
-				$Dati.="Data scadenza firma ".FormatDataItalianoBreve(get_post_meta($post_ID, "_scadenza",TRUE))."<br />".$DaVisDati;
+				$Dati.=__("Data scadenza firma", 'wpscuola' )." ".FormatDataItalianoBreve(get_post_meta($post_ID, "_scadenza",TRUE))."<br />".$DaVisDati;
 			}
 			$DesDest=GetEencoDestinatari($post_ID,TRUE);
 			$Info.= '<i class="fa fa-users" aria-hidden="true"></i> '.$DesDest;
-			$Dati.="Destinatari Circolari: ".$DesDest;
+			$Dati.=__("Destinatari Circolari", 'wpscuola' ).": ".$DesDest;
 			echo '<a href="#" title="'.$Dati.'" class="nolink">'.$Info."</a>";
 		}
 	}
@@ -1589,15 +1560,15 @@ function circolari_updated_messages( $messages ) {
 	global $post, $post_ID;
     $messages['circolari'] = array(
 	0 => '', 
-	1 => sprintf('Circolare aggiornata. <a href="%s">Visualizza Circolare</a>', esc_url( get_permalink($post_ID) ) ),
+	1 => sprintf(__('Circolare aggiornata. <a href="%s">Visualizza Circolare</a>', 'wpscuola' ), esc_url( get_permalink($post_ID) ) ),
 	2 => 'Circolare aggiornata',
 /* translators: %s: date and time of the revision */
-	3 => isset($_GET['circolari']) ? sprintf( 'Circolare ripristinata alla versione %s', wp_post_revision_title( (int) $_GET['circolari'], false ) ) : false,
-	4 => sprintf( 'Circolare pubblicata. <a href="%s">Visualizza Circolare</a>', esc_url( get_permalink($post_ID) ) ),
+	3 => isset($_GET['circolari']) ? sprintf( __('Circolare ripristinata alla versione %s', 'wpscuola' ), wp_post_revision_title( (int) $_GET['circolari'], false ) ) : false,
+	4 => sprintf( __('Circolare pubblicata. <a href="%s">Visualizza Circolare</a>', 'wpscuola' ), esc_url( get_permalink($post_ID) ) ),
 	5 => 'Circolare memorizzata',
-	6 => sprintf( 'Circolare inviata. <a target="_blank" href="%s">Anteprima Circolare</a>', esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
-	7 => sprintf( 'Circolare schedulata per: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Anteprima circolare</a>',date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
-	8 => sprintf( 'Bozza Circolare aggiornata. <a target="_blank" href="%s">Anteprima Circolare</a>', esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+	6 => sprintf( __('Circolare inviata. <a target="_blank" href="%s">Anteprima Circolare</a>', 'wpscuola' ), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+	7 => sprintf( __('Circolare schedulata per: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Anteprima circolare</a>', 'wpscuola' ),date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
+	8 => sprintf( __('Bozza Circolare aggiornata. <a target="_blank" href="%s">Anteprima Circolare</a>', 'wpscuola' ), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
 );
 return $messages;
 }
@@ -1636,25 +1607,20 @@ function circolari_salva_dettagli( $post_id ){
 }
 
 function circolari_crea_box(){
-  add_meta_box('parametri', 'Parametri Circolari', 'circolari_crea_box_parametri', 'circolari_scuola', 'side', 'high',array(
+  add_meta_box('parametri', __('Parametri Circolari', 'wpscuola' ), 'circolari_crea_box_parametri', 'circolari_scuola', 'side', 'high',array(
         '__block_editor_compatible_meta_box' => true,
     ));
-
-/*  add_meta_box('prog', 'Progressivo', 'circolari_crea_box_progressivo', 'circolari', 'advanced', 'high');
-  add_meta_box('firma', 'Richiesta Firma', 'circolari_crea_box_firma', 'circolari', 'advanced', 'high');
-  add_meta_box('sciopero', 'Circolare comunicazione Sciopero', 'circolari_crea_box_firma_sciopero', 'circolari', 'advanced', 'high');
-  add_meta_box('visibilita', 'Visibilit&agrave;', 'circolari_crea_box_visibilita', 'circolari', 'advanced', 'high');*/
 }
 
 function circolari_crea_box_parametri( $post ){
-echo "<h4>Firmare entro</h4>";	
+echo "<h4>".__("Firmare entro", 'wpscuola' )."</h4>";	
 circolari_crea_box_data_scadenza($post);
-echo "<h4>Progessivo</h4>";
+echo "<h4>".__("Progessivo", 'wpscuola' )."</h4>";
 circolari_crea_box_progressivo($post);
-echo "<h4>Firme</h4>";
+echo "<h4>".__("Firme", 'wpscuola' )."</h4>";
 circolari_crea_box_firma($post);
 //circolari_crea_box_firma_sciopero($post);
-echo "<h4>Visibilit&agrave;</h4>";
+echo "<h4>".__("Visibilità", 'wpscuola' )."</h4>";
 circolari_crea_box_visibilita($post);
 }
 
@@ -1678,7 +1644,7 @@ if ($anno=="" or !$anno){
 }
 if ($numero=="" or !$numero)
 	$numero=NewNumCircolare($anno);
-echo '<label>Numero/Anno</label>
+echo '<label>'.__("Numero/Anno", 'wpscuola' ).'</label>
 	<input type="text" name="numero" value="'.$numero.'" size="5" id="numero_circolare" style="text-align:right"/>_<input type="text" name="anno" value="'.$anno.'" size="5"/>
 	<br />' ;
 }
@@ -1694,37 +1660,18 @@ else
 		$selp='checked="checked"';
 	else	
 		$seld='checked="checked"';
-echo 'Pubblica <input type="radio" name="visibilita" value="p" '.$selp.'/><br />
-Riservata <input type="radio" name="visibilita" value="d" '.$seld.'/>';
-//$term_list = wp_get_post_terms($post->ID, 'gruppiutenti', array("fields" => "names"));
-//print_r($term_list);
+echo __("Pubblica", 'wpscuola' ).' <input type="radio" name="visibilita" value="p" '.$selp.'/><br />
+'.__("Riservata", 'wpscuola' ).' <input type="radio" name="visibilita" value="d" '.$seld.'/>';
 }
 function circolari_crea_box_firma( $post ){
 	global $Testi;
 $sign=get_post_meta($post->ID, "_sign",TRUE);
 echo Circolari_Tipo::get_Tipi($sign);
-/*
-$firma=get_post_meta($post->ID, "_firma");
-if($firma[0]=="Si")
-	$firma='checked="checked"';
- echo "<label>E' richiesta la firma</label>
-	<input type='checkbox' name='firma' value='Si' $firma />
-	<br />" ;
-}
-function circolari_crea_box_firma_sciopero( $post ){
-$sciopero=get_post_meta($post->ID, "_sciopero");
-if($sciopero[0]=="Si")
-	$sciopero='checked="checked"';
- echo "<label>Circolare sindacale</label>
-	<input type='checkbox' name='sciopero' value='Si' $sciopero />
-	<br />" ;
-*/
-
 }
 
 function circolari_crea_box_data_scadenza( $post ){
 $scadenza=FormatDataItalianoBreve(get_post_meta($post->ID, "_scadenza",TRUE));
-echo "<label>Data</label> <input type='text' name='scadenza' value='".$scadenza."' size='8' style='text-align:left' id='DataScadenza'/>
+echo "<label>".__("Data", 'wpscuola' )."</label> <input type='text' name='scadenza' value='".$scadenza."' size='8' style='text-align:left' id='DataScadenza'/>
 	<br />" ;
 }
 
@@ -1737,7 +1684,7 @@ function circolari_VisualizzaFirme($post_id,$Tipo=0){
 	$TipoC=get_post_meta($post_id, "_sign",TRUE);
 	echo' 
 	<div class="wrap">
-		<h2 >Circolare n° '.$numero[0].'_'.$anno[0].'<br /><strong>'.$circolare->post_title.'</strong></h2>';
+		<h2 >'.__("Circolare n°", 'wpscuola' ).' '.$numero[0].'_'.$anno[0].'<br /><strong>'.$circolare->post_title.'</strong></h2>';
 	$globale=get_post_meta($post_id, '_visibilita_generale');
 	$fgs = wp_get_object_terms($post_id, 'gruppiutenti');
 	$Elenco="";
@@ -1763,11 +1710,11 @@ function circolari_VisualizzaFirme($post_id,$Tipo=0){
 		<table  id="TabellaCircolari" class="widefat"  cellspacing="0" width="100%">
 			<thead>
 				<tr>
-					<th style="width:'.(20-$sottrai).'%;">User login</th>
-					<th style="width:'.(30-$sottrai).'%;" id="ColOrd" sorted="1">Cognome</th>
-					<th style="width:'.(15-$sottrai).'%;">Gruppo</th>
-					<th style="width:'.(15-$sottrai).'%;">Data Operazione</th>
-					<th style="width:'.(15-$sottrai).'%;">Espressione</th>';
+					<th style="width:'.(20-$sottrai).'%;">'.__("User login", 'wpscuola' ).'</th>
+					<th style="width:'.(30-$sottrai).'%;" id="ColOrd" sorted="1">'.__("Cognome", 'wpscuola' ).'</th>
+					<th style="width:'.(15-$sottrai).'%;">'.__("Gruppo", 'wpscuola' ).'</th>
+					<th style="width:'.(15-$sottrai).'%;">'.__("Data Operazione", 'wpscuola' ).'</th>
+					<th style="width:'.(15-$sottrai).'%;">'.__("Espressione", 'wpscuola' ).'</th>';
 	if ($Tipo==1){
 			$Testo=Circolari_find_Tipo($TipoC);
 			echo '
@@ -1778,11 +1725,11 @@ function circolari_VisualizzaFirme($post_id,$Tipo=0){
 			</thead>
 			<tfoot>
 				<tr>
-					<th style="width:'.(20-$sottrai).'%;">User login</th>
-					<th style="width:'.(30-$sottrai).'%;">Cognome</th>
-					<th style="width:'.(15-$sottrai).'%;">Gruppo</th>
-					<th style="width:'.(15-$sottrai).'%;">Data Operazione</th>
-					<th style="width:'.(15-$sottrai).'%;">Espressione</th>';
+					<th style="width:'.(20-$sottrai).'%;">'.__("User login", 'wpscuola' ).'</th>
+					<th style="width:'.(30-$sottrai).'%;">'.__("Cognome", 'wpscuola' ).'</th>
+					<th style="width:'.(15-$sottrai).'%;">'.__("Gruppo", 'wpscuola' ).'</th>
+					<th style="width:'.(15-$sottrai).'%;">'.__("Data Operazione", 'wpscuola' ).'</th>
+					<th style="width:'.(15-$sottrai).'%;">'.__("Espressione", 'wpscuola' ).'</th>';
 	if ($Tipo==1){
 			$Testo=Circolari_find_Tipo($TipoC);
 			echo '
@@ -1807,7 +1754,7 @@ function circolari_VisualizzaFirme($post_id,$Tipo=0){
 			}
 			$DesGsU=substr($DesGsU,0,strlen($DesGsU)-2);
 		}else{
-			$DesGsU="<span style='color:red;'>Nessuno</span>";
+			$DesGsU="<span style='color:red;'>".__("Nessuno", 'wpscuola' )."</span>";
 		}
 		echo '
 					<tr>
@@ -1819,7 +1766,7 @@ function circolari_VisualizzaFirme($post_id,$Tipo=0){
 			if(Circolari_is_set_IDRisposte($firma->adesione))
 				$desad=$TestiRisposte[(int)$firma->adesione]->get_Risposta();
 			else
-				$desad="Errore Etichetta non trovata";
+				$desad=__("Errore Etichetta non trovata", 'wpscuola' );
 		else
 			$desad="";
 		echo '

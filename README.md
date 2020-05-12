@@ -19,6 +19,10 @@ https://github.com/ignazios/wp-scuola
 ## Supporto
 facebook: https://www.facebook.com/wpscuola/
 ## Change log
+- **0.0.5**
+  - ***Modificato*** in rendering del blocco file dell'Editor Gutenberg
+  - ***Corretto*** un errore nella gestione della visualizzazione della domanda della FAQ nel FrontEnd
+  - ***Corretti*** alcuni bugs minori
 - **0.0.4**
   - ***Implementato*** la gestione delle lingue
   - ***Corretti*** alcuni bug del modulo Circolari

@@ -1,0 +1,1020 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WPScuola\n"
+"POT-Creation-Date: 2020-04-30 19:39+0200\n"
+"PO-Revision-Date: 2020-05-03 19:52+0200\n"
+"Last-Translator: \n"
+"Language-Team: Ignazio Scimone ignazios@☺gmail.com\n"
+"Language: en_GB\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.3\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: widget/widget_calendario.php\n"
+"X-Poedit-SearchPathExcluded-1: widget/widget_feedRSS.php\n"
+
+#: 404.php:21
+msgid "Si è verificato il seguente errore:"
+msgstr ""
+
+#: 404.php:23
+msgid "404 Pagina non trovata"
+msgstr ""
+
+#: 404.php:25
+msgid "La pagina che stavi cercando non esiste."
+msgstr ""
+
+#: archive-amm-trasparente.php:21
+msgid "Documenti Trasparenza:"
+msgstr ""
+
+#: archive-circolari_scuola.php:93
+msgid "Circolari di:"
+msgstr ""
+
+#: archive-circolari_scuola.php:115 archive.php:109 author.php:119
+#: category.php:191 index.php:189 search.php:136 tag.php:153
+msgid "Data di Pubblicazione"
+msgstr ""
+
+#: archive.php:88
+msgid "Archivio articoli"
+msgstr ""
+
+#: archive.php:88 author.php:99
+msgid "del mese di"
+msgstr ""
+
+#: archive.php:88 author.php:99
+msgid "dell'anno"
+msgstr ""
+
+#: attachment.php:25
+msgid "Media collegato in: "
+msgstr ""
+
+#: attachment.php:26
+#, php-format
+msgid "Vai a %s"
+msgstr ""
+
+#: author.php:99
+msgid "Archivio articoli di"
+msgstr ""
+
+#: category.php:149
+msgid "Articoli della Categoria"
+msgstr ""
+
+#: category.php:172 index.php:170
+msgid "Argomenti"
+msgstr ""
+
+#: comments.php:44
+msgid "Trackbacks"
+msgstr ""
+
+#: comments.php:44
+msgid "Trackback"
+msgstr ""
+
+#: comments.php:52
+msgid "Invia Commento"
+msgstr ""
+
+#: footer.php:74
+msgid "Informazioni"
+msgstr ""
+
+#: footer.php:86
+msgid "Mappa con la geolocalizzazione dell'Istituto"
+msgstr ""
+
+#: footer.php:94
+msgid "Recapiti"
+msgstr ""
+
+#: footer.php:129
+msgid "Mail"
+msgstr ""
+
+#: footer.php:225
+msgid "Sezione Legale"
+msgstr ""
+
+#: footer.php:229
+#, php-format
+msgid "Copyright %1$s %2$s %3$s"
+msgstr ""
+
+#: functions.php:21
+msgid "Gennaio"
+msgstr ""
+
+#: functions.php:22
+msgid "Febbraio"
+msgstr ""
+
+#: functions.php:23
+msgid "Marzo"
+msgstr ""
+
+#: functions.php:24
+msgid "Aprile"
+msgstr ""
+
+#: functions.php:25
+msgid "Maggio"
+msgstr ""
+
+#: functions.php:26
+msgid "Giugno"
+msgstr ""
+
+#: functions.php:27
+msgid "Luglio"
+msgstr ""
+
+#: functions.php:28
+msgid "Agosto"
+msgstr ""
+
+#: functions.php:29
+msgid "Settembre"
+msgstr ""
+
+#: functions.php:30
+msgid "Ottobre"
+msgstr ""
+
+#: functions.php:31
+msgid "Novembre"
+msgstr ""
+
+#: functions.php:32
+msgid "Dicembre"
+msgstr ""
+
+#: functions.php:51
+msgid "Blu"
+msgstr ""
+
+#: functions.php:56
+msgid "Grigio scuro"
+msgstr ""
+
+#: functions.php:61
+msgid "Blu scuro"
+msgstr ""
+
+#: functions.php:66
+msgid "Azzurro"
+msgstr ""
+
+#: functions.php:71
+msgid "Grigio"
+msgstr ""
+
+#: functions.php:76
+msgid "Grigio chiaro"
+msgstr ""
+
+#: functions.php:81
+msgid "Verde"
+msgstr ""
+
+#: functions.php:86
+msgid "Rosso"
+msgstr ""
+
+#: functions.php:91
+msgid "Arancione"
+msgstr ""
+
+#: functions.php:96
+msgid "Argento"
+msgstr ""
+
+#: functions.php:101
+msgid "Bianco"
+msgstr ""
+
+#: functions.php:109
+msgid "Piccolo"
+msgstr ""
+
+#: functions.php:114
+msgid "Normale"
+msgstr ""
+
+#: functions.php:119
+msgid "Medio"
+msgstr ""
+
+#: functions.php:124
+msgid "Grande"
+msgstr ""
+
+#: functions.php:141
+msgid "Main Menu"
+msgstr ""
+
+#: functions.php:142
+msgid "Mega Menu"
+msgstr ""
+
+#: functions.php:143
+msgid "Lingua Menu"
+msgstr ""
+
+#: functions.php:144
+msgid "Social Menu"
+msgstr ""
+
+#: functions.php:145
+msgid "Footer Menu"
+msgstr ""
+
+#: functions.php:146
+msgid "Footer Menu Ente"
+msgstr ""
+
+#: functions.php:147
+msgid "Footer Menu Legale"
+msgstr ""
+
+#: functions.php:148
+msgid "Footer Menu secondo"
+msgstr ""
+
+#: functions.php:240
+msgid "Large image"
+msgstr ""
+
+#: functions.php:278
+msgid "Home Widget Area"
+msgstr ""
+
+#: functions.php:280
+msgid "Widget area che compare in homepage."
+msgstr ""
+
+#: functions.php:288
+msgid "Post Sidebar Widget Area"
+msgstr ""
+
+#: functions.php:290
+msgid "Widget area che compare nella sidebar dei post."
+msgstr ""
+
+#: functions.php:298
+msgid "Page Sidebar Widget Area"
+msgstr ""
+
+#: functions.php:300
+msgid "Widget area che compare nella sidebar delle pagine."
+msgstr ""
+
+#: functions.php:308
+msgid "Footer Widget Area"
+msgstr ""
+
+#: functions.php:310
+msgid "Widget area che compare nel footer."
+msgstr ""
+
+#: functions.php:318
+msgid "Footer Sub Widget Area"
+msgstr ""
+
+#: functions.php:320
+msgid "Widget area che compare sotto la footer widget area."
+msgstr ""
+
+#: functions.php:328
+msgid "Post Footer Widget Area"
+msgstr ""
+
+#: functions.php:330
+msgid "Widget area che compare sotto il contenuto del singolo post."
+msgstr ""
+
+#: functions.php:338
+msgid "Event Sidebar Widget Area"
+msgstr ""
+
+#: functions.php:340
+msgid "Widget area che compare nella sidebar degli eventi."
+msgstr ""
+
+#: functions.php:349
+msgid "Amministrazione Trasparente"
+msgstr ""
+
+#: functions.php:351
+msgid ""
+"Widget area visibile solo nelle pagine dell'Amministrazione Trasparente."
+msgstr ""
+
+#: functions.php:583
+msgid "Submit"
+msgstr ""
+
+#: header.php:28
+msgid ""
+"Questo sito utilizza cookie tecnici, analytics e di terze parti. "
+"<br>Proseguendo nella navigazione accetti l’utilizzo dei cookie."
+msgstr ""
+
+#: header.php:36 header.php:37
+msgid "Vai al contenuto principale"
+msgstr ""
+
+#: header.php:47
+msgid "Sito"
+msgstr ""
+
+#: header.php:117
+msgid "Menu"
+msgstr ""
+
+#: inc/customizer.php:879
+msgid "Colore della testata"
+msgstr ""
+
+#: inc/customizer.php:889
+msgid "Colore dei link"
+msgstr ""
+
+#: inc/customizer.php:901
+msgid "Colore del footer"
+msgstr ""
+
+#: inc/customizer.php:912
+msgid "Colore dei link nel footer"
+msgstr ""
+
+#: inc/my_class-walker-category.php:49
+#, php-format
+msgid "Feed for all posts filed under %s"
+msgstr ""
+
+#: inc/my_class-walker-category.php:148
+msgid "No categories"
+msgstr ""
+
+#: inc/my_class-walker-category.php:151
+msgid "Categories"
+msgstr ""
+
+#: index.php:147
+msgid "Articoli del Blog"
+msgstr ""
+
+#: lib/bootstrap-italia/js/bootstrap-italia.bundle.min.js:7
+msgid "show"
+msgstr ""
+
+#: lib/bootstrap-italia/js/bootstrap-italia.bundle.min.js:7
+msgid "hide"
+msgstr ""
+
+#: lib/bootstrap-italia/js/bootstrap-italia.bundle.min.js:7
+msgid "toggle"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:29
+msgid ""
+"<span><i>il <strong>Titolo</strong> &egrave; la <strong>domanda della FAQ</"
+"strong>.<br>"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:30
+msgid "<h2>Risposta alla domanda della FAQ</h2>"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:38 plugins/faq/scuola_faq.php:39
+msgid "FAQs"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:40
+msgid "Archivio FAQ"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:41
+msgid "Attributi FAQ"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:42
+msgid "FAQ Padre:"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:43
+msgid "Tutte le FAQs"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:44
+msgid "Aggiungi nuova FAQ"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:45
+msgid "Aggiungi Nuova"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:46
+msgid "Nuova FAQ"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:47
+msgid "Modifica FAQ"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:48
+msgid "Aggiorna FAQ"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:49
+msgid "Visualizza FAQ"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:50
+msgid "Visualizza FAQs"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:51
+msgid "Cerca FAQ"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:52
+msgid "FAQ non trovata"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:53
+msgid "FAQ non trovato nel cestino"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:54
+msgid "Lista FAQs"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:55
+msgid "Naviga la Lista delle FAQs"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:56
+msgid "Filtra lista FAQs"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:59
+msgid "FAQ"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:60
+msgid "Frequently asked questions (FAQ), alias Le domande più frequenti."
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:84 plugins/faq/scuola_faq.php:85
+msgid "Gruppi di FAQs"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:86
+msgid "Gruppo di FAQs padre"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:87
+msgid "Gruppi di FAQs padre"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:88
+msgid "Nuovo Gruppo di FAQs"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:89
+msgid "Aggiungi nuovo Gruppo di FAQs"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:90
+msgid "Modifica Gruppo di FAQs"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:91
+msgid "Aggiorna Gruppo di FAQs"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:92
+msgid "Visualizza Gruppo di FAQs"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:93
+msgid "Separere i Gruppo di FAQs con le virgole"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:94
+msgid "Aggiungi o Rimuovi Gruppi di FAQs"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:95
+msgid "Seleziona tra i Gruppi di FAQs magiornamente utilizzati"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:96
+msgid "Gruppi di FAQs più popolari"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:97
+msgid "Cerca Gruppo di FAQs"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:98
+msgid "Gruppo di FAQs non trovato"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:99
+msgid "Nessun Gruppo di FAQs"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:100
+msgid "Elenco Gruppo di FAQs"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:101
+msgid "Naviga nella Lista dei Gruppi di FAQs"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:133
+#: plugins/gestione-circolari/GestioneCircolari.php:1579
+msgid "M j, Y @ G:i"
+msgstr ""
+
+#: plugins/faq/scuola_faq.php:277
+msgid "Inserisci la Domanda della FAQ"
+msgstr ""
+
+#: plugins/gestione-circolari/GestioneCircolari_CustomPostType.php:34
+msgid "Circolari"
+msgstr ""
+
+#: plugins/gestione-circolari/GestioneCircolari_CustomPostType.php:35
+msgid "Circolare"
+msgstr ""
+
+#: plugins/gestione-circolari/GestioneCircolari_CustomPostType.php:36
+msgid "Aggiungi Circolare"
+msgstr ""
+
+#: plugins/gestione-circolari/GestioneCircolari_CustomPostType.php:38
+msgid "Modifica"
+msgstr ""
+
+#: plugins/gestione-circolari/GestioneCircolari_CustomPostType.php:39
+msgid "Modifica Circolare"
+msgstr ""
+
+#: plugins/gestione-circolari/GestioneCircolari_CustomPostType.php:40
+msgid "Nuova Circolare"
+msgstr ""
+
+#: plugins/gestione-circolari/GestioneCircolari_CustomPostType.php:41
+msgid "Circolare Aggiornata"
+msgstr ""
+
+#: plugins/gestione-circolari/GestioneCircolari_CustomPostType.php:42
+msgid "Visualizza Circolare"
+msgstr ""
+
+#: plugins/gestione-circolari/GestioneCircolari_CustomPostType.php:43
+msgid "Visualizza"
+msgstr ""
+
+#: plugins/gestione-circolari/GestioneCircolari_CustomPostType.php:44
+msgid "Cerca Circolare"
+msgstr ""
+
+#: plugins/gestione-circolari/GestioneCircolari_CustomPostType.php:45
+msgid "Nessuna Circolare trovata"
+msgstr ""
+
+#: plugins/gestione-circolari/GestioneCircolari_CustomPostType.php:46
+msgid "Nessuna Circolare trovata nel cestino"
+msgstr ""
+
+#: plugins/gestione-circolari/GestioneCircolari_CustomPostType.php:47
+msgid "Circolare superiore"
+msgstr ""
+
+#: plugins/gestione-circolari/GestioneNavigazioneCircolari.widget.php:39
+#: plugins/gestione-circolari/XXXGestioneNavigazioneCircolari.widget.php:39
+msgid "Select page"
+msgstr ""
+
+#: plugins/gestione-circolari/admin/gruppi.php:146
+msgid "Gruppi"
+msgstr ""
+
+#: plugins/gestione-circolari/admin/gruppi.php:147
+msgid "Tutti i Gruppi"
+msgstr ""
+
+#: plugins/gestione-circolari/admin/gruppi.php:148
+msgid "Gruppo padre"
+msgstr ""
+
+#: plugins/gestione-circolari/admin/gruppi.php:149
+msgid "Gruppo padre:"
+msgstr ""
+
+#: plugins/gestione-circolari/admin/gruppi.php:150
+msgid "Nuovo Gruppo"
+msgstr ""
+
+#: plugins/gestione-circolari/admin/gruppi.php:151
+msgid "Aggiungi nuovo Gruppo"
+msgstr ""
+
+#: plugins/gestione-circolari/admin/gruppi.php:152
+msgid "Modifica Gruppo"
+msgstr ""
+
+#: plugins/gestione-circolari/admin/gruppi.php:153
+msgid "Aggiorna Gruppo"
+msgstr ""
+
+#: plugins/gestione-circolari/admin/gruppi.php:154
+msgid "Visualizza Gruppo"
+msgstr ""
+
+#: plugins/gestione-circolari/admin/gruppi.php:155
+msgid "Gruppi separati da virgola"
+msgstr ""
+
+#: plugins/gestione-circolari/admin/gruppi.php:156
+msgid "Aggiungi o rimuovi Gruppi"
+msgstr ""
+
+#: plugins/gestione-circolari/admin/gruppi.php:157
+msgid "Scegli tra i più usati"
+msgstr ""
+
+#: plugins/gestione-circolari/admin/gruppi.php:158
+msgid "Gruppi popolari"
+msgstr ""
+
+#: plugins/gestione-circolari/admin/gruppi.php:159
+msgid "Cerca Gruppi"
+msgstr ""
+
+#: plugins/gestione-circolari/admin/gruppi.php:160
+msgid "Gruppo non trovato"
+msgstr ""
+
+#: plugins/gestione-circolari/admin/gruppi.php:161
+msgid "Nessun Gruppo"
+msgstr ""
+
+#: plugins/gestione-circolari/admin/gruppi.php:162
+msgid "Elenco Gruppi"
+msgstr ""
+
+#: plugins/gestione-circolari/admin/gruppi.php:163
+msgid "Navigazione elenco Gruppi"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:64
+msgid "Stato del Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:68
+msgid "Selezionare per attivare il Servizio."
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:73
+msgid "Ordine di visualizzazione del Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:77
+msgid "Indicare l'ordine di visualizzaznione del Servizio."
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:82
+msgid "URL di erogazione del Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:90
+msgid "URL di descrizione del Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:98
+msgid "Codice IPA"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:102
+msgid ""
+"Codice Indice dei domicili digitali della Pubblica Amministrazione (https://"
+"indicepa.gov.it/)."
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:153
+#: plugins/servizi/scuola_servizi.php:154
+#: plugins/servizi/scuola_servizi.php:180
+msgid "Servizi"
+msgstr "Services"
+
+#: plugins/servizi/scuola_servizi.php:155
+msgid "Archivio Servizi"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:156
+msgid "Attributi Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:157
+msgid "Servizio Padre:"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:158
+msgid "Tutti i Servizi"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:159
+msgid "Aggiungi nuovo Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:160
+msgid "Aggiungi Nuovo"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:161
+msgid "Nuovo Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:162
+msgid "Modifica Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:163
+msgid "Aggiorna Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:164
+msgid "Visualizza Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:165
+msgid "Visualizza Servizi"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:166
+msgid "Cerca Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:167
+msgid "Servizio non trovato"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:168
+msgid "Servizio non trovato nel cestino"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:169
+msgid "Logo Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:170
+msgid "Imposta Logo Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:171
+msgid "Rimuovi Logo Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:172
+msgid "Usa Logo Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:173
+msgid "Inserisci nel Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:174
+msgid "Carica in questo Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:175
+msgid "Lista Servizi"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:176
+msgid "Naviga la Lista dei Servizi"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:177
+msgid "Filtra lista Servizi"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:181
+msgid "I servizi interni ed esterni della scuola."
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:205
+msgid "Tipi di Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:206
+msgid "Tutti i tipi di Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:207
+#: plugins/servizi/scuola_servizi.php:208
+msgid "Tipo di Servizio padre"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:209
+msgid "Nuovo Tipo di Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:210
+msgid "Aggiungi nuovo Tipo di Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:211
+msgid "Modifica Tipo di Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:212
+msgid "Aggiorna Tipo di Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:213
+msgid "Visualizza Tipo di Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:214
+msgid "Separere i Tipi di Servizio con le virgole"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:215
+msgid "Aggiungi o Rimuovi Tipi di Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:216
+msgid "Seleziona tra i Tipi di Servizio magiornamente utilizzati"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:217
+msgid "Tipi di Servizo più popolari"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:218
+msgid "Cerca Tipo di Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:219
+msgid "Tipo di Servizio non trovato"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:220
+msgid "Nessun Tipo di Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:221
+msgid "Elenco Tipi di Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:222
+msgid "Naviga nella Lista dei Tipi di Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:244
+msgid "Inserisci il Nome del Servizio"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:252
+msgid ""
+"<span><em>il <strong>Titolo</strong> &egrave; il <strong>Nome del Servizio</"
+"strong>.<br /><br />"
+msgstr ""
+
+#: plugins/servizi/scuola_servizi.php:253
+msgid ""
+"<span style=\"font-size: 23px;font-weight: 400;margin: 0;padding: 9px 0 4px "
+"0;line-height: 1.3;\">Descrizione del Servizio</span>"
+msgstr ""
+
+#: search.php:105
+msgid "Inserisci un termine per la ricerca: "
+msgstr ""
+
+#: search.php:115
+msgid "Attenzione"
+msgstr ""
+
+#: search.php:117
+msgid "Non sono stati trovati contenuti con i parametri indicati"
+msgstr ""
+
+#: searchform.php:16
+msgid "Ricerca all'interno del sito"
+msgstr ""
+
+#: searchform.php:19
+msgid "Cerca"
+msgstr ""
+
+#: single-circolari_scuola.php:68
+msgid "entro OGGI"
+msgstr ""
+
+#: single-circolari_scuola.php:71
+msgid "entro DOMANI"
+msgstr ""
+
+#: single-circolari_scuola.php:74
+#, php-format
+msgid "entro %s giorni"
+msgstr ""
+
+#: single-circolari_scuola.php:79
+#, php-format
+msgid "Esprimere adesione %s"
+msgstr ""
+
+#: single-circolari_scuola.php:81
+#, php-format
+msgid "Firmare %s"
+msgstr ""
+
+#: single-circolari_scuola.php:85
+msgid "Firmata"
+msgstr ""
+
+#: tag.php:102
+msgid "Articoli con Tag"
+msgstr ""
+
+#: tag.php:125
+msgid "Etichette"
+msgstr ""
+
+#: template-parts/entry-content.php:16
+msgid "Pagine: "
+msgstr ""
+
+#: template-parts/entry-excerpt.php:4
+msgid "Riassunto"
+msgstr ""
+
+#: widget/widget_articoli_griglia.php:43
+msgid "Articoli per categoria"
+msgstr ""
+
+#: widget/widget_articoli_griglia.php:191
+msgid "Title:"
+msgstr ""
+
+#: widget/widget_articoli_griglia.php:196
+msgid "Numero di articoli da visualizzare:"
+msgstr ""
+
+#: widget/widget_articoli_griglia.php:201
+msgid "Seleziona la categoria:"
+msgstr ""
+
+#: widget/widget_articoli_griglia.php:220
+msgid ""
+"Visualizza articoli casualmente. Se deselezionato, verranno visualizzati "
+"prima i pi&ugrave; recenti."
+msgstr ""
+
+#: widget/widget_articoli_griglia.php:226
+msgid ""
+"Visualizza estratto. Se deselezionato, visualizza solo il titolo "
+"dell'articolo."
+msgstr ""
+
+#: widget/widget_articoli_griglia.php:232
+msgid "Visualizza le thumbnails degli articoli."
+msgstr ""
+
+#: widget/widget_articoli_griglia.php:238
+msgid "Visualizza le categorie degli articoli."
+msgstr ""
+
+#: widget/widget_articoli_griglia.php:244
+msgid "Visualizza le date degli articoli."
+msgstr ""
+
+#: widget/widget_articoli_griglia.php:250
+msgid "Visualizza l'ombra delle schede."
+msgstr ""
+
+#~ msgid "No events"
+#~ msgstr "No events"
+
+#~ msgid "No locations"
+#~ msgstr "No locations"

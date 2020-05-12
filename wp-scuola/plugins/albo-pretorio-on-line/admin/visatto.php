@@ -51,59 +51,59 @@ function Visualizza_Atto($Parametri){
 	ap_insert_log(5,5,$id,"Visualizzazione");
 	$coloreAnnullati=get_option('opt_AP_ColoreAnnullati');
 	if($risultato->DataAnnullamento!='0000-00-00')
-		$Annullato='<p style="background-color: '.$coloreAnnullati.';text-align:center;font-size:1.5em;">Atto Annullato dal Responsabile del Procedimento<br /><br />Motivo: <span style="font-size:1;font-style: italic;">'.stripslashes($risultato->MotivoAnnullamento).'</span></p>';
+		$Annullato='<p style="background-color: '.$coloreAnnullati.';text-align:center;font-size:1.5em;">'.__("Atto Annullato dal Responsabile del Procedimento", 'wpscuola').'<br /><br />'.__("Motivo", 'wpscuola').': <span style="font-size:1;font-style: italic;">'.stripslashes($risultato->MotivoAnnullamento).'</span></p>';
 	else
 		$Annullato='';
 	$Stato="Scaduto";
 	if ($risultato->DataFine>date("Y-m-d"))
-		$Stato="In corso di Validità";
+		$Stato=__("In corso di Validità", 'wpscuola');
 ?>
 <section  id="DatiAtto">
 	<div class="container clearfix mb-3 pb-3">
 		<h2 class="u-text-h2 pt-3 pl-2"><?php echo $Titolo;?></h2>
-		<?php echo ($Annullato?"<h3>'.$Annullato.'</h3>":"");?>
+		<?php echo ($Annullato?"<h3>".$Annullato."</h3>":"");?>
 	   	<div class="row">
 	   		<div class="col-12 col-xl-8">
 				<table class="table table-striped table-hove">
 				    <tbody id="dati-atto">
 				    <tr>
-				    	<th class="w-25 text-right">Stato Atto</th>
+				    	<th class="w-25 text-right"><?php _e("Stato Atto", 'wpscuola');?></th>
 				    	<td class="align-middle"><?php echo $Stato;?></td>
 				    </tr>
 					<tr>
-						<th class="w-25 text-right">Ente titolare dell'Atto</th>
+						<th class="w-25 text-right"><?php _e("Ente titolare dell'Atto", 'wpscuola');?></th>
 						<td class="align-middle"><?php echo stripslashes(ap_get_ente($risultato->Ente)->Nome);?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right">Numero Albo</th>
+						<th class="w-25 text-right"><?php _e("Numero Albo", 'wpscuola');?></th>
 						<td class="align-middle"><?php echo $risultato->Numero."/".$risultato->Anno;?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right">Codice di Riferimento</th>
+						<th class="w-25 text-right"><?php _e("Codice di Riferimento", 'wpscuola');?></th>
 						<td class="align-middle"><?php echo stripslashes($risultato->Riferimento);?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right">Oggetto</th>
+						<th class="w-25 text-right"><?php _e("Oggetto", 'wpscuola');?></th>
 						<td class="align-middle"><?php echo stripslashes($risultato->Oggetto);?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right">Data inizio Pubblicazione</th>
+						<th class="w-25 text-right"><?php _e("Data inizio Pubblicazione", 'wpscuola');?></th>
 						<td class="align-middle"><?php echo ap_VisualizzaData($risultato->DataInizio);?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right">Data fine Pubblicazione</th>
+						<th class="w-25 text-right"><?php _e("Data fine Pubblicazione", 'wpscuola');?></th>
 						<td class="align-middle"><?php echo ap_VisualizzaData($risultato->DataFine)?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right">Data oblio</th>
+						<th class="w-25 text-right"><?php _e("Data oblio", 'wpscuola');?></th>
 						<td class="align-middle"><?php echo ap_VisualizzaData($risultato->DataOblio);?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right">Note</th>
+						<th class="w-25 text-right"><?php _e("Note", 'wpscuola');?></th>
 						<td class="align-middle"><?php echo stripslashes($risultato->Informazioni);?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right">Categoria</th>
+						<th class="w-25 text-right"><?php _e("Categoria", 'wpscuola');?></th>
 						<td class="align-middle"><?php echo stripslashes($risultatocategoria->Nome)?></td>
 					</tr>
 <?php
@@ -116,7 +116,7 @@ if($MetaDati!==FALSE){
 	$Meta=substr($Meta,0,-3);?>
 					<h2 class="u-text-h2 pt-3 pl-2"><?php echo $Titolo;?></h2>
 					<tr>
-						<th>Meta Dati</th>
+						<th><?php _e("Meta Dati", 'wpscuola');?></th>
 						<td style="vertical-align: middle;"><?php echo $Meta;?></td>
 					</tr>
 <?php }?>
@@ -158,7 +158,7 @@ foreach($Soggetti as $Soggetto){
 	</div>
 	   	<div class="row">
 	   		<div class="col">
-			<h3 class="u-text-h2 pt-3 pb-2">Allegati</h3>
+			<h3 class="u-text-h2 pt-3 pb-2"><?php _e("Allegati", 'wpscuola');?></h3>
 <?php
 if (strpos(get_permalink(),"?")>0)
 	$sep="&amp;";
@@ -180,7 +180,7 @@ foreach ($allegati as $allegato) {
 	if (is_file($allegato->Allegato))
 		echo '        <a href="'.ap_DaPath_a_URL($allegato->Allegato).'" class="addstatdw" rel="'.get_permalink().$sep.'action=addstatall&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" target="_blank">'. basename( $allegato->Allegato).'</a> ('.ap_Formato_Dimensione_File(filesize($allegato->Allegato)).')<br />'.htmlspecialchars_decode($TipidiFiles[strtolower($Estensione)]['Verifica']).' <a href="'.get_permalink().$sep.'action=dwnalle&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" >Scarica allegato</a>';		
 			else
-				echo basename( $allegato->Allegato)." File non trovato, il file &egrave; stato cancellato o spostato!";?>
+				echo basename( $allegato->Allegato)." ".__("File non trovato, il file &egrave; stato cancellato o spostato!", 'wpscuola');?>
 			</div>
 		</div>
 <?php	}?>

@@ -11,6 +11,75 @@
  * Text Domain:       	wpscuola
 */
 
+
+function personaliza_file_render( $attributes, $content ) {
+	/**
+	 * Here you find an array with the ids of all 
+	 * the images that are in your gallery.
+	 * 
+	 * for example: 
+	 * $attributes = [
+	 *     "ids" => [ 12, 34, 56, 78 ]
+	 * ]
+	 *
+	 * Now have fun querying them,
+	 * arrangin them and returning your constructed markup!
+	*/
+  $IDFile=$attributes['id'];
+  $Link=$attributes['href'];
+  $Title = get_post($IDFile)->post_title; //The Title
+  $Description = get_post($IDFile)->post_content; // The Description	
+  $filesize = size_format(filesize( get_attached_file( $IDFile ) ), 2); 
+  $filetype = wp_check_filetype($Link);
+  $IconaFile='<i class="far fa-file"></i>';
+  switch ($filetype['ext']){
+  	case "txt": 
+  	case "odt": $IconaFile='<i class="far fa-file-alt fa-2x"></i>'; break;
+  	case "pdf": $IconaFile='<i class="far fa-file-pdf fa-2x"></i>'; break;
+ 	case "csv": $IconaFile='<i class="fas fa-file-csv fa-2x"></i>'; break;
+  	case "doc":
+  	case "rtf":
+  	case "docx": $IconaFile='<i class="far fa-file-word fa-2x"></i>'; break;
+  	case "xls":
+  	case "ods":
+  	case "xlsx": $IconaFile='<i class="far fa-file-excel fa-2x"></i>'; break;
+  	case "ppt":
+  	case "odp": 
+  	case "pptx": $IconaFile='<i class="far fa-file-powerpoint fa-2x"></i>'; break;
+  	case "mp4":  $IconaFile='<i class="far fa-file-video fa-2x"></i>'; break;
+  	case "zip":  $IconaFile='<i class="far fa-file-archive fa-2x"></i>'; break;
+  	case "png":
+  	case "jpg":
+  	case "jpeg":
+  	case "bmp":
+  	case "ico":$IconaFile='<i class="far fa-file-image fa-2x"></i>'; break;
+  }
+  $Contenuto='<div class="wp-block-file">'.
+  $IconaFile.' <a href="'.$Link.'" title="'.$Title.'">'.$Title.' ('.$filesize .')</a>';
+    	
+  if(strpos($content,"wp-block-file__button")!==FALSE) $Contenuto.='<a href="'.$Link.'" class="wp-block-file__button" download="">Download</a>';
+  if($Description) $Contenuto.='<br /><span>'.$Description.'</span>';
+  $Contenuto.='</div>';
+  return $Contenuto;
+/*   
+   <section class="entry-content">
+	               	               
+<div class="wp-block-file"><a href="https://isitalia.eduva.org/wp-content/uploads/2020/05/ALL.-A_-MODULO-domanda-iscrizione-PON_1.pdf">ALL.-A_-MODULO-domanda-iscrizione-PON_1</a><a href="https://isitalia.eduva.org/wp-content/uploads/2020/05/ALL.-A_-MODULO-domanda-iscrizione-PON_1.pdf" class="wp-block-file__button" download="">Download</a></div>
+	            </section>
+*/
+}
+
+function personaliza_blocco_file() {
+	register_block_type( 'core/file', array(
+		'render_callback' => 'personaliza_file_render',
+	) );
+}
+
+add_action( 'init', 'personaliza_blocco_file' );
+
+
+
+
 /* UPDATER THEME VERSION */
 require 'inc/theme-update-checker.php';
 $update_checker = new ThemeUpdateChecker(
@@ -472,7 +541,8 @@ function scuola_customize_head() {
 <!-- Custom <head> content -->
   <style type="text/css">
   body {color: <?php echo get_theme_mod( 'scuola_text_color', "#000000" ); ?>;}
-  .it-header-center-wrapper .it-header-center-content-wrapper .it-brand-wrapper a, .it-header-center-wrapper .it-header-center-content-wrapper .it-right-zone, .it-right-zone .nav li a,{color: <?php echo get_theme_mod( 'scuola_head_link_color', "#fff" );!important ?> }
+  .it-header-center-wrapper .it-header-center-content-wrapper .it-brand-wrapper a, .it-header-center-wrapper .it-header-center-content-wrapper .it-right-zone, .it-right-zone .nav li a{color: <?php echo get_theme_mod( 'scuola_head_link_color', "#fff" );!important ?> }
+  .wp-block-file .wp-block-file__button{background-color: <?php echo get_theme_mod( 'scuola_link_color', "#0066cc" );!important ?> }
    .mysearchform input[type="text"], .it-header-wrapper .mysearchform input[type="text"], .mysearchform [type="submit"]{color: <?php echo get_theme_mod( 'scuola_head_text_color', "#fff" );!important ?> }
     .mysearchform input[type="text"], .it-header-wrapper .mysearchform input[type="text"]{box-shadow: 0 1px 0px <?php echo get_theme_mod( 'scuola_head_text_color', "#fff" );!important ?>;}
     .it-footer-main{color: <?php echo get_theme_mod( 'scuola_footer_text_color', "#000000" ); ?>;}

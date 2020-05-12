@@ -103,11 +103,9 @@ class Articoli_Griglia extends WP_Widget {
                   <div class="card-body">
                     <div class="category-top">
                       <!-- <a class="category" href="#">Category</a> -->
-                      <?php if( true === $categories ) { ?> 
-                        <strong>
+                         <strong>
                           <?php the_category(', '); ?>
                         </strong>
-                      <?php } ?>
                       <?php if( true === $date ) { ?> 
                         <span class="data">
                           <?php echo get_the_date( 'j M Y' ); ?>
@@ -201,7 +199,7 @@ class Articoli_Griglia extends WP_Widget {
             <label for="<?php echo $this->get_field_id('cat_id'); ?>"><?php _e( 'Seleziona la categoria:' )?></label>
             <select id="<?php echo $this->get_field_id('cat_id'); ?>" name="<?php echo $this->get_field_name('cat_id'); ?>">
                 <?php 
-                $this->categories = get_categories();
+                $this->categories = get_categories(array('hide_empty' => false));
                 foreach ( $this->categories as $cat ) {
                     $selected = ( $cat->term_id == esc_attr( $cat_id ) ) ? ' selected = "selected" ' : '';
                     $option = '<option '.$selected .'value="' . $cat->term_id;

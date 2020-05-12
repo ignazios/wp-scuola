@@ -83,12 +83,12 @@ function FormatDataDB($Data,$incGG=0,$incMM=0,$incAA=0){
 }
 
 function circ_MeseLettere($mm){
-	$mesi = array('', 'Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio',  'Agosto', 'Settembre', 'Ottobre', 'Novembre','Dicembre');
+	$mesi = array('', __("Gennaio", 'wpscuola' ), __("Febbraio", 'wpscuola' ), __("Marzo", 'wpscuola' ), __("Aprile", 'wpscuola' ), __("Maggio", 'wpscuola' ), __("Giugno", 'wpscuola' ), __("Luglio", 'wpscuola' ),  __("Agosto", 'wpscuola' ), __("Settembre", 'wpscuola' ), __("Ottobre", 'wpscuola' ), __("Novembre", 'wpscuola' ),__("Dicembre", 'wpscuola' ));
 	return $mesi[$mm];	
 }
 
 function circ_GiornoLettere($gg){
-	$giorni = array('Domenica','Lunedì','Martedì', 'Mercoledì', 'Giovedì', 'Venerdì','Sabato');
+	$giorni = array(__("Domenica", 'wpscuola' ),__("Lunedì", 'wpscuola' ),__("Martedì", 'wpscuola' ), __("Mercoledì", 'wpscuola' ), __("Giovedì", 'wpscuola' ), __("Venerdì", 'wpscuola' ),__("Sabato", 'wpscuola' ));
 	return $giorni[$gg];
 }
 
@@ -533,7 +533,7 @@ function RimuoviFirmaCircolare($IDCircolare){
 		$MessaggioNotifica=get_option('Circolari_Messaggio_NotificaFirma');
 		$MsgFirma=$TestiRisposte[$firma->adesione]->get_RispostaMail();
 		$MsgFirmaLog=$TestiRisposte[$firma->adesione]->get_Risposta();
-		$StatoEmail="Email non inviata";
+		$StatoEmail=__("Email non inviata", 'wpscuola');
 		if(get_option('Circolari_NotificaFirma')=="Si"){
 			$DatiUtente=$current_user->display_name;
 			$Data=date("d/m/Y");
@@ -543,13 +543,13 @@ function RimuoviFirmaCircolare($IDCircolare){
 			$MessaggioNotifica= str_replace("{Link_Circolare}", get_permalink($IDCircolare), $MessaggioNotifica);
 			$MessaggioNotifica= str_replace("{Operazione}", "rimuovere ".$MsgFirma, $MessaggioNotifica); 
 			if (wp_mail($current_user->user_email,$OggettoNotifica,$MessaggioNotifica,"From: ".$MittenteNotifica)){
-				$StatoEmail="Email inviata correttamente";
+				$StatoEmail=__("Email inviata correttamente", 'wpscuola');
 			}else{
-				$StatoEmail="ERRORE Email non inviata";
+				$StatoEmail=__("ERRORE Email non inviata", 'wpscuola');
 			}
 		}
 		ScriviLog($IDCircolare,$current_user->ID,"UnSign",$MsgFirmaLog);
-		return "La Firma alla Circolare Num. ".GetNumeroCircolare($IDCircolare)." &egrave; correttamente rimossa<br />".$StatoEmail;
+		return sprintf(__("La Firma alla Circolare Num. %s è correttamente rimossa", 'wpscuola'),GetNumeroCircolare($IDCircolare))."<br />".$StatoEmail;
 	}	
 }
 function FirmaCircolare($IDCircolare,$Pv=-1){
@@ -586,13 +586,13 @@ function FirmaCircolare($IDCircolare,$Pv=-1){
 			$MessaggioNotifica= str_replace("{Link_Circolare}", get_permalink($IDCircolare), $MessaggioNotifica);
 			$MessaggioNotifica= str_replace("{Operazione}", $MsgFirma, $MessaggioNotifica); 
 			if (wp_mail($current_user->user_email,$OggettoNotifica,$MessaggioNotifica,"From: ".$MittenteNotifica)){
-				$StatoEmail="Email inviata correttamente";
+				$StatoEmail=__("Email inviata correttamente", 'wpscuola');
 			}else{
-				$StatoEmail="ERRORE Email non inviata";
+				$StatoEmail=__("ERRORE Email non inviata", 'wpscuola');
 			}
 		}
 		ScriviLog($IDCircolare,$current_user->ID,"Sign",$MsgFirmaLog);
-		return "Circolare Num. ".GetNumeroCircolare($IDCircolare)." Firmata correttamente <br />".$StatoEmail;
+		return sprintf(__("Circolare Num. %s Firmata correttamente", 'wpscuola'),GetNumeroCircolare($IDCircolare))."<br />".$StatoEmail;
 	}
 }
 function Get_User_Per_Gruppo($IdGruppo){
@@ -622,7 +622,7 @@ if (strpos($urlCircolari,"?")>0){
 $Ritorno="<ul>
 ";
 //echo $tipo."  ".$Categoria."  ".$Anno;
-$mesi = array("","Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre","Novembre", "Dicembre");
+$mesi = array('', __("Gennaio", 'wpscuola' ), __("Febbraio", 'wpscuola' ), __("Marzo", 'wpscuola' ), __("Aprile", 'wpscuola' ), __("Maggio", 'wpscuola' ), __("Giugno", 'wpscuola' ), __("Luglio", 'wpscuola' ),  __("Agosto", 'wpscuola' ), __("Settembre", 'wpscuola' ), __("Ottobre", 'wpscuola' ), __("Novembre", 'wpscuola' ),__("Dicembre", 'wpscuola' ));
 
 	$Sql='SELECT year('.$table_prefix.'posts.post_date) as anno  
 		FROM '.$table_prefix.'posts JOIN '.$table_prefix.'term_relationships ON '.$table_prefix.'posts.ID = '.$table_prefix.'term_relationships.object_id
@@ -644,7 +644,7 @@ WHERE post_type IN ("post","circolari_scuola") and post_status="publish"
 group by month('.$table_prefix.'posts.post_date)
 order by month('.$table_prefix.'posts.post_date) DESC;';
 $Ritorno.= "Anno ".$Anno["anno"].' <select name="archive-anni'.$Anno["anno"].'" onChange=\'document.location.href=this.options[this.selectedIndex].value;\'>
-        <option value="">Seleziona Mese\Anno</option>
+        <option value="">'.__("Seleziona Mese\Anno", 'wpscuola' ).'</option>
         <option value="'.$urlCircolari.$Sep.'Anno='.$Anno["anno"].'">'.$Anno["anno"].'</option>';
 			$Mesi=$wpdb->get_results($SqlMese,ARRAY_A );
 			foreach( $Mesi as $Mese){
@@ -666,9 +666,9 @@ if (strpos($urlCircolari,"?")>0){
 }else{
 	$Sep="?";
 }
-$Ritorno="<label for=\"archivio-anni-mesi\">Archivio</label>: <select id=\"archivio-anni-mesi\" name=\"archivio-anni-mesi\" onChange=\"document.location.href=this.options[this.selectedIndex].value;\">";
+$Ritorno="<label for=\"archivio-anni-mesi\">".__("Archivio", 'wpscuola' )."</label>: <select id=\"archivio-anni-mesi\" name=\"archivio-anni-mesi\" onChange=\"document.location.href=this.options[this.selectedIndex].value;\">";
 //echo $tipo."  ".$Categoria."  ".$Anno;
-$mesi = array("","Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre","Novembre", "Dicembre");
+$mesi = array('', __("Gennaio", 'wpscuola' ), __("Febbraio", 'wpscuola' ), __("Marzo", 'wpscuola' ), __("Aprile", 'wpscuola' ), __("Maggio", 'wpscuola' ), __("Giugno", 'wpscuola' ), __("Luglio", 'wpscuola' ),  __("Agosto", 'wpscuola' ), __("Settembre", 'wpscuola' ), __("Ottobre", 'wpscuola' ), __("Novembre", 'wpscuola' ),__("Dicembre", 'wpscuola' ));
 
 	$Sql='SELECT year('.$table_prefix.'posts.post_date) as anno  
 		FROM '.$table_prefix.'posts JOIN '.$table_prefix.'term_relationships ON '.$table_prefix.'posts.ID = '.$table_prefix.'term_relationships.object_id

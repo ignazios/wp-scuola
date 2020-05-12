@@ -33,7 +33,7 @@ function get_FiltriParametri($Stato=1,$cat=0,$StatoFinestra="si"){
         	</div>
         	<div class="row mb-2">
        			<div class="col-12 col-lg-4 etichetta_filtri">
-					<label>Atto</label>
+					<label>'.__("Atto", 'wpscuola').'</label>
 				</div>
         		<div class="col-12 col-lg-8">				
 					<input class="w-50 d-inline" placeholder="N&deg; Atto" type="number" size="10" maxlength="15" id="numero" name="numero" value="'.(isset($_REQUEST['numero'])?$_REQUEST['numero']:"").'" />/'.$anni.'
@@ -41,7 +41,7 @@ function get_FiltriParametri($Stato=1,$cat=0,$StatoFinestra="si"){
 			</div>
        		<div class="row mb-2">
        			<div class="col-12 col-lg-4 etichetta_filtri">
-					<label>Riferimento</label>
+					<label>'.__("Riferimento", 'wpscuola').'</label>
 				</div>
         		<div class="col-12 col-lg-8">				
 					<input type="text" size="40" name="riferimento" id ="riferimento" value="'.(isset($_REQUEST['riferimento'])?$_REQUEST['riferimento']:"").'"/>
@@ -49,7 +49,7 @@ function get_FiltriParametri($Stato=1,$cat=0,$StatoFinestra="si"){
 			</div>
        		<div class="row mb-2">
        			<div class="col-12 col-lg-4 etichetta_filtri">
-					<label>Oggetto</label>
+					<label>'.__("Oggetto", 'wpscuola').'</label>
 				</div>
         		<div class="col-12 col-lg-8">				
 					<input type="text" size="40" name="oggetto" id ="oggetto" value="'.(isset($_REQUEST['oggetto'])?$_REQUEST['oggetto']:"").'"/>
@@ -57,7 +57,7 @@ function get_FiltriParametri($Stato=1,$cat=0,$StatoFinestra="si"){
 			</div>
        		<div class="row mb-2">
        			<div class="col-12 col-lg-4 etichetta_filtri">
-					<label>da Data</label>
+					<label>'.__("da Data", 'wpscuola').'</label>
 				</div>
         		<div class="col-12 col-lg-8">				
 					<input name="DataInizio" class="w-50" id="Calendario1" type="text" value="'.htmlentities((isset($_REQUEST['DataInizio'])?$_REQUEST['DataInizio']:"")).'" size="10"/>
@@ -65,7 +65,7 @@ function get_FiltriParametri($Stato=1,$cat=0,$StatoFinestra="si"){
 			</div>
        		<div class="row mb-2">
        			<div class="col-12 col-lg-4 etichetta_filtri">
-					<label>a Data</label>
+					<label>'.__("a Data", 'wpscuola').'</label>
 				</div>
         		<div class="col-12 col-lg-8">				
 					<input name="DataFine" class="w-50" id="Calendario2" type="text" value="'.htmlentities((isset($_REQUEST['DataFine'])?$_REQUEST['DataFine']:"")).'" size="10"/>
@@ -73,10 +73,10 @@ function get_FiltriParametri($Stato=1,$cat=0,$StatoFinestra="si"){
 			</div>
       		<div class="row mt-2">
        			<div class="col col-12 col-lg-6 d-flex justify-content-center">
-			      <button type="submit" class="btn btn-primary" name="filtra" id="filtra" value="Filtra">Filtra</button>
+			      <button type="submit" class="btn btn-primary" name="filtra" id="filtra" value="Filtra">'.__("Filtra", 'wpscuola').'</button>
 			    </div>
        			<div class="col col-12 col-lg-6 d-flex justify-content-center">
-			      <button type="submit" class="btn btn-outline-primary" name="annullafiltro" id="annullafiltro" value="Annulla Filtro">Annulla Filtro</button>
+			      <button type="submit" class="btn btn-outline-primary" name="annullafiltro" id="annullafiltro" value="Annulla Filtro">'.__("Annulla Filtro", 'wpscuola').'</button>
 			    </div>
 			</div>
  		</div>
@@ -100,7 +100,7 @@ function get_FiltriCategorie($Stato=1){
 	      		$HTMLL.='               <li style="text-align:left;padding-left:'.$shift.'px;font-weight: bold;"><a href="'.get_permalink().$sep.'filtra=Filtra&amp;categoria='.$riga[0].'"  >'.$riga[1].'</a> '.$numAtti.'</li>'; 
 		}
 	}else{
-		$HTMLL.= '                <li>Nessuna Categoria Codificata</li>';
+		$HTMLL.= '                <li>'.__("Nessuna Categoria Codificata", 'wpscuola').'</li>';
 	}
 	$HTMLL.='             </ul>';
 	return $HTMLL;

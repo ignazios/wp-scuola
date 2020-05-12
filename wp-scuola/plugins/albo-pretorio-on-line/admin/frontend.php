@@ -12,57 +12,57 @@ ob_start();
 
 if(isset($_REQUEST['id']) And !is_numeric($_REQUEST['id'])){
 	$_REQUEST['id']=0;
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> E' stato indicato un VALORE non valido per il parametro <span style='color:red;'>ID</span>";
+	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>ID</span>";
 	return;
 }
 if(isset($_REQUEST['action']) And $_REQUEST['action']!=wp_strip_all_tags($_REQUEST['action'])){
 	unset($_REQUEST['action']);
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> E' stato indicato un VALORE non valido per il parametro <span style='color:red;'>Action</span>";
+	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>Action</span>";
 	return;
 }
 if(isset($_REQUEST['categoria']) And !is_numeric($_REQUEST['categoria'])){
 	$_REQUEST['categoria']=0;
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> E' stato indicato un VALORE non valido per il parametro <span style='color:red;'>Categoria</span>";
+	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>".__("Categoria", 'wpscuola')."</span>";
 }
 if(isset($_REQUEST['numero']) And $_REQUEST['numero']!="" AND !is_numeric($_REQUEST['numero'])){
 	$_REQUEST['numero']="";
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> E' stato indicato un VALORE non valido per il parametro <span style='color:red;'>Numero</span>";
+	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>".__("Numero", 'wpscuola')."</span>";
 }
 if(isset($_REQUEST['anno']) And !is_numeric($_REQUEST['anno'])){
 	$_REQUEST['anno']=0;
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> E' stato indicato un VALORE non valido per il parametro <span style='color:red;'>Anno</span>";
+	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>".__("Anno", 'wpscuola')."</span>";
 }
 if(isset($_REQUEST['ente']) And !is_numeric($_REQUEST['ente'])){
 	$_REQUEST['ente']="-1";
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> E' stato indicato un VALORE non valido per il parametro <span style='color:red;'>Ente</span>";
+	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>".__("Ente", 'wpscuola')."</span>";
 }
 if(isset($_REQUEST['Pag']) And !is_numeric($_REQUEST['Pag'])){
 	$_REQUEST['Pag']=1;
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> E' stato indicato un VALORE non valido per il parametro <span style='color:red;'>Pag</span>";
+	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>".__("Pag", 'wpscuola')."</span>";
 }
 if(isset($_REQUEST['oggetto']) And $_REQUEST['oggetto']!=wp_strip_all_tags($_REQUEST['oggetto'])){
 	$_REQUEST['oggetto']="";
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> E' stato indicato un VALORE non valido per il parametro <span style='color:red;'>Oggetto</span>";
+	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>".__("Oggetto", 'wpscuola')."</span>";
 }
 if(isset($_REQUEST['riferimento']) And $_REQUEST['riferimento']!=wp_strip_all_tags($_REQUEST['riferimento'])){
 	$_REQUEST['riferimento']="";
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> E' stato indicato un VALORE non valido per il parametro <span style='color:red;'>Riferimento</span>";
+	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>".__("Riferimento", 'wpscuola')."</span>";
 }
 if(isset($_REQUEST['DataInizio']) And $_REQUEST['DataInizio']!=wp_strip_all_tags($_REQUEST['DataInizio'])){
 	$_REQUEST['DataInizio']="";
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> E' stato indicato un VALORE non valido per il parametro <span style='color:red;'>Da Data</span>";
+	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>".__("Da Data", 'wpscuola')."</span>";
 }
 if(isset($_REQUEST['DataFine']) And $_REQUEST['DataFine']!=wp_strip_all_tags($_REQUEST['DataFine'])){
 	$_REQUEST['DataFine']="";
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> E' stato indicato un VALORE non valido per il parametro <span style='color:red;'>A Data</span>";
+	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>".__("A Data", 'wpscuola')."</span>";
 }
 if(isset($_REQUEST['filtra']) And $_REQUEST['filtra']!="Filtra"){
 	$_REQUEST['filtra']="Filtra";
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> E' stato indicato un VALORE non valido per il parametro <span style='color:red;'>filtra</span>";
+	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>".__("Filtra", 'wpscuola')."</span>";
 }
 if(isset($_REQUEST['vf']) And ($_REQUEST['vf']!="s" And $_REQUEST['vf']!="h" And $_REQUEST['vf']!="undefined")){
 	$_REQUEST['vf']="undefined";
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> E' stato indicato un VALORE non valido per il parametro <span style='color:red;'>vf</span>";
+	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>vf</span>";
 }
 foreach($_REQUEST as $Key => $Val){
 	$_REQUEST[$Key]=htmlspecialchars(wp_strip_all_tags($_REQUEST[$Key]));
@@ -80,14 +80,14 @@ if(isset($_REQUEST['action'])){
                     StampaAtto($_REQUEST['id'], 'a');
                 }
             }else{
-				echo "ATTENZIONE:<br />E' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO";
+				_e("ATTENZIONE:<br />E' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO", 'wpscuola');
 			}
             break;
 		case 'visatto':
 			if(is_numeric($_REQUEST['id']))
 				$ret=VisualizzaAtto($_REQUEST['id']);
 			else{
-				echo "ATTENZIONE:<br />E' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO";
+				_e("ATTENZIONE:<br />E' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO", 'wpscuola');
 			}
 			break;
 		case 'addstatall':
@@ -100,15 +100,15 @@ if(isset($_REQUEST['action'])){
 				   !is_numeric($_REQUEST['numero']) OR
 				   !is_numeric($_REQUEST['anno']) OR
 				   !is_numeric($_REQUEST['ente'])){
-						echo "ATTENZIONE:<br />E' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO";
+						_e("ATTENZIONE:<br />E' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO", 'wpscuola');
 						break;
 				}
 			if($_REQUEST['oggetto']!=wp_strip_all_tags($_REQUEST['oggetto'])){
-				echo "ATTENZIONE:<br />E' stato indicato un parametro non valido nel campo Oggetto che può rappresentare un ATTACCO INFORMATICO AL SITO";
+				_e("ATTENZIONE:<br />E' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO", 'wpscuola');
 				break;
 			}
 			if($_REQUEST['riferimento']!=wp_strip_all_tags($_REQUEST['riferimento'])){
-				echo "ATTENZIONE:<br />E' stato indicato un parametro non valido nel campo Riferimento che può rappresentare un ATTACCO INFORMATICO AL SITO";
+				_e("ATTENZIONE:<br />E' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO", 'wpscuola');
 				break;
 			}
 	 		$ret=Lista_Atti($Parametri,$_REQUEST['categoria'],(int)$_REQUEST['numero'],(int)$_REQUEST['anno'], htmlentities($_REQUEST['oggetto']),htmlentities($_REQUEST['DataInizio']),htmlentities($_REQUEST['DataFine']), htmlentities($_REQUEST['riferimento']),$_REQUEST['ente']);
@@ -132,15 +132,15 @@ if(isset($_REQUEST['action'])){
 			   (isset($_REQUEST['numero']) And $_REQUEST['numero']!="" AND !is_numeric($_REQUEST['numero'])) OR
 			   (isset($_REQUEST['anno']) And !is_numeric($_REQUEST['anno'])) OR
 			   (isset($_REQUEST['ente']) And !is_numeric($_REQUEST['ente']))){
-					echo "ATTENZIONE:<br />E' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO";
+					_e("ATTENZIONE:<br />E' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO", 'wpscuola');
 					return;
 			}
 			if($_REQUEST['oggetto']!=wp_strip_all_tags($_REQUEST['oggetto'])){
-				echo "ATTENZIONE:<br />E' stato indicato un parametro non valido nel campo Oggetto che può rappresentare un ATTACCO INFORMATICO AL SITO";
+				_e("ATTENZIONE:<br />E' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO", 'wpscuola');
 				return;
 			}
 			if($_REQUEST['riferimento']!=wp_strip_all_tags($_REQUEST['riferimento'])){
-				echo "ATTENZIONE:<br />E' stato indicato un parametro non valido nel campo Riferimento che può rappresentare un ATTACCO INFORMATICO AL SITO";
+				_e("ATTENZIONE:<br />E' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO", 'wpscuola');
 				return;
 			}
 			$ret=Lista_Atti($Parametri,(int)$_REQUEST['categoria'],(int)$_REQUEST['numero'],(int)$_REQUEST['anno'], htmlentities($_REQUEST['oggetto']),htmlentities($_REQUEST['DataInizio']),htmlentities($_REQUEST['DataFine']), htmlentities($_REQUEST['riferimento']),(int)$_REQUEST['ente']);			
@@ -168,53 +168,53 @@ function VisualizzaAtto($id){
 	ap_insert_log(5,5,$id,"Visualizzazione");
 	$coloreAnnullati=get_option('opt_AP_ColoreAnnullati');
 	if($risultato->DataAnnullamento!='0000-00-00')
-		$Annullato='<p style="background-color: '.$coloreAnnullati.';text-align:center;font-size:1.5em;">Atto Annullato dal Responsabile del Procedimento<br /><br />Motivo: <span style="font-size:1;font-style: italic;">'.stripslashes($risultato->MotivoAnnullamento).'</span></p>';
+		$Annullato='<p style="background-color: '.$coloreAnnullati.';text-align:center;font-size:1.5em;">'.__("Atto Annullato dal Responsabile del Procedimento", 'wpscuola').'<br /><br />'.__("Motivo", 'wpscuola').': <span style="font-size:1;font-style: italic;">'.stripslashes($risultato->MotivoAnnullamento).'</span></p>';
 	else
 		$Annullato='';
 ?>
 <section  id="DatiAtto">
 	<div class="container clearfix mb-3 pb-3">
-		<button class="btn btn-primary" onclick="window.location.href='<?php echo $_SERVER['HTTP_REFERER'];?>'"><i class="fas fa-arrow-circle-left"></i> Torna alla Lista</button>
+		<button class="btn btn-primary" onclick="window.location.href='<?php echo $_SERVER['HTTP_REFERER'];?>'"><i class="fas fa-arrow-circle-left"></i> <?php _e("Torna alla Lista", 'wpscuola');?></button>
 		<h2 class="u-text-h2 pt-3 pl-2">Dati atto</h2>
-		<?php echo ($Annullato?"<h3>'.$Annullato.'</h3>":"");?>
+		<?php echo ($Annullato?"<h3>".$Annullato."</h3>":"");?>
 	   	<div class="row">
 	   		<div class="col-12 col-xl-8">
 				<table class="table table-striped table-hove">
 				    <tbody id="dati-atto">
 					<tr>
-						<th class="w-25 text-right">Ente titolare dell'Atto</th>
+						<th class="w-25 text-right"><?php _e("Ente titolare dell'Atto", 'wpscuola');?></th>
 						<td class="align-middle"><?php echo stripslashes(ap_get_ente($risultato->Ente)->Nome);?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right">Numero Albo</th>
+						<th class="w-25 text-right"><?php _e("Numero Albo", 'wpscuola');?></th>
 						<td class="align-middle"><?php echo $risultato->Numero."/".$risultato->Anno;?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right">Codice di Riferimento</th>
+						<th class="w-25 text-right"><?php _e("Codice di Riferimento", 'wpscuola');?></th>
 						<td class="align-middle"><?php echo stripslashes($risultato->Riferimento);?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right">Oggetto</th>
+						<th class="w-25 text-right"><?php _e("Oggetto", 'wpscuola');?></th>
 						<td class="align-middle"><?php echo stripslashes($risultato->Oggetto);?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right">Data inizio Pubblicazione</th>
+						<th class="w-25 text-right"><?php _e("Data inizio Pubblicazione", 'wpscuola');?></th>
 						<td class="align-middle"><?php echo ap_VisualizzaData($risultato->DataInizio);?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right">Data fine Pubblicazione</th>
+						<th class="w-25 text-right"><?php _e("Data fine Pubblicazione", 'wpscuola');?></th>
 						<td class="align-middle"><?php echo ap_VisualizzaData($risultato->DataFine)?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right">Data oblio</th>
+						<th class="w-25 text-right"><?php _e("Data oblio", 'wpscuola');?></th>
 						<td class="align-middle"><?php echo ap_VisualizzaData($risultato->DataOblio);?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right">Note</th>
+						<th class="w-25 text-right"><?php _e("Note", 'wpscuola');?></th>
 						<td class="align-middle"><?php echo stripslashes($risultato->Informazioni);?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right">Categoria</th>
+						<th class="w-25 text-right"><?php _e("Categoria", 'wpscuola');?></th>
 						<td class="align-middle"><?php echo stripslashes($risultatocategoria->Nome)?></td>
 					</tr>
 <?php
@@ -226,7 +226,7 @@ if($MetaDati!==FALSE){
 	}
 	$Meta=substr($Meta,0,-3);?>
 					<tr>
-						<th>Meta Dati</th>
+						<th><?php _e("Meta Dati", 'wpscuola');?></th>
 						<td style="vertical-align: middle;"><?php echo $Meta;?></td>
 					</tr>
 <?php }?>
@@ -239,7 +239,7 @@ $Soggetti=unserialize($risultato->Soggetti);
 $Soggetti=ap_get_alcuni_soggetti_ruolo(implode(",",$Soggetti));
 $Ruolo="";
 if($Soggetti){
-			echo "<h3 class=\"u-text-h2 pt-3 pl-2\">Soggetti</h3>";
+			echo "<h3 class=\"u-text-h2 pt-3 pl-2\">". __("Soggetti", 'wpscuola')."</h3>";
 }
 foreach($Soggetti as $Soggetto){
 	if(ap_get_Funzione_Responsabile($Soggetto->Funzione,"Display")=="No"){
@@ -255,11 +255,11 @@ foreach($Soggetti as $Soggetto){
 	if ($Soggetto->Email)
 		echo'		<a href="mailto:'.$Soggetto->Email.'">'.$Soggetto->Email.'</a><br />';
 	if ($Soggetto->Telefono)
-		echo	"Tel. ".$Soggetto->Telefono."<br />";
+		echo __("Tel.", 'wpscuola')." ".$Soggetto->Telefono."<br />";
 	if ($Soggetto->Orario)
-		echo 	"Orario ricevimento: ".$Soggetto->Orario.'<br />';
+		echo 	__("Orario ricevimento:", 'wpscuola')." ".$Soggetto->Orario.'<br />';
 	if ($Soggetto->Note)
-		echo	"Note: ".$Soggetto->Note;
+		echo __("Note:", 'wpscuola')." ".$Soggetto->Note;
 ?>
 				</div>
 			</div>
@@ -268,7 +268,7 @@ foreach($Soggetti as $Soggetto){
 	</div>
 	   	<div class="row">
 	   		<div class="col">
-			<h3 class="u-text-h2 pt-3 pb-2">Allegati</h3>
+			<h3 class="u-text-h2 pt-3 pb-2"><?php _e("Allegati", 'wpscuola');?></h3>
 <?php
 if (strpos(get_permalink(),"?")>0)
 	$sep="&amp;";
@@ -292,7 +292,7 @@ foreach ($allegati as $allegato) {
  <?php	if (is_file($allegato->Allegato))
 		echo '        <a href="'.ap_DaPath_a_URL($allegato->Allegato).'" class="addstatdw" rel="'.get_permalink().$sep.'action=addstatall&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" target="_blank">'. basename( $allegato->Allegato).'</a> ('.ap_Formato_Dimensione_File(filesize($allegato->Allegato)).')<br />'.htmlspecialchars_decode($TipidiFiles[strtolower($Estensione)]['Verifica']).' <a href="'.get_permalink().$sep.'action=dwnalle&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" >Scarica allegato</a>';		
 			else
-				echo basename( $allegato->Allegato)." File non trovato, il file &egrave; stato cancellato o spostato!";?>
+				echo basename( $allegato->Allegato)." ".__("File non trovato, il file &egrave; stato cancellato o spostato!", 'wpscuola');?>
 			</div>
 		</div>
 <?php	}?>
@@ -307,16 +307,16 @@ function Lista_Atti($Parametri,$Categoria=0,$Numero=0,$Anno=0,$Oggetto='',$Dadat
 	ob_start();
 	switch ($Parametri['stato']){
 			case 0:
-				$TitoloAtti="Tutti gli Atti";
+				$TitoloAtti=__("Tutti gli AttiTutti gli Atti", 'wpscuola');
 				break;
 			case 1:
-				$TitoloAtti="Atti in corso di Validit&agrave;";
+				$TitoloAtti=__("Atti in corso di Validit&agrave;", 'wpscuola');
 				break;
 			case 2:
-				$TitoloAtti="Atti Scaduti";
+				$TitoloAtti=__("Atti scaduti", 'wpscuola');
 				break;
 			case 3:
-				$TitoloAtti="Atti da Pubblicare";
+				$TitoloAtti=__("Atti da Pubblicare", 'wpscuola');
 				break;
 	}
 	if (isset($Parametri['per_page'])){
@@ -366,12 +366,12 @@ function Lista_Atti($Parametri,$Categoria=0,$Numero=0,$Anno=0,$Oggetto='',$Dadat
 	$coloreDispari=get_option('opt_AP_ColoreDispari');?>
 <section  id="FiltroAtti">
 	<div class="container shadow clearfix mb-3 pb-3">
-		<h2 class="u-text-h2 pt-3 pl-2">Filtri</h2>
+		<h2 class="u-text-h2 pt-3 pl-2"><?php _e("Filtri", 'wpscuola');?></h2>
 	   	<div class="row">
 	  	 	<div class="col-12 col-lg-6">
 	  	 		<div id="FiltriParametri" class="collapse-div collapse-background-active" role="tablist">
 					<div class="collapse-header" id="headingA1">
-				    	<button data-toggle="collapse" data-target="#Parametri" aria-expanded="false" aria-controls="Parametri" class="ButtonUF">Parametri</button>
+				    	<button data-toggle="collapse" data-target="#Parametri" aria-expanded="false" aria-controls="Parametri" class="ButtonUF"><?php _e("Parametri", 'wpscuola');?></button>
 				  	</div>
 					<div id="Parametri" class="collapse" role="tabpanel" aria-labelledby="headingA1" data-parent="#FiltriParametri">
 						<div class="collapse-body border border-primary rounded-bottom">
@@ -384,7 +384,7 @@ function Lista_Atti($Parametri,$Categoria=0,$Numero=0,$Anno=0,$Oggetto='',$Dadat
 	  	 	<div class="col-12 col-lg-6">
 	  	 		<div id="FiltriParametri" class="collapse-div collapse-background-active" role="tablist">
 					<div class="collapse-header" id="headingA1">
-				    	<button data-toggle="collapse" data-target="#Categorie" aria-expanded="false" aria-controls="Categorie" class="ButtonUF">Categorie</button>    	
+				    	<button data-toggle="collapse" data-target="#Categorie" aria-expanded="false" aria-controls="Categorie" class="ButtonUF"><?php _e("Categorie", 'wpscuola');?></button>    	
 				  	</div>
 					<div id="Categorie" class="collapse" role="tabpanel" aria-labelledby="headingA1" data-parent="#FiltriParametri">
 						<div class="collapse-body border border-primary rounded-bottom">
@@ -421,13 +421,13 @@ if ($TotAtti>$N_A_pp){
 			$Npag++;
 		}
 		$Nav.= '<div> 
-    		<strong>N. Atti '.$TotAtti.'</strong>
+    		<strong>'.__("N. Atti", 'wpscuola').' '.$TotAtti.'</strong>
 	     		<ul class="page-numbers" id="PagineAlboOnLine">';
      	if (isset($_REQUEST['Pag']) And $_REQUEST['Pag']>1 ){
  			$Pagcur=$_REQUEST['Pag'];
 			$PagPre=$Pagcur-1; 
-				$Nav.= '<li><a href="'.$Para.'1" class="prev page-numbers" title="Vai alla prima pagina"><i class="it-arrow-left-triangle"></i></a></li>
-					  <li><a href="'.$Para.$PagPre.'" class="page-numbers" title="Vai alla pagina precedente"><i class="it-chevron-left"></i></a></li> ';
+				$Nav.= '<li><a href="'.$Para.'1" class="prev page-numbers" title="'.__("Vai alla prima pagina", 'wpscuola').'"><i class="it-arrow-left-triangle"></i></a></li>
+					  <li><a href="'.$Para.$PagPre.'" class="page-numbers" title="'.__("Vai alla pagina precedente", 'wpscuola').'"><i class="it-chevron-left"></i></a></li> ';
 		}else{
 			$Pagcur=1;
 		}
@@ -440,15 +440,15 @@ if ($TotAtti>$N_A_pp){
 		}
 		for($i=$MInf;$i<$MSup+1;$i++){
 			if($i==$Pagcur){
-				$Nav.= "<li><span aria-current=\"page\" class=\"page-numbers current\" title=\"Sei gi&agrave; nella prima pagina\">".$i."</span></li>";
+				$Nav.= "<li><span aria-current=\"page\" class=\"page-numbers current\" title=\"".__("Sei gi&agrave; nella prima pagina", 'wpscuola')."\">".$i."</span></li>";
 			}else{
 				$Nav.= "<li><a class=\"page-numbers\" href=\"".$Para.$i."\">".$i."</a>";
 			}
 		}
    		if (isset($_REQUEST['Pag']) And $_REQUEST['Pag']<$Npag ){
    			$PagSuc=($Pagcur==$Npag?$Npag:$Pagcur+1);
- 			$Nav.= '<li><a href="'.$Para.$PagSuc.'" class="next page-numbers" title="Vai alla pagina successiva"><i class="it-chevron-right"></i></a></li>
-				  <li><a href="'.$Para.$Npag.'" class="next page-numbers" title="Vai all\'ultima pagina"><i class="it-arrow-right-triangle"></i></a>';
+ 			$Nav.= '<li><a href="'.$Para.$PagSuc.'" class="next page-numbers" title="'.__("Vai alla pagina successiva", 'wpscuola').'"><i class="it-chevron-right"></i></a></li>
+				  <li><a href="'.$Para.$Npag.'" class="next page-numbers" title="'.__("Vai all'ultima pagina", 'wpscuola').'"><i class="it-arrow-right-triangle"></i></a>';
 		}
 		$Nav.= '</ul>
 		</div>';
@@ -477,10 +477,10 @@ if(!is_array($FEColsOption)){
 				"DataOblio"=>0), json_decode($FEColsOption,TRUE),"");
 }	
 echo '	<div class="tabalbo">                               
-		<table class="table table-striped table-hover" summary="atti validi per riferimento, oggetto e categoria"> 
+		<table class="table table-striped table-hover" summary="'.__("atti validi per riferimento, oggetto e categoria", 'wpscuola').'"> 
 		<thead>
 	    	<tr>
-	        	<th scope="col">Prog.</th>';
+	        	<th scope="col">'.__("Prog.", 'wpscuola').'</th>';
 foreach($FEColsOption as $Opzione => $Valore){
 		if($Valore==1){
 			echo '			<th scope="col">'.$Opzione.'</th>';
@@ -504,7 +504,7 @@ echo '	</tr>
 	//		Bonifica_Url();
 			$ParCella='';
 			if($riga->DataAnnullamento!='0000-00-00'){
-				$ParCella='style="background-color: '.$coloreAnnullati.';" title="Atto Annullato. Motivo Annullamento: '.$riga->MotivoAnnullamento.'"';
+				$ParCella='style="background-color: '.$coloreAnnullati.';" title="'.__("Atto Annullato. Motivo Annullamento", 'wpscuola').': '.$riga->MotivoAnnullamento.'"';
 				$CeAnnullato=true;
 			}
 			echo '<tr >
@@ -566,7 +566,7 @@ echo '	</tr>
 			}
 	} else {
 			echo '<tr>
-					<td colspan="6">Nessun Atto Codificato</td>
+					<td colspan="6">'.__("Nessun Atto Codificato", 'wpscuola').'</td>
 				  </tr>';
 	}
 	echo '
@@ -574,7 +574,7 @@ echo '	</tr>
     </table>';
 echo '</div>';
 	if ($CeAnnullato) 
-		echo '<p>Le righe evidenziate con questo sfondo <span style="background-color: '.$coloreAnnullati.';">&nbsp;&nbsp;&nbsp;</span> indicano Atti Annullati</p>';
+		echo '<p>'.__("Le righe evidenziate con questo sfondo", 'wpscuola').' <span style="background-color: '.$coloreAnnullati.';">&nbsp;&nbsp;&nbsp;</span> '.__("indicano Atti Annullati", 'wpscuola').'</p>';
 echo '</div><!-- /wrap -->	';
 echo $Nav;
 return ob_get_clean();
