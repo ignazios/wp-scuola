@@ -21,6 +21,7 @@ facebook: https://www.facebook.com/wpscuola/
 ## Change log
 - **0.0.5**
   - ***Modificato*** in rendering del blocco file dell'Editor Gutenberg
+  - ***Predisposto*** tutto il testo del tema per la traduzione
   - ***Corretto*** un errore nella gestione della visualizzazione della domanda della FAQ nel FrontEnd
   - ***Corretti*** alcuni bugs minori
 - **0.0.4**
