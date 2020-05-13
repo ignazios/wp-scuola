@@ -12,7 +12,7 @@
  * Text Domain:       	wpscuola
 */
  get_header(); 
-?>
+ ?>
 <section id="content" role="main" class="container-fluid">
    <div class="container-fluid">
       <div class="row">

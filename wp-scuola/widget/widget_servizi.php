@@ -113,7 +113,7 @@ class Servizi extends WP_Widget {
 			$Servizio_Link=get_permalink($Servizio->ID);?>
 		<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 pb-2">
 		    <div class="hovereffect">
-		        <img class="img-responsive" src="<?php echo $Servizio_Image;?>" alt="logo servizo <?php $Servizio->post_title;?>" width="300" height="200">
+		        <img class="img-responsive" src="<?php echo $Servizio_Image;?>" alt="logo servizo <?php $Servizio->post_title;?>" width="100%" height="200">
 		            <div class="overlay">
 		                <h2><?php echo $Servizio->post_title;?></h2>
 						<p>
@@ -127,7 +127,7 @@ class Servizi extends WP_Widget {
 	</div>
   </div>
 <?php
-	}
+	} 
 	
 /** @see WP_Widget::update */
 	function update($new_instance, $old_instance){
@@ -146,19 +146,19 @@ class Servizi extends WP_Widget {
 		$tipologias = ! empty( $instance['tipologias'] ) ? $instance['tipologias'] :0;
 		?>
            <p>
-                <label for="<?php echo $this->get_field_id( 'titolo' ); ?>">Titolo Sezione:</label>
+                <label for="<?php echo $this->get_field_id( 'titolo' ); ?>"><?php _e( 'Titolo Sezione', 'wpscuola' );?>:</label>
                 <input type="text" class="widefat" id="<?php echo $this->get_field_id( 'titolo' ); ?>" name="<?php echo $this->get_field_name( 'titolo' ); ?>" value="<?php echo esc_attr( $titolo ); ?>" />
             </p>
             <p>
-  	    		<label for="<?php echo $this->get_field_id( 'tipovis' ); ?>">Tipologia di visualizzazione:</label><br />
+  	    		<label for="<?php echo $this->get_field_id( 'tipovis' ); ?>"><?php _e( 'Tipologia di visualizzazione', 'wpscuola' );?>:</label><br />
   	    		<select name="<?php echo $this->get_field_name( 'tipovis' ); ?>" id="<?php echo $this->get_field_id( 'tipovis' ); ?>" class="">
-					<option value="0" <?php echo ($tipovis=="0" ?'selected="selected"':"");?>>Tutti servizi</option>
-					<option value="1" <?php echo ($tipovis=="1" ?'selected="selected"':"");?>>Per tipologia di Servizio</option>
-					<option value="2" <?php echo ($tipovis=="2" ?'selected="selected"':"");?>>Singola tipologia di Servizio</option>
+					<option value="0" <?php echo ($tipovis=="0" ?'selected="selected"':"");?>><?php _e( 'Tutti i servizi', 'wpscuola' );?></option>
+					<option value="1" <?php echo ($tipovis=="1" ?'selected="selected"':"");?>><?php _e( 'Per tipologia di Servizio', 'wpscuola' );?></option>
+					<option value="2" <?php echo ($tipovis=="2" ?'selected="selected"':"");?>><?php _e( 'Singola tipologia di Servizio', 'wpscuola' );?></option>
 				</select>
         	</p>
         	<p>
-				<label for="<?php echo $this->get_field_id( 'tipologias' ); ?>">Tipologia di servizio:</label><br />
+				<label for="<?php echo $this->get_field_id( 'tipologias' ); ?>"><?php _e( 'Tipologia di servizio', 'wpscuola' );?>:</label><br />
 <?php  
 	$args = array(
 	'option_none_value'  => '-1',
@@ -176,7 +176,7 @@ class Servizi extends WP_Widget {
 	wp_dropdown_categories( $args );
 ?>
         	<br />
-        	<em>Questo valore viene utilizzato solo per</em> <strong>Tipologia di visualizzazione</strong>=<em>Singola tipologia di Servizio</em>
+        	<em><?php _e( 'Questo valore viene utilizzato solo per</em> <strong>Tipologia di visualizzazione</strong>=<em>Singola tipologia di Servizio', 'wpscuola' );?></em>
         	</p>
 <?php
 	}

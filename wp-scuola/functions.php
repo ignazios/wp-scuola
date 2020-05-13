@@ -10,21 +10,41 @@
  * License URI: 		https://opensource.org/licenses/AGPL-3.0
  * Text Domain:       	wpscuola
 */
+add_filter('image_size_names_choose', 		'scuola_image_sizes');
+add_filter( 'wp_title', 					'scuola_filter_wp_title');
+add_filter( 'get_comments_number', 			'scuola_comments_number');
+add_filter( 'language_attributes', 			'add_opengraph_doctype');
+add_filter( 'excerpt_more', 				'new_excerpt_more');
+add_filter( 'excerpt_length', 				'custom_excerpt_length', 10 );
+add_filter( 'pre_get_posts',				'scuola_SearchFilter');
+add_filter( 'the_password_form', 			'scuola_password_form' );
+/**
+* Riattiva la gestione dei link standard di Wordpress 
+* I link vengono utilizzati in home page nel widget GalleraLinks
+* @return
+*/
+add_filter( 'pre_option_link_manager_enabled', '__return_true' );
 
+add_action( 'wp_enqueue_scripts', 			'enqueue_scuola_public' );
+add_action( 'comment_form_before', 			'scuola_enqueue_comment_reply_script');
+add_action( 'init',							'scuola_inizialize');
+add_action( 'widgets_init', 				'scuola_register_Widget' );
+add_action( 'customize_register', 			'scuola_customize_register');
+add_action( 'wp_head', 						'scuola_opengraph');
+add_action( 'wp_head', 						'scuola_customize_head' );
+add_action( 'enqueue_block_editor_assets', 	'gutenberg_styles' );
+add_action( 'wp_footer', 					'scuola_customize_footer');
+add_action( 'admin_enqueue_scripts', 		'enqueue_scuola_admin' );
+add_action( 'after_setup_theme', 			'scuola_setup');
+add_action( 'init', 						'personaliza_blocco_file' );
 
+add_post_type_support ('page', 	'excerpt');
+/**
+* 
+* Personalizzazione blocco file dell'editor Gutenberg
+*
+*/
 function personaliza_file_render( $attributes, $content ) {
-	/**
-	 * Here you find an array with the ids of all 
-	 * the images that are in your gallery.
-	 * 
-	 * for example: 
-	 * $attributes = [
-	 *     "ids" => [ 12, 34, 56, 78 ]
-	 * ]
-	 *
-	 * Now have fun querying them,
-	 * arrangin them and returning your constructed markup!
-	*/
   $IDFile=$attributes['id'];
   $Link=$attributes['href'];
   $Title = get_post($IDFile)->post_title; //The Title
@@ -61,12 +81,6 @@ function personaliza_file_render( $attributes, $content ) {
   if($Description) $Contenuto.='<br /><span>'.$Description.'</span>';
   $Contenuto.='</div>';
   return $Contenuto;
-/*   
-   <section class="entry-content">
-	               	               
-<div class="wp-block-file"><a href="https://isitalia.eduva.org/wp-content/uploads/2020/05/ALL.-A_-MODULO-domanda-iscrizione-PON_1.pdf">ALL.-A_-MODULO-domanda-iscrizione-PON_1</a><a href="https://isitalia.eduva.org/wp-content/uploads/2020/05/ALL.-A_-MODULO-domanda-iscrizione-PON_1.pdf" class="wp-block-file__button" download="">Download</a></div>
-	            </section>
-*/
 }
 
 function personaliza_blocco_file() {
@@ -74,10 +88,6 @@ function personaliza_blocco_file() {
 		'render_callback' => 'personaliza_file_render',
 	) );
 }
-
-add_action( 'init', 'personaliza_blocco_file' );
-
-
 
 
 /* UPDATER THEME VERSION */
@@ -217,30 +227,6 @@ register_nav_menus(array(
 	'menu-footer-secondo'  => __( 'Footer Menu secondo', 'wpscuola' ),
 ));
 }
-
-add_filter('image_size_names_choose', 		'scuola_image_sizes');
-add_filter( 'wp_title', 						'scuola_filter_wp_title');
-add_filter( 'get_comments_number', 			'scuola_comments_number');
-add_filter( 'language_attributes', 			'add_opengraph_doctype');
-add_filter( 'excerpt_more', 					'new_excerpt_more');
-add_filter( 'excerpt_length', 				'custom_excerpt_length', 10 );
-add_filter( 'pre_get_posts',					'scuola_SearchFilter');
-add_filter( 'the_password_form', 			'scuola_password_form' );
-
-add_action( 'wp_enqueue_scripts', 			'enqueue_scuola_public' );
-add_action( 'comment_form_before', 			'scuola_enqueue_comment_reply_script');
-add_action( 'init',							'scuola_inizialize');
-add_action( 'widgets_init', 				'scuola_register_Widget' );
-add_action( 'customize_register', 			'scuola_customize_register');
-add_action( 'wp_head', 						'scuola_opengraph');
-add_action( 'wp_head', 						'scuola_customize_head' );
-add_action( 'enqueue_block_editor_assets', 	'gutenberg_styles' );
-add_action( 'wp_footer', 					'scuola_customize_footer');
-add_action( 'admin_enqueue_scripts', 		'enqueue_scuola_admin' );
-add_action( 'after_setup_theme', 			'scuola_setup');
-
-add_post_type_support ('page', 	'excerpt');
-
 
 // Inclusione libreria per la personalizzazione delle impostazioni del tema
 require get_template_directory() . '/inc/customizer.php';
@@ -457,6 +443,7 @@ function scuola_register_Widget(){
 	register_widget( 'Articoli_Griglia' );
 	register_widget( 'Trasparenza' );
 	register_widget( 'Feed_RSS' );
+	register_widget( 'Link' );
 	if(class_exists("EM_Event")) 					register_widget( 'my_EM_Widget_Calendar' );
 	if(get_theme_mod('scuola_servizi_attiva'))		register_widget( 'Servizi' );
 	if(function_exists("at_sezioni_shtc"))			register_widget( 'my_ATWidget' );	
@@ -470,6 +457,7 @@ require get_template_directory() . '/widget/widget_feedRSS.php';
 require get_template_directory() . '/widget/widget_trasparenza.php';
 require get_template_directory() . '/widget/widget_articoli.php';
 require get_template_directory() . '/widget/widget_articoli_griglia.php';
+require get_template_directory() . '/widget/widget_link.php';
 if(get_theme_mod('scuola_servizi_attiva'))		require get_template_directory() . '/widget/widget_servizi.php';
 if(function_exists("at_sezioni_shtc"))			require get_template_directory() . '/widget/widget_AT.php';
 if(get_theme_mod("scuola_circolari_attiva"))	require get_template_directory() . '/widget/widget_circolari.php';
