@@ -19,6 +19,8 @@ https://github.com/ignazios/wp-scuola
 ## Supporto
 facebook: https://www.facebook.com/wpscuola/
 ## Change log
+- **0.0.7**
+  - ***Inserito*** l'ordinamento nella visualizzazione dei servizi
 - **0.0.6**
   - ***Implementato*** la gestione dei link
   - ***Aggiunto*** widget per la galleria dei link

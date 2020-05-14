@@ -45,10 +45,13 @@ class Servizi extends WP_Widget {
             if ( $title ) {
                 echo $args['before_title'] . $title . $args['after_title'];
             }
-            switch ($tipovis){
+             switch ($tipovis){
             	case 0:
             		$argServizi = array('numberposts' => -1,
-            							'post_type'   => 'servizio',);
+            							'post_type'   => 'servizio',
+             							'order' => 'ASC',
+  										'meta_key'			=> 'servizio_ordine',
+										'orderby'			=> 'meta_value_num',);
 					$Servizi=get_posts($argServizi);
 					$this->Crea_blocchi($Servizi);
 					break;
@@ -67,11 +70,14 @@ class Servizi extends WP_Widget {
 						<div class="tab-content" id="nav-tabContent_<?php echo $args['widget_id'];?>">		
 <?php					$Primo=true;
 						foreach($Tipologie as $Tipologia){
-           					$argServizi = array('numberposts' => -1,
-           										'post_type'   => 'servizio',
-		            							'tax_query' => array(array( 'taxonomy' => 'tiposervizio',
-															                'field' => 'slug',
-															                'terms' => $Tipologia->slug)));
+           					$argServizi = array('numberposts' 	=> -1,
+           										'post_type'   	=> 'servizio',
+           										'order' 		=> 'ASC',
+           										'meta_key'		=> 'servizio_ordine',
+  												'orderby' 		=> 'meta_value_num',
+		            							'tax_query' 	=> array(array( 'taxonomy' => 'tiposervizio',
+															                	'field' => 'slug',
+															                	'terms' => $Tipologia->slug)));
 							$Servizi=get_posts($argServizi);?>
 							<div class="tab-pane p-4 fade show <?php echo ($Primo?"active":'');$Primo=false;?> shadow" id="<?php echo $Tipologia->slug;?>" role="tabpanel" aria-labelledby="<?php echo $Tipologia->slug;?>-tab">
 							  	<div class="">
@@ -83,11 +89,14 @@ class Servizi extends WP_Widget {
 <?php				}				
 					break;
 	           	case 2:
-	            		$argServizi = array('numberposts' => -1,
-	            							'post_type'   => 'servizio',		            							
-	            							'tax_query' => array(array( 'taxonomy' 	=> 'tiposervizio',
-																        'field' 	=> 'id',
-																        'terms' 	=> $tipologias)));
+	            		$argServizi = array('numberposts' 	=> -1,
+	            							'post_type'   	=> 'servizio',
+	            							'meta_key'		=> 'servizio_ordine',
+	            							'order' 		=> 'ASC',
+  											'orderby' 		=> 'meta_value_num',		            							
+	            							'tax_query'		=> array(array( 'taxonomy' 	=> 'tiposervizio',
+																        	'field' 	=> 'id',
+																        	'terms' 	=> $tipologias)));
 						$Servizi=get_posts($argServizi);
 						$this->Crea_blocchi($Servizi);
 						break;

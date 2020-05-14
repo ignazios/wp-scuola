@@ -28,6 +28,7 @@ class ScuolaServizi {
 		add_filter( 'rwmb_meta_boxes',                          array( $this, 'servizi_mbox_destinazione' ) );
 		add_action( 'add_meta_boxes',							array( $this, 'servizi_add_custom_box' ) );
 		add_action( 'save_post',      							array( $this, 'save_metabox' ), 10, 2 );
+		add_filter( 'manage_posts_columns', 					array( $this, 'servizi_NuoveColonne') );  
      }
 		function servizi_add_custom_box()
 		{
@@ -135,7 +136,7 @@ class ScuolaServizi {
 		$servizio_link_descrizione = isset( $_POST[ 'servizio_link_descrizione' ] ) ? sanitize_text_field( $_POST[ 'servizio_link_descrizione' ] ) : '';
 		$servizio_attivazione_servizio = isset( $_POST[ 'servizio_attivazione_servizio' ] ) ? 'si' : 'no';
 		$servizio_codice_ipa = isset( $_POST[ 'servizio_codice_ipa' ] ) ? sanitize_text_field( $_POST[ 'servizio_codice_ipa' ] ) : '';
-		$servizio_ordine = isset( $_POST[ 'servizio_ordine' ] ) ? sanitize_text_field( $_POST[ 'servizio_ordine' ] ) : '';
+		$servizio_ordine = isset( $_POST[ 'servizio_ordine' ] ) ? sanitize_text_field( $_POST[ 'servizio_ordine' ] ) : 0;
 		// Update the meta field in the database.
 		update_post_meta( $post_id, 'servizio_link_servizio', 			$servizio_link_servizio );
 		update_post_meta( $post_id, 'servizio_link_descrizione', 		$servizio_link_descrizione );
@@ -237,7 +238,7 @@ class ScuolaServizi {
 /**
  * Aggiungo label sotto il titolo
  */
-		function servizio_change_title_text( $title ){
+	function servizio_change_title_text( $title ){
 		     $screen = get_current_screen();
 		  
 		     if  ( 'servizio' == $screen->post_type ) {
@@ -253,4 +254,26 @@ class ScuolaServizi {
 			_e('<span style="font-size: 23px;font-weight: 400;margin: 0;padding: 9px 0 4px 0;line-height: 1.3;">Descrizione del Servizio</span>', 'wpscuola' );
 		}
 	}
+/** 
+* Aggiungo colonna con ordine di visualizzazione
+*/	
+	function servizi_NuoveColonne($defaults) {  
+		if ($_GET['post_type']=="servizio"){
+			$defaults['ordine'] = 'Ordine di visualizzazione'; 
+		}
+	   return $defaults;  
+	}  
+/** 
+* Aggiungo contenuto alla colonna ordine di visualizzazione
+*/
+
+}
+add_action( 'manage_posts_custom_column', 'servizi_NCContenuto', 10, 2 );
+function servizi_NCContenuto($column_name, $post_ID) { 
+	if ($_GET['post_type']=="servizio"){
+		 if ($column_name == 'ordine'){
+		 	echo get_post_meta($post_ID, "servizio_ordine",TRUE);
+		}
+	}
+	
 }
