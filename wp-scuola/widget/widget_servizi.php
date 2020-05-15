@@ -56,7 +56,11 @@ class Servizi extends WP_Widget {
 					$this->Crea_blocchi($Servizi);
 					break;
 				case 1:
-					$Tipologie=get_categories(array('taxonomy' =>"tiposervizio","hide_empty" => 0));
+					$Tipologie=get_categories(array('taxonomy'  	=>"tiposervizio",
+													'hide_empty' 	=> true,
+													'order' 		=> 'ASC',
+           											'meta_key'		=> 'ordine',
+  													'orderby' 		=> 'meta_value_num'));
 //					echo "<pre>";var_dump($Tipologie);echo "</pre>";
 					if (count($Tipologie)>0){?>
 						<nav>

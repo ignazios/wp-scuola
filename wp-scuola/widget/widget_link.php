@@ -51,8 +51,11 @@ class Link extends WP_Widget {
  					$this->Crea_blocchi($Links);
 					break;
 				case 1:
-					$args=array('taxonomy' => 'link_category','hide_empty' => false);
-					$CatsLink = get_terms($args);
+					$CatsLink = get_categories(array('taxonomy' => 'link_category',
+								'hide_empty' 	=> false,
+								'order' 		=> 'ASC',
+           						'meta_key'		=> 'ordine_link',
+  								'orderby' 		=> 'meta_value_num'));
 //					echo "<pre>";var_dump($Tipologie);echo "</pre>";
 					if (count($CatsLink)>0){?>
 						<nav>

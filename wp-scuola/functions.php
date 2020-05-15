@@ -227,7 +227,8 @@ register_nav_menus(array(
 	'menu-footer-secondo'  => __( 'Footer Menu secondo', 'wpscuola' ),
 ));
 }
-
+// Inclusione libreria personalizzazione link
+require get_template_directory() . '/plugins/link/custom_link.php';
 // Inclusione libreria per la personalizzazione delle impostazioni del tema
 require get_template_directory() . '/inc/customizer.php';
 // Inclusione libreria per la personalizzazione dell'elenco delle categorie

@@ -263,11 +263,77 @@ class ScuolaServizi {
 		}
 	   return $defaults;  
 	}  
+	
+}
+
+/**
+* Aggiunta del campo alla Tassonomia tiposervizio  
+*/
+add_action( 'tiposervizio_add_form_fields', 'add_tiposervizio_field', 10, 2 );
+function add_tiposervizio_field($taxonomy) {
+    global $feature_groups;
+    ?><div class="form-field term-ordine">
+        <label for="ordine"><?php _e('Ordine', 'wpscuola' );; ?></label>
+ 		<input type="number" name="term_meta[ordine]" id="term_meta[ordine]"  min="1" max="100" style="width: 5em;" value="<?php echo $term_meta['ordine'] ? $term_meta['ordine'] : '1'; ?>">
+ 		<br />
+		<span class="description"><?php _e('Ordine di visualizzazione', 'wpscuola' ); ?></span>
+    </div><?php
+}
+/**
+* Memorizzazione del campo alla Tassonomia tiposervizio  
+*/
+add_action( 'created_tiposervizio', 'save_tiposervizio_field', 10, 2 );
+function save_tiposervizio_field( $term_id, $tt_id ){
+    if( isset( $_POST["term_meta"]['ordine'] ) && is_numeric($_POST["term_meta"]['ordine']) ){
+         $ordine = intval(sanitize_title( $_POST["term_meta"]['ordine']));
+        add_term_meta( $term_id, 'ordine', $ordine, true );
+    }
+}
+/**
+* Modifica del campo alla Tassonomia tiposervizio  
+*/
+add_action( 'tiposervizio_edit_form_fields', 'tiposervizio_addCusomField', 10, 2);
+	function tiposervizio_addCusomField($term, $taxonomy ){
+ 	$ordine = get_term_meta( $term->term_id, 'ordine', true );?>
+ 			<tr class="form-field">
+			<th scope="row" valign="top">
+				<label for="ordine"><?php _e('Ordine', 'wpscuola' );; ?></label>
+			</th>
+			<td>
+				<input type="number" name="term_meta[ordine]" id="term_meta[ordine]"  min="1" max="100" style="width: 5em;" value="<?php echo $ordine ? $ordine : '0'; ?>"><br />
+		            <span class="description"><?php _e('Ordine di visualizzazione', 'wpscuola' ); ?></span>
+		        </td>
+		</tr>
+<?php
+}
+/**
+* Aggiornamento del campo alla Tassonomia tiposervizio  
+*/
+add_action( 'edited_tiposervizio', 'update_tiposervizio_field', 10, 2 );
+function update_tiposervizio_field( $term_id, $tt_id ){
+    if( isset( $_POST["term_meta"]['ordine'] ) && is_numeric($_POST["term_meta"]['ordine']) ){
+        $ordine = intval(sanitize_title( $_POST["term_meta"]['ordine'] ));
+        update_term_meta( $term_id, 'ordine', $ordine );
+    }
+}
+/**
+* Aggiunta del campo nella visualizzazione della Tassonomia tiposervizio  
+*/
+add_filter( 'manage_edit-tiposervizio_columns', 'tiposervizio_add_column' );
+function tiposervizio_add_column( $columns ) {
+	$columns['ordine'] = __( 'Ordine', 'wpscuola' );
+	return $columns;
+}
+add_filter('manage_tiposervizio_custom_column', 'tiposervizio_column_content',10,3);
+function tiposervizio_column_content($content,$column_name,$term_id){
+	if ($column_name == 'ordine'){
+		 $content=get_term_meta( $term_id, "ordine",TRUE);
+	}
+	return $content;
+}
 /** 
 * Aggiungo contenuto alla colonna ordine di visualizzazione
 */
-
-}
 add_action( 'manage_posts_custom_column', 'servizi_NCContenuto', 10, 2 );
 function servizi_NCContenuto($column_name, $post_ID) { 
 	if ($_GET['post_type']=="servizio"){
