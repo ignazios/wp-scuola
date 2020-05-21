@@ -20,55 +20,61 @@ License: GPL2
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
+	
 include_once(dirname (__FILE__) .'/functions.inc.php');				/* Various functions used throughout */
 //include_once(dirname (__FILE__) .'/AlboPretorio.widget.inc');
-define("Prenotazioni_URL",plugin_dir_url(dirname (__FILE__).'/Prenotazioni.php'));
+define("Prenotazioni_URL",get_template_directory_uri().'/plugins/prenotazioni/');
 define("Prenotazioni_DIR",dirname (__FILE__));
 include_once ( dirname (__FILE__) . '/lib/class_spazi.inc.php' );
 include_once ( dirname (__FILE__) . '/lib/class_prenotazioni.inc.php' );
 include_once ( dirname (__FILE__) . "/lib/tab_pre_gg.php");
-include_once (dirname (__FILE__) . "/Prenotazioni.widget.php");
 if (!class_exists('Plugin_Prenotazioni')) {
- class Plugin_Prenotazioni {
+class Plugin_Prenotazioni {
 	
-	var $version;
-	var $minium_WP   = '3.8';
+	var $minium_WP   = '5';
 	var $options     = '';
 	
-	function Plugin_Prenotazioni() {
+	function __construct() {
 		global $G_Spaces;
 		if ( ! function_exists( 'get_plugins' ) )
 	 		require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	    $plugins = get_plugins( "/".plugin_basename( dirname( __FILE__ ) ) );
             $plugin_nome = basename( ( __FILE__ ) );
-	    $this->version=$plugins[$plugin_nome]['Version'];
 		// Inizializzazioni
+		
 		$this->define_tables();
 		$this->plugin_name = plugin_basename(dirname( __FILE__ ) );
 		// Hook per attivazione/disattivazione plugin
 		$G_Spaces=new Spazi();
-		register_activation_hook( __FILE__, array(&$this, 'activate'));
-		register_deactivation_hook(__FILE__, array(&$this, 'deactivate') );	
+//		register_activation_hook( __FILE__, array(&$this, 'activate'));
+//		register_deactivation_hook(__FILE__, array(&$this, 'deactivate') );	
 //		register_uninstall_hook( __FILE__, array(&$this, 'uninstall') );
 		// Hook di inizializzazione che registra il punto di avvio del plugin
 		add_action( 'admin_enqueue_scripts',    	array(&$this,'enqueue_scripts') );
-		add_action('init',                      	array(&$this, 'update_Prenotazioni_settings'));
-		add_action( 'wp_enqueue_scripts',       	array(&$this,'head_Front_End'));
-		add_action( 'admin_menu',               	array (&$this, 'add_menu') ); 
+		add_action( 'init',                      	array(&$this, 'update_Prenotazioni_settings'));
+		add_action( 'wp_enqueue_scripts',       	array(&$this, 'head_Front_End'));
+		add_action( 'admin_menu',               	array(&$this, 'add_menu') ); 
 		add_action( 'wp_ajax_prenSpazi',        	array(&$this,'getPrenotazioniSpazi'));
 		add_action( 'wp_ajax_FEprenSpazi',      	array(&$this,'getPrenotazioniSpazi'));
 		add_action( 'wp_ajax_StampPrenSpazi',   	array(&$this,'staPrenotazioniSpazi'));
-		add_action( 'wp_ajax_nopriv_VisPrenSpazi',      array(&$this,'VisPrenotazioniSpazi'));
+		add_action( 'wp_ajax_nopriv_VisPrenSpazi',  array(&$this,'VisPrenotazioniSpazi'));
 		add_action( 'wp_ajax_VisPrenSpazi',     	array(&$this,'VisPrenotazioniSpazi'));
 		add_action( 'wp_ajax_delPren',          	array(&$this,'deletePrenotazioniSpazi'));
 		add_action( 'wp_ajax_newPren',          	array(&$this,'nuovaPrenotazioneSpazi'));
-        add_filter('manage_posts_columns',  		array(&$this,'SpaziNuoveColonne'),10,1);
-        add_action('manage_posts_custom_column',	array(&$this,'SpaziNuoveColonneContenuto'), 10, 2); 
+        add_filter( 'manage_posts_columns',  		array(&$this,'SpaziNuoveColonne'),10,1);
+        add_action( 'manage_posts_custom_column',	array(&$this,'SpaziNuoveColonneContenuto'), 10, 2); 
 		add_shortcode('Prenotazioni',           	array(&$this, 'FrontEndPrenotazioni'));
 		add_shortcode('OccupazioneSpazio',      	array(&$this, 'FEOccupazioneSpazio'));
 //                add_filter('the_content',              array(&$this,'FiltroVisualizzaSpazio'));
-		if (!is_admin()) 
-			add_action('wp_print_styles', array(&$this,'Prenotazioni_styles'));
+		
+		if((get_option('wps_ModuloPrenotazioni')!= 'Si'||!get_option('wps_ModuloPrenotazioni')) And get_theme_mod("scuola_prenotazioni_attiva")){
+			$this->activate();
+			update_option('wps_ModuloPrenotazioni', 'Si');
+		}
+		if(get_option('wps_ModuloPrenotazioni')== 'Si' And !get_theme_mod("scuola_prenotazioni_attiva")){
+			$this->uninstall();
+			update_option('wps_ModuloPrenotazioni', 'No');
+		}
 	}
         function FiltroVisualizzaSpazio( $content ){
             global $TestiRisposte,$Testi;
@@ -119,64 +125,35 @@ if (!class_exists('Plugin_Prenotazioni')) {
 	}
 	function enqueue_scripts( $hook_suffix ) {
             wp_enqueue_script('jquery');
-            wp_enqueue_script('jquery-ui-core');
-            wp_enqueue_script( 'jquery-ui-datepicker', '', array('jquery'));
-            wp_enqueue_script('jquery-ui-widget');
-            wp_enqueue_script('jquery-ui-tabs', false, array('jquery'), false, false);
+            wp_enqueue_script( 'jquery-ui-core',		false, array('jquery'), false, false);
+            wp_enqueue_script( 'jquery-ui-datepicker', 	false, array('jquery'), false, false);
+            wp_enqueue_script( 'jquery-ui-widget', 		false, array('jquery'), false, false);
+            wp_enqueue_script( 'jquery-ui-tabs', 		false, array('jquery'), false, false);
+            wp_enqueue_script( 'jquery-ui-dialog', 		false, array('jquery'), false, false);
+            wp_enqueue_script( 'jquery-ui-slider', 		false, array('jquery'), false, false);
+            wp_enqueue_script( 'wp-color-picker');         
             wp_enqueue_style( 'wp-color-picker' );
-            wp_enqueue_script( 'wp-color-picker');
-            wp_enqueue_script('jquery-ui-tooltip');
-            wp_enqueue_script('jquery-ui-dialog');
             wp_enqueue_style( 'wp-jquery-ui-dialog' );
-            wp_enqueue_script('jquery-ui-slider', false, array('jquery'), false, false);
-            wp_enqueue_style( 'jquery.ui.theme', plugins_url( 'css/jquery-ui-custom.css', __FILE__ ) );
-            wp_register_style($this->plugin_name,  plugins_url( 'css/style.css', __FILE__ ));
-            if($hook_suffix == 'toplevel_page_Prenotazioni' And isset($_GET["PreviewPrint"])) {
-                wp_register_style("Prenotazioni_AnteprimaStampa",  plugins_url( 'css/printPre.css', __FILE__ ));
+            wp_enqueue_style( 'jquery.ui.theme', Prenotazioni_URL. 'css/jquery-ui-custom.css');
+            wp_register_style($this->plugin_name,  Prenotazioni_URL. 'css/style.css');
+            wp_enqueue_style( $this->plugin_name);
+           if($hook_suffix == 'toplevel_page_Prenotazioni' And isset($_GET["PreviewPrint"])) {
+                wp_register_style("Prenotazioni_AnteprimaStampa", Prenotazioni_URL.  'css/printPre.css');
                 wp_enqueue_style( "Prenotazioni_AnteprimaStampa");
-                wp_enqueue_script( 'Prenotazioni_AnteprimaStampa', plugins_url('js/printPre.js', __FILE__ ));
+                wp_enqueue_script( 'Prenotazioni_AnteprimaStampa', Prenotazioni_URL. 'js/printPre.js');
             }
-            wp_enqueue_style( $this->plugin_name);
-            wp_enqueue_script( 'Prenotazioni-admin-fields', plugins_url('js/Prenotazioni.js', __FILE__ ));
-        
-            $myStyleUrl = plugins_url('css/style.css', __FILE__); 
-            $myStyleFile = Prenotazioni_DIR.'/css/style.css';
-            if ( file_exists($myStyleFile) ) {
-                wp_register_style($this->plugin_name, $myStyleUrl);
-                wp_enqueue_style( $this->plugin_name);
-            }
+            wp_enqueue_script( 'Prenotazioni-admin-fields', Prenotazioni_URL. 'js/Prenotazioni.js');
 	}
-	function Prenotazioni_styles() {
-        $myStyleUrl = plugins_url('css/style.css', __FILE__); 
-        $myStyleFile = Prenotazioni_DIR.'/css/style.css';
-        if ( file_exists($myStyleFile) ) {
-            wp_register_style($this->plugin_name, $myStyleUrl);
-            wp_enqueue_style( $this->plugin_name);
-        }
- 		$handle = 'jquery.ui.theme';
-   		$list = 'enqueued';
-     	if (!wp_script_is( $handle, $list )) 
-			wp_enqueue_style( 'jquery.ui.theme', plugins_url( 'css/jquery-ui-custom.css', __FILE__ ) );
-   }
 	function head_Front_End() {
-		//wp_enqueue_script( 'Prenotazioni_FrontEnd', plugins_url('js/Prenotazioni_FrontEnd.js', __FILE__ ));
-		//echo "<script type='text/javascript' src='".Prenotazioni_URL."js/Prenotazioni_FrontEnd.js'></script>";
-  	    wp_enqueue_script('jquery');
-		if (is_file(get_stylesheet_directory() . '/plugins/prenotazioni/js/Prenotazioni_FrontEnd.js')){
-		   	wp_enqueue_script('Prenotazioni-FrontEnd', get_stylesheet_directory_uri(). '/plugins/prenotazioni/js/Prenotazioni_FrontEnd.js' );		
-	   }else{
-   		    wp_enqueue_script('jquery-ui-core');
-		    wp_enqueue_script('jquery-ui-widget');
-		    wp_enqueue_script('jquery-ui-tabs');
-			wp_enqueue_script('jquery-ui-datepicker', '', array('jquery'));
-			wp_enqueue_script('jquery-ui-tooltip');
-			wp_enqueue_script('jquery-ui-dialog');
-			wp_enqueue_style('wp-jquery-ui-dialog' );
-           wp_enqueue_script('Prenotazioni-FrontEnd', plugins_url('js/Prenotazioni_FrontEnd.js', __FILE__ ));	   	
-	   }
+		global $post;
+		if( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'Prenotazioni') ) {
+      		wp_enqueue_script('Prenotazioni-FrontEnd', Prenotazioni_URL. 'js/Prenotazioni_FrontEnd.js');
+      		wp_enqueue_style( 'prenotazioni-style', Prenotazioni_URL . "css/style.css");
+      		wp_enqueue_script('Prenotazioni-FrontEnd_tooltip', Prenotazioni_URL. 'js/Prenotazioni_tooltip.js',array(),null,true);
+		}
 	}
 	function add_menu(){
-  		add_menu_page('Panoramica', 'Prenotazioni', 'read', 'Prenotazioni',array( $this,'show_menu'),Prenotazioni_URL."img/logo.png");
+  		add_menu_page('Panoramica', 'Prenotazioni', 'read', 'Prenotazioni',array( $this,'show_menu'),Prenotazioni_URL."img/logo.png",24);
   		$parametri_page=add_submenu_page( 'Prenotazioni', 'Parametri', 'Parametri', 'manage_options', 'config', array( $this,'show_menu'));
 		$prenotazioni_page=add_submenu_page( 'Prenotazioni', 'Gestione Prenotazioni', 'Gestione Prenotazioni', 'read', 'gest_prenotazioni', array( $this,'show_menu'));
 		$prenotazioni_my_page=add_submenu_page( 'Prenotazioni', 'Prenotazioni', 'Mie Prenotazioni', 'read', 'myprenotazioni', array( $this,'show_menu'));

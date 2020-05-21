@@ -10,7 +10,7 @@
  * License URI: 		https://opensource.org/licenses/AGPL-3.0
  * Text Domain:       	wpscuola
 */
-add_filter('image_size_names_choose', 		'scuola_image_sizes');
+add_filter( 'image_size_names_choose', 		'scuola_image_sizes');
 add_filter( 'wp_title', 					'scuola_filter_wp_title');
 add_filter( 'get_comments_number', 			'scuola_comments_number');
 add_filter( 'language_attributes', 			'add_opengraph_doctype');
@@ -21,7 +21,6 @@ add_filter( 'the_password_form', 			'scuola_password_form' );
 /**
 * Riattiva la gestione dei link standard di Wordpress 
 * I link vengono utilizzati in home page nel widget GalleraLinks
-* @return
 */
 add_filter( 'pre_option_link_manager_enabled', '__return_true' );
 
@@ -52,6 +51,21 @@ function personaliza_file_render( $attributes, $content ) {
   $filesize = size_format(filesize( get_attached_file( $IDFile ) ), 2); 
   $filetype = wp_check_filetype($Link);
   $IconaFile='<i class="far fa-file"></i>';
+/* 
+  ob_start();
+	var_dump($content);
+	$a=ob_get_contents();
+  ob_end_clean();
+*/
+	$PosT=strpos($content,"target");
+	$Target="";
+	if($PosT!==FALSE){
+		$Target=substr($content,$PosT,strpos($content," ",$PosT)-$PosT);	
+	}
+	$Div=substr($content,0,strpos($content,">")+1);
+	$PosST=strpos($content,">",strlen($Div)+1)+1;
+	$Titolo=substr($content,$PosST,strpos($content,"<",$PosST+1)-$PosST);
+	if($Title!=$Titolo) $Title=$Titolo;
   switch ($filetype['ext']){
   	case "txt": 
   	case "odt": $IconaFile='<i class="far fa-file-alt fa-2x"></i>'; break;
@@ -74,8 +88,8 @@ function personaliza_file_render( $attributes, $content ) {
   	case "bmp":
   	case "ico":$IconaFile='<i class="far fa-file-image fa-2x"></i>'; break;
   }
-  $Contenuto='<div class="wp-block-file">'.
-  $IconaFile.' <a href="'.$Link.'" title="'.$Title.'">'.$Title.' ('.$filesize .')</a>';
+  $Contenuto=$Div.
+  $IconaFile.' <a href="'.$Link.'" title="'.$Title.'" '.$Target.'>'.$Title.' ('.$filesize .')</a>';
     	
   if(strpos($content,"wp-block-file__button")!==FALSE) $Contenuto.='<a href="'.$Link.'" class="wp-block-file__button" download="">Download</a>';
   if($Description) $Contenuto.='<br /><span>'.$Description.'</span>';
@@ -236,6 +250,9 @@ require get_template_directory() . '/inc/my_class-walker-category.php';
 /**
 * Inclusione Moduli del tema
 */
+if(get_theme_mod('scuola_circolari_attiva')){
+	require get_template_directory() . '/plugins/gestione-circolari/GestioneCircolari.php';
+}
 if(get_theme_mod('scuola_faq_attiva')){ 
 	require get_template_directory() . '/plugins/faq/scuola_faq.php';
 	$my_faq=new ScuolaFAQ();
@@ -243,11 +260,12 @@ if(get_theme_mod('scuola_faq_attiva')){
 if(get_theme_mod('scuola_servizi_attiva')){
 	require get_template_directory() . '/plugins/servizi/scuola_servizi.php';
 	$my_servizi=new ScuolaServizi();
-}
-if(get_theme_mod('scuola_circolari_attiva')){
-	require get_template_directory() . '/plugins/gestione-circolari/GestioneCircolari.php';
-}
+}	  
 
+//var_dump(get_theme_mod('scuola_prenotazioni_attiva'));wp_die();
+if(get_theme_mod('scuola_modpren_attiva')){
+	require get_template_directory() . '/plugins/prenotazioni/Prenotazioni.php';
+}
 function calc_NumArticoliMA($ArchivioDate){
 	$Dati=array();
 	foreach ($ArchivioDate as $Data) {
@@ -274,7 +292,7 @@ if (function_exists("at_sezioni_shtc")){
 	} add_shortcode('at-search', 'my_at_search_shtc');	
 }
 
-if ( !class_exists( 'SimplePie' ) and is_home()) {
+if ( !class_exists( 'SimplePie' ) ) {
 
 	class Registry_FixSimplePieErrors {
 
@@ -288,7 +306,7 @@ if ( !class_exists( 'SimplePie' ) and is_home()) {
 
 Registry_FixSimplePieErrors::setUp();
 
-include( get_template_directory . '/inc/class-simplepie.php' );
+include( get_template_directory() . '/inc/class-simplepie.php' );
 }
 
  function scuola_image_sizes($sizes) {
@@ -301,6 +319,7 @@ include( get_template_directory . '/inc/class-simplepie.php' );
 
 function enqueue_scuola_admin() {
     wp_enqueue_style('scuola_fonts_Awesome', get_template_directory_uri() . '/lib/bootstrap-italia/css/all.css');
+            wp_enqueue_script('jquery-ui-tooltip');
 }
 
 function enqueue_scuola_public() {
@@ -309,7 +328,7 @@ function enqueue_scuola_public() {
     wp_enqueue_style( 'bootstrap-italia-icon-font', get_template_directory_uri() . "/lib/bootstrap-italia/css/italia-icon-font.css");
     wp_enqueue_style( 'general-style', get_template_directory_uri() . "/style.css");
     wp_enqueue_style( 'scuola_fonts_Awesome', get_template_directory_uri() . '/lib/bootstrap-italia/css/all.css');
-	wp_enqueue_script( 'PopperScript', get_template_directory_uri().'/lib/js/popper.min.js', array('jquery'),null ,true );
+//	wp_enqueue_script( 'PopperScript', get_template_directory_uri().'/lib/js/popper.min.js', array('jquery'),null ,true );
     wp_enqueue_script( 'bootstrap-italia_bundle_min_script', get_template_directory_uri().'/lib/bootstrap-italia/js/bootstrap-italia.bundle.min.js', array('jquery'),null ,true );
 	wp_enqueue_script('scuola-public-script', get_template_directory_uri().'/js/Public.js', array('jquery'),null ,true );
 	if (is_front_page()) {

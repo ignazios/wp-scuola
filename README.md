@@ -19,6 +19,10 @@ https://github.com/ignazios/wp-scuola
 ## Supporto
 facebook: https://www.facebook.com/wpscuola/
 ## Change log
+- **0.0.9**
+  - ***Implementato*** il modulo Prenotazioni basato sul plugin omonimo con interfaccia pubblica ridisegnata
+  - ***Risolti*** alcuni bug minori
+  - ***Personalizzata*** l'interfaccia pubblica della visualizzazione degli allegati con Icona Titolo del file e Dimensione
 - **0.0.8**
   - ***Inserito*** l'ordinamento nella visualizzazione delle Titologie di servizi
   - ***Inserito*** l'ordinamento nella visualizzazione delle Categorie di Link e dei Link 

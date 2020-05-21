@@ -1,6 +1,7 @@
 jQuery.noConflict();
 (function($) {
-    $(function() {	
+    $(function() {
+    	$('[data-toggle="tooltip"]').tooltip();	
          $('#NavPag_Circolari').keypress(function() 
             {
 			window.location = $('#UrlNavPagCircolari').attr('value')+$('#NavPag_Circolari').attr('value');

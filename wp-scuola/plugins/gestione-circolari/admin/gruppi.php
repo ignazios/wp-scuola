@@ -13,17 +13,17 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
 }
 
 //Gestione Gruppi Utenti
-add_action( 'init', 'Crea_tassonomia_GruppoUtenti');
-add_filter('manage_users_sortable_columns', 'gruppi_user_sortable_columns' );
-add_filter('request', 'gruppi_user_column_orderby' );
-add_action('manage_users_custom_column', 'gruppi_add_custom_user_columns', 15, 3);
-add_filter('manage_users_columns', 'gruppi_add_user_columns', 15, 1);
-add_action( 'show_user_profile', 'visualizza_gruppo_utenti' );
-add_action( 'edit_user_profile', 'visualizza_gruppo_utenti' );
-add_action( 'personal_options_update', 'memorizza_gruppo_utenti' );
-add_action( 'edit_user_profile_update', 'memorizza_gruppo_utenti' );
+add_action( 'init', 						'wps_Crea_tassonomia_GruppoUtenti');
+add_filter('manage_users_sortable_columns', 'wps_gruppi_user_sortable_columns' );
+add_filter('request', 						'wps_gruppi_user_column_orderby' );
+add_action('manage_users_custom_column', 	'wps_gruppi_add_custom_user_columns', 15, 3);
+add_filter('manage_users_columns', 			'wps_gruppi_add_user_columns', 15, 1);
+add_action( 'show_user_profile', 			'wps_visualizza_gruppo_utenti' );
+add_action( 'edit_user_profile', 			'wps_visualizza_gruppo_utenti' );
+add_action( 'personal_options_update', 		'wps_memorizza_gruppo_utenti' );
+add_action( 'edit_user_profile_update', 	'wps_memorizza_gruppo_utenti' );
 
-function memorizza_gruppo_utenti( $user_id ) {
+function wps_memorizza_gruppo_utenti( $user_id ) {
 	if ( !current_user_can( 'edit_user', $user_id ) ){
 		return false;
 	}
@@ -35,7 +35,7 @@ function memorizza_gruppo_utenti( $user_id ) {
 		update_user_meta( $user_id, 'gruppo', $GruppiArray);
 	}
 }
-function sort_terms_hierarchicaly(Array &$cats, Array &$into, $parentId = 0)
+function wps_sort_terms_hierarchicaly(Array &$cats, Array &$into, $parentId = 0)
 {
     foreach ($cats as $i => $cat) {
         if ($cat->parent == $parentId) {
@@ -46,10 +46,10 @@ function sort_terms_hierarchicaly(Array &$cats, Array &$into, $parentId = 0)
 
     foreach ($into as $topCat) {
         $topCat->children = array();
-        sort_terms_hierarchicaly($cats, $topCat->children, $topCat->term_id);
+        wps_sort_terms_hierarchicaly($cats, $topCat->children, $topCat->term_id);
     }
 }
-function displayLivelloGruppo($gruppi,$GruppiUtente,$Livello){
+function wps_displayLivelloGruppo($gruppi,$GruppiUtente,$Livello){
 	foreach($gruppi as $K=>$gruppo){
 		if (in_array($K, $GruppiUtente)){
 			$Selezionato= "checked";
@@ -61,14 +61,14 @@ function displayLivelloGruppo($gruppi,$GruppiUtente,$Livello){
 		. '<input type="checkbox" name="Gruppo['.$K.']" value="'.$K.'" '.$Selezionato.' style="margin-left:'.($Livello*20).'px;">'.$gruppo->name
 		.'</p>';
 		if (count($gruppo->children)>0){
-			displayLivelloGruppo($gruppo->children,$GruppiUtente,$Livello+1);
+			wps_displayLivelloGruppo($gruppo->children,$GruppiUtente,$Livello+1);
 		}
 	}
 }
-function visualizza_gruppo_utenti( $user ) { 
+function wps_visualizza_gruppo_utenti( $user ) { 
  $gruppiutenti=get_terms('gruppiutenti', array('hide_empty' => false));
  $gruppi = array();
- sort_terms_hierarchicaly($gruppiutenti, $gruppi);
+ wps_sort_terms_hierarchicaly($gruppiutenti, $gruppi);
 //  echo "<pre>";print_r($gruppi);echo "</pre>";
  $GruppiUtente=get_the_author_meta( 'gruppo', $user->ID );
   if(!is_array( $GruppiUtente )){
@@ -82,7 +82,7 @@ function visualizza_gruppo_utenti( $user ) {
 			<td>
 <?php	     if (current_user_can('create_users'))
      	{
-				displayLivelloGruppo($gruppi,$GruppiUtente,0);
+				wps_displayLivelloGruppo($gruppi,$GruppiUtente,0);
 			?>
 				<span class="description">Per favore seleziona il gruppo di appartenenza dell'utente.</span>
 <?php
@@ -97,11 +97,11 @@ function visualizza_gruppo_utenti( $user ) {
 	</table>
 <?php }
 
-function gruppi_add_user_columns( $defaults ) {
+function wps_gruppi_add_user_columns( $defaults ) {
  	$defaults['gruppo'] = "Gruppo/i";
      return $defaults;
 }
-function gruppi_add_custom_user_columns($value, $column_name, $id) {
+function wps_gruppi_add_custom_user_columns($value, $column_name, $id) {
       if( $column_name == 'gruppo' ) {	
       	$IDGruppo=array();
 	  	if(($IDG=get_the_author_meta( 'gruppo', $id ))==NULL)
@@ -120,12 +120,12 @@ function gruppi_add_custom_user_columns($value, $column_name, $id) {
       }
  }
 
-function gruppi_user_sortable_columns( $columns ) {
+function wps_gruppi_user_sortable_columns( $columns ) {
 	$columns['gruppo'] = 'Gruppo';
 	return $columns;
 }
 
-function gruppi_user_column_orderby( $vars ) {
+function wps_gruppi_user_column_orderby( $vars ) {
  if ( isset( $vars['orderby'] ) && 'gruppo' == $vars['orderby'] ) {
  			$vars = array_merge( $vars, array(
 			'meta_key' => 'gruppo',
@@ -139,7 +139,7 @@ function gruppi_user_column_orderby( $vars ) {
 * Tassonomia personalizzata Gruppi Utenti
 * 
 */
-function Crea_tassonomia_GruppoUtenti() 
+function wps_Crea_tassonomia_GruppoUtenti() 
 {
 	// Register Custom Taxonomy
 	$labels = array(

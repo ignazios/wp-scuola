@@ -1,7 +1,7 @@
 jQuery.noConflict();
 (function($) {
     $(function() {	
-        $( document ).tooltip({
+        $( '.tooltip' ).tooltip({
             content: function(){
                 var element = $( this );
                 return element.attr('title')
@@ -19,4 +19,5 @@ jQuery.noConflict();
             }
         });
 	});
-})(jQuery);
+	
+ })(jQuery);

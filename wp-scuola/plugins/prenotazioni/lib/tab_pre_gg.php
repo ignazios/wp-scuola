@@ -218,13 +218,13 @@ function createTablePrenotazioniSpazio($IDSpazio=0,$data=""){
 	$StatoPrenotazioni=$Gest_Prenotazioni->getPreGioSpa($data_p,$IDSpazio);
 	$HTML= '
  		<input type="hidden" id="OldSel" value="" />
-		<table class="settimanale" id="selectable" style="height:600px;width: 250px;" >
+		<table class="table table-striped" id="selectable">
  		    <thead>
 	          	<tr>
-	                <th style="background-color:#00FFCC;width:25%">Ora</th>';
+	                <th class="bg-primary" style="width:25%;border-right: 2px solid #d6dce3;">Ora</th>';
 	                	$colore="#33CCFF";
 	                $HTML.= '
-	                <th style="background-color:#33CCFF;width:75%"">Occupazione</th>
+	                <th class="bg-primary" style="width:70%"">Occupazione</th>
  	           </tr>
  	    </thead>
 	    <tbody>';
@@ -247,7 +247,7 @@ function createTablePrenotazioniSpazio($IDSpazio=0,$data=""){
 			}
 			$HTML.= '          
      		<tr>
-                <th style="background-color:#00FFCC">'.$i.'</th>';
+                <th  class="bg-primary">'.$i.'</th>';
                 if ($StatoPrenotazioni[$i]['OreCons']>0){
                         $appo = explode ('/',$data_p);
                         $dataOC=mktime($i,0,0,$appo[1],$appo[0],$appo[2]);		

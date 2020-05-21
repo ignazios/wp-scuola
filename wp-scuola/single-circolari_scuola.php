@@ -21,7 +21,7 @@
 			$selp="Pb";
 		else	
 			$seld="Pr";
-	if ((!is_user_logged_in() Or !Is_Circolare_per_User($PostID)) And $seld=="Pr")	{?>
+	if ((!is_user_logged_in() Or !wps_Is_Circolare_per_User($PostID)) And $seld=="Pr")	{?>
 	<div class="alert alert-success mx-auto mt-5" style="width: 50%;" role="alert">
   		<h4 class="alert-heading">Avviso di sicurezza!</h4>
   		<p>Circolare riservata a specifici gruppi di utenti registrati.</p>
@@ -39,7 +39,7 @@
 		   		$ID_post=get_the_ID();
 				$numero=get_post_meta($ID_post, "_numero",TRUE);
 				$anno=get_post_meta($ID_post, "_anno",TRUE);
-				$Elenco=GetEencoDestinatari($ID_post);
+				$Elenco=wps_GetEencoDestinatari($ID_post);
  ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header>
@@ -53,11 +53,11 @@
 						</p>
 						<p>
 							<i class="fa fa-users pr-1" aria-hidden="true"></i> <?php echo $Elenco;?>
-				            <?php	if (Is_Circolare_Da_Firmare($ID_post)){?>
+				            <?php	if (wps_Is_Circolare_Da_Firmare($ID_post)){?>
 				            	  <span class="card-firma pl-2 pr-1">
-							<?php		if (!Is_Circolare_Firmata($ID_post)) {
-											$ngiorni=Get_scadenzaCircolare($ID_post,"",True);					
-											if(Is_Circolare_Scaduta($ID_post)){
+							<?php		if (!wps_Is_Circolare_Firmata($ID_post)) {
+											$ngiorni=wps_Get_scadenzaCircolare($ID_post,"",True);					
+											if(wps_Is_Circolare_Scaduta($ID_post)){
 												echo' <i class="fas fa-pencil-alt" aria-hidden="true" style="color:red;"></i> Scaduta e non Firmata ';						
 											}else{
 												switch ($ngiorni){

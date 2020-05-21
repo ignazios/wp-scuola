@@ -1,3 +1,17 @@
+.tooltip-inner{
+	background-color: #06c!important;
+	text-align: left!important;
+	color:#ffffff!important;
+	font-size:0.8rem!important;
+}
+#content ul.dropdown-menu, #content ul.dropdown-menu li{
+    padding-left: 0!important;
+    list-style: none!important;
+}
+.bootstrap-select-wrapper>label, .form-group>label {
+    color:#06c!important;
+}
+
 table.settimanale {
 	border-width: 1px;
 	border-style: thin;

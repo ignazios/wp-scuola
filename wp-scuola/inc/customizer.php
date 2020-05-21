@@ -19,7 +19,7 @@ $articoli=array();
 if (count($posts)!=0)
 	foreach ($posts as $post) {
 		$articoli[$post->ID]=$post->post_title;
-	}    
+	}  
 /**
 *  Crea pannello per impostazione Tema
 */
@@ -448,10 +448,21 @@ $wp_customize->add_setting('scuola_circolari_attiva', array(
 $wp_customize->add_control('scuola_circolari_attiva', array(
     'label' => 'Attiva il modulo Circolari',
     'description'	=>' Il modulo permette di integrare la gestione delle Circolari Scolastiche' ,
-    'priority'	=> 2,
+    'priority'	=> 3,
     'type' => 'checkbox', 
     'section' => 'Scuola_Moduli_Settings', 
     'settings' => 'scuola_circolari_attiva'));
+$wp_customize->add_setting('scuola_modpren_attiva', array(
+    'default' => false, 
+    'capability' => 'edit_theme_options', 
+    'sanitize_callback' => 'scuola_sanitize_checkbox'));
+$wp_customize->add_control('scuola_modpren_attiva', array(
+    'label' => 'Attiva il modulo Prenotazioni',
+    'description'	=>' Il modulo permette di integrare la gestione delle Prenotazione degli spazi scolastici' ,
+    'priority'	=> 4,
+    'type' => 'checkbox', 
+    'section' => 'Scuola_Moduli_Settings', 
+    'settings' => 'scuola_modpren_attiva'));
 /**
 *  Crea pannello per impostazione Home Page
 */
@@ -889,7 +900,6 @@ $wp_customize->add_setting( 'scuola_text_color' , array(
     'section'     => 'colors',
     'settings'     => 'scuola_footer_link_color'
   ) ) );
-
 }
 function scuola_sanitize_number( $input ) {
     if (is_numeric($input)) { 

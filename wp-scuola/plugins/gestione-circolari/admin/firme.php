@@ -8,9 +8,9 @@
  * @ver 2.7.3
  */
 
-function circolari_VisualizzaArchivio()
+function wps_circolari_VisualizzaArchivio()
 {
-global $msg,$TestiRisposte,$Testi;
+global $msg,$wps_TestiRisposte,$wps_Testi;
 	$current_user =wp_get_current_user();
 	$DataCreazioneUtente=substr(get_userdata($current_user->ID)->user_registered,0,10);
 	echo'
@@ -19,7 +19,7 @@ global $msg,$TestiRisposte,$Testi;
 		</div>';
 	if($msg!="") 
 		echo '<div id="message" class="updated"><p>'.$msg.'</p></div>';
-	$Posts=GetArchivioCircolari();
+	$Posts=wps_GetArchivioCircolari();
 	echo '
 	<div>
 		<table id="TabellaCircolari" class="widefat"  cellspacing="0" width="99%">
@@ -48,16 +48,16 @@ global $msg,$TestiRisposte,$Testi;
 			<tboby>';
 	foreach($Posts as $post){
 	//print_r($post);
-		if (!(Is_Circolare_Pubblica($post->ID) Or Is_Circolare_per_User($post->ID)))
+		if (!(wps_Is_Circolare_Pubblica($post->ID) Or wps_Is_Circolare_per_User($post->ID)))
 			continue;
 		$sign=get_post_meta($post->ID, "_sign",TRUE);
 		$RimuoviFirma="";
 		$Campo_Firma="";
 		$GGDiff="";
 		$BGC="";
-		$Scadenza=Get_scadenzaCircolare($post->ID,"DataDB");
-//		echo $Scadenza." - ".$sign." - ".Is_Circolare_Firmata($post->ID)." - <br />";
-		if($Scadenza>date("Y-m-d") and $sign!="NoFirma" And Is_Circolare_Firmata($post->ID)){
+		$Scadenza=wps_Get_scadenzaCircolare($post->ID,"DataDB");
+//		echo $Scadenza." - ".$sign." - ".wps_Is_Circolare_Firmata($post->ID)." - <br />";
+		if($Scadenza>date("Y-m-d") and $sign!="NoFirma" And wps_Is_Circolare_Firmata($post->ID)){
 			$Titolo="Rimuovi ".($sign=="Firma"?"Firma":"Espressione");
 			$LinkRmFirma=admin_url()."edit.php?post_type=circolari_scuola&page=Archivio&op=RemoveFirma&pid=".$post->ID."&circoRmFir=".wp_create_nonce('RmFirmaCircolare');
 			$RimuoviFirma='<a href="'.$LinkRmFirma.'"<i class="fa fa-times" aria-hidden="true" title="'.$Titolo.'" style="color:red;"></i></a>';		
@@ -78,31 +78,31 @@ global $msg,$TestiRisposte,$Testi;
 					$BGC="color: red;";
 				}	
 				if($sign=="Firma"){
-					if (Is_Circolare_Firmata($post->ID)){
+					if (wps_Is_Circolare_Firmata($post->ID)){
 						 $Campo_Firma="Firmata";
 					}else{
 						$Campo_Firma="Non Firmata";
 					}
 				}else{
-					$Campo_Firma=$TestiRisposte[get_Circolare_Adesione($post->ID)]->get_Risposta();
+					$Campo_Firma=$wps_TestiRisposte[wps_get_Circolare_Adesione($post->ID)]->get_Risposta();
 				}
 			}
 		}
 //		setup_postdata($post);
-//		$dati_firma=get_Firma_Circolare($post->ID);
+//		$dati_firma=wps_get_Firma_Circolare($post->ID);
 		echo "
 				<tr>
-					<td> ".GetNumeroCircolare($post->ID)."</td>
+					<td> ".wps_GetNumeroCircolare($post->ID)."</td>
 					<td>
 					<a href='".get_permalink( $post->ID )."'>
 					$post->post_title
 					</a>
 					</td> 
-					<td>".FormatDataItalianoBreve(substr($post->post_date,0,10),TRUE)."</td>
-					<td>".Circolari_Tipo::get_TipoCircolare($sign)->get_DescrizioneTipo()."</td>
-					<td><spam style='$BGC'>".FormatDataItalianoBreve(Get_scadenzaCircolare( $post->ID,"" ),TRUE)." $GGDiff</spam></td>
+					<td>".wps_FormatDataItalianoBreve(substr($post->post_date,0,10),TRUE)."</td>
+					<td>".wps_Circolari_Tipo::get_TipoCircolare($sign)->get_DescrizioneTipo()."</td>
+					<td><spam style='$BGC'>".wps_FormatDataItalianoBreve(wps_Get_scadenzaCircolare( $post->ID,"" ),TRUE)." $GGDiff</spam></td>
 					<td>$RimuoviFirma $Campo_Firma</td>
-					<td>".FormatDataItalianoBreve(Get_Data_Firma($post->ID),TRUE)."</td>
+					<td>".wps_FormatDataItalianoBreve(wps_Get_Data_Firma($post->ID),TRUE)."</td>
 				</tr>";
 	}	
 	echo '
@@ -111,7 +111,7 @@ global $msg,$TestiRisposte,$Testi;
 		</div>';	
 }
 
-function circolari_GestioneFirme()
+function wps_circolari_GestioneFirme()
 {
 global $msg;
 echo'
@@ -120,11 +120,11 @@ echo'
 		</div>';
 if($msg!="") 
 	echo '<div id="message" class="updated"><p>'.$msg.'</p></div>';
-		VisualizzaTabellaCircolari();		
+		wps_VisualizzaTabellaCircolari();		
 }
-function VisualizzaTabellaCircolari(){
-	global $TestiRisposte,$Testi;
-	$Posts=GetCircolariDaFirmare("D");
+function wps_VisualizzaTabellaCircolari(){
+	global $wps_TestiRisposte,$wps_Testi;
+	$Posts=wps_GetCircolariDaFirmare("D");
 	
 	echo '
 	<div>
@@ -150,7 +150,7 @@ function VisualizzaTabellaCircolari(){
 	$BaseUrl=admin_url()."edit.php";
 	foreach($Posts as $post){
 		$sign=get_post_meta($post->ID, "_sign",TRUE);
-		$Scadenza=Get_scadenzaCircolare($post->ID,"DataDB");
+		$Scadenza=wps_Get_scadenzaCircolare($post->ID,"DataDB");
 		if ($Scadenza=="9999-12-31")
 			$GGDiff=9999;
 		else{
@@ -173,7 +173,7 @@ function VisualizzaTabellaCircolari(){
 				break;	
 		}
 		echo $sign;
-		$TipoCircolare= Circolari_find_Tipo($sign);
+		$TipoCircolare= wps_Circolari_find_Tipo($sign);
 		if($sign=="Firma"){
 				$Campo_Firma='<a href="'.$BaseUrl.'?post_type=circolari_scuola&page=Firma&op=Firma&pid='.$post->ID.'&circoFir='.wp_create_nonce('FirmaCircolare').'">Firma Circolare</a>';
 		}elseif ($sign!="NoFirma"){	
@@ -186,7 +186,7 @@ function VisualizzaTabellaCircolari(){
 					<input type="hidden" name="circoFir" value="'.wp_create_nonce('FirmaCircolare').'" />';
 				$Risposte=$TipoCircolare->get_Risposte();
 				foreach($Risposte as $Risposta){
-					$Risp=Circolari_find_Risposta($Risposta);
+					$Risp=wps_Circolari_find_Risposta($Risposta);
 					$Campo_Firma.='<input type="radio" name="scelta" class="s'.$Risposta.'-'.$post->ID.'" value="'.$Risposta.'"/>'.$Risp->get_Risposta().' '; 
 				}
 				$Campo_Firma.= ' <input type="hidden" name="to" id="to" value="'.$TipoCircolare->get_TestoElenco().'" />
@@ -195,7 +195,7 @@ function VisualizzaTabellaCircolari(){
 			}				
 			echo "
 				<tr>
-					<td> ".GetNumeroCircolare($post->ID)."</td>
+					<td> ".wps_GetNumeroCircolare($post->ID)."</td>
 					<td>
 					<a href='".get_permalink( $post->ID )."'>
 					$post->post_title

@@ -50,7 +50,7 @@
 		echo $args['before_widget'];          
            if ( $title ) {
                 echo $args['before_title'] . $title . ' <a href="'.site_url('/wp-admin/edit.php?post_type=circolari_scuola&page=Firma').'">';
-                if(is_user_logged_in() and ($CircoDaFirmare=GetCircolariDaFirmare("N"))>0){
+                if(is_user_logged_in() and ($CircoDaFirmare=wps_GetCircolariDaFirmare("N"))>0){
                 	echo '<span class="badge badge-pill badge-danger" title="Circolari da firmare">'.$CircoDaFirmare.'</span></a>';
                 }
                 echo $args['after_title'];
@@ -63,12 +63,12 @@
 					$visibilita="p";
 				else 
 					$visibilita=$visibilita[0];
-     			if ((Is_Circolare_per_User($Circolare->ID) and $visibilita=="d") or $visibilita=="p"){
+     			if ((wps_Is_Circolare_per_User($Circolare->ID) and $visibilita=="d") or $visibilita=="p"){
      				$NunEleVis++;
      				if ($NunEleVis<=$numelementi){
 						$numero=get_post_meta($Circolare->ID, "_numero",TRUE);
 						$anno=get_post_meta($Circolare->ID, "_anno",TRUE);
-						$Elenco=GetEencoDestinatari($Circolare->ID);
+						$Elenco=wps_GetEencoDestinatari($Circolare->ID);
 ?>
  			<div class="col-12 col-sm-6 col-lg-4">
       			<div class="it-grid-item-wrapper shadow>
@@ -89,11 +89,11 @@
 				          <p class="card-text"><?php echo $Circolare->post_excerpt; ?></p>
 				          <div class="it-card-footer">
 				            <span class="card-autore"><i class="fas fa-user-edit"></i> <?php echo get_the_author_meta('display_name', $Circolare->post_author);?></span>
-				            <?php	if (Is_Circolare_Da_Firmare($Circolare->ID)){?>
+				            <?php	if (wps_Is_Circolare_Da_Firmare($Circolare->ID)){?>
 				            	  <span class="card-firma">
-							<?php		if (!Is_Circolare_Firmata($Circolare->ID)) {
-											$ngiorni=Get_scadenzaCircolare($Circolare->ID,"",True);					
-											if(Is_Circolare_Scaduta($Circolare->ID)){
+							<?php		if (!wps_Is_Circolare_Firmata($Circolare->ID)) {
+											$ngiorni=wps_Get_scadenzaCircolare($Circolare->ID,"",True);					
+											if(wps_Is_Circolare_Scaduta($Circolare->ID)){
 												echo' <i class="fa fa-pencil" aria-hidden="true" style="color:red;"></i> Scaduta e non Firmata ';						
 											}else{
 												switch ($ngiorni){

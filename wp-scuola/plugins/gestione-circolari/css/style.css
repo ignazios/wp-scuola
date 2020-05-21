@@ -49,16 +49,6 @@
     color:#7F0000;
     cursor:pointer;
 }
- .ui-tooltip, .arrow:after {
-    background: #fff;
-    border: 2px solid white;
-  }
-  .ui-tooltip {
-    padding: 10px 20px;
-    color: #000;
-    border-radius: 20px;
-    box-shadow: 0 0 7px black;
-  }
   .arrow {
     width: 70px;
     height: 16px;

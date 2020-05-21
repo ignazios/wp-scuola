@@ -1,5 +1,5 @@
 <?php
-function crea_custom_circolari() {
+function wps_crea_custom_circolari() {
 	$ArrSupports=array('title', 'editor', 'author','excerpt', 'thumbnail');
 	if(get_option('Circolari_GestPerm')=="int"){
 		$cps=array();
@@ -49,12 +49,12 @@ function crea_custom_circolari() {
 		'show_ui' => true,
 		'show_in_admin_bar' => true,
 		'show_in_rest' => true,
-		'menu_position' => 5,
+		'menu_position' => 20,
 		'capability_type' => $cp,
 		'capabilities' => $cps,
 		'hierarchical' => false,
 		'has_archive' => true,
-		'menu_icon' => Circolari_URL.'/img/circolare.png',
+		'menu_icon' => wps_Circolari_URL.'/img/circolare.png',
 	//   'taxonomies' => array('category'),  
 		'supports' => $ArrSupports));
 }

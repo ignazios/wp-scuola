@@ -37,19 +37,34 @@ get_header();
 	    <div class="col-lg-3">
 			<div class="link-list-wrapper shadow p-1">
 				<div class="row p-2">
-					<h6 class="TitoloArchivio"><i class="far fa-newspaper"></i> Servizio</h6>
+					<h6 class="TitoloArchivio"><i class="far fa-newspaper"></i> <?php _e("Servizio", "wpscuola");?></h6>
 				</div> 
 				<ul class="link-list" id="ListaPagine">
 		<?php
 			$servizio_link_servizio = get_post_meta( get_the_ID(), 'servizio_link_servizio', true );
 			$servizio_link_descrizione = get_post_meta( get_the_ID(), 'servizio_link_descrizione', true );
-			$servizio_attivazione_servizio = get_post_meta( get_the_ID(), 'servizio_attivazione_servizio', true );
 			$servizio_codice_ipa = get_post_meta( get_the_ID(), 'servizio_codice_ipa', true );
+			$servizio_targetS = get_post_meta( get_the_ID(), 'servizio_targetservizo', true );
+			$servizio_targetD = get_post_meta( get_the_ID(), 'servizio_targetdescrizione', true );
+			if( !isset( $servizio_targetS ) ) $servizio_targetS = '_blank';
+			if( !isset( $servizio_targetD ) ) $servizio_targetD = '_blank';
 
 			// Set default values.
-			if(!empty( $servizio_link_servizio)) echo '<li class="pb-2"><a href="'.$servizio_link_servizio.'" class="badge badge-primary" target="_blank">Erogazione</a></li>';
-			if(!empty( $servizio_link_descrizione)) echo '<li class="pb-2"><a href="'.$servizio_link_descrizione.'" class="badge badge-primary" target="_blank">Descrizione</a></li>';
-			if(!empty( $servizio_codice_ipa)) echo '<li class="pb-2"><a href="https://indicepa.gov.it/ricerca/n-lista-aoo.php?cod_amm='.$servizio_codice_ipa.'" class="badge badge-primary" target="_blank">Amministrazione</a></li>';?>
+			if(!empty( $servizio_link_servizio)) :?>
+					<li class="pb-2">
+						<a href="<?php echo$servizio_link_servizio;?>" class="badge badge-primary" <?php echo ($servizio_targetS!="" ? "target=\"".$servizio_targetS."\"":"");?>><?php _e("Erogazione", "wpscuola");?></a>
+					</li>
+<?php		endif;
+			if(!empty( $servizio_link_descrizione)) :?>
+					<li class="pb-2">
+						<a href="<?php echo$servizio_link_descrizione;?>" class="badge badge-primary" <?php echo ($servizio_targetD!="" ? "target=\"".$servizio_targetD."\"":"");?>><?php _e("Descrizione", "wpscuola");?></a>
+					</li>
+<?php		endif;
+			if(!empty( $servizio_codice_ipa)) :?>
+					<li class="pb-2">
+						<a href="https://indicepa.gov.it/ricerca/n-lista-aoo.php?cod_amm=<?php echo $servizio_codice_ipa;?>" class="badge badge-primary" target="_blank"><?php _e("Amministrazione", "wpscuola");?></a>
+					</li>
+<?php		endif;?>
 		  		</ul>
 			 </div>
 		</div>	         

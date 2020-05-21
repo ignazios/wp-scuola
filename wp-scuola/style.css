@@ -5,7 +5,7 @@ Author: 		Ignazio Scimone
 Author URI: 	https://eduva.org/
 Description: 	WPScuola è un tema di WordPress realizzato principalmente per le scuole italiane. Il tema è basata sul tema originale Design Italia Versione: 0.32 https://github.com/italia/design-wordpress-theme autore Marco Gargano http://marcogargano.com/. 
 Il tema utilizza la libreria Bootstrap Italia basata su Bootstrap 4.3.1, di cui eredita tutte le funzionalità, componenti, griglie e classi di utilità, personalizzandole secondo le Linee Guida di Design per i siti web della Pubblica Amministrazione. 
-Version: 		0.0.8
+Version: 		0.0.9
 License: 		AGPL-3.0
 License URI: 	https://opensource.org/licenses/AGPL-3.0
 Tags: 			right-sidebar, custom-header, custom-footer, custom-colors, custom-logo, custom-menu, mega-menu, footer-widgets, footer-menu, editor-style, featured-images, post-formats, theme-options, blocco-scuola, blocco-in-evidenza, modulo-FAQ, modulo-Circolari, tempate-albo-online, template-amministrazione-trasparente.
@@ -164,9 +164,9 @@ input[type="email"],
 textarea, 
 select {
 	padding: 10px;
-	background-color: #f6f6f6;
+	background-color: transparent;/*#f6f6f6;*/
 	border: none;
-	box-shadow: 0 0 0 1px rgba(0, 0, 0, .2);
+/*	box-shadow: 0 0 0 1px rgba(0, 0, 0, .2);*/
 	display: block;
 	max-width: 100%;
 }
@@ -185,11 +185,10 @@ input[type="submit"] {
 	box-shadow: none;
 	color: #004a4d;
 	font-weight: 600;
-  padding: .6em 1.2em;
-  text-transform: uppercase;
-  -ms-touch-action: manipulation;
-  touch-action: manipulation;
-  vertical-align: middle;
+  	padding: .6em 1.2em;
+  	-ms-touch-action: manipulation;
+  	touch-action: manipulation;
+  	vertical-align: middle;
 /*  white-space: nowrap;*/
 }
 button:hover, 

@@ -1,6 +1,6 @@
 jQuery.noConflict();
 (function($) {
-	$(function() {	
+	$(function() {
  	$(document).click(function(e) { //start function when Random button is clicked
 		var IdEle=e.target.id;
 		if(IdEle.slice(0, 13)=="adminpreStyle"){
@@ -61,10 +61,9 @@ jQuery.noConflict();
     $( "#SHInfo" ).click(function() {
       $( "#info" ).toggle( "fast" );
     });
-    $('#CartellePrenotazioni').tabs();
     $( "#SpazioP" ).change(function() {
  		 $( "#SpazioP option:selected" ).each(function() {
-			$("#imgSpazio").attr('src',$( this ).attr('title'));
+			$("#imgSpazio").attr('src',$( this ).attr('data'));
 				$.ajax({type: "post",url: $("#UrlAjax").attr("value"),data: { 
 								action: 'FEprenSpazi', 
 		                        data: $('#DataPrenotazione').attr("value"), 

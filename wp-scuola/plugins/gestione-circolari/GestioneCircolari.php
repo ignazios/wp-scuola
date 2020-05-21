@@ -24,27 +24,27 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
   die('You are not allowed to call this page directly.'); 
 }
 global $wpdb,$table_prefix;
-$wpdb->table_firme_circolari = $table_prefix . "firme_circolari";
+$wpdb->table_circolari_firme = $table_prefix . "circolari_firme";
 
-define("Circolari_URL",get_template_directory_uri()."/plugins/gestione-circolari");
-define("Circolari_DIR",dirname (__FILE__));
-define("Circolari_Dir_Servizio",WP_CONTENT_DIR."/Circolari");
-include_once(Circolari_DIR."/admin/gruppi.php");
-include_once(Circolari_DIR."/admin/firme.php");
-include_once(Circolari_DIR."/functions.inc.php");
-include_once(Circolari_DIR."/GestioneCircolari_CustomPostType.php");
-include_once(Circolari_DIR."/admin/testi.php");
-if((get_option('Circolari_ModuloCircolari')!= 'Si'||!get_option('Circolari_ModuloCircolari')) And get_theme_mod("scuola_circolari_attiva")){
-	circolari_activate();
-	update_option('Circolari_ModuloCircolari', 'Si');
+define("wps_Circolari_URL",get_template_directory_uri()."/plugins/gestione-circolari");
+define("wps_Circolari_DIR",dirname (__FILE__));
+define("wps_Circolari_DIR_Servizio",WP_CONTENT_DIR."/Circolari");
+include_once(wps_Circolari_DIR."/admin/gruppi.php");
+include_once(wps_Circolari_DIR."/admin/firme.php");
+include_once(wps_Circolari_DIR."/functions.inc.php");
+include_once(wps_Circolari_DIR."/GestioneCircolari_CustomPostType.php");
+include_once(wps_Circolari_DIR."/admin/testi.php");
+if((get_option('wps_Circolari_ModuloCircolari')!= 'Si'||!get_option('wps_Circolari_ModuloCircolari')) And get_theme_mod("scuola_circolari_attiva")){
+	wps_circolari_activate();
+	update_option('wps_Circolari_ModuloCircolari', 'Si');
 }
-if(get_option('Circolari_ModuloCircolari')== 'Si' And !get_theme_mod("scuola_circolari_attiva")){
-	circolari_uninstall();
-	update_option('Circolari_ModuloCircolari', 'No');
+if(get_option('wps_Circolari_ModuloCircolari')== 'Si' And !get_theme_mod("scuola_circolari_attiva")){
+	wps_circolari_uninstall();
+	update_option('wps_Circolari_ModuloCircolari', 'No');
 }
 $msg="";
-$TestiRisposte="";
-$Testi="";
+$wps_TestiRisposte="";
+$wps_Testi="";
 require_once(ABSPATH . 'wp-includes/pluggable.php'); 
 if(isset($_REQUEST["op"])){
 	if (isset($_REQUEST['circoFir'])) 
@@ -52,24 +52,31 @@ if(isset($_REQUEST["op"])){
 			switch ($_REQUEST["op"]){
 				case "Firma":
 					global $msg;
-					$msg=FirmaCircolare((int)$_REQUEST["pid"],4);
+					$msg=wps_FirmaCircolare((int)$_REQUEST["pid"],4);
 					break;
 				case "Adesione":
 					global $msg;
-					$msg=FirmaCircolare((int)$_REQUEST["pid"],$_REQUEST["scelta"]);
+					$msg=wps_FirmaCircolare((int)$_REQUEST["pid"],$_REQUEST["scelta"]);
 					wp_redirect( $_SERVER['HTTP_REFERER'] );
 					break;	
 			}
 	if (isset($_REQUEST['circoRmFir'])){
 		if (wp_verify_nonce($_REQUEST['circoRmFir'],'RmFirmaCircolare') And $_REQUEST["op"]=="RemoveFirma"){
 			global $msg;
-			$msg=RimuoviFirmaCircolare($_REQUEST["pid"]);
+			$msg=wps_RimuoviFirmaCircolare($_REQUEST["pid"]);
 			wp_redirect( $_SERVER['HTTP_REFERER'] );
 		}	
 	}
 }
+if (isset($_GET['update']) And $_GET['update'] == 'true')
+	$stato="<div id='setting-error-settings_updated' class='updated settings-error'> 
+			<p><strong>".__( 'Impostazioni salvate', 'wpscuola' ).".</strong></p></div>";
 
-function post_type_archive( $query ) {  
+function wps_circolari_post_type_archive( $query ) { 
+	if (get_post_type()=='newsletter' ) {
+	     $query->set('post_type', array( 'post', 'circolari_scuola' ) );
+		return $query; 
+	}
 	if(current_user_can('administrator')) return $query;
 	if($query->is_post_type_archive('circolari_scuola' ) and ($query->is_admin==FALSE)){  
 		$current_user = wp_get_current_user();
@@ -107,10 +114,8 @@ function post_type_archive( $query ) {
 		}
 	 }  
 }  
-add_action( 'pre_get_posts', 'post_type_archive' );  
 
-
-add_filter('posts_where', function ($where, $query) {
+function wps_circolari_posts_where($where, $query) {
 	if(current_user_can('administrator') Or $query->query_vars['post_type']!='circolari_scuola' Or $query->is_admin==true) return $where;
 		$current_user = wp_get_current_user();
 		if ( 0 == $current_user->ID ) return $where;
@@ -134,9 +139,9 @@ add_filter('posts_where', function ($where, $query) {
 	$where=substr($where,strpos($where, "AND",3));
 	$where=$where." ".$CondPrivati;
 	return $where;
-}, 10, 2);
+}
 
-function circolari_scuola_rewrite_rules(){
+function wps_circolari_scuola_rewrite_rules(){
 
     add_rewrite_rule(
         'circolari_scuola/([0-9]{4})/([0-9]{1,2})/?$',
@@ -149,43 +154,53 @@ function circolari_scuola_rewrite_rules(){
         'index.php?post_type=circolari_scuola&year=$matches[1]',
         'top'
     );
-
 }
-add_action( 'init', 'circolari_scuola_rewrite_rules' );
 
+add_filter( 'post_updated_messages', 		'wps_circolari_updated_messages');
+add_filter( 'manage_posts_columns', 		'wps_circolari_NuoveColonne');  
+add_filter( 'post_row_actions',				'wps_circolari_remove_quick_edit',10,2);
+add_filter( 'wp_get_attachment_url', 		'wps_circolari_getFileUrl', 10, 2);
+add_filter( 'the_content', 					'wps_circolari_FiltroVisualizzaCircolare');
+add_filter( 'get_the_excerpt', 				'wps_circolari_FiltroVisualizzaRiassuntoCircolare' );
+add_filter('posts_where', 					'wps_circolari_posts_where', 10, 2);
 
-if (isset($_GET['update']) And $_GET['update'] == 'true')
-	$stato="<div id='setting-error-settings_updated' class='updated settings-error'> 
-			<p><strong>".__( 'Impostazioni salvate', 'wpscuola' ).".</strong></p></div>";
+add_action( 'init', 						'wps_circolari_scuola_rewrite_rules' );
+add_action( 'save_post', 					'wps_circolari_salva_dettagli');
+add_action( 'add_meta_boxes',				'wps_circolari_crea_box');
+add_action( 'manage_posts_custom_column', 	'wps_circolari_NuoveColonneContenuto', 10, 2); 
+add_action( 'admin_menu', 					'wps_circolari_add_menu' ); 
+add_action( 'init', 						'wps_circolari_Inizializzazione');
+// Disattivate le notifiche per rallentamento BackEnd
+add_action( 'wp_before_admin_bar_render', 	'wps_circolari_admin_bar_render' );
+add_action( 'admin_menu', 					'wps_circolari_add_menu_bubble' );
+add_action( 'wp_head', 						'wps_circolari_Testata' );
+add_action( 'admin_enqueue_scripts',  		'wps_circolari_Admin_Enqueue_Scripts' );
+add_action( 'wp_enqueue_scripts', 			'wps_circolari_FrontEnd_Enqueue_Scripts' );
+add_action( 'do_feed', 						'wps_circolari_disable_feed', 1);
+add_action( 'do_feed_rdf', 					'wps_circolari_disable_feed', 1);
+add_action( 'do_feed_rss', 					'wps_circolari_disable_feed', 1);
+add_action( 'do_feed_rss2', 				'wps_circolari_disable_feed', 1);
+add_action( 'do_feed_atom', 				'wps_circolari_disable_feed', 1);
+add_action( 'pre_get_posts', 				'wps_circolari_post_type_archive' );  
 
-add_filter('post_updated_messages', 'circolari_updated_messages');
-add_action('save_post', 'circolari_salva_dettagli');
-add_action('add_meta_boxes','circolari_crea_box');
-add_filter('manage_posts_columns', 'circolari_NuoveColonne');  
-add_action('manage_posts_custom_column', 'circolari_NuoveColonneContenuto', 10, 2); 
-add_action('admin_menu', 'circolari_add_menu' ); 
-//add_action('publish_circolari','AC_OnPublishPost' );
-add_filter('post_row_actions','remove_quick_edit',10,2);
-add_filter('wp_get_attachment_url', 'getFileUrl', 10, 2);
-
-function circolari_Inizializzazione(){
-	global $TestiRisposte,$Testi;
+function wps_circolari_Inizializzazione(){
+	global $wps_TestiRisposte,$wps_Testi;
 /**
 *  Creazione del custom post type Circolari
 */    
-	crea_custom_circolari();
+	wps_crea_custom_circolari();
 /**
 * Impostazione dei tipi di circolari e dei testi delle risposte 
 */
-	if(FALSE!==($TestiRisposte=get_option('Circolari_TestiRisposte'))){
-    	$TestiRisposte= unserialize($TestiRisposte);
+	if(FALSE!==($wps_TestiRisposte=get_option('Circolari_TestiRisposte'))){
+    	$wps_TestiRisposte= unserialize($wps_TestiRisposte);
     }else{
-    	$TestiRisposte=circolari_CreaTestiRisposta();
+    	$wps_TestiRisposte=wps_circolari_CreaTestiRisposta();
     }
-   	if(FALSE!==($Testi=get_option('Circolari_Tipo'))){
-    	$Testi=unserialize($Testi);
+   	if(FALSE!==($wps_Testi=get_option('Circolari_Tipo'))){
+    	$wps_Testi=unserialize($wps_Testi);
     }else{
-    	$Testi=circolari_CreaTesti();
+    	$wps_Testi=wps_circolari_CreaTesti();
     }
 /**
 * Operazione eseguite per la memorizzazione dei parametri delle Circoalri
@@ -205,36 +220,8 @@ function circolari_Inizializzazione(){
 			}
 	}
 }
-add_action('init', "circolari_Inizializzazione");
 
-/**
-* *************************************************
-* 
-* Disattivate le notifiche per rallentamento BackEnd
-*/
-add_action( 'wp_before_admin_bar_render', 'circolari_admin_bar_render' );
-add_action( 'admin_menu', 'add_circolari_menu_bubble' );
-/**
-* *************************************************
-*/
-add_filter( 'the_content', 'FiltroVisualizzaCircolare');
-add_filter( 'get_the_excerpt', 'FiltroVisualizzaRiassuntoCircolare' );
-//add_shortcode('VisCircolari', 'VisualizzaCircolari');
-//add_shortcode('VisCircolariHome', 'VisualizzaCircolariHome');
-add_action('wp_head', 'TestataCircolari' );
-add_action( 'admin_enqueue_scripts',  'Circolari_Admin_Enqueue_Scripts' );
-add_action( 'wp_enqueue_scripts', 'Circolari_FrontEnd_Enqueue_Scripts' );
-
-add_action('do_feed', 'circolari_disable_feed', 1);
-add_action('do_feed_rdf', 'circolari_disable_feed', 1);
-add_action('do_feed_rss', 'circolari_disable_feed', 1);
-add_action('do_feed_rss2', 'circolari_disable_feed', 1);
-add_action('do_feed_atom', 'circolari_disable_feed', 1);
-//register_uninstall_hook(__FILE__,  'circolari_uninstall' );
-//register_activation_hook( plugin_basename(__FILE__), 'circolari_activate');
-//add_action( 'plugins_loaded', 'circolari_activate');
-//circolari_activate();
-function getFileUrl($url, $id){
+function wps_circolari_getFileUrl($url, $id){
     if (get_post_type($id)=="circolari_scuola") {
 		$visibilita=get_post_meta($id, "_visibilita");
 		if (count($visibilita)==0)
@@ -244,13 +231,13 @@ function getFileUrl($url, $id){
 				$selp="Pb";
 			else	
 				$seld="Pr";
-		if ((!is_user_logged_in() Or !Is_Circolare_per_User($id)) And $seld=="Pr")	
+		if ((!is_user_logged_in() Or !wps_Is_Circolare_per_User($id)) And $seld=="Pr")	
 			$url = get_home_url().'?circolarifiletype=attachment&circolarigetfile='.$url;		
 		}
         return $url;
     }
 //removes quick edit from custom post type list
-function remove_quick_edit( $actions ) {
+function wps_circolari_remove_quick_edit( $actions ) {
 	global $post;
     if( $post->post_type == 'circolari_scuola' ) {
  		unset($actions['inline hide-if-no-js']);
@@ -258,179 +245,140 @@ function remove_quick_edit( $actions ) {
     return $actions;
 }
 
-function circolari_disable_feed() {
+function wps_circolari_disable_feed() {
 	if ( get_post_type()=='circolari_scuola') {
         wp_die( __( 'Non ci sono feed disponibili per le Circolari, per visualizzarle naviga la', 'wpscuola' ).'  <a href="'. get_bloginfo('url') .'">'.__( 'Home', 'wpscuola' ).'</a> '.__( 'del sito', 'wpscuola' ).'!');
     }
 }
 
-function Circolari_FrontEnd_Enqueue_Scripts() {
-//	wp_enqueue_style( 'circolari_styles-fonts', Circolari_URL.'/font/css/font-awesome.min.css',  array(), null, 'all' );
-//	wp_enqueue_style( 'circolari_styles', Circolari_URL.'/css/style.css',  array(), null, 'all' );
+function wps_circolari_FrontEnd_Enqueue_Scripts() {
+//	wp_enqueue_style( 'circolari_styles-fonts', wps_Circolari_URL.'/font/css/font-awesome.min.css',  array(), null, 'all' );
+//	wp_enqueue_style( 'circolari_styles', wps_Circolari_URL.'/css/style.css',  array(), null, 'all' );
 	}
-function Circolari_Admin_Enqueue_Scripts($hook) {
-//	if($hook == 'edit.php' And (isset($_GET['post_type']) And $_GET['post_type']=="circolari")) {
+	
+function wps_circolari_Admin_Enqueue_Scripts($hook) {
 		wp_enqueue_script('jquery');
 		wp_enqueue_script( 'jquery-ui-datepicker', '', array('jquery'),false,true);
-		wp_enqueue_script( 'Circolari-admin', Circolari_URL.'/js/Circolari.js', array(), null);
-		wp_enqueue_style( 'jquery.ui.theme', Circolari_URL.'/css/jquery-ui-custom.css');
+        wp_enqueue_style( 'jquery.ui.theme', get_template_directory_uri().'/plugins/prenotazioni/css/jquery-ui-custom.css');
+		wp_enqueue_script( 'Circolari-admin', wps_Circolari_URL.'/js/Circolari.js', array(), null);
 		if($hook == 'edit.php' And (isset($_GET['post_type']) And $_GET['post_type']=="circolari_scuola")) {
-        	wp_enqueue_script( 'jquery-ui-tooltip', '', array('jquery'),false,true);
-        	wp_enqueue_script( 'Circolari-admin-tooltip', Circolari_URL.'/js/Circolari_tooltip.js', array(), null);
+//			wp_enqueue_script( 'jquery-ui-tooltip', '', array('jquery'),false,true);
+        	wp_enqueue_script( 'Circolari-admin-tooltip', wps_Circolari_URL.'/js/Circolari_tooltip.js', array(), false,true);
 		}
-		wp_enqueue_script( 'Circolari-DataTable', Circolari_URL.'/js/jquery.dataTables.js');
-		wp_enqueue_script( 'Circolari-DataTable-Tools', Circolari_URL.'/js/dataTables.tableTools.js');
-
-		wp_enqueue_style( 'circolari_styles-fonts', Circolari_URL.'/font/css/font-awesome.min.css',  array(), null, 'all' );
-		wp_enqueue_style( 'Circolari-DataTable-theme', Circolari_URL.'/css/jquery.dataTables.css' );
-		wp_enqueue_style( 'Circolari-DataTable-theme-Tools', Circolari_URL.'/css/dataTables.tableTools.css' );
-		wp_enqueue_style( 'Circolari-style', Circolari_URL.'/css/style.css' );
-//    }
+		wp_enqueue_script( 'Circolari-DataTable', wps_Circolari_URL.'/js/jquery.dataTables.js');
+		wp_enqueue_script( 'Circolari-DataTable-Tools', wps_Circolari_URL.'/js/dataTables.tableTools.js');
+		wp_enqueue_style( 'Circolari-DataTable-theme', wps_Circolari_URL.'/css/jquery.dataTables.css' );
+		wp_enqueue_style( 'Circolari-DataTable-theme-Tools', wps_Circolari_URL.'/css/dataTables.tableTools.css' );
+		wp_enqueue_style( 'Circolari-style', wps_Circolari_URL.'/css/style.css' );
 }
 
-function search_filter($query) {
-if (get_post_type()=='newsletter' ) {
-    	      $query->set('post_type', array( 'post', 'circolari_scuola' ) );
-}
-	return $query;
-}
+function wps_circolari_FiltroVisualizzaCircolare( $content ){
+	$PostID= get_the_ID();
+	/*
+	 * Se l'articolo non appartiene al CustomPostType circolari_scuola rimando il contenuto
+	 */
+		if (get_post_type( $PostID) !="circolari_scuola")
+			return $content;
 
-add_action('pre_get_posts','search_filter');
-
-function VisualizzaCircolari($atts){
-	$ret="";
-	if (isset($_REQUEST['Anno']))
-		$Anno = (int)$_REQUEST['Anno'];
-	else
-		$Anno = date('Y');
-	if (isset($_REQUEST['Mese']))
-		$Mese=(int)$_REQUEST['Mese'];
-	elseif(isset($_REQUEST['Anno']))
-		$Mese="";
-	else
-		$Mese=date('n');
-	$atts = shortcode_atts(
-			array(
-				'archivio' => 'Mese',
-				'numcircolari' => 'All',
-			), $atts, 'VisCircolari' );
-	require_once ( dirname (__FILE__) . '/admin/frontend.php' );
-	return $ret;
-}
-
-function VisualizzaCircolariHome(){
-	$ret="";
-	require_once ( dirname (__FILE__) . '/admin/frontendhome.php' );
-	return $ret;
-}
-
-function FiltroVisualizzaCircolare( $content ){
-$PostID= get_the_ID();
-/*
- * Se l'articolo non appartiene al CustomPostType circolari_scuola rimando il contenuto
- */
-	if (get_post_type( $PostID) !="circolari_scuola")
-		return $content;
-
-	if(FALSE!==($TestiRisposte=get_option('Circolari_TestiRisposte'))){
-		$TestiRisposte= unserialize($TestiRisposte);
-	}else{
-		return $content;
-	}
-	if(FALSE!==($Testi=get_option('Circolari_Tipo'))){
-		$Testi=unserialize($Testi);
-	}else{
-		return $content;
-	}
-$sign=get_post_meta($PostID, "_sign",TRUE);
-if(!isset($sign) or $sign=="") return $content;
-	
-/*
- * Se l'articolo non appartiene al CustomPostType circolari_scuola rimando il contenuto
- */
-	if (get_post_type( $PostID) !="circolari_scuola")
-		return $content;
-/*
- * Se non c'è un utente loggato verifico se la circolare è pubblica. 
- * Se è pubblica la rimando per la visualizzazione
- * Altrimenti rimando il messaggio di risorsa riservata
- */
-	$visibilita=get_post_meta($PostID, "_visibilita");
-	$seld="";
-	if (count($visibilita)==0)
-		$selp="Pb";
-	else 
-		if ($visibilita[0]=="p")
+		if(FALSE!==($wps_TestiRisposte=get_option('Circolari_TestiRisposte'))){
+			$wps_TestiRisposte= unserialize($wps_TestiRisposte);
+		}else{
+			return $content;
+		}
+		if(FALSE!==($wps_Testi=get_option('Circolari_Tipo'))){
+			$wps_Testi=unserialize($wps_Testi);
+		}else{
+			return $content;
+		}
+	$sign=get_post_meta($PostID, "_sign",TRUE);
+	if(!isset($sign) or $sign=="") return $content;
+		
+	/*
+	 * Se l'articolo non appartiene al CustomPostType circolari_scuola rimando il contenuto
+	 */
+		if (get_post_type( $PostID) !="circolari_scuola")
+			return $content;
+	/*
+	 * Se non c'è un utente loggato verifico se la circolare è pubblica. 
+	 * Se è pubblica la rimando per la visualizzazione
+	 * Altrimenti rimando il messaggio di risorsa riservata
+	 */
+		$visibilita=get_post_meta($PostID, "_visibilita");
+		$seld="";
+		if (count($visibilita)==0)
 			$selp="Pb";
-		else	
-			$seld="Pr";
-	if ((!is_user_logged_in() Or !Is_Circolare_per_User($PostID)) And $seld=="Pr")	
-		return '
-	<div class="alert alert-success" role="alert">
-  		<h4 class="alert-heading">'.__( 'Avviso di sicurezza', 'wpscuola' ).'!</h4>
-  		<p>'.__( 'Circolare riservata a specifici gruppi di utenti registrati', 'wpscuola' ).'.</p>
-  		<hr>
-  		<p class="mb-0">'.__( 'Loggati per accedere alla circolare', 'wpscuola' ).'.</p>
-	</div>';
-/*
- * Se la circolare è per l'utente ed è da firmare visualizzo la gestione della firma 
- * 
- * Altrimenti rimando il messaggio di risorsa riservata
- */
-	if (!Is_Circolare_Da_Firmare($PostID) or !Is_Circolare_per_User($PostID))
-		return $content;
-	if (strlen(stristr($_SERVER["HTTP_REFERER"],"wp-admin/edit.php?post_type=circolari_scuola&page=Firma"))>0)
-		return "<br />
-		<button style=' outline: none;
- cursor: pointer;
- text-align: center;
- text-decoration: none;
- font: bold 12px Arial, Helvetica, sans-serif;
- color: #fff;
- padding: 10px 20px;
- border: solid 1px #0076a3;
- background: #0095cd;' onclick='javascript:history.back()'>".__( 'Torna alla Firma', 'wpscuola' )."</button>".$content;
-	else{ 
-		$Campo_Firma="";
-		if (Is_Circolare_per_User($PostID)){	
-			if($sign=="NoFirma"){
-				return $content;
-			}else{
-				$BaseUrl=admin_url()."edit.php";
-				if (Is_Circolare_Firmata($PostID)){
-					return  $content;
+		else 
+			if ($visibilita[0]=="p")
+				$selp="Pb";
+			else	
+				$seld="Pr";
+		if ((!is_user_logged_in() Or !wps_Is_Circolare_per_User($PostID)) And $seld=="Pr")	
+			return '
+		<div class="alert alert-success" role="alert">
+	  		<h4 class="alert-heading">'.__( 'Avviso di sicurezza', 'wpscuola' ).'!</h4>
+	  		<p>'.__( 'Circolare riservata a specifici gruppi di utenti registrati', 'wpscuola' ).'.</p>
+	  		<hr>
+	  		<p class="mb-0">'.__( 'Loggati per accedere alla circolare', 'wpscuola' ).'.</p>
+		</div>';
+	/*
+	 * Se la circolare è per l'utente ed è da firmare visualizzo la gestione della firma 
+	 * 
+	 * Altrimenti rimando il messaggio di risorsa riservata
+	 */
+		if (!wps_Is_Circolare_Da_Firmare($PostID) or !wps_Is_Circolare_per_User($PostID))
+			return $content;
+		if (strlen(stristr($_SERVER["HTTP_REFERER"],"wp-admin/edit.php?post_type=circolari_scuola&page=Firma"))>0)
+			return "<br />
+			<button style=' outline: none;
+	 cursor: pointer;
+	 text-align: center;
+	 text-decoration: none;
+	 font: bold 12px Arial, Helvetica, sans-serif;
+	 color: #fff;
+	 padding: 10px 20px;
+	 border: solid 1px #0076a3;
+	 background: #0095cd;' onclick='javascript:history.back()'>".__( 'Torna alla Firma', 'wpscuola' )."</button>".$content;
+		else{ 
+			$Campo_Firma="";
+			if (wps_Is_Circolare_per_User($PostID)){	
+				if($sign=="NoFirma"){
+					return $content;
 				}else{
-					if ($sign!="Firma"){
-						$Campo_Firma='<form action=""  method="get" style="display:inline;">
-							<div>
-								<div class="row">
-									<input type="hidden" name="op" value="Adesione" />
-									<input type="hidden" name="pid" value="'.$PostID.'" />
-									<input type="hidden" name="circoFir" value="'.wp_create_nonce('FirmaCircolare').'" />';
-					$TipoC=Circolari_find_Tipo($sign);
-					$Primo=true;
-					foreach($TipoC->get_Risposte() as $Risposta){
-						$Campo_Firma.='    <div class="form-check form-check-inline">
-      <input name="scelta" type="radio" id="radio'.$Risposta.'" class="s'.$Risposta.'-'.$PostID.'" value="'.$Risposta.'" '.($Primo?"checked":"").'>
-      <label for="radio'.$Risposta.'">'.Circolari_find_Risposta($Risposta)->get_Risposta().'</label>
-    </div>';
-    				$Primo=false;
-					}
-					$Campo_Firma.='
-									<button class="btn btn-primary btn-icon inviaadesione" type="submit" name="inviaadesione" id="'.$PostID.'" value="Firma" rel="'.get_the_title($PostID).'"><i class="fas fa-signature pr-2"></i> <span>'.__( 'Esprimi scelta', 'wpscuola' ).'</span>
+					$BaseUrl=admin_url()."edit.php";
+					if (wps_Is_Circolare_Firmata($PostID)){
+						return  $content;
+					}else{
+						if ($sign!="Firma"){
+							$Campo_Firma='<form action=""  method="get" style="display:inline;">
+								<div>
+									<div class="row">
+										<input type="hidden" name="op" value="Adesione" />
+										<input type="hidden" name="pid" value="'.$PostID.'" />
+										<input type="hidden" name="circoFir" value="'.wp_create_nonce('FirmaCircolare').'" />';
+						$TipoC=wps_Circolari_find_Tipo($sign);
+						$Primo=true;
+						foreach($TipoC->get_Risposte() as $Risposta){
+							$Campo_Firma.='    <div class="form-check form-check-inline">
+	      <input name="scelta" type="radio" id="radio'.$Risposta.'" class="s'.$Risposta.'-'.$PostID.'" value="'.$Risposta.'" '.($Primo?"checked":"").'>
+	      <label for="radio'.$Risposta.'">'.wps_Circolari_find_Risposta($Risposta)->get_Risposta().'</label>
+	    </div>';
+	    				$Primo=false;
+						}
+						$Campo_Firma.='
+										<button class="btn btn-primary btn-icon inviaadesione" type="submit" name="inviaadesione" id="'.$PostID.'" value="Firma" rel="'.get_the_title($PostID).'"><i class="fas fa-signature pr-2"></i> <span>'.__( 'Esprimi scelta', 'wpscuola' ).'</span>
+									</div>
 								</div>
-							</div>
-						</form>';
-					}else
-						$Campo_Firma='<button class="btn btn-primary btn-icon" onclick="window.location.href=\''.get_permalink($PostID).'?op=Firma&pid='.$PostID.'&circoFir='.wp_create_nonce('FirmaCircolare').'\'"><i class="fas fa-signature pr-2"></i> <span>'.__( 'Firma la Circolare', 'wpscuola' ).'</span>';					
+							</form>';
+						}else
+							$Campo_Firma='<button class="btn btn-primary btn-icon" onclick="window.location.href=\''.get_permalink($PostID).'?op=Firma&pid='.$PostID.'&circoFir='.wp_create_nonce('FirmaCircolare').'\'"><i class="fas fa-signature pr-2"></i> <span>'.__( 'Firma la Circolare', 'wpscuola' ).'</span>';					
+					}
 				}
 			}
-		}
-	return $content." <br />".$Campo_Firma;
-	}	
+		return $content." <br />".$Campo_Firma;
+		}	
 }
 
-function FiltroVisualizzaRiassuntoCircolare( $excerpt ){
+function wps_circolari_FiltroVisualizzaRiassuntoCircolare( $excerpt ){
 
 	$PostID= get_the_ID();
 /*
@@ -456,17 +404,17 @@ function FiltroVisualizzaRiassuntoCircolare( $excerpt ){
 			$selp="Pb";
 		else	
 			$seld="Pr";
-			if ((!is_user_logged_in() Or !Is_Circolare_per_User($PostID)) And $seld=="Pr")	
+			if ((!is_user_logged_in() Or !wps_Is_Circolare_per_User($PostID)) And $seld=="Pr")	
 		return __( 'Contenuto riservato a specifici gruppi di utenti registrati', 'wpscuola' );
 	else
 		return $excerpt;
 //	return $excerpt;
 }
-function circolari_activate() {
+function wps_circolari_activate() {
 	global $wpdb;
 	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 	require_once(ABSPATH . 'wp-admin/includes/plugin.php'); 
-	$sql = "CREATE TABLE IF NOT EXISTS ".$wpdb->table_firme_circolari." (
+	$sql = "CREATE TABLE IF NOT EXISTS ".$wpdb->table_circolari_firme." (
   			post_ID  bigint(20) NOT NULL,
   			user_ID bigint(20) NOT NULL,
   			datafirma timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -500,40 +448,40 @@ con la presente email ti confermiamo di aver registrato, in data %s,  la tua sce
 Grazie per la collaborazione', 'wpscuola' ),"{Dati_Utente}","{Data}","{Operazione}","{Link_Circolare}").'    ');
 	}
 	if(get_option('Circolari_TestiRisposte')== ''||!get_option('Circolari_TestiRisposte') ){			
-		circolari_CreaTestiRisposta();
+		wps_circolari_CreaTestiRisposta();
 	}
 	if(get_option('Circolari_Tipo')== ''||!get_option('Circolari_Tipo')){
-		circolari_CreaTesti();
+		wps_circolari_CreaTesti();
 	}
 }
-function circolari_CreaTestiRisposta(){
-$TestiRisposte=array(new Circolari_Risposta(0,__( "Non Firmata", 'wpscuola' ),__( "Non Firmare la, 'wpscuola' )"),
+function wps_circolari_CreaTestiRisposta(){
+$wps_TestiRisposte=array(new Circolari_Risposta(0,__( "Non Firmata", 'wpscuola' ),__( "Non Firmare la, 'wpscuola' )"),
 				 new Circolari_Risposta(1,__( "Si", 'wpscuola' ),__( "Aderire alla", 'wpscuola' )),
                  new Circolari_Risposta(2,__( "No", 'wpscuola' ),__( "Non Aderire alla", 'wpscuola' )),
                  new Circolari_Risposta(3,__( "Presa Visione", 'wpscuola' ),__( "Prendere Visione in merito alla", 'wpscuola' )),
                  new Circolari_Risposta(4,__( "Firma", 'wpscuola' ),__( "Firmare la", 'wpscuola' ))));
-add_option('Circolari_TestiRisposte', serialize($TestiRisposte));
-return $TestiRisposte;
+add_option('Circolari_TestiRisposte', serialize($wps_TestiRisposte));
+return $wps_TestiRisposte;
 }
-function circolari_CreaTesti(){
-$Testi=array(new Circolari_Tipo(__( "NoFirma", 'wpscuola' ),__( "Informativa", 'wpscuola' ),"",__( "La circolare non richiede conferma", 'wpscuola' ),__( "Firma non prevista", 'wpscuola' ),"",array()),
+function wps_circolari_CreaTesti(){
+$wps_Testi=array(new Circolari_Tipo(__( "NoFirma", 'wpscuola' ),__( "Informativa", 'wpscuola' ),"",__( "La circolare non richiede conferma", 'wpscuola' ),__( "Firma non prevista", 'wpscuola' ),"",array()),
 		new Circolari_Tipo(__( "Sciopero", 'wpscuola' ),__( "Adesioni allo sciopero", 'wpscuola' ),__( "Sciopero", 'wpscuola' ),__( "Adesione", 'wpscuola' ),__( "La circolare si riferisce ad uno sciopero.<br />Bisogna indicare Si/No/Presa Visione", 'wpscuola' ),__( "Adesione allo sciopero", 'wpscuola' ),array(1,2,3)),
         new Circolari_Tipo(__( "Firma", 'wpscuola' ),__( "Firme", 'wpscuola' ),__( "Circolare ordinaria", 'wpscuola' ),__( "Da Firmare", 'wpscuola' ),__( "&Egrave; richiesta la firma alla circolare ordinaria", 'wpscuola' ),__( "Firma la circolare ordinaria", 'wpscuola' ),array(4)),
         new Circolari_Tipo(__( "Assemblea", 'wpscuola' ),__( "Partecipazioni all'assemblea", 'wpscuola' ),__( "Assembea Sindacale", 'wpscuola' ),__( "Partecipazione", 'wpscuola' ),__( "La circolare si riferisce ad una assemblea sindacale.<br />Bisogna indicare Si/No", 'wpscuola' ),__( "Partecipazione all'assemblea", 'wpscuola' ),array(1,2)));
-add_option('Circolari_Tipo', serialize($Testi));
-return $Testi;
+add_option('Circolari_Tipo', serialize($wps_Testi));
+return $wps_Testi;
 }
-function circolari_create_Testi_Risposte(){
-	global $TestiRisposte,$Testi;
+function wps_circolari_create_Testi_Risposte(){
+	global $wps_TestiRisposte,$wps_Testi;
 	if(isset($_REQUEST['MemoRisposta']) And $_REQUEST['MemoRisposta'] == 'Crea Nuova Risposta'){
-		$nuova=new Circolari_Risposta(Circolari_Get_New_Numero_Risposta(),$_REQUEST['risposta'],$_REQUEST['testomail']);
-		$TestiRisposte[]=$nuova;
-		update_option('Circolari_TestiRisposte', serialize($TestiRisposte));			
+		$nuova=new Circolari_Risposta(wps_Circolari_Get_New_Numero_Risposta(),$_REQUEST['risposta'],$_REQUEST['testomail']);
+		$wps_TestiRisposte[]=$nuova;
+		update_option('Circolari_TestiRisposte', serialize($wps_TestiRisposte));			
 	}
 	if(isset($_REQUEST['MemoTesto']) And $_REQUEST['MemoTesto'] == 'Creazione Tipo Circolare'){
 		$num=0;
 		$suff="";
-		while (Circolari_is_set_Tipo($_REQUEST['tipo'].$suff)){
+		while (wps_Circolari_is_set_Tipo($_REQUEST['tipo'].$suff)){
 			$num++;
 			$suff="-".$num;
 		}
@@ -544,14 +492,14 @@ function circolari_create_Testi_Risposte(){
 								  $_REQUEST["descrizione"],
 								  $_REQUEST["testo_elenco"],
 								  array());
-		$Testi[]=$nuova;
-		update_option('Circolari_Tipo', serialize($Testi));			
+		$wps_Testi[]=$nuova;
+		update_option('Circolari_Tipo', serialize($wps_Testi));			
 	}
 }
-function circolari_update_Testi_Risposte(){
-	global $TestiRisposte,$Testi;
+function wps_circolari_update_Testi_Risposte(){
+	global $wps_TestiRisposte,$wps_Testi;
 	if(filter_input(INPUT_GET,'MemoTesto') == 'Memorizza Modifiche'){		
-			foreach($Testi as $Testo)
+			foreach($wps_Testi as $Testo)
 				if ($Testo->get_Tipo()==$_REQUEST['tipo']){
 					if(isset($_REQUEST['popup'])){$Testo->set_Popup($_REQUEST['popup']);}
 					if(isset($_REQUEST['des_tipo'])){$Testo->set_DescrizioneTipo($_REQUEST['des_tipo']);}
@@ -566,61 +514,57 @@ function circolari_update_Testi_Risposte(){
 					}
 					$Testo->set_Risposte($risposte);
 				}		
-		update_option('Circolari_Tipo', serialize($Testi));			
+		update_option('Circolari_Tipo', serialize($wps_Testi));			
 	}
 	if(filter_input(INPUT_GET,'MemoRisposta') == 'Memorizza Modifiche'){
-			foreach($TestiRisposte as $Risposta)
+			foreach($wps_TestiRisposte as $Risposta)
 				if ($Risposta->get_IDRisposta()==(int)$_REQUEST['id']){
 					$Risposta->set_Risposta($_REQUEST['risposta']);
 					$Risposta->set_RispostaMail($_REQUEST['rispostamail']);
 				}		
-		update_option('Circolari_TestiRisposte', serialize($TestiRisposte));			
+		update_option('Circolari_TestiRisposte', serialize($wps_TestiRisposte));			
 	}
 }
-function add_circolari_menu_bubble() {
-  global $menu,$DaFirmare;
-//	$NumCircolari=GetCircolariDaFirmare("N");
-$DaFirmare=GetCircolariDaFirmare("N");
-  if ($DaFirmare==0)
-	return;
-// echo "<pre>";var_dump($menu);echo "</pre>";
-  foreach($menu as $i=>$m){
-  	if ($m[0]=="Circolari"){
-		$menu[$i][0] .= "<span class='update-plugins count-1'><span class='update-count'>$DaFirmare</span></span>";
-		return;
-	}
- }
+function wps_circolari_add_menu_bubble() {
+  	global $menu,$DaFirmare;
+	$DaFirmare=wps_GetCircolariDaFirmare("N");
+ 	if ($DaFirmare==0) return;
+	foreach($menu as $i=>$m){
+	  	if ($m[0]=="Circolari"){
+			$menu[$i][0] .= "<span class='update-plugins count-1'><span class='update-count'>$DaFirmare</span></span>";
+			return;
+		}
+ 	}
 }
 
-function circolari_add_menu(){
-   add_submenu_page( 'edit.php?post_type=circolari_scuola', 'Parametri',  __( 'Parametri', 'wpscuola' ), 'edit_others_posts', 'circolari', 'circolari_MenuPagine');
-   $pageFirma=add_submenu_page( 'edit.php?post_type=circolari_scuola', 'Firma',  __( 'Firma', 'wpscuola' ), 'read', 'Firma', 'circolari_GestioneFirme');
-   add_action( 'admin_head-'. $pageFirma, 'TestataCircolari' );
-//   add_action( 'admin_head-'. $pagenFirmate, 'TestataCircolari' );
-   $pageArchivio=add_submenu_page( 'edit.php?post_type=circolari_scuola', 'Archivio Circolari', __( 'Archivio Circolari', 'wpscuola' ), 'read', 'Archivio', 'circolari_VisualizzaArchivio');
-   add_action( 'admin_head-'. $pageArchivio, 'TestataCircolari' );
-   $gestionetesti=add_submenu_page( 'edit.php?post_type=circolari_scuola', 'Testi',  __( 'Tipi di circolari', 'wpscuola' ), 'edit_published_posts', 'Testi', 'circolari_MenuTesti');
-   add_action( 'admin_head-'. $gestionetesti, 'TestataCircolari' );  
-   $utility=add_submenu_page( 'edit.php?post_type=circolari_scuola', 'Utility',  __( 'Utility', 'wpscuola' ), 'edit_others_posts', 'Utility', 'circolari_Utility');
-   add_action( 'admin_head-'. $utility, 'TestataCircolari' );
+function wps_circolari_add_menu(){
+   add_submenu_page( 'edit.php?post_type=circolari_scuola', 'Parametri',  __( 'Parametri', 'wpscuola' ), 'edit_others_posts', 'circolari', 'wps_circolari_MenuPagine');
+   $pageFirma=add_submenu_page( 'edit.php?post_type=circolari_scuola', 'Firma',  __( 'Firma', 'wpscuola' ), 'read', 'Firma', 'wps_circolari_GestioneFirme');
+   add_action( 'admin_head-'. $pageFirma, 'wps_circolari_Testata' );
+   $pageArchivio=add_submenu_page( 'edit.php?post_type=circolari_scuola', 'Archivio Circolari', __( 'Archivio Circolari', 'wpscuola' ), 'read', 'Archivio', 'wps_circolari_VisualizzaArchivio');
+   add_action( 'admin_head-'. $pageArchivio, 'wps_circolari_Testata' );
+   $gestionetesti=add_submenu_page( 'edit.php?post_type=circolari_scuola', 'Testi',  __( 'Tipi di circolari', 'wpscuola' ), 'edit_published_posts', 'Testi', 'wps_circolari_MenuTesti');
+   add_action( 'admin_head-'. $gestionetesti, 'wps_circolari_Testata' );  
+   $utility=add_submenu_page( 'edit.php?post_type=circolari_scuola', 'Utility',  __( 'Utility', 'wpscuola' ), 'edit_others_posts', 'Utility', 'wps_circolari_Utility');
+   add_action( 'admin_head-'. $utility, 'wps_circolari_Testata' );
 }
-function circolari_MenuTesti(){
-	global $TestiRisposte,$Testi;	
+function wps_circolari_MenuTesti(){
+	global $wps_TestiRisposte,$wps_Testi;	
 	if (isset($_REQUEST['opT'])){
 		switch ($_REQUEST['opT']){
 			case "Edit":
-				circolari_GestioneTesti();
+				wps_circolari_GestioneTesti();
 				break;
 			case "Risp":
-				circolari_GestioneRisposteTesti();
+				wps_circolari_GestioneRisposteTesti();
 				break;
 			case "NewTipo":
-				circolari_NewTesto();
+				wps_circolari_NewTesto();
 				break;
 			case "Canc":
-				if (($Num=Circolari_IsUsed_TipoCircolare($_REQUEST['id']))==0 And !in_array($_REQUEST['id'],array("NoFirma","Sciopero","Firma","Assemblea"))){
-					unset($Testi[Circolari_find_Index_Tipo($_REQUEST['id'])]);
-					update_option('Circolari_Tipo', serialize($Testi));
+				if (($Num=wps_Circolari_IsUsed_TipoCircolare($_REQUEST['id']))==0 And !in_array($_REQUEST['id'],array("NoFirma","Sciopero","Firma","Assemblea"))){
+					unset($wps_Testi[wps_($_REQUEST['id'])]);
+					update_option('Circolari_Tipo', serialize($wps_Testi));
 				echo'<div class="updated">
 	<p></p><em><strong>'.__( 'Cancellazione avvenuta con successo!', 'wpscuola' ).'</em></strong><p> </p>
 </div>
@@ -635,7 +579,7 @@ function circolari_MenuTesti(){
 			case "MemorizzaNew":
 				if (isset($_REQUEST["circoTesti"])) {
 					if (wp_verify_nonce($_REQUEST["circoTesti"],'GestioneTestiCircolari')){
-						circolari_create_Testi_Risposte();
+						wps_circolari_create_Testi_Risposte();
 						echo'<div class="updated">
 	<p></p><em><strong>'.__( 'Creazione avvenuta con successo!', 'wpscuola' ).'</em></strong><p> </p>
 </div>
@@ -646,7 +590,7 @@ function circolari_MenuTesti(){
 			case "Memorizza":
 				if (isset($_REQUEST["circoTesti"])) {
 					if (wp_verify_nonce($_REQUEST["circoTesti"],'GestioneTestiCircolari')){
-						circolari_update_Testi_Risposte();
+						wps_circolari_update_Testi_Risposte();
 						echo'<div class="updated">
 	<p></p><em><strong>'.__( 'Memorizzazione avvenuta con successo!', 'wpscuola' ).'</em></strong><p> </p>
 </div>
@@ -666,12 +610,12 @@ function circolari_MenuTesti(){
 	if (isset($_REQUEST['opR'])){
 		switch ($_REQUEST['opR']){
 			case "Edit":
-				circolari_GestioneRisposte();
+				wps_circolari_GestioneRisposte();
 				break;
 			case "Canc":
-				if (($Num=Circolari_IsUsed_Risposta($_REQUEST['id']))==0){
-					unset($TestiRisposte[Circolari_find_Index_Risposta($_REQUEST['id'])]);
-					update_option('Circolari_TestiRisposte', serialize($TestiRisposte));
+				if (($Num=wps_Circolari_IsUsed_Risposta($_REQUEST['id']))==0){
+					unset($wps_TestiRisposte[wps_Circolari_find_Index_Risposta($_REQUEST['id'])]);
+					update_option('Circolari_TestiRisposte', serialize($wps_TestiRisposte));
 				echo'<div class="updated">
 	<p></p><em><strong>'.__( 'Cancellazione avvenuta con successo!', 'wpscuola' ).'</em></strong><p> </p>
 </div>
@@ -684,12 +628,12 @@ function circolari_MenuTesti(){
 				}		
 				break;
 			case "NewRisp":
-				circolari_NewRisposta();
+				wps_circolari_NewRisposta();
 				break;
 			case "MemorizzaNew":
 				if (isset($_REQUEST["circoTesti"])) {
 					if (wp_verify_nonce($_REQUEST["circoTesti"],'GestioneTestiCircolari')){
-						circolari_create_Testi_Risposte();
+						wps_circolari_create_Testi_Risposte();
 						echo'<div class="updated">
 	<p></p><em><strong>'.__( 'Cancellazione avvenuta con successo!', 'wpscuola' ).'</em></strong><p> </p>
 </div>
@@ -700,7 +644,7 @@ function circolari_MenuTesti(){
 			case "Memorizza":
 				if (isset($_REQUEST["circoTesti"])) {
 					if (wp_verify_nonce($_REQUEST["circoTesti"],'GestioneTestiCircolari')){
-						circolari_update_Testi_Risposte();
+						wps_circolari_update_Testi_Risposte();
 						echo'<div class="updated">
 	<p></p><em><strong>'.__( 'Memorizzazione avvenuta con successo!', 'wpscuola' ).'</em></strong><p> </p>
 </div>
@@ -711,17 +655,17 @@ function circolari_MenuTesti(){
 		}
 		return;
 	}
-	circolari_Testi();
+	wps_circolari_Testi();
 }
-function circolari_GestioneRisposteTesti(){
-	global $TestiRisposte,$Testi;
-	foreach($Testi as $Testo){
+function wps_circolari_GestioneRisposteTesti(){
+	global $wps_TestiRisposte,$wps_Testi;
+	foreach($wps_Testi as $Testo){
 		if($Testo->get_Tipo()==$_GET['id'])
 			break;
 	}	
 	$UrlB=get_site_url()."/wp-admin/edit.php";
 echo '<div class="wrap">
-	<i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i>
+	<i class="fas fa-pencil-alt fa-3x" aria-hidden="true"></i>
 		<h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Gestione Risposte', 'wpscuola' ).'</h2>
 	</div> 
 		<br />
@@ -755,7 +699,7 @@ echo '<div class="wrap">
 		<input type="hidden" name="circoTesti" value="'.wp_create_nonce('GestioneTestiCircolari').'"/>
 		<div style="margin:20px;border: thin groove Blue;background-color: #ECECEC;padding:20px;width:400px;margin-left:auto;margin-right:auto;">
 		<p style="font-weight: bold;font-size: 1.3em;text-align: center;margin-bottom: 15px;">'.__( 'Risposte assegnate a questo tipo di corcolare', 'wpscuola' ).'</p>';	
-		foreach($TestiRisposte as $TRisposte){
+		foreach($wps_TestiRisposte as $TRisposte){
 				if($Testo->is_set_Risposta($TRisposte->get_IDRisposta()))
 					$chk="checked='checked'";
 				else
@@ -772,9 +716,9 @@ echo '<div class="wrap">
 		</form>';
 							
 }
-function circolari_GestioneTesti(){
-	global $TestiRisposte,$Testi;
-	foreach($Testi as $Testo){
+function wps_circolari_GestioneTesti(){
+	global $wps_TestiRisposte,$wps_Testi;
+	foreach($wps_Testi as $Testo){
 		if($Testo->get_Tipo()==$_GET['id'])
 			break;
 	}	
@@ -784,7 +728,7 @@ function circolari_GestioneTesti(){
 		$Operazione=__( 'Nuovo', 'wpscuola' );
 	$UrlB=get_site_url()."/wp-admin/edit.php";
 echo '<div class="wrap">
-	<i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.$Operazione.' '.__( 'Testo Circolare', 'wpscuola' ).'</h2>
+	<i class="fas fa-pencil-alt fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.$Operazione.' '.__( 'Testo Circolare', 'wpscuola' ).'</h2>
 	</div> 
 		<form action="'.$UrlB.'" name="MTesti" metod="post">
 		<input type="hidden" name="opT" value="Memorizza"/>
@@ -829,9 +773,9 @@ echo '<div class="wrap">
 		</form>';
 							
 }
-function circolari_GestioneRisposte(){
-	global $TestiRisposte;
-	foreach($TestiRisposte as $Risposta){
+function wps_circolari_GestioneRisposte(){
+	global $wps_TestiRisposte;
+	foreach($wps_TestiRisposte as $Risposta){
 		if($Risposta->get_IDRisposta()==(int)$_GET['id'])
 			break;
 	}	
@@ -841,7 +785,7 @@ function circolari_GestioneRisposte(){
 		$Operazione="Nuovo";
 	$UrlB=get_site_url()."/wp-admin/edit.php";
 echo '<div class="wrap">
-	<i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.$Operazione.' '.__( 'Risposta Circolare', 'wpscuola' ).'</h2>
+	<i class="fas fa-pencil-alt fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.$Operazione.' '.__( 'Risposta Circolare', 'wpscuola' ).'</h2>
 	</div> 
 		<form action="'.$UrlB.'" name="MRisposte" metod="post">
 		<input type="hidden" name="opR" value="Memorizza"/>
@@ -867,10 +811,10 @@ echo '<div class="wrap">
 		</form>';
 							
 }
-function circolari_NewTesto(){
+function wps_circolari_NewTesto(){
 	$UrlB=get_site_url()."/wp-admin/edit.php";
 echo '<div class="wrap">
-	<i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Nuovo Tipo Circolare', 'wpscuola' ).'</h2>
+	<i class="fas fa-pencil-alt fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Nuovo Tipo Circolare', 'wpscuola' ).'</h2>
 	</div> 
 		<form action="'.$UrlB.'" name="MTesti" metod="post">
 		<input type="hidden" name="opT" value="MemorizzaNew"/>
@@ -914,17 +858,17 @@ echo '<div class="wrap">
 		</p>
 		</form>';							
 }
-function circolari_NewRisposta(){
-	global $TestiRisposte;
+function wps_circolari_NewRisposta(){
+	global $wps_TestiRisposte;
 	$UrlB=get_site_url()."/wp-admin/edit.php";
 echo '<div class="wrap">
-	<i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Nuova Risposta Circolare', 'wpscuola' ).'</h2>
+	<i class="fas fa-pencil-alt fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Nuova Risposta Circolare', 'wpscuola' ).'</h2>
 	</div> 
 		<form action="'.$UrlB.'" name="MRisposte" metod="post">
 		<input type="hidden" name="opR" value="MemorizzaNew"/>
 		<input type="hidden" name="post_type" value="circolari_scuola"/>
 		<input type="hidden" name="page" value="Testi"/>
-		<input type="hidden" name="id" value="'.Circolari_Get_New_Numero_Risposta().'"/>
+		<input type="hidden" name="id" value="'.wps_Circolari_Get_New_Numero_Risposta().'"/>
 		<input type="hidden" name="circoTesti" value="'.wp_create_nonce('GestioneTestiCircolari').'"/>
 		<p style="text-align:left;font-size:1em;font-style: italic;margin-top:30px;">
 		<table class="widefat">
@@ -945,11 +889,11 @@ echo '<div class="wrap">
 							
 }
 
-function circolari_Testi(){
-	global $TestiRisposte,$Testi;
+function wps_circolari_Testi(){
+	global $wps_TestiRisposte,$wps_Testi;
 	$UrlB=get_site_url()."/wp-admin/edit.php?post_type=circolari_scuola&page=Testi";
 echo '<div class="wrap">
-	<i class="fa fa-pencil-square-o fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Tipi di Circolari', 'wpscuola' ).'</h2>
+	<i class="fas fa-pencil-alt fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Tipi di Circolari', 'wpscuola' ).'</h2>
 	</div> 
 		<p></p>
 		<div class="widefat">
@@ -967,10 +911,10 @@ echo '<div class="wrap">
 					<th>'.__( 'Testo Elenco', 'wpscuola' ).'</th>
 					<th>'.__( 'Operazioni', 'wpscuola' ).'</th>
 				</tr>';
-	foreach($Testi as $Testo){
-		$RisposteModifica="<a href='".$UrlB."&opT=Edit&id=".$Testo->get_Tipo()."' title='".__( 'Modifica Testi Tipo Circolare', 'wpscuola' )."'><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a> ";
-		$RisposteCancella="<a href='".$UrlB."&opT=Canc&id=".$Testo->get_Tipo()."' title='".__( 'Cancella Tipo Circolare', 'wpscuola' )."'><i class=\"fa fa-eraser\" aria-eraser=\"true\" style=\"color:red;\"></i></a> ";
-		$Risposte="<a href='".$UrlB."&opT=Risp&id=".$Testo->get_Tipo()."' title='".__( 'Modifica le risposte', 'wpscuola' )."'><i class=\"fa fa-child\" aria-eraser=\"true\" style=\"color:green;\"></i></a> ";
+	foreach($wps_Testi as $Testo){
+		$RisposteModifica="<a href='".$UrlB."&opT=Edit&id=".$Testo->get_Tipo()."' title='".__( 'Modifica Testi Tipo Circolare', 'wpscuola' )."'><i class=\"fas fa-pencil-alt\" aria-hidden=\"true\"></i></a> ";
+		$RisposteCancella="<a href='".$UrlB."&opT=Canc&id=".$Testo->get_Tipo()."' title='".__( 'Cancella Tipo Circolare', 'wpscuola' )."'><i class=\"fas fa-trash-alt\" aria-eraser=\"true\" style=\"color:red;\"></i></a> ";
+		$Risposte="<a href='".$UrlB."&opT=Risp&id=".$Testo->get_Tipo()."' title='".__( 'Modifica le risposte', 'wpscuola' )."'><i class=\"fas fa-edit\" aria-eraser=\"true\" style=\"color:green;\"></i></a> ";
 		if($Testo->get_Tipo()=="NoFirma"){
 			$RisposteCancella=$Risposte="";
 		}
@@ -1001,13 +945,13 @@ echo '
 					<th>'.__( 'Testo Mail', 'wpscuola' ).'</th>
 					<th>'.__( 'Operazioni', 'wpscuola' ).'</th>
 				</tr>';
-	foreach($TestiRisposte as $TestoRisposta){
+	foreach($wps_TestiRisposte as $TestoRisposta){
 		$RisposteModifica="
-		<a href='".$UrlB."&opR=Edit&id=".$TestoRisposta->get_IDRisposta()."'><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a>
+		<a href='".$UrlB."&opR=Edit&id=".$TestoRisposta->get_IDRisposta()."'><i class=\"fas fa-pencil-alt\" aria-hidden=\"true\"></i></a>
 		";
 		if ($TestoRisposta->get_IDRisposta()>4)
 			$RisposteCancella="
-		<a href='".$UrlB."&opR=Canc&id=".$TestoRisposta->get_IDRisposta()."'><i class=\"fa fa-eraser\" aria-eraser=\"true\" style=\"color:red;\"></i></a>
+		<a href='".$UrlB."&opR=Canc&id=".$TestoRisposta->get_IDRisposta()."'><i class=\"fas fa-trash-alt\" aria-eraser=\"true\" style=\"color:red;\"></i></a>
 		";
 		else
 			$RisposteCancella="";
@@ -1023,7 +967,7 @@ echo '
 			</p>
 </div>';	
 }
-function circolari_Utility($Stato=""){
+function wps_circolari_Utility($Stato=""){
 echo '<div class="wrap">
 		<i class="fa fa-cogs fa-3x" aria-hidden="true"></i> <h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Utility Circolari', 'wpscuola' ).'</h2>';
 $lista="";
@@ -1042,7 +986,7 @@ if($azione){
 						if (isset($_GET['opt']) && $_GET['opt']=="aggsca"){
 							$Scadenza=date('Y-m-d', strtotime(substr($post->post_date_gmt,0,10). " + $GGscadenza days"));
 							if (update_post_meta($post->ID,"_scadenza",$Scadenza ))
-								$lista.= ' <img src="'.Circolari_URL.'/img/verificato.png" alt="Icona Permessi" style="display:inline;margin-left:5px;"/>';
+								$lista.= ' <img src="'.wps_Circolari_URL.'/img/verificato.png" alt="Icona Permessi" style="display:inline;margin-left:5px;"/>';
 						}else
 						$lista.=" ".__( 'la data verrà aggiornata a', 'wpscuola' ).":".date('Y-m-d', strtotime(substr($post->post_date_gmt,0,10). " + $GGscadenza days"));
 					$lista.= "</li>";					
@@ -1071,10 +1015,10 @@ if($azione){
 					if (!empty($scadenza) And (strlen($Data[0])<4 or strlen($Data[1])<2 or strlen($Data[2])<2)){
 						$lista.="			<li>$post->ID $post->post_title ";
 						if (isset($_GET['opt']) && $_GET['opt']=="aggsca"){
-							if (update_post_meta($post->ID,"_scadenza",NormalData($scadenza)))
-								$lista.= ' <img src="'.Circolari_URL.'/img/verificato.png" alt="Icona Permessi" style="display:inline;margin-left:5px;"/>';
+							if (update_post_meta($post->ID,"_scadenza",wps_NormalData($scadenza)))
+								$lista.= ' <img src="'.wps_Circolari_URL.'/img/verificato.png" alt="Icona Permessi" style="display:inline;margin-left:5px;"/>';
 						}else
-						$lista.="<spam style='font-weight: bold;'>".$scadenza ."</spam> ".__( 'la data verrà aggiornata a', 'wpscuola' ).":<spam style='font-weight: bold;'>".NormalData($scadenza)."</spam>";
+						$lista.="<spam style='font-weight: bold;'>".$scadenza ."</spam> ".__( 'la data verrà aggiornata a', 'wpscuola' ).":<spam style='font-weight: bold;'>".wps_NormalData($scadenza)."</spam>";
 					$lista.= "</li>";					
 					}
 				}
@@ -1156,19 +1100,19 @@ if($azione){
 					</li>
 				</ul>';
 }
-function TestataCircolari() {
-global $TestiRisposte,$post;
-	
-if( isset($post->post_type) And $post->post_type != 'circolari_scuola' ) {
-	return;
-}
-$sele="";
-if($TestiRisposte){
-	foreach($TestiRisposte as $Risp){
-		$sele.='if ($(".s'.$Risp->get_IDRisposta().'-"+$(this).attr(\'id\')).attr(\'checked\')=="checked")	s="'.$Risp->get_Risposta().'";
-		';
-	}	
-}
+function wps_circolari_Testata() {
+	global $wps_TestiRisposte,$post;
+		
+	if( isset($post->post_type) And $post->post_type != 'circolari_scuola' ) {
+		return;
+	}
+	$sele="";
+	if($wps_TestiRisposte){
+		foreach($wps_TestiRisposte as $Risp){
+			$sele.='if ($(".s'.$Risp->get_IDRisposta().'-"+$(this).attr(\'id\')).attr(\'checked\')=="checked")	s="'.$Risp->get_Risposta().'";
+			';
+		}	
+	}
 ?>
 <script type='text/javascript'>
 jQuery.noConflict();
@@ -1191,28 +1135,28 @@ jQuery.noConflict();
 <?php
 }
 
-function circolari_MenuPagine(){
+function wps_circolari_MenuPagine(){
 	switch (filter_input(INPUT_GET,"op")){
 		case "Firme":
-			circolari_VisualizzaFirme((int)$_REQUEST["post_id"]);
+			wps_((int)$_REQUEST["post_id"]);
 			break;
 		case "Adesioni":
-			circolari_VisualizzaFirme((int)$_REQUEST["post_id"],1);
+			wps_circolari_VisualizzaFirme((int)$_REQUEST["post_id"],1);
 			break;
 		case "email":
-			circolari_SpostainNewsletter((int)$_REQUEST["post_id"]);
+			wps_circolari_SpostainNewsletter((int)$_REQUEST["post_id"]);
 			break;
 		case "Log":
-			circolari_VisualizzaLog((int)$_REQUEST["post_id"]);
+			wps_circolari_VisualizzaLog((int)$_REQUEST["post_id"]);
 			break;
 		default:
-			circolari_Parametri();	
+			wps_circolari_Parametri();	
 	}
 }
-function circolari_uninstall() {
+function wps_circolari_uninstall() {
 	global $wpdb;
 // Eliminazione Tabelle data Base
-	$wpdb->query("DROP TABLE IF EXISTS ".$wpdb->table_firme_circolari);
+	$wpdb->query("DROP TABLE IF EXISTS ".$wpdb->table_circolari_firme);
 	$Circolari = get_posts( "post_type=circolari_scuola" );
 	foreach ( $Circolari as $Circolare )
 		set_post_type( $Circolare );	
@@ -1226,13 +1170,13 @@ function circolari_uninstall() {
 	delete_option('Circolari_TestiRisposte');
 }
 
-function circolari_VisualizzaLog($IDPost){
-	global $TestiRisposte;
-	MakeDir();
+function wps_circolari_VisualizzaLog($IDPost){
+	global $wps_TestiRisposte;
+	wps_MakeDir();
 	$numero=get_post_meta($IDPost, "_numero");
 	$anno=get_post_meta($IDPost, "_anno");
 	$circolare=get_post($IDPost);
-	$Dati=Get_Log_Circolare($IDPost);
+	$Dati=wps_Get_Log_Circolare($IDPost);
 ?>	
 	<div class="wrap">
 		<i class="fa fa-th-list fa-3x" aria-hidden="true"></i>
@@ -1260,7 +1204,7 @@ function circolari_VisualizzaLog($IDPost){
 <?php
 }
 
-function circolari_SpostainNewsletter($IDPost){
+function wps_circolari_SpostainNewsletter($IDPost){
 $DatiPost=get_post( $IDPost,  ARRAY_A);
 		$args = array(
 			'post_type' => 'attachment',
@@ -1321,7 +1265,7 @@ echo '<div class="wrap">
 	}
 }
 
-function circolari_Parametri(){
+function wps_circolari_Parametri(){
 	$DestTutti  =  get_option('Circolari_Visibilita_Pubblica');
 	$GiorniScadenza  =  get_option('Circolari_GGScadenza');
 	$NotificaFirma = get_option('Circolari_NotificaFirma');
@@ -1439,7 +1383,7 @@ echo'</select></td>
 	    </div>';
 }
 // Nuova Colonna Gestione  
-function circolari_NuoveColonne($defaults) {  
+function wps_circolari_NuoveColonne($defaults) {  
 	if ($_GET['post_type']=="circolari_scuola"){
 		$defaults['stato'] = 'Parametri Circolare'; 
 	    if (current_user_can('edit_others_posts')){
@@ -1450,11 +1394,11 @@ function circolari_NuoveColonne($defaults) {
 }  
   
 // Visualizzazione nuova colonna Gestione  
-function circolari_NuoveColonneContenuto($column_name, $post_ID) {  
+function wps_circolari_NuoveColonneContenuto($column_name, $post_ID) {  
 	global $wpdb;
  	if ($_GET['post_type']=="circolari_scuola"){
 		$sign=get_post_meta($post_ID, "_sign",TRUE);
-		$tipo=Circolari_find_Tipo($sign);
+		$tipo=wps_Circolari_find_Tipo($sign);
 		if($tipo===FALSE){
 			 echo "<span style=\"color:red;\">".__("ERRORE!<br />Tipo di circolare non definito", 'wpscuola' )."</span>";
 			 return;
@@ -1470,9 +1414,9 @@ function circolari_NuoveColonneContenuto($column_name, $post_ID) {
 			$Linkfirma="";
 			$LinkLog="";
 			if ($tipo->get_Tipo()=="Firma" )
-				$Linkfirma='<a class="function" href="'.admin_url().'edit.php?post_type=circolari_scuola&page=circolari&op=Firme&post_id='.$post_ID.'"><i class="fa fa-pencil" title="Visualizza '.$Prefisso.'"></i></a>';
+				$Linkfirma='<a class="function" href="'.admin_url().'edit.php?post_type=circolari_scuola&page=circolari&op=Firme&post_id='.$post_ID.'"><i class="fas fa-pencil-alt tooltip" title="Visualizza '.$Prefisso.'"></i></a>';
 			elseif($tipo->get_Tipo()!="NoFirma")
-				$Linkfirma='<a class="function" href="'.admin_url().'edit.php?post_type=circolari_scuola&page=circolari&op=Adesioni&post_id='.$post_ID.'"><i class="fa fa-pencil-square-o" title="Visualizza '.$Prefisso.'"></i></a>';
+				$Linkfirma='<a class="function" href="'.admin_url().'edit.php?post_type=circolari_scuola&page=circolari&op=Adesioni&post_id='.$post_ID.'"><i class="fas fa-pencil-alt tooltip" title="Visualizza '.$Prefisso.'"></i></a>';
 	    	if ( defined( 'ALO_EM_INTERVAL_MIN' ) ){
 				$DataInvio = get_post_meta( $post_ID, "_sendNewsLetter", true); 
 				$IDNL=$wpdb->get_results("SELECT meta_value FROM $wpdb->postmeta Where post_id=$post_ID And meta_key='_placeholder_easymail_post';");
@@ -1480,12 +1424,12 @@ function circolari_NuoveColonneContenuto($column_name, $post_ID) {
 					$NL=$wpdb->get_results("SELECT ID FROM $wpdb->posts Where ID=".$IDNL[0]->meta_value.";");
 				}
 	    		if ($DataInvio And count($IDNL)>0 And count($NL)>0){
-					$LinkNL.=' <a class="function" href="'.admin_url().'post.php?post='.$IDNL[0]->meta_value.'&action=edit"><i class="fa fa-envelope" title="Visualizza NewsLetter <br />generata in data '. $DataInvio.'"></i></a>';
+					$LinkNL.=' <a class="function" href="'.admin_url().'post.php?post='.$IDNL[0]->meta_value.'&action=edit"><i class="fa fa-envelope tooltip" title="Visualizza NewsLetter <br />generata in data '. $DataInvio.'"></i></a>';
 				}else
-	            	$LinkNL.=' <a class="function" href="'.admin_url().'edit.php?post_type=circolari_scuola&page=circolari&op=email&post_id='.$post_ID.'"><i class="fa fa-inbox" title="Genera NewsLetter"></i></a>';  
+	            	$LinkNL.=' <a class="function" href="'.admin_url().'edit.php?post_type=circolari_scuola&page=circolari&op=email&post_id='.$post_ID.'"><i class="fa fa-inbox tooltip" title="Genera NewsLetter"></i></a>';  
 			}
 			if ($tipo->get_Tipo()!='NoFirma'){
-				$LinkLog=' <a class="function" href="'.admin_url().'edit.php?post_type=circolari_scuola&page=circolari&op=Log&post_id='.$post_ID.'"><i class="fa fa-th-list" aria-hidden="true" title="Visualizza Log delle Firme della Circolare"></i></a>';
+				$LinkLog=' <a class="function" href="'.admin_url().'edit.php?post_type=circolari_scuola&page=circolari&op=Log&post_id='.$post_ID.'"><i class="fa fa-th-list tooltip" aria-hidden="true" title="Visualizza Log delle Firme della Circolare"></i></a>';
 			}
 			echo '<div class="btn-group">'.$Linkfirma.$LinkNL.$LinkLog.'</div>';
 	     }
@@ -1497,15 +1441,15 @@ function circolari_NuoveColonneContenuto($column_name, $post_ID) {
 			$Dati="Circolare N° ".$numero.'_'.$anno."<br />"; 
 			if(get_post_meta($post_ID, "_visibilita", "d")=="d"){
 				$Info.= '<i class="fa fa-lock" aria-hidden="true"></i><br />';
-				$Dati.=__("Visibilità:Riservata", 'wpscuola' )." <br />";
+				$Dati.=__("Visibilità:Riservata", 'wpscuola' )." <br>";
 			}else{
 				$Info.= '<i class="fa fa-unlock" aria-hidden="true"></i><br />';
-				$Dati.=__("Visibilità:Pubblica", 'wpscuola' )." <br />";
+				$Dati.=__("Visibilità:Pubblica", 'wpscuola' )." <br>";
 			}
-			$Dati.=__("Tipo", 'wpscuola' ).": <strong>".$tipo->get_Tipo()."</strong> <br />";
+			$Dati.=__("Tipo", 'wpscuola' ).": <strong>".$tipo->get_Tipo()."</strong> <br>";
 			$Info.= '<i class="fa fa-hand-pointer-o" aria-hidden="true"></i> '.$tipo->get_Tipo().'<br />';
-			if (Is_da_Firmare($post_ID)){
-				if(Is_Circolare_Scaduta($post_ID)){
+			if (wps_Is_da_Firmare($post_ID)){
+				if(wps_Is_Circolare_Scaduta($post_ID)){
 					$Color="red;";
 				}else{
 					$Color="#14D700;";
@@ -1516,35 +1460,35 @@ function circolari_NuoveColonneContenuto($column_name, $post_ID) {
 				$DaVisDati="";
 				if (current_user_can( 'edit_others_posts')){
 					$IdGruppoTutti=get_option('Circolari_Visibilita_Pubblica');
-					$Firmate=Get_Numero_Firme_Per_Circolare($post_ID);
+					$Firmate=wps_Get_Numero_Firme_Per_Circolare($post_ID);
 					if(in_array($IdGruppoTutti,$dest))
-						$DaVis= $Firmate."/".Get_User_Per_Gruppo($IdGruppoTutti);
+						$DaVis= $Firmate."/".wps_Get_User_Per_Gruppo($IdGruppoTutti);
 					else{
 						foreach($dest as $IdGruppo)
 							if ($IdGruppoTutti!=$IdGruppo)
-								$NU+=Get_User_Per_Gruppo($IdGruppo);
+								$NU+=wps_Get_User_Per_Gruppo($IdGruppo);
 						$DaVis=  $Firmate."/$NU";			
 					}
 					$DaVis="(".$DaVis.")";
 					$DaVisDati=" Firmate ".$Firmate." su ".$NU."<br />";
 				}
-				$Info.= ' <i class="fa fa-pencil" aria-hidden="true" style="color:'.$Color.'"></i> '.FormatDataItalianoBreve(get_post_meta($post_ID, "_scadenza",TRUE)).$DaVis."<br />";
-				$Dati.=__("Data scadenza firma", 'wpscuola' )." ".FormatDataItalianoBreve(get_post_meta($post_ID, "_scadenza",TRUE))."<br />".$DaVisDati;
+				$Info.= ' <i class="fas fa-pencil-alt" aria-hidden="true" style="color:'.$Color.'"></i> '.wps_FormatDataItalianoBreve(get_post_meta($post_ID, "_scadenza",TRUE)).$DaVis."<br />";
+				$Dati.=__("Data scadenza firma", 'wpscuola' )." ".wps_FormatDataItalianoBreve(get_post_meta($post_ID, "_scadenza",TRUE))."<br>".$DaVisDati;
 			}
-			$DesDest=GetEencoDestinatari($post_ID,TRUE);
+			$DesDest=wps_GetEencoDestinatari($post_ID,TRUE);
 			$Info.= '<i class="fa fa-users" aria-hidden="true"></i> '.$DesDest;
 			$Dati.=__("Destinatari Circolari", 'wpscuola' ).": ".$DesDest;
-			echo '<a href="#" title="'.$Dati.'" class="nolink">'.$Info."</a>";
+			echo '<a href="#" title="'.$Dati.'" class="nolink tooltip">'.$Info."</a>";
 		}
 	}
 }  
 
 // add links/menus to the admin bar
 
-function circolari_admin_bar_render() {
+function wps_circolari_admin_bar_render() {
 	global $wp_admin_bar,$DaFirmare;
 	if (!isset($DaFirmare))
-		$DaFirmare=GetCircolariDaFirmare("N");
+		$DaFirmare=wps_GetCircolariDaFirmare("N");
 	if ($DaFirmare>0)
 		$VisNumCircolari=' <span style="background-color:red;">&nbsp;'.$DaFirmare.'&nbsp;</span>';
 	else
@@ -1556,7 +1500,7 @@ function circolari_admin_bar_render() {
 		'meta' => array(  'title' => 'Circolari da Firmare' )));
 }
 
-function circolari_updated_messages( $messages ) {
+function wps_circolari_updated_messages( $messages ) {
 	global $post, $post_ID;
     $messages['circolari'] = array(
 	0 => '', 
@@ -1572,7 +1516,7 @@ function circolari_updated_messages( $messages ) {
 );
 return $messages;
 }
-function circolari_salva_dettagli( $post_id ){
+function wps_circolari_salva_dettagli( $post_id ){
 //	print_r($_POST);exit;
 		if ( filter_input(INPUT_POST,'post_type') == 'circolari_scuola' ) {	
 			delete_post_meta( $post_id, '_scadenza' );
@@ -1587,9 +1531,9 @@ function circolari_salva_dettagli( $post_id ){
 			}
 			if ($_POST["Sign"]!="NoFirma"){
 				if ($_POST["scadenza"])
-					update_post_meta( $post_id, '_scadenza', FormatDataDB($_POST["scadenza"]));
+					update_post_meta( $post_id, '_scadenza', wps_FormatDataDB($_POST["scadenza"]));
 				else
-					update_post_meta( $post_id, '_scadenza', FormatDataDB($_POST["scadenza"],get_option('Circolari_GGScadenza')));
+					update_post_meta( $post_id, '_scadenza', wps_FormatDataDB($_POST["scadenza"],get_option('Circolari_GGScadenza')));
 			}else{
 				update_post_meta( $post_id, '_scadenza', "");
 			}
@@ -1606,32 +1550,32 @@ function circolari_salva_dettagli( $post_id ){
 		}
 }
 
-function circolari_crea_box(){
-  add_meta_box('parametri', __('Parametri Circolari', 'wpscuola' ), 'circolari_crea_box_parametri', 'circolari_scuola', 'side', 'high',array(
+function wps_circolari_crea_box(){
+  add_meta_box('parametri', __('Parametri Circolari', 'wpscuola' ), 'wps_circolari_crea_box_parametri', 'circolari_scuola', 'side', 'high',array(
         '__block_editor_compatible_meta_box' => true,
     ));
 }
 
-function circolari_crea_box_parametri( $post ){
+function wps_circolari_crea_box_parametri( $post ){
 echo "<h4>".__("Firmare entro", 'wpscuola' )."</h4>";	
-circolari_crea_box_data_scadenza($post);
+wps_circolari_crea_box_data_scadenza($post);
 echo "<h4>".__("Progessivo", 'wpscuola' )."</h4>";
-circolari_crea_box_progressivo($post);
+wps_circolari_crea_box_progressivo($post);
 echo "<h4>".__("Firme", 'wpscuola' )."</h4>";
-circolari_crea_box_firma($post);
+wps_circolari_crea_box_firma($post);
 //circolari_crea_box_firma_sciopero($post);
 echo "<h4>".__("Visibilità", 'wpscuola' )."</h4>";
-circolari_crea_box_visibilita($post);
+wps_circolari_crea_box_visibilita($post);
 }
 
-function NewNumCircolare($numero){
+function wps_circolari_NewNumCircolare($numero){
 	$args = array( 'numberposts' => '1','post_type'=> 'circolari_scuola','post_status' => 'publish','meta_key' => '_anno','meta_value' => $numero);
 	$ultimo=wp_get_recent_posts($args);
 	$ID=$ultimo[0]['ID'];
 	$numero=get_post_meta($ID, "_numero");
 	return $numero[0]+1;
 }
-function circolari_crea_box_progressivo( $post ){
+function wps_circolari_crea_box_progressivo( $post ){
 $numero=get_post_meta($post->ID, "_numero",TRUE);
 $anno=get_post_meta($post->ID, "_anno",TRUE);
 if ($anno=="" or !$anno){	
@@ -1643,13 +1587,13 @@ if ($anno=="" or !$anno){
 		$anno=($anno-1)."/".date("y");
 }
 if ($numero=="" or !$numero)
-	$numero=NewNumCircolare($anno);
+	$numero=wps_circolari_NewNumCircolare($anno);
 echo '<label>'.__("Numero/Anno", 'wpscuola' ).'</label>
 	<input type="text" name="numero" value="'.$numero.'" size="5" id="numero_circolare" style="text-align:right"/>_<input type="text" name="anno" value="'.$anno.'" size="5"/>
 	<br />' ;
 }
 
-function circolari_crea_box_visibilita( $post ){
+function wps_circolari_crea_box_visibilita( $post ){
 $visibilita=get_post_meta($post->ID, "_visibilita");
 $selp="";
 $seld="";
@@ -1663,20 +1607,20 @@ else
 echo __("Pubblica", 'wpscuola' ).' <input type="radio" name="visibilita" value="p" '.$selp.'/><br />
 '.__("Riservata", 'wpscuola' ).' <input type="radio" name="visibilita" value="d" '.$seld.'/>';
 }
-function circolari_crea_box_firma( $post ){
-	global $Testi;
+function wps_circolari_crea_box_firma( $post ){
+	global $wps_Testi;
 $sign=get_post_meta($post->ID, "_sign",TRUE);
 echo Circolari_Tipo::get_Tipi($sign);
 }
 
-function circolari_crea_box_data_scadenza( $post ){
-$scadenza=FormatDataItalianoBreve(get_post_meta($post->ID, "_scadenza",TRUE));
+function wps_circolari_crea_box_data_scadenza( $post ){
+$scadenza=wps_FormatDataItalianoBreve(get_post_meta($post->ID, "_scadenza",TRUE));
 echo "<label>".__("Data", 'wpscuola' )."</label> <input type='text' name='scadenza' value='".$scadenza."' size='8' style='text-align:left' id='DataScadenza'/>
 	<br />" ;
 }
 
-function circolari_VisualizzaFirme($post_id,$Tipo=0){
-	global $GestioneScuola,$Testi,$TestiRisposte;
+function wps_circolari_VisualizzaFirme($post_id,$Tipo=0){
+	global $GestioneScuola,$wps_Testi,$wps_TestiRisposte;
 	$numero=get_post_meta($post_id, "_numero");
 	$anno=get_post_meta($post_id, "_anno");
 	$circolare=get_post($post_id);
@@ -1699,7 +1643,7 @@ function circolari_VisualizzaFirme($post_id,$Tipo=0){
 			<i class="fa fa-users fa-2x" aria-hidden="true"></i> '.$Elenco.'</p>
 	</div>
 	';
-	$utenti=Get_Users_per_Circolare($post_id);
+	$utenti=wps_Get_Users_per_Circolare($post_id);
 	if ($Tipo==1)
 		$sottrai=3;
 	else	
@@ -1716,7 +1660,7 @@ function circolari_VisualizzaFirme($post_id,$Tipo=0){
 					<th style="width:'.(15-$sottrai).'%;">'.__("Data Operazione", 'wpscuola' ).'</th>
 					<th style="width:'.(15-$sottrai).'%;">'.__("Espressione", 'wpscuola' ).'</th>';
 	if ($Tipo==1){
-			$Testo=Circolari_find_Tipo($TipoC);
+			$Testo=wps_Circolari_find_Tipo($TipoC);
 			echo '
 						<th style="width:12%;">'.$Testo->get_TestoElenco().'</th>';
 		}			
@@ -1731,7 +1675,7 @@ function circolari_VisualizzaFirme($post_id,$Tipo=0){
 					<th style="width:'.(15-$sottrai).'%;">'.__("Data Operazione", 'wpscuola' ).'</th>
 					<th style="width:'.(15-$sottrai).'%;">'.__("Espressione", 'wpscuola' ).'</th>';
 	if ($Tipo==1){
-			$Testo=Circolari_find_Tipo($TipoC);
+			$Testo=wps_Circolari_find_Tipo($TipoC);
 			echo '
 						<th style="width:12%;">'.$Testo->get_TestoElenco().'</th>';
 		}				
@@ -1741,7 +1685,7 @@ function circolari_VisualizzaFirme($post_id,$Tipo=0){
 			<tboby>';
 	foreach($utenti as $utente){
 		$GruppoUtente=get_user_meta($utente->ID, "gruppo", true);
-		if(($firma=get_Firma_Circolare($post_id,$utente->ID))===FALSE){
+		if(($firma=wps_get_Firma_Circolare($post_id,$utente->ID))===FALSE){
 			$Firma="";
 		}else{
 			$Firma=$firma->datafirma;	
@@ -1763,8 +1707,8 @@ function circolari_VisualizzaFirme($post_id,$Tipo=0){
 						<td>'.$DesGsU.'</td>
 						<td>'.$Firma.'</td>';
 		if (isset($firma->adesione)) 
-			if(Circolari_is_set_IDRisposte($firma->adesione))
-				$desad=$TestiRisposte[(int)$firma->adesione]->get_Risposta();
+			if(wps_Circolari_is_set_IDRisposte($firma->adesione))
+				$desad=$wps_TestiRisposte[(int)$firma->adesione]->get_Risposta();
 			else
 				$desad=__("Errore Etichetta non trovata", 'wpscuola' );
 		else
@@ -1779,5 +1723,4 @@ function circolari_VisualizzaFirme($post_id,$Tipo=0){
 	</div>
 	';
 }	
-
 ?>

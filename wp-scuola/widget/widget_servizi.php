@@ -51,7 +51,10 @@ class Servizi extends WP_Widget {
             							'post_type'   => 'servizio',
              							'order' => 'ASC',
   										'meta_key'			=> 'servizio_ordine',
-										'orderby'			=> 'meta_value_num',);
+										'orderby'			=> 'meta_value_num',
+										'meta_query'	=> array(array('key'	 	=> 'servizio_attivazione_servizio',
+																	   'value'	  	=> 'si',
+																	   'compare' 	=> '=')));
 					$Servizi=get_posts($argServizi);
 					$this->Crea_blocchi($Servizi);
 					break;
@@ -79,6 +82,9 @@ class Servizi extends WP_Widget {
            										'order' 		=> 'ASC',
            										'meta_key'		=> 'servizio_ordine',
   												'orderby' 		=> 'meta_value_num',
+  												'meta_query'	=> array(array('key'	 	=> 'servizio_attivazione_servizio',
+																				'value'	  	=> 'si',
+																				'compare' 	=> '=')),
 		            							'tax_query' 	=> array(array( 'taxonomy' => 'tiposervizio',
 															                	'field' => 'slug',
 															                	'terms' => $Tipologia->slug)));
@@ -98,6 +104,9 @@ class Servizi extends WP_Widget {
 	            							'meta_key'		=> 'servizio_ordine',
 	            							'order' 		=> 'ASC',
   											'orderby' 		=> 'meta_value_num',		            							
+											'meta_query'	=> array(array('key'	 	=> 'servizio_attivazione_servizio',
+																			'value'	  	=> 'si',
+																			'compare' 	=> '=')),
 	            							'tax_query'		=> array(array( 'taxonomy' 	=> 'tiposervizio',
 																        	'field' 	=> 'id',
 																        	'terms' 	=> $tipologias)));
