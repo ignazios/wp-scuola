@@ -18,11 +18,7 @@ https://github.com/ignazios/wp-scuola
 [Qui](https://raw.githubusercontent.com/ignazios/wp-scuola/master/wp-scuola.zip) puoi scaricare il **Pacchetto** utilizzabile per la prima installazione o per l'aggiornamento manuale
 ## Supporto
 facebook: https://www.facebook.com/wpscuola/
-## Versioni certificate
-<<<<<<< HEAD
-## Versioni certificate
-=======
->>>>>>> 291affb247fc672c23a246ba1de5eb20d117361a
+## Tema verificato per le seguenti versioni
  - **Wordpress** 	*5.0* - *5.4.1*
  - **PHP** 		*7.0*
 ## Change log
