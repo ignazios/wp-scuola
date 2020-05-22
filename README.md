@@ -19,8 +19,9 @@ https://github.com/ignazios/wp-scuola
 ## Supporto
 facebook: https://www.facebook.com/wpscuola/
 ## Versioni certificate
-Wordpress 	5.0 - 5.4.1
-PHP 		7.0
+## Versioni certificate
+ - **Wordpress** 	*5.0* - *5.4.1*
+ - **PHP** 		*7.0*
 ## Change log
 - **0.1.0**
   - ***Revisionati*** e ***Tradotti*** tutti i widget implementati dal tema
