@@ -218,7 +218,7 @@ class Feed_RSS extends WP_Widget {
 	public function form( $instance ) {
 		if ( empty( $instance ) ) {
 			$instance = array(
-				'title'				  => 'Notizie della Scuola',
+				'design-italia-title'		   => 'Notizie della Scuola',
 				'design-italia-titleSx'        => '',
 				'design-italia-urlSx'          => '',
 				'design-italia-titleCx'        => '',

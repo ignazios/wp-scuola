@@ -10,13 +10,16 @@ class Servizi extends WP_Widget {
        function __construct() {
 			parent::__construct( false, 'Scuola Servizi',
 				array('classname' => 'Servizi',
-				    'description' => 'Blocco Servizi organizzato con tabs per tipologia di servizio') );
+				    'description' => __('Blocco Servizi organizzato con tabs per tipologia di servizio','wpscuola')));
+         	add_action( 'save_post', 	[$this, 'flush_widget_cache'] );
+	      	add_action( 'deleted_post', [$this, 'flush_widget_cache'] );
+	      	add_action( 'switch_theme', [$this, 'flush_widget_cache'] );
         }
 
     function widget($args, $instance) {
  	       $cache = [];
 	        if ( ! $this->is_preview() ) {
-	            $cache = wp_cache_get( 'widget_grid_posts', 'widget' );
+	            $cache = wp_cache_get( 'widget_servizi', 'widget' );
 	        }
 
 	        if ( ! is_array( $cache ) ) {
@@ -34,7 +37,9 @@ class Servizi extends WP_Widget {
 
 	        ob_start();
 	        
-             $title = apply_filters('widget_title', $instance['titolo']);
+ 	         $title = ( ! empty( $instance['title'] ) ) ? $instance['title'] : __( 'Servizi','wpscuola' );
+        	/** This filter is documented in twp-includes/default-widgets.php */
+        	 $title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
              $tipovis = ! empty( $instance['tipovis'] ) ? $instance['tipovis'] :0;
              $tipologias = ! empty( $instance['tipologias'] ) ? $instance['tipologias'] :0;?>
  <section id="art_<?php echo $args['widget_id'];?>"  class="home-widget container">
@@ -64,7 +69,6 @@ class Servizi extends WP_Widget {
 													'order' 		=> 'ASC',
            											'meta_key'		=> 'ordine',
   													'orderby' 		=> 'meta_value_num'));
-//					echo "<pre>";var_dump($Tipologie);echo "</pre>";
 					if (count($Tipologie)>0){?>
 						<nav>
 						  <div class="nav nav-tabs auto" id="nav_<?php echo $args['widget_id'];?>" role="tablist">
@@ -119,7 +123,15 @@ class Servizi extends WP_Widget {
 <?php echo $args['after_widget'];?>
 </section>	
 <?php
+	wp_reset_postdata();
+
+    if ( ! $this->is_preview() ) {
+        $cache[ $args['widget_id'] ] = ob_get_flush();
+        wp_cache_set( 'widget_link', $cache, 'widget' );
+    } else {
+        ob_end_flush();
     }
+}
 /**
 * 
 * @param {object} $Servizi
@@ -150,26 +162,29 @@ class Servizi extends WP_Widget {
   </div>
 <?php
 	} 
+
+	public function flush_widget_cache(){
+	        wp_cache_delete('widget_servizi', 'widget');
+	}	
 	
-/** @see WP_Widget::update */
 	function update($new_instance, $old_instance){
-            $instance = $old_instance;
-            $instance['titolo'] = strip_tags($new_instance['titolo']);
-            $instance['tipovis'] = $new_instance['tipovis'];
-            $instance['tipologias'] = $new_instance['tipologias'];
+        $instance = $old_instance;
+        $instance['title'] = strip_tags($new_instance['title']);
+        $instance['tipovis'] = $new_instance['tipovis'];
+        $instance['tipologias'] = $new_instance['tipologias'];
 		return $instance;
 	}
 
 	/** @see WP_Widget::form */
 	function form($instance){
 		$instance = wp_parse_args( (array) $instance, array( ) ); 
-		$titolo = ! empty( $instance['titolo'] ) ? $instance['titolo'] : esc_html__( 'Servizi', 'wpscuola' );
+		$titolo = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Servizi', 'wpscuola' );
 		$tipovis = ! empty( $instance['tipovis'] ) ? $instance['tipovis'] :0;
 		$tipologias = ! empty( $instance['tipologias'] ) ? $instance['tipologias'] :0;
 		?>
            <p>
-                <label for="<?php echo $this->get_field_id( 'titolo' ); ?>"><?php _e( 'Titolo Sezione', 'wpscuola' );?>:</label>
-                <input type="text" class="widefat" id="<?php echo $this->get_field_id( 'titolo' ); ?>" name="<?php echo $this->get_field_name( 'titolo' ); ?>" value="<?php echo esc_attr( $titolo ); ?>" />
+                <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Titolo Sezione', 'wpscuola' );?>:</label>
+                <input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $titolo ); ?>" />
             </p>
             <p>
   	    		<label for="<?php echo $this->get_field_id( 'tipovis' ); ?>"><?php _e( 'Tipologia di visualizzazione', 'wpscuola' );?>:</label><br />

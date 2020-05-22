@@ -1,15 +1,17 @@
 /*
-Theme Name: 	WPScuola
-Theme URI: 		https://github.com/ignazios/wp-scuola
-Author: 		Ignazio Scimone
-Author URI: 	https://eduva.org/
-Description: 	WPScuola è un tema di WordPress realizzato principalmente per le scuole italiane. Il tema è basata sul tema originale Design Italia Versione: 0.32 https://github.com/italia/design-wordpress-theme autore Marco Gargano http://marcogargano.com/. 
-Il tema utilizza la libreria Bootstrap Italia basata su Bootstrap 4.3.1, di cui eredita tutte le funzionalità, componenti, griglie e classi di utilità, personalizzandole secondo le Linee Guida di Design per i siti web della Pubblica Amministrazione. 
-Version: 		0.0.9
-License: 		AGPL-3.0
-License URI: 	https://opensource.org/licenses/AGPL-3.0
-Tags: 			right-sidebar, custom-header, custom-footer, custom-colors, custom-logo, custom-menu, mega-menu, footer-widgets, footer-menu, editor-style, featured-images, post-formats, theme-options, blocco-scuola, blocco-in-evidenza, modulo-FAQ, modulo-Circolari, tempate-albo-online, template-amministrazione-trasparente.
-Text Domain: 	wpscuola
+Theme Name: 		WPScuola
+Theme URI: 			https://github.com/ignazios/wp-scuola
+Author: 			Ignazio Scimone
+Author URI: 		https://eduva.org/
+Description: 		WPScuola è un tema di WordPress realizzato principalmente per le scuole italiane. Il tema è basata sul tema originale Design Italia Versione: 0.32 https://github.com/italia/design-wordpress-theme autore Marco Gargano http://marcogargano.com/. Il tema utilizza la libreria Bootstrap Italia basata su Bootstrap 4.3.1, di cui eredita tutte le funzionalità, componenti, griglie e classi di utilità, personalizzandole secondo le Linee Guida di Design per i siti web della Pubblica Amministrazione. 
+Requires at least: 	5.0
+Tested up to: 		5.4.1
+Requires PHP: 		7.0
+Version: 			0.1.0
+License: 			AGPL-3.0
+License URI: 		https://opensource.org/licenses/AGPL-3.0
+Tags: 				right-sidebar, custom-header, custom-footer, custom-colors, custom-logo, custom-menu, mega-menu, footer-widgets, footer-menu, editor-style, featured-images, post-formats, theme-options, blocco-scuola, blocco-in-evidenza, modulo-FAQ, modulo-Circolari, tempate-albo-online, template-amministrazione-trasparente.
+Text Domain: 		wpscuola
 
 Copyright (c) i rispettivi contributori, come mostrato dal file AUTHORS.
 Questo programma è un software gratuito: puoi ridistribuirlo e / o modificarlo secondo i termini della GNU Affero General Public License come pubblicato dalla Free Software Foundation, sia la versione 3 della Licenza, sia (a tua scelta) qualsiasi versione successiva.

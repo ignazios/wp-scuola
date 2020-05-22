@@ -12,13 +12,16 @@
         function __construct() {
 			parent::__construct( false, 'Scuola Articoli',
 				array('classname' => 'Articoli',
-				    'description' => 'Blocco Articoli su due colonne con due categoria') );
-        }
+				    'description' => __('Blocco Articoli su due colonne con due categoria','wpscuola')) );
+ 	      add_action( 'save_post', 		[$this, 'flush_widget_cache'] );
+	      add_action( 'deleted_post', 	[$this, 'flush_widget_cache'] );
+	      add_action( 'switch_theme', 	[$this, 'flush_widget_cache'] );
+       }
 
         function widget( $args, $instance ) {
 	       $cache = [];
 	        if ( ! $this->is_preview() ) {
-	            $cache = wp_cache_get( 'widget_grid_posts', 'widget' );
+	            $cache = wp_cache_get( 'widget_posts', 'widget' );
 	        }
 
 	        if ( ! is_array( $cache ) ) {
@@ -35,8 +38,10 @@
 	        }
 
 	        ob_start();
-//      	    var_dump($args);
-            $title = apply_filters('widget_title', $instance['titolo']);
+	        
+	        $title = ( ! empty( $instance['title'] ) ) ? $instance['title'] : __( 'Articoli su due colonne','wpscuola' );
+        	/** This filter is documented in wp-includes/default-widgets.php */
+        	$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
  			$catprimoblocco=isset($instance['catprimoblocco'])?$instance['catprimoblocco']:"";
  			$catsecondoblocco=isset($instance['catsecondoblocco'])?$instance['catsecondoblocco']:"";
  			$numelementi=isset($instance['numelementi'])?$instance['numelementi']:"";
@@ -138,28 +143,29 @@
 
     if ( ! $this->is_preview() ) {
         $cache[ $args['widget_id'] ] = ob_get_flush();
-        wp_cache_set( 'widget_grid_posts', $cache, 'widget' );
+        wp_cache_set( 'widget_posts', $cache, 'widget' );
     } else {
         ob_end_flush();
     }
 }
         function update( $new_instance, $old_instance ) {
-//var_dump($new_instance);wp_die();
             $instance = $old_instance;
-            $instance['titolo'] = strip_tags($new_instance['titolo']);
-
+            $instance['title'] = strip_tags($new_instance['title']);
             $instance['catprimoblocco']=strip_tags($new_instance['catprimoblocco']);   
             $instance['catsecondoblocco']=strip_tags($new_instance['catsecondoblocco']);   
             $instance['numelementi']=strip_tags($new_instance['numelementi']);   
 			$instance['leggitutto']=strip_tags($new_instance['leggitutto']);
 			$instance['titolosx']=strip_tags($new_instance['titolosx']);
 			$instance['titolodx']=strip_tags($new_instance['titolodx']);
-            return $instance;
+           return $instance;
         }
-
+	    public function flush_widget_cache() 
+	    {
+	        wp_cache_delete('widget_posts', 'widget');
+	    }
         function form( $instance ) {
-            $instance = wp_parse_args( (array) $instance, array( ) ); 
-            $titolo = ! empty( $instance['titolo'] ) ? $instance['titolo'] : esc_html__( 'Comunicazioni', 'text_domain' );
+           // $instance = wp_parse_args( (array) $instance, array( ) ); 
+            $title = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Comunicazioni', 'text_domain' );
  			$catprimoblocco=isset($instance['catprimoblocco'])?$instance['catprimoblocco']:0;
  			$catsecondoblocco=isset($instance['catsecondoblocco'])?$instance['catsecondoblocco']:0;
             $numelementi=isset($instance['numelementi'])?$instance['numelementi']:5;
@@ -168,8 +174,8 @@
 ?>           
 
            <p>
-                <label for="<?php echo $this->get_field_id( 'titolo' ); ?>">Titolo Sezione:</label>
-                <input type="text" class="widefat" id="<?php echo $this->get_field_id( 'titolo' ); ?>" name="<?php echo $this->get_field_name( 'titolo' ); ?>" value="<?php echo esc_attr( $titolo ); ?>" />
+                <label for="<?php echo $this->get_field_id( 'title' ); ?>">Titolo Sezione:</label>
+                <input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $title ); ?>" />
             </p>
             <p>
              <label for="<?php echo $this->get_field_id( 'numelementi' ); ?>">N&ordm; elementi da visualizzare:</label>

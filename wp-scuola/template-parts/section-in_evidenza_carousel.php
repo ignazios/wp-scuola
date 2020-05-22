@@ -55,7 +55,7 @@
 	 <div class="it-carousel-wrapper it-carousel-landscape-abstract-three-cols">
 	  <div class="it-header-block">
 	    <div class="it-header-block-title">
-	      <h2 class="no_toc pl-3">In evidenza</h2>
+	      <h3 class="widget-title pl-3"><?php _e('In evidenza', 'wpscuola');?></h3>
 	    </div>
 	  </div>
 	   <div class="row">
@@ -77,7 +77,7 @@
 			          <h5 class="card-title card-title-fix"><?php echo $Title;?></h5>
 			          <div class="it-card-footer">
 			          	<a class="read-more" href="<?php echo $PermaLink;?>">
-			              <span class="text"><i class="fas fa-link p-1"></i> Leggi articolo</span>
+			              <span class="text"><i class="fas fa-link p-1"></i> <?php _e('Leggi articolo', 'wpscuola');?></span>
 			            </a>
 			          </div>
 			        </div>
@@ -120,7 +120,7 @@
 				        	<h5 class="card-title card-title-fix"><?php echo $Title;?></h5>
 				          	<div class="it-card-footer">
 				          		<a class="read-more" href="<?php echo $PermaLink;?>">
-				              		<span class="text"><i class="fas fa-link p-1"></i> Leggi articolo</span>
+				              		<span class="text"><i class="fas fa-link p-1"></i> <?php _e('Leggi articolo', 'wpscuola');?></span>
 				            	</a>
 					    	</div>
 					    </div>

@@ -54,7 +54,7 @@
 ?>
 <section class="scuola">
 	<div id="Scuola" class="container mt-5">
-	<h2 class="u-text-h2"><?php echo get_theme_mod('scuola_scuola_titolosezione');?></h2>
+	<h3 class="widget-title"><?php echo get_theme_mod('scuola_scuola_titolosezione');?></h3>
     <div class="row">
   		<div class="col-12 col-lg-3">
   		<div class="row p-md-5">

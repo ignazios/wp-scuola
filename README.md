@@ -18,7 +18,14 @@ https://github.com/ignazios/wp-scuola
 [Qui](https://raw.githubusercontent.com/ignazios/wp-scuola/master/wp-scuola.zip) puoi scaricare il **Pacchetto** utilizzabile per la prima installazione o per l'aggiornamento manuale
 ## Supporto
 facebook: https://www.facebook.com/wpscuola/
+## Versioni certificate
+Wordpress 	5.0 - 5.4.1
+PHP 		7.0
 ## Change log
+- **0.1.0**
+  - ***Revisionati*** e ***Tradotti*** tutti i widget implementati dal tema
+  - ***Corretti*** alcuni bag minori
+  - ***Aggiornati*** il file delle traduzioni wpscuola/languages/wpscuola-it_IT.po   
 - **0.0.9**
   - ***Implementato*** il modulo Prenotazioni basato sul plugin omonimo con interfaccia pubblica ridisegnata
   - ***Risolti*** alcuni bug minori

@@ -8,7 +8,7 @@
 ?>
 <section id="Comunicazioni">
 	<div class="container shadow clearfix">
-		<h2 class="u-text-h2 pt-3 pl-2">Ultime Comunicazioni</h2>
+		<h3 class="widget-title"><?php _e('Ultime Comunicazioni', 'wpscuola');?></h3>
 		<div class="col-12">
 <?php
     $limit = get_theme_mod('ultime-comunicazioni_num_elementi');
@@ -53,7 +53,7 @@
     endif;
     if ($showallarchivio){
 ?>	<div class="row float-right">
-			<a class="read-more" href="<?php echo esc_url(home_url()) .'/comunicazioni';?>"><i class="fas fa-link p-1"></i> <span class="text">Mostra tutte le comunicazioni</span>
+			<a class="read-more" href="<?php echo esc_url(home_url()) .'/comunicazioni';?>"><i class="fas fa-link p-1"></i> <span class="text"><?php _e('Mostra tutte le comunicazioni', 'wpscuola');?></span>
           	</a>
     </div>						
 <?php	} ?>				

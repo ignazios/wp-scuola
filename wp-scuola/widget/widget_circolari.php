@@ -10,8 +10,11 @@
         function __construct() {
 			parent::__construct( false, 'Scuola Circolari',
 				array('classname' => 'Circolari',
-				    'description' => 'Blocco Circolari in Home Page') );
-        }
+				    'description' => __('Blocco Circolari in Home Page','wpscuola')));
+        	add_action( 'save_post', 	[$this, 'flush_widget_cache'] );
+	      	add_action( 'deleted_post', [$this, 'flush_widget_cache'] );
+	      	add_action( 'switch_theme', [$this, 'flush_widget_cache'] );
+		 }
 
         function widget( $args, $instance ) {
 	       $cache = [];
@@ -34,7 +37,9 @@
 
 	        ob_start();
 //      	    var_dump($args);
-            $title = apply_filters('widget_title', $instance['titolo']);
+	        $title = ( ! empty( $instance['title'] ) ) ? $instance['title'] : __( 'Circolari','wpscuola' );
+        	/** This filter is documented in wp-includes/default-widgets.php */
+        	$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
  			$numelementi=isset($instance['numelementi'])?$instance['numelementi']:"";
  			$linkLT=isset($instance['leggitutto'])?$instance['leggitutto']:"";
 
@@ -93,33 +98,33 @@
 				            	  <span class="card-firma">
 							<?php		if (!wps_Is_Circolare_Firmata($Circolare->ID)) {
 											$ngiorni=wps_Get_scadenzaCircolare($Circolare->ID,"",True);					
-											if(wps_Is_Circolare_Scaduta($Circolare->ID)){
-												echo' <i class="fa fa-pencil" aria-hidden="true" style="color:red;"></i> Scaduta e non Firmata ';						
+											if(wps_Is_Circolare_Scaduta($Circolare->ID)){?>
+									<i class="fa fa-pencil" aria-hidden="true" style="color:red;"></i> <?php _e('Scaduta e non Firmata','wpscuola');						
 											}else{
 												switch ($ngiorni){
 													case -1:							
 														$entro="";							
 														break;													
 													case 0:
-														$entro="entro OGGI";
+														$entro= __('entro OGGI','wpscuola');
 														break;
 													case 1:
-														$entro="entro DOMANI";
+														$entro= __('entro DOMANI','wpscuola');
 														break;
 													default:
-														$entro="entro $ngiorni giorni";
+														$entro= sprintf(__('entro %s giorni','wpscuola'),$ngiorni);
 														break;
 												}
 												$sign=get_post_meta($Circolare->ID, "_sign",TRUE);
 												if ($sign!="Firma")
-													$Tipo="Esprimere adesione $entro";
+													$Tipo=sprintf(__('Esprimere adesione %s','wpscuola'),$entro);
 												else
-													$Tipo="Firmare $entro";
-												echo' <i class="fa fa-pencil" aria-hidden="true" style="color:red;"></i> '.$Tipo;	
+													$Tipo=sprintf(__('Firmare %s','wpscuola'),$entro);?>
+									<i class="fa fa-pencil" aria-hidden="true" style="color:red;"></i> <?php echo $Tipo;	
 										}			
-									}else{
-										echo' <i class="fa fa-pencil" aria-hidden="true" style="color:blue;"></i> Firmata';				
-									}?>
+									}else{ ?>
+									<i class="fa fa-pencil" aria-hidden="true" style="color:blue;"></i> <?php _e('Firmata','wpscuola');
+						   			}?>
 								</span>
 				           <?php } ?>
 				          </div>
@@ -135,7 +140,7 @@
 <?php		if($linkLT){?>							
 			<div class="it-card-footer">
 		    	<a class="read-more" href="<?php echo get_post_type_archive_link("circolari_scuola");?>">
-		        	<span class="text"><i class="fas fa-link p-1"></i> Leggi tutte le circolari</span>
+		        	<span class="text"><i class="fas fa-link p-1"></i> <?php _e('Leggi tutte le circolari','wpscuola');?></span>
 		        </a>
 		    </div>
 <?php 		} ?>
@@ -147,16 +152,20 @@
 
     if ( ! $this->is_preview() ) {
         $cache[ $args['widget_id'] ] = ob_get_flush();
-        wp_cache_set( 'widget_grid_posts', $cache, 'widget' );
+        wp_cache_set( 'widget_circolari', $cache, 'widget' );
     } else {
         ob_end_flush();
     }
 }
-
+	    public function flush_widget_cache() 
+	    {
+	        wp_cache_delete('widget_circolari', 'widget');
+	    }
+	    
         function update( $new_instance, $old_instance ) {
 //var_dump($new_instance);wp_die();
             $instance = $old_instance;
-            $instance['titolo'] = strip_tags($new_instance['titolo']);
+            $instance['title'] = strip_tags($new_instance['title']);
             $instance['numelementi']=strip_tags($new_instance['numelementi']);   
 			$instance['leggitutto']=strip_tags($new_instance['leggitutto']);
            return $instance;
@@ -164,21 +173,21 @@
 
         function form( $instance ) {
             $instance = wp_parse_args( (array) $instance, array( ) ); 
-            $titolo = ! empty( $instance['titolo'] ) ? $instance['titolo'] : esc_html__( 'Comunicazioni', 'text_domain' );
+            $titolo = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Circolari', 'wpscuola' );
             $numelementi=isset($instance['numelementi'])?$instance['numelementi']:5;
 ?>           
 
            <p>
-                <label for="<?php echo $this->get_field_id( 'titolo' ); ?>">Titolo Sezione:</label>
-                <input type="text" class="widefat" id="<?php echo $this->get_field_id( 'titolo' ); ?>" name="<?php echo $this->get_field_name( 'titolo' ); ?>" value="<?php echo esc_attr( $titolo ); ?>" />
+                <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Titolo Sezione','wpscuola');?>:</label>
+                <input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $titolo ); ?>" />
             </p>
             <p>
-             <label for="<?php echo $this->get_field_id( 'numelementi' ); ?>">N&ordm; elementi da visualizzare:</label>
+             <label for="<?php echo $this->get_field_id( 'numelementi' ); ?>"><?php _e('N° elementi da visualizzare','wpscuola');?>:</label>
             <input type="number" min="1" max="10" id="<?php echo $this->get_field_id( 'numelementi' ); ?>" name="<?php echo $this->get_field_name( 'numelementi' ); ?>" value="<?php echo $numelementi; ?>" />
         </p>
      <div class="Servizi">
-    	<h3>Link Leggi Tutto</h3>
-    	<label for="<?php echo $this->get_field_id( 'leggitutto' ); ?>">Attiva:</label>
+    	<h3><?php _e('Link Leggi Tutto','wpscuola');?></h3>
+    	<label for="<?php echo $this->get_field_id( 'leggitutto' ); ?>"><?php _e('Attiva','wpscuola');?>:</label>
     	<input type="checkbox" id="<?php echo $this->get_field_id('leggitutto'); ?>" name="<?php echo $this->get_field_name('leggitutto'); ?>" value="1" <?php echo ($instance['leggitutto'] == '1') ? 'checked="checked"':''; ?>/>
     </div>
       <?php

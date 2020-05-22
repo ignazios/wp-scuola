@@ -22,7 +22,7 @@ class Articoli_Griglia extends WP_Widget {
     {
         $cache = [];
         if ( ! $this->is_preview() ) {
-            $cache = wp_cache_get( 'widget_cat_posts', 'widget' );
+            $cache = wp_cache_get( 'widget_grid_posts', 'widget' );
         }
 
         if ( ! is_array( $cache ) ) {
@@ -139,7 +139,7 @@ class Articoli_Griglia extends WP_Widget {
 
         if ( ! $this->is_preview() ) {
             $cache[ $args['widget_id'] ] = ob_get_flush();
-            wp_cache_set( 'widget_cat_posts', $cache, 'widget' );
+            wp_cache_set( 'widget_grid_posts', $cache, 'widget' );
         } else {
             ob_end_flush();
         }
@@ -158,17 +158,12 @@ class Articoli_Griglia extends WP_Widget {
         $instance['shadow']           = $new_instance['shadow'];
         $instance['categories']     = $new_instance['categories'];
         $this->flush_widget_cache();
-
-        $alloptions = wp_cache_get( 'alloptions', 'options' );
-        if ( isset($alloptions['widget_category_posts']) )
-            delete_option('widget_category_posts');
-
         return $instance;
     }
 
     public function flush_widget_cache() 
     {
-        wp_cache_delete('widget_cat_posts', 'widget');
+        wp_cache_delete('widget_grid_posts', 'widget');
     }
 
     public function form( $instance ) 
@@ -215,7 +210,7 @@ class Articoli_Griglia extends WP_Widget {
         <p>
             <?php $checked = ( $random ) ? ' checked=\"checked\" ' : ''; ?>
             <input type="checkbox" id="<?php echo $this->get_field_id( 'rand' ); ?>" name="<?php echo $this->get_field_name( 'rand' ); ?>" value="true" <?php echo $checked; ?> />    
-            <label for="<?php echo $this->get_field_id('rand'); ?>"><?php _e( 'Visualizza articoli casualmente. Se deselezionato, verranno visualizzati prima i più recenti.' ); ?></label>
+            <label for="<?php echo $this->get_field_id('rand'); ?>"><?php _e( 'Visualizza articoli casualmente. Se deselezionato, verranno visualizzati prima i pi&ugrave; recenti.' ); ?></label>
         </p>
 
         <p>

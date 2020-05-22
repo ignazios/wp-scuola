@@ -353,8 +353,8 @@ if (function_exists('register_sidebar')) {
 		'name' => __('Home Widget Area', 'wpscuola') ,
 		'id' => 'home-widget-area',
 		'description'   => __( 'Widget area che compare in homepage.', 'wpscuola' ),
-		'before_widget' => '<div id="%1$s" class="col-lg widget-container p-2 %2$s">',
-		'after_widget' => "</div>",
+		'before_widget' => '<section id=""%1$s" class="home-widget container %2$s">',
+		'after_widget' => "</section>",
 		'before_title' => '<h3 class="widget-title">',
 		'after_title' => '</h3>',
 	));
