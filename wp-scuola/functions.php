@@ -403,11 +403,22 @@ if (function_exists('register_sidebar')) {
 		'name' => __('Post Footer Widget Area', 'wpscuola') ,
 		'id' => 'single-footer-widget-area',
 		'description'   => __( 'Widget area che compare sotto il contenuto del singolo post.', 'wpscuola' ),
-		'before_widget' => '<div id="%1$s" class="col-lg widget-container shadow p-2 %2$s">',
+		'before_widget' => '<div id="%1$s" class="col-lg widget-container shadow p-2 mb-4 %2$s">',
 		'after_widget' => "</div>",
 		'before_title' => '<h4 class="widget-title">',
 		'after_title' => '</h4>',
 	));
+
+	register_sidebar( array(
+		'name' => __('Page Footer Widget Area', 'wpscuola') ,
+		'id' => 'page-footer-widget-area',
+		'description'   => __( 'Widget area che compare sotto il contenuto della singola pagina.', 'wpscuola' ),
+		'before_widget' => '<div id="%1$s" class="col-lg widget-container shadow p-2 mb-4 %2$s">',
+		'after_widget' => "</div>",
+		'before_title' => '<h4 class="widget-title">',
+		'after_title' => '</h4>',
+	));
+
 	if(class_exists("EM_Event")){
 		register_sidebar(array(
 			'name' => __('Event Sidebar Widget Area', 'wpscuola') ,

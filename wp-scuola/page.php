@@ -10,14 +10,27 @@
  * License URI: 		https://opensource.org/licenses/AGPL-3.0
  * Text Domain:       	wpscuola
 */
+	$args = array(
+        'posts_per_page' => 1,
+        'order'          => 'ASC',
+        'post_parent'    => $post->ID,
+    );
+ 
+    $padre = get_children( $args );
+    
    	$Primo_Livello=get_ancestors( $post->ID, 'page' ); 	
+//echo "<pre>";var_dump($padre);echo "</pre>";
+//echo "<pre>";var_dump($Primo_Livello);echo "</pre>";
    	$Are_Child=FALSE;
 	$Figli=array();
-   if (count($Primo_Livello)>0){
-//echo "<pre>";var_dump($Primo_Livello);echo "</pre>";
+	if(count($Primo_Livello)==0)
+		$Partenza=$post->ID;
+	else
+		$Partenza=end($Primo_Livello);
+   if (count($Primo_Livello)>0 or count($padre)>0){
 	   $args = array(
 	        'posts_per_page' => -1,
-	        'child_of'    	 => end($Primo_Livello),
+	        'child_of'    	 => $Partenza,
 	        'order'          => 'ASC',
 	        'orderby'        => 'post_title',
 	        'hierarchical'	 => TRUE,
@@ -25,6 +38,14 @@
 	        'title_li'		 => "",
 	        'depth'			=>0,);
 	    $figli = wp_list_pages( $args );
+	    $figli= '<li class="page_item page-item-234 page_item_has_children current_page_item">
+	    	<a href="'.get_permalink(end($Primo_Livello)).'" aria-current="page">'.get_the_title(end($Primo_Livello)).'</a>
+				<ul class="children">
+				'.$figli.'
+				</ul>
+			</li>';
+	    //echo "<pre>";var_dump($padre);echo "</pre>";
+	    //echo "<pre>";var_dump($figli);echo "</pre>";
 	    $Are_Child=TRUE; 
     }   
     
@@ -51,6 +72,7 @@ get_header();
 	         </article>
 	         <?php if ( ! post_password_required() ) comments_template( '', true ); ?>
 	         <?php endwhile; endif; ?>
+        <?php dynamic_sidebar("page-footer-widget-area"); ?>         
 	      </div>     
 	      <div class="col-sm-3">
 <?php	if($Are_Child){

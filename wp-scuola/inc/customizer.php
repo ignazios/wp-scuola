@@ -137,7 +137,7 @@ $wp_customize->add_control( 'scuola_cookies_pulsSXlink', array(
 $wp_customize->add_section('Scuola_Social_Settings',array(
     'title'			 =>'Impostazione Social',
     'priority'		 =>5,
-    'description'	 => 'Sezione che permette di impostrare i canali social della scuola',
+    'description'	 => 'Sezione che permette di impostare i canali social della scuola',
     'panel'			 =>'scuola_settings'));   
 // Campo Facebook
 $wp_customize->add_setting( 'scuola_social_facebook' , array(
@@ -233,7 +233,7 @@ $wp_customize->add_section('Scuola_Amministrazione_Settings',array(
                          	<li>N° di telefono</li>
                          	<li>Indirizzi email</li>
                          	<li>Codici amministrazione</li>
-                         	<li>Link alla Mappa</li>
+                         	<li>Codici IBAN</li>
                          </ul>',
     'panel'			 =>'scuola_settings',
 ));
@@ -477,7 +477,7 @@ $wp_customize->add_section('Scuola_AmmAfferente_Settings',array(
     'title'			 =>'Dati Amministrazione Afferente',
     'priority'		 =>1,
     'description'	 => '<h2>Amministrazione Afferente</h2>
-    					Impostazione dati dell\'mministrazione di riferimento che vengono riportati nel\'Head delle pagine a sinistra',
+    					Impostazione dati dell\'amministrazione di riferimento che vengono riportati nel\'Head delle pagine a sinistra',
     'panel'			 =>'scuola_settings_home',
 ));
 $wp_customize->add_setting( 'Scuola_AmmAfferente_Nome' , array(

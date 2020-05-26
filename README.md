@@ -22,6 +22,8 @@ facebook: https://www.facebook.com/wpscuola/
  - **Wordpress** 	*5.0* - *5.4.1*
  - **PHP** 		*7.0*
 ## Change log
+- **0.1.1**
+  - ***Corretti*** alcuni bag minori
 - **0.1.0**
   - ***Revisionati*** e ***Tradotti*** tutti i widget implementati dal tema
   - ***Corretti*** alcuni bag minori
