@@ -99,7 +99,7 @@ global $msg,$wps_TestiRisposte,$wps_Testi;
 					</a>
 					</td> 
 					<td>".wps_FormatDataItalianoBreve(substr($post->post_date,0,10),TRUE)."</td>
-					<td>".wps_Circolari_Tipo::get_TipoCircolare($sign)->get_DescrizioneTipo()."</td>
+					<td>".Circolari_Tipo::get_TipoCircolare($sign)->get_DescrizioneTipo()."</td>
 					<td><spam style='$BGC'>".wps_FormatDataItalianoBreve(wps_Get_scadenzaCircolare( $post->ID,"" ),TRUE)." $GGDiff</spam></td>
 					<td>$RimuoviFirma $Campo_Firma</td>
 					<td>".wps_FormatDataItalianoBreve(wps_Get_Data_Firma($post->ID),TRUE)."</td>

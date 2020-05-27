@@ -2,7 +2,7 @@
  	$IDCircolare=get_the_ID();
  	$numero=get_post_meta($IDCircolare, "_numero",TRUE);
 	$anno=get_post_meta($IDCircolare, "_anno",TRUE);
-	$Elenco=GetEencoDestinatari($IDCircolare);
+	$Elenco=wps_GetEencoDestinatari($IDCircolare);
  ?>
  <div class="row">
 	<div class="col-12 border-bottom border-primary">
@@ -13,11 +13,11 @@
 			<i class="far fa-calendar-alt"></i> <?php echo date('d/m/Y',strtotime(get_the_date()));?> <strong> <i class="fas fa-user-edit"></i> <a href="<?php echo esc_url(home_url('/'))."author/".get_the_author_meta('user_nicename');?>"><?php the_author_meta('display_name');?></a><br />
 			<i class="fas fa-ticket-alt"></i> <?php echo $numero."_".$anno;?></strong> <span class="users"><i class="fa fa-users" aria-hidden="true"></i> <?php echo $Elenco;?>
 <?php	
-	if (Is_Circolare_Da_Firmare($IDCircolare)){?>
+	if (wps_Is_Circolare_Da_Firmare($IDCircolare)){?>
 				<br />
-<?php		if (!Is_Circolare_Firmata($IDCircolare)) {
-				$ngiorni=Get_scadenzaCircolare($IDCircolare,"",True);					
-				if(Is_Circolare_Scaduta($IDCircolare)){
+<?php		if (!wps_Is_Circolare_Firmata($IDCircolare)) {
+				$ngiorni=wps_Get_scadenzaCircolare($IDCircolare,"",True);					
+				if(wps_Is_Circolare_Scaduta($IDCircolare)){
 					echo' <i class="fa fa-pencil" aria-hidden="true" style="color:red;"></i> Scaduta e non Firmata ';						
 				}else{
 					switch ($ngiorni){

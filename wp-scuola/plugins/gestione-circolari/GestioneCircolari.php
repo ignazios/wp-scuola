@@ -397,6 +397,7 @@ function wps_circolari_FiltroVisualizzaRiassuntoCircolare( $excerpt ){
  * Altrimenti rimando il messaggio di risorsa riservata
  */
 	$visibilita=get_post_meta($PostID, "_visibilita");
+	$seld="Pb";
 	if (count($visibilita)==0)
 		$selp="Pb";
 	else 
@@ -404,7 +405,7 @@ function wps_circolari_FiltroVisualizzaRiassuntoCircolare( $excerpt ){
 			$selp="Pb";
 		else	
 			$seld="Pr";
-			if ((!is_user_logged_in() Or !wps_Is_Circolare_per_User($PostID)) And $seld=="Pr")	
+	if ((!is_user_logged_in() Or !wps_Is_Circolare_per_User($PostID)) And $seld=="Pr")	
 		return __( 'Contenuto riservato a specifici gruppi di utenti registrati', 'wpscuola' );
 	else
 		return $excerpt;

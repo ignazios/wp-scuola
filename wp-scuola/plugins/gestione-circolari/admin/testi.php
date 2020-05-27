@@ -122,9 +122,9 @@ if ( !class_exists( 'Circolari_Tipo' ) ) {
 		
 		//Funzioni sull'insieme dei tipi
 		public static function get_Tipi($Tipo=""){
-			global $Testi;
+			global $wps_Testi;
 			$Elemento="";
-			foreach($Testi as $Testo){
+			foreach($wps_Testi as $Testo){
 				$Elemento.="
 		<p class='description'>
 	 		<input type='radio' id='Imposta".$Testo->get_Tipo()."' name='Sign' value='".$Testo->get_Tipo()."'";
@@ -138,12 +138,12 @@ if ( !class_exists( 'Circolari_Tipo' ) ) {
 		} 
 		
 		public static function get_TipoCircolare($TipoCircolare=""){
-			global $Testi;
-			foreach($Testi as $TipoC){
+			global $wps_Testi;
+			foreach($wps_Testi as $TipoC){
 				if ($TipoCircolare==$TipoC->get_Tipo())
 					return $TipoC;
 			}	
-			return FALSE;
+			return NULL;
 		} 
 	}
 }

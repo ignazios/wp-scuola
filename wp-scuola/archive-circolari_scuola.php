@@ -80,8 +80,8 @@ function my_get_archivesAnnoMese()
 	}
 	return $Result;
 }
-$Anno=$search_query["year"];
-$Mese=$mesi[(int)$search_query["monthnum"]];
+$Anno=(isset($search_query["year"])? $search_query["year"]:"");
+$Mese=(isset($search_query["monthnum"])? $mesi[(int)$search_query["monthnum"]]:"") ;
 if (!$Anno) $Anno=date("Y");
 if (!$Anno And !$Mese) $Mese=$mesi[(int)date("n")];
 $Archivio=my_get_archivesAnnoMese();?>
