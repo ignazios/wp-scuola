@@ -378,7 +378,7 @@ function createTablePrenotazioniSpazioSettimana($IDSpazio=0,$settimana=0,$anno=0
 			$Data=date("d/m/Y",$Giorni[$giorno-1]);
             $PO=$Prenotazioni->getPreGioSpa($Data,$IDSpazio);
             for($ora=$Parametri['OraInizio'];$ora<=$Parametri['OraFine'];$ora++){
-                if($PO[$ora][Impegno]==2){
+                if($PO[$ora]['Impegno']==2){
                     $Riservato[$giorno][$ora]="<strong>".ucwords($PO[$ora][Motivo])."</strong><br />".$PO[$ora][Note];
                 }
             }

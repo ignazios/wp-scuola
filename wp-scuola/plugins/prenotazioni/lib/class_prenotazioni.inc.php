@@ -376,8 +376,8 @@ class Prenotazioni{
 	 	$MsgDate=implode(" - ",$MsgDate);
         $Utente="(".$UserID.") ".$user_info->last_name." ".$user_info->first_name;
 		$OrePren=" Dalle: ".$orai." Alle: ".($orai+$ore);
-		$this->sendMail(get_option(admin_email),$Utente,$user_info->user_email,get_the_title($IdSpazio),$MsgDate,$OrePren,$note,"Amministratore");
-		$this->sendMail($user_info->user_email,$Utente,get_option(admin_email),get_the_title($IdSpazio),$MsgDate,$OrePren,$note,"Utente");
+		$this->sendMail(get_option("admin_email"),$Utente,$user_info->user_email,get_the_title($IdSpazio),$MsgDate,$OrePren,$note,"Amministratore");
+		$this->sendMail($user_info->user_email,$Utente,get_option("admin_email"),get_the_title($IdSpazio),$MsgDate,$OrePren,$note,"Utente");
  	 	return $PrenCre;
 	}
 }

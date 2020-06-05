@@ -117,8 +117,8 @@ function wps_circolari_post_type_archive( $query ) {
 
 function wps_circolari_posts_where($where, $query) {
 	if(current_user_can('administrator') Or $query->query_vars['post_type']!='circolari_scuola' Or $query->is_admin==true) return $where;
-		$current_user = wp_get_current_user();
-		if ( 0 == $current_user->ID ) return $where;
+	$current_user = wp_get_current_user();
+	if ( 0 == $current_user->ID ) return $where;
 	if(strpos($where, "term_taxonomy_id")===FALSE) return $where;
 		
 	$GruppoUtente=get_user_meta($current_user->ID, "gruppo", true);
@@ -182,6 +182,7 @@ add_action( 'do_feed_rss', 					'wps_circolari_disable_feed', 1);
 add_action( 'do_feed_rss2', 				'wps_circolari_disable_feed', 1);
 add_action( 'do_feed_atom', 				'wps_circolari_disable_feed', 1);
 add_action( 'pre_get_posts', 				'wps_circolari_post_type_archive' );  
+add_action( 'save_post', 					'set_post_default_group', 10,3 );
 
 function wps_circolari_Inizializzazione(){
 	global $wps_TestiRisposte,$wps_Testi;
@@ -968,6 +969,31 @@ echo '
 			</p>
 </div>';	
 }
+
+function get_IDGruppoParent($Gruppi,$ParentID){
+	foreach($Gruppi as $Gruppo){
+		if($Gruppo["group_id"]==$ParentID) return $Gruppo["IDGruppo"];
+	}
+	return 0;
+}
+
+function wps_split_GruppiUtente($Gruppi){
+	$Utenti=array();
+	foreach($Gruppi as $Gruppo){
+		foreach($Gruppo["utenti"] as $Utente)
+			$Utenti[$Utente][]=$Gruppo["IDGruppo"];
+	}
+	return $Utenti;
+}
+function wps_split_GroupsGruppo($Gruppi){
+	$TabGruppi=array();
+	foreach($Gruppi as $Gruppo){
+		$TabGruppi[$Gruppo["group_id"]]=$Gruppo["IDGruppo"];
+	}
+	return $TabGruppi;
+	
+}
+
 function wps_circolari_Utility($Stato=""){
 echo '<div class="wrap">
 		<i class="fa fa-cogs fa-3x" aria-hidden="true"></i> <h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Utility Circolari', 'wpscuola' ).'</h2>';
@@ -1046,7 +1072,7 @@ if($azione){
 				header('Location: '.get_bloginfo('wpurl').'/wp-admin/edit.php?post_type=circolari_scuola&page=Utility');
 				exit;
 			}		
-			$Circolari = get_posts("post_type=circolari_scuola&orderby=date&posts_per_page=-1&post_status=any");
+			$Circolari = get_posts("post_type=circolari_scuola&orderby=date&numberposts=-1&posts_per_page=-1&post_status=any");
 			foreach($Circolari as $post) {
 				$firma=get_post_meta($post->ID,"_firma");
 				$sciopero=get_post_meta($post->ID,"_sciopero");
@@ -1082,6 +1108,104 @@ if($azione){
 			echo "<div class='update-nag'><em><strong>".__("Operazione conclusa con successo!", 'wpscuola' )."</em></strong></div>";
 			echo '<meta http-equiv="refresh" content="5;url=edit.php?post_type=circolari_scuola&page=Utility"/>';
 			break;
+		case "importa":
+			if(class_exists( "Groups_Group" ) And count(get_terms('gruppiutenti', array('hide_empty' => false)))==0){
+				$Obj_Gruppi=new Groups_Group(array(1));
+				$Gruppi=array();
+				$Groups=$Obj_Gruppi->get_groups();
+				echo "<h3>Gruppi</h3>";
+				foreach($Groups as $Group){
+					if ($Group->group_id>1){
+						$group = new Groups_Group( $Group->group_id );
+						$users = $group->users;
+						$UtentiGruppo=array();
+						if(!is_null($users) And count($users)>0){
+							foreach($users as $user){
+								$UtentiGruppo[]=$user->ID;
+							}
+						}
+						$NewGruppo=wp_insert_term($Group->name,"gruppiutenti",array("description"=>$Group->description));
+						if ( ! is_wp_error( $NewGruppo ) ){
+							$Gruppo=array( "group_id"    => $Group->group_id,
+										   "parent_id"   => $Group->parent_id,
+										   "name"		 => $Group->name,
+										   "description" => $Group->description,
+										   "utenti"		 => $UtentiGruppo,
+										   "IDGruppo"	 => isset( $NewGruppo['term_id'] ) ? $NewGruppo['term_id'] :0,
+										   "IDParent"	 => 0);
+						}else{
+							$Gruppo=array( "group_id"    => $Group->group_id,
+										   "parent_id"   => $Group->parent_id,
+										   "name"		 => $Group->name,
+										   "description" => $Group->description,
+										   "utenti"		 => $UtentiGruppo,
+										   "IDGruppo"	 => -1,
+										   "IDParent"	 => 0);							
+						}
+						$Gruppi[]=$Gruppo;
+					}
+				}
+				
+				foreach($Gruppi as $Key=>$Gruppo){
+					if(!is_null($Gruppo["parent_id"]) And $Gruppo["parent_id"]>0){
+						$IDGruppoParent=get_IDGruppoParent($Gruppi,$Gruppo["parent_id"]);
+						$AggGruppo=wp_update_term($Gruppo["IDGruppo"],"gruppiutenti",array("parent"=>$IDGruppoParent));
+						if ( is_wp_error( $AggGruppo ) ){
+						    echo $AggGruppo->get_error_message();
+						}else{
+							$Gruppi[$Key]["IDParent"]=$IDGruppoParent;
+						}
+					}
+				}
+				update_option("ImportazioneGroups",$Gruppi);
+				$UtentiGruppi=wps_split_GruppiUtente($Gruppi);
+				update_option("ImportazioneGroupsUtentiGruppi",$UtentiGruppi);
+				$GroupsGruppi=wps_split_GroupsGruppo($Gruppi);
+				update_option("ImportazioneTabellaGroupsGruppi",$GroupsGruppi);
+//				echo "<pre>";var_dump($Gruppi);echo "</pre>";
+				foreach($UtentiGruppi as $Key=>$UtenteGruppo){
+//					echo "Utente ".$Key." - gruppo ";
+//					echo "<pre>";var_dump($UtenteGruppo);echo "</pre> <br />";
+					update_user_meta( $Key, 'gruppo', $UtenteGruppo);
+				}
+//				echo get_option('Circolari_Visibilita_Pubblica')."<pre>";var_dump($GroupsGruppi);echo "</pre>".$GroupsGruppi[get_option('Circolari_Visibilita_Pubblica')] ;
+				update_option('Circolari_Visibilita_Pubblica',$GroupsGruppi[get_option('Circolari_Visibilita_Pubblica')] );
+//				var_dump(get_option('Circolari_Visibilita_Pubblica'));
+				$GP = get_term( get_option('Circolari_Visibilita_Pubblica'), "gruppiutenti" );
+				//echo "<pre>";var_dump($GP);echo "</pre>";
+				echo "<p style=\"color:green;font-size:1.5em;font-weight: bold;\">".sprintf(__("Importazione Gruppi ed assegnazione degli utenti eseguita con successo. Impostato il gruppo Pubblico a:%s", 'wpscuola' ),$GP->name)."</p>";
+			}else{
+				echo "<p style=\"color:red;font-size:1.5em;font-weight: bold;\">".__("Impossibile importare i dati da Circolari Groups, il plugin Groups non mi risulta installato o l'importazione è già avvenuta", 'wpscuola' )."</p>";
+			}
+			break;
+		case "importacircolarigroups":
+			if(count(get_terms('gruppiutenti', array('hide_empty' => false)))>0){
+				$GruppiImportati=get_option("ImportazioneTabellaGroupsGruppi");
+				$Circolari = get_posts( "post_type=circolari&numberposts=-1" );
+//				echo "<pre>";var_dump($GruppiImportati);echo "</pre>";
+				foreach($Circolari as $Circolare){
+					$Destinatari=get_post_meta($Circolare->ID,"_destinatari");
+					$Destinatari=unserialize($Destinatari[0]);
+//					echo "<pre>".$Circolare->ID." ";var_dump($Destinatari);echo "</pre>";
+					$GDest=array();
+					foreach($Destinatari as $Destinatario){
+						$GDest[]=$GruppiImportati[$Destinatario];
+					}
+					if(count($GDest)==1 and $GDest[0]==NULL){
+						$DestTutti=get_option('Circolari_Visibilita_Pubblica');
+						$GDest[]=(int)$DestTutti;
+					}
+//					echo "<pre>".$Circolare->ID." ";var_dump($GDest);echo "</pre>";
+					wp_set_post_terms($Circolare->ID,$GDest,"gruppiutenti");
+					if (get_post_meta( $Circolare->ID, 'groups-read', true )) update_post_meta( $Circolare->ID, '_visibilita', 'd');
+					set_post_type($Circolare->ID,"circolari_scuola");
+				}
+//				echo "<pre>";var_dump($UtentiGruppi);echo "</pre>";
+				echo "<p style=\"color:green;font-size:1.5em;font-weight: bold;\">".__("Importazione Circolari eseguita con successo", 'wpscuola' )."</p>";
+			}else{
+				echo "<p style=\"color:red;font-size:1.5em;font-weight: bold;\">".__("Impossibile importare le Circolari da Circolari Groups, devi prima importare i gruppi", 'wpscuola' )."</p>";
+			}
+			break;
 		}
 	return;	
 }
@@ -1099,7 +1223,37 @@ if($azione){
 					<li style="text-align:left;font-size:1em;">'.__("Questa procedura verifica il formato delle date di scadenza.", 'wpscuola' ).'<br /><spam style="font-size:1em;font-style: italic;margin-left:10px;font-weight: bold;">
 		'.__("Verifica Formato data scadenza firma", 'wpscuola' ).' <spam style="text-align:center;font-size:1.5em;font-weight: bold;"> <a href="edit.php?post_type=circolari_scuola&page=Utility&action=verforsca">'.__("Verifica", 'wpscuola' ).'</a></spam>
 					</li>
-				</ul>';
+				</ul>
+				<p style="text-align:center;font-size:1.5em;font-weight: bold;">Importa Gruppi da Groups</p>
+					<ul>
+						<li style="text-align:left;font-size:1em;">
+						<p>Questa procedura deve essere eseguita prima di disattivare Groups.</p>
+						Le operazioni che verranno eseguite sono:
+						<ol>
+							<li>Importazione dei Gruppi</li>
+							<li>Aggiornamento dei gruppi degli utenti</li>
+						</ol>
+						</li>
+						</p>
+					</ul>
+					<spam style="text-align:center;font-size:1.5em;font-weight: bold;">
+						<a href="edit.php?post_type=circolari_scuola&page=Utility&action=importa">Importa Gruppi</a>
+					</spam>	
+				<p style="text-align:center;font-size:1.5em;font-weight: bold;">Importa Circolari da Circolari Groups</p>
+					<ul>
+						<li style="text-align:left;font-size:1em;">
+						<p>Questa procedura deve essere eseguita dopo la disattivazione di Circolari Groups.</p>
+						Le operazioni che verranno eseguite sono:
+						<ol>
+							<li>Modifica del tipo post delle circolari</li>
+							<li>Aggiornamento dei gruppi destinatari delle circolari</li>
+						</ol>
+						</li>
+						</p>
+					</ul>
+					<spam style="text-align:center;font-size:1.5em;font-weight: bold;">
+						<a href="edit.php?post_type=circolari_scuola&page=Utility&action=importacircolarigroups">Importa Circolari</a>
+					</spam>';
 }
 function wps_circolari_Testata() {
 	global $wps_TestiRisposte,$post;
@@ -1158,7 +1312,7 @@ function wps_circolari_uninstall() {
 	global $wpdb;
 // Eliminazione Tabelle data Base
 	$wpdb->query("DROP TABLE IF EXISTS ".$wpdb->table_circolari_firme);
-	$Circolari = get_posts( "post_type=circolari_scuola" );
+	$Circolari = get_posts( "post_type=circolari_scuola&numberposts=-1" );
 	foreach ( $Circolari as $Circolare )
 		set_post_type( $Circolare );	
 	delete_option('Circolari_Versione');
@@ -1517,6 +1671,17 @@ function wps_circolari_updated_messages( $messages ) {
 );
 return $messages;
 }
+
+function set_post_default_group($post_id, $post, $update){
+	if ( 'circolari_scuola' !== $post->post_type ) {
+        return;
+    }
+	$term_list = wp_get_post_terms($post_id, 'gruppiutenti', array("fields" => "names"));
+	if (count($term_list)==0) {
+		$DestTutti=get_option('Circolari_Visibilita_Pubblica');
+		wp_set_object_terms( $post_id, (int)$DestTutti,"gruppiutenti",FALSE );
+	}
+}
 function wps_circolari_salva_dettagli( $post_id ){
 //	print_r($_POST);exit;
 		if ( filter_input(INPUT_POST,'post_type') == 'circolari_scuola' ) {	
@@ -1525,11 +1690,6 @@ function wps_circolari_salva_dettagli( $post_id ){
 			delete_post_meta( $post_id, '_anno' );
 			delete_post_meta( $post_id, '_visibilita' );
 			//wp_set_post_categories( $post_id, array($Circolari) );
-			$term_list = wp_get_post_terms($post_id, 'gruppiutenti', array("fields" => "names"));
-			if (count($term_list)==0) {
-				$DestTutti=get_option('Circolari_Visibilita_Pubblica');
-				wp_set_object_terms( $post_id, (int)$DestTutti,"gruppiutenti",FALSE );
-			}
 			if ($_POST["Sign"]!="NoFirma"){
 				if ($_POST["scadenza"])
 					update_post_meta( $post_id, '_scadenza', wps_FormatDataDB($_POST["scadenza"]));
