@@ -1179,9 +1179,13 @@ if($azione){
 			}
 			break;
 		case "importacircolarigroups":
+			$Circolari = get_posts( "post_type=circolari&numberposts=-1" );
+			if(count($Circolari)==0){
+				echo "<p style=\"color:red;font-size:1.5em;font-weight: bold;\">".__("Non ci sono Circolari da importare da Circolari Groups", 'wpscuola' )."</p>";
+				break;
+			}
 			if(count(get_terms('gruppiutenti', array('hide_empty' => false)))>0){
 				$GruppiImportati=get_option("ImportazioneTabellaGroupsGruppi");
-				$Circolari = get_posts( "post_type=circolari&numberposts=-1" );
 //				echo "<pre>";var_dump($GruppiImportati);echo "</pre>";
 				foreach($Circolari as $Circolare){
 					$Destinatari=get_post_meta($Circolare->ID,"_destinatari");
