@@ -1228,35 +1228,38 @@ if($azione){
 		'.__("Verifica Formato data scadenza firma", 'wpscuola' ).' <spam style="text-align:center;font-size:1.5em;font-weight: bold;"> <a href="edit.php?post_type=circolari_scuola&page=Utility&action=verforsca">'.__("Verifica", 'wpscuola' ).'</a></spam>
 					</li>
 				</ul>
-				<p style="text-align:center;font-size:1.5em;font-weight: bold;">Importa Gruppi da Groups</p>
+				<p style="text-align:center;font-size:1.5em;font-weight: bold;">'.__("Importa Gruppi da Groups", 'wpscuola' ).'</p>
 					<ul>
 						<li style="text-align:left;font-size:1em;">
-						<p>Questa procedura deve essere eseguita prima di disattivare Groups.</p>
-						Le operazioni che verranno eseguite sono:
+						<p>'.__("Questa procedura deve essere eseguita prima di disattivare Groups.", 'wpscuola' ).'</p>
+						'.__("Le operazioni che verranno eseguite sono:", 'wpscuola' ).'
 						<ol>
-							<li>Importazione dei Gruppi</li>
-							<li>Aggiornamento dei gruppi degli utenti</li>
+							<li>'.__("Importazione dei Gruppi", 'wpscuola' ).'</li>
+							<li>'.__("Aggiornamento dei gruppi degli utenti", 'wpscuola' ).'</li>
+							<li>'.__("Impostazione Gruppo Pubblico", 'wpscuola' ).'</li>
 						</ol>
 						</li>
 						</p>
 					</ul>
 					<spam style="text-align:center;font-size:1.5em;font-weight: bold;">
-						<a href="edit.php?post_type=circolari_scuola&page=Utility&action=importa">Importa Gruppi</a>
+						<a href="edit.php?post_type=circolari_scuola&page=Utility&action=importa">'.__("Importa Gruppi", 'wpscuola' ).'</a>
 					</spam>	
-				<p style="text-align:center;font-size:1.5em;font-weight: bold;">Importa Circolari da Circolari Groups</p>
+				<p style="text-align:center;font-size:1.5em;font-weight: bold;">'.__("Importa Circolari da Circolari Groups", 'wpscuola' ).'</p>
 					<ul>
 						<li style="text-align:left;font-size:1em;">
-						<p>Questa procedura deve essere eseguita dopo la disattivazione di Circolari Groups.</p>
-						Le operazioni che verranno eseguite sono:
+						<p>'.__("Questa procedura deve essere eseguita dopo la disattivazione di Circolari Groups.", 'wpscuola' ).'</p>
+						'.__("Le operazioni che verranno eseguite sono:", 'wpscuola' ).'
 						<ol>
-							<li>Modifica del tipo post delle circolari</li>
-							<li>Aggiornamento dei gruppi destinatari delle circolari</li>
+							<li>'.__("Importazione delle Circolari", 'wpscuola' ).'Modifica del tipo post delle circolari</li>
+							<li>'.__("Aggiornamento dei gruppi destinatari delle circolari", 'wpscuola' ).'</li>
+							<li>'.__("Aggiornamento delle Circolari Private", 'wpscuola' ).'</li>
+							<li>'.__("Cancellazione delle Circolari codificate con Circolari Groups", 'wpscuola' ).'</li>
 						</ol>
 						</li>
 						</p>
 					</ul>
 					<spam style="text-align:center;font-size:1.5em;font-weight: bold;">
-						<a href="edit.php?post_type=circolari_scuola&page=Utility&action=importacircolarigroups">Importa Circolari</a>
+						<a href="edit.php?post_type=circolari_scuola&page=Utility&action=importacircolarigroups">'.__("Importa Circolari", 'wpscuola' ).'</a>
 					</spam>';
 }
 function wps_circolari_Testata() {
