@@ -22,6 +22,8 @@ facebook: https://www.facebook.com/wpscuola/
  - **Wordpress** 	*5.0* - *5.4.1*
  - **PHP** 		*7.0*
 ## Change log
+- **0.1.4**
+  - ***Corretti*** alcuni bag minori
 - **0.1.3**
   - ***Implementato*** sistema di importazione gruppi e circoalri da Circolari Groups
   - ***Corretti*** alcuni bag minori

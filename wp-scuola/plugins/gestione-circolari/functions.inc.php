@@ -355,7 +355,7 @@ function wps_ScriviLog($PostID,$UserID,$Operazione="Sign",$Espressione="Firma"){
 	$ora = date("G:i:s");
 	$ip = $_SERVER['REMOTE_ADDR'];
 	$testo = $data." ".$ora."|".$ip."|".$PostID."|".$UserID."|".$Operazione."|".$Espressione."\n";
-	$var=@fopen(wps_wps_Circolari_DIR_Servizio."/Firme.log","a");
+	$var=@fopen(wps_Circolari_DIR_Servizio."/Firme.log","a");
 	fwrite($var,$testo);
 	fclose($var);
 }
@@ -386,7 +386,7 @@ function wps_array_msort($array, $cols)
 
 function wps_Get_Log_Circolare($PostID){
 	$log=array();
-	$file=@fopen(wps_wps_Circolari_DIR_Servizio."/Firme.log","r");
+	$file=@fopen(wps_Circolari_DIR_Servizio."/Firme.log","r");
 	if ($file) {
 		while (($riga = fgets($file)) !== false) {
 			$buffer=explode("|",$riga);
@@ -400,7 +400,7 @@ function wps_Get_Log_Circolare($PostID){
 			}
 		}
 	}else{
-		$file=@fopen(wps_wps_Circolari_DIR_Servizio."/Firme.log","w");
+		$file=@fopen(wps_Circolari_DIR_Servizio."/Firme.log","w");
 	}
 	$LOG=wps_array_msort($log, array('Utente'=>SORT_ASC, 'Data'=>SORT_DESC));
 	fclose($file);
@@ -451,7 +451,7 @@ function wps_RimuoviFirmaCircolare($IDCircolare){
 }
 function wps_FirmaCircolare($IDCircolare,$Pv=-1){
 	global $wpdb;
-	MakeDir();
+	wps_MakeDir();
 	if(FALSE!==($wps_TestiRisposte=get_option('Circolari_TestiRisposte'))){
     	$wps_TestiRisposte= unserialize($wps_TestiRisposte);
     }else{

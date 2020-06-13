@@ -24,7 +24,7 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) {
   die('You are not allowed to call this page directly.'); 
 }
 global $wpdb,$table_prefix;
-$wpdb->table_circolari_firme = $table_prefix . "circolari_firme";
+$wpdb->table_circolari_firme = $table_prefix . "firme_circolari";
 
 define("wps_Circolari_URL",get_template_directory_uri()."/plugins/gestione-circolari");
 define("wps_Circolari_DIR",dirname (__FILE__));
@@ -1250,7 +1250,7 @@ if($azione){
 						<p>'.__("Questa procedura deve essere eseguita dopo la disattivazione di Circolari Groups.", 'wpscuola' ).'</p>
 						'.__("Le operazioni che verranno eseguite sono:", 'wpscuola' ).'
 						<ol>
-							<li>'.__("Importazione delle Circolari", 'wpscuola' ).'</li>
+							<li>'.__("Importazione delle Circolari", 'wpscuola' ).'Modifica del tipo post delle circolari</li>
 							<li>'.__("Aggiornamento dei gruppi destinatari delle circolari", 'wpscuola' ).'</li>
 							<li>'.__("Aggiornamento delle Circolari Private", 'wpscuola' ).'</li>
 							<li>'.__("Cancellazione delle Circolari codificate con Circolari Groups", 'wpscuola' ).'</li>
