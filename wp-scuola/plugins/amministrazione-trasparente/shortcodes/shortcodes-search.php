@@ -1,18 +1,20 @@
 <?php
-function get_terms_dropdown($taxonomies, $args){
-    $myterms = get_terms($taxonomies, $args);
-    $optionname = "tipologie";
-    $output ="<select style='width: 100px;' name='".$optionname."'><option value=''>Filtra</option>'";
+if (!function_exists("get_terms_dropdown")){
+	function get_terms_dropdown($taxonomies, $args){
+	    $myterms = get_terms($taxonomies, $args);
+	    $optionname = "tipologie";
+	    $output ="<select style='width: 100px;' name='".$optionname."'><option value=''>Filtra</option>'";
 
-    foreach($myterms as $term){
-        $term_taxonomy=$term->YOURTAXONOMY; //CHANGE ME
-        $term_slug=$term->slug;
-        $term_name =$term->name;
-        $link = $term_slug;
-        $output .="<option name='".$link."' value='".$link."'>".$term_name."</option>";
-    }
-    $output .="</select>";
-return $output;
+	    foreach($myterms as $term){
+	        $term_taxonomy=$term->YOURTAXONOMY; //CHANGE ME
+	        $term_slug=$term->slug;
+	        $term_name =$term->name;
+	        $link = $term_slug;
+	        $output .="<option name='".$link."' value='".$link."'>".$term_name."</option>";
+	    }
+	    $output .="</select>";
+	return $output;
+	}
 }
 $taxonomies = array('tipologie'); // CHANGE ME
 $args = array('order'=>'ASC','hide_empty'=>true);
