@@ -7,7 +7,7 @@ Description: 		WPScuola è un tema di WordPress realizzato principalmente per le
 Requires at least: 	5.0
 Tested up to: 		5.4.1
 Requires PHP: 		7.0
-Version: 			0.1.4
+Version: 			0.1.5
 License: 			AGPL-3.0
 License URI: 		https://opensource.org/licenses/AGPL-3.0
 Tags: 				right-sidebar, custom-header, custom-footer, custom-colors, custom-logo, custom-menu, mega-menu, footer-widgets, footer-menu, editor-style, featured-images, post-formats, theme-options, blocco-scuola, blocco-in-evidenza, modulo-FAQ, modulo-Circolari, tempate-albo-online, template-amministrazione-trasparente.
@@ -1543,10 +1543,7 @@ nav-tabs:after {
  }
 .mycallout .callout-title{
 	font-size: 0.8rem!important;
-	margin-left: 0.22rem!important;
-	margin-right: 0.22rem!important;
-	text-transform:none!important;
-	padding: 0 1rem!important;;
+	margin-left: 1.22rem;
 }
 
 	.sticky .icona_piccola{
@@ -1996,4 +1993,8 @@ article .attachments h3{
     margin:0!important;
     font-size: .9rem!important;
     line-height: 1.555!important;
+}
+a.read-more {
+    text-transform: none!important;
+    font-size: 1rem!important;
 }

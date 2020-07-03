@@ -48,7 +48,7 @@ $wps_Testi="";
 require_once(ABSPATH . 'wp-includes/pluggable.php'); 
 if(isset($_REQUEST["op"])){
 	if (isset($_REQUEST['circoFir'])) 
-		if (wp_verify_nonce($_REQUEST['circoFir'],'FirmaCircolare'))
+		if (wp_verify_nonce($_REQUEST['circoFir'],'FirmaCircolare')){
 			switch ($_REQUEST["op"]){
 				case "Firma":
 					global $msg;
@@ -57,9 +57,11 @@ if(isset($_REQUEST["op"])){
 				case "Adesione":
 					global $msg;
 					$msg=wps_FirmaCircolare((int)$_REQUEST["pid"],$_REQUEST["scelta"]);
-					wp_redirect( $_SERVER['HTTP_REFERER'] );
 					break;	
-			}
+			}			
+		}else
+			wp_die("Errore di sicurezza");
+
 	if (isset($_REQUEST['circoRmFir'])){
 		if (wp_verify_nonce($_REQUEST['circoRmFir'],'RmFirmaCircolare') And $_REQUEST["op"]=="RemoveFirma"){
 			global $msg;
@@ -1300,7 +1302,7 @@ jQuery.noConflict();
 function wps_circolari_MenuPagine(){
 	switch (filter_input(INPUT_GET,"op")){
 		case "Firme":
-			wps_((int)$_REQUEST["post_id"]);
+			wps_circolari_VisualizzaFirme((int)$_REQUEST["post_id"]);
 			break;
 		case "Adesioni":
 			wps_circolari_VisualizzaFirme((int)$_REQUEST["post_id"],1);
@@ -1825,13 +1827,14 @@ function wps_circolari_VisualizzaFirme($post_id,$Tipo=0){
 					<th style="width:'.(20-$sottrai).'%;">'.__("User login", 'wpscuola' ).'</th>
 					<th style="width:'.(30-$sottrai).'%;" id="ColOrd" sorted="1">'.__("Cognome", 'wpscuola' ).'</th>
 					<th style="width:'.(15-$sottrai).'%;">'.__("Gruppo", 'wpscuola' ).'</th>
-					<th style="width:'.(15-$sottrai).'%;">'.__("Data Operazione", 'wpscuola' ).'</th>
-					<th style="width:'.(15-$sottrai).'%;">'.__("Espressione", 'wpscuola' ).'</th>';
+					<th style="width:'.(15-$sottrai).'%;">'.__("Data Operazione", 'wpscuola' ).'</th>';
 	if ($Tipo==1){
 			$Testo=wps_Circolari_find_Tipo($TipoC);
 			echo '
 						<th style="width:12%;">'.$Testo->get_TestoElenco().'</th>';
-		}			
+		}else
+		echo '
+					<th style="width:'.(15-$sottrai).'%;">'.__("Espressione", 'wpscuola' ).'</th>';			
 	echo '
 				</tr>
 			</thead>
@@ -1840,13 +1843,13 @@ function wps_circolari_VisualizzaFirme($post_id,$Tipo=0){
 					<th style="width:'.(20-$sottrai).'%;">'.__("User login", 'wpscuola' ).'</th>
 					<th style="width:'.(30-$sottrai).'%;">'.__("Cognome", 'wpscuola' ).'</th>
 					<th style="width:'.(15-$sottrai).'%;">'.__("Gruppo", 'wpscuola' ).'</th>
-					<th style="width:'.(15-$sottrai).'%;">'.__("Data Operazione", 'wpscuola' ).'</th>
-					<th style="width:'.(15-$sottrai).'%;">'.__("Espressione", 'wpscuola' ).'</th>';
+					<th style="width:'.(15-$sottrai).'%;">'.__("Data Operazione", 'wpscuola' ).'</th>';
 	if ($Tipo==1){
 			$Testo=wps_Circolari_find_Tipo($TipoC);
 			echo '
 						<th style="width:12%;">'.$Testo->get_TestoElenco().'</th>';
-		}				
+		}else
+		echo '<th style="width:'.(15-$sottrai).'%;">'.__("Espressione", 'wpscuola' ).'</th>';
 	echo '
 				</tr>
 			</tfoot>

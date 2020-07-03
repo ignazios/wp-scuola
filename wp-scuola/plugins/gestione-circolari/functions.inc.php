@@ -464,7 +464,7 @@ function wps_FirmaCircolare($IDCircolare,$Pv=-1){
 				'user_ID' => $current_user->ID,
 				'ip' => $_SERVER['REMOTE_ADDR'],
 				'adesione' => $Pv))){
-// echo "Sql==".$wpdb->last_query ."    Ultimo errore==".$wpdb->last_error;
+ //echo "Sql==".$wpdb->last_query ."    Ultimo errore==".$wpdb->last_error;
 		$err=$wpdb->last_error;
         return "La Circolare Num. ".wps_GetNumeroCircolare($IDCircolare)." &egrave; gi&agrave; stata Firmata (msg: ".$err.")";
 	}else{

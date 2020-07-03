@@ -172,14 +172,13 @@ function wps_VisualizzaTabellaCircolari(){
 				$BGC="color: Blue;";
 				break;	
 		}
-		echo $sign;
 		$TipoCircolare= wps_Circolari_find_Tipo($sign);
 		if($sign=="Firma"){
 				$Campo_Firma='<a href="'.$BaseUrl.'?post_type=circolari_scuola&page=Firma&op=Firma&pid='.$post->ID.'&circoFir='.wp_create_nonce('FirmaCircolare').'">Firma Circolare</a>';
 		}elseif ($sign!="NoFirma"){	
 				$Campo_Firma=$TipoCircolare->get_DescrizioneTipo().'<br />';
 				$Campo_Firma.='<form action="'.$BaseUrl.'"  method="get" style="display:inline;">
-					<input type="hidden" name="post_type" value="circolari" />
+					<input type="hidden" name="post_type" value="circolari_scuola" />
 					<input type="hidden" name="page" value="Firma" />
 					<input type="hidden" name="op" value="Adesione" />
 					<input type="hidden" name="pid" value="'.$post->ID.'" />

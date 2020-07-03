@@ -54,7 +54,7 @@ get_header();
 <section id="content" role="main" class="container-fluid">
    <div class="container-fluid">
       <div class="row">
-	      <div class="col-md-8 offset-sm-1">
+	      <div class="col-lg-8 offset-sm-1">
 	         <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 	         <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	            <header class="header mt-5">
@@ -74,7 +74,7 @@ get_header();
 	         <?php endwhile; endif; ?>
         <?php dynamic_sidebar("page-footer-widget-area"); ?>         
 	      </div>     
-	      <div class="col-sm-3">
+	      <div class="col-lg-3">
 <?php	if($Are_Child){
 	    	get_template_part('template-parts/nav',"subpage");
 	    }

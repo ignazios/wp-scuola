@@ -14,11 +14,13 @@
 			<i class="fas fa-ticket-alt"></i> <?php echo $numero."_".$anno;?></strong> <span class="users"><i class="fa fa-users" aria-hidden="true"></i> <?php echo $Elenco;?>
 <?php	
 	if (wps_Is_Circolare_Da_Firmare($IDCircolare)){?>
-				<br />
 <?php		if (!wps_Is_Circolare_Firmata($IDCircolare)) {
 				$ngiorni=wps_Get_scadenzaCircolare($IDCircolare,"",True);					
 				if(wps_Is_Circolare_Scaduta($IDCircolare)){
-					echo' <i class="fa fa-pencil" aria-hidden="true" style="color:red;"></i> Scaduta e non Firmata ';						
+					echo' <i class="fa fa-pencil" aria-hidden="true"></i> 
+						<p>
+							<span class="rounded bg-danger text-white p-2 text-center">'.__("Scaduta e non Firmata","wpscuola").'</span>
+						</p>';						
 				}else{
 					switch ($ngiorni){
 						case -1:							
@@ -39,10 +41,16 @@
 						$Tipo="Esprimere adesione $entro";
 					else
 						$Tipo="Firmare $entro";
-					echo' <i class="fa fa-pencil" aria-hidden="true" style="color:red;"></i> '.$Tipo;	
+					echo' <i class="fa fa-pencil" aria-hidden="true"></i> 
+						<p>
+							<span class="rounded bg-danger text-white p-2 text-center">'.$Tipo.'</span>
+						</p>';	
 			}			
 		}else{
-			echo' <i class="fa fa-pencil" aria-hidden="true" style="color:blue;"></i> Firmata';				
+			echo' <i class="fa fa-pencil" aria-hidden="true"></i> 
+						<p>
+							<span class="rounded bg-primary text-white p-2 text-center">'.__("Firmata","wpscuola").'</span>
+						</p>';			
 		} 
 	}?>
 		</p>

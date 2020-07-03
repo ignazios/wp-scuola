@@ -2,61 +2,21 @@
 
 extract(shortcode_atts(array('col' => '1', 'bar' => '0', 'con' => '0'), $atts));
 
-switch ($col) {
-    case 0:
-        $atscss= "";
-        break;
-    case 1:
-        $atscss= "";
-        break;
-    case 2:
-        $atscss= "width:49%;float:left;";
-        $atw2 = "width:98%;float:left;";
-        break;
-    case 3:
-        $atscss= "width:31%;float:left;";
-        $atw2 = "width:62%;float:left;";
-        break;
-}
-
-echo '
-<style type="text/css">
-.at-tableclass {'.$atscss.'padding:0px 0px 0px 5px;position:relative;min-width: 200px;}
-';
-
-if ($atw2) { echo '#at-s-23 { '.$atw2.' }'; }
-
-echo '
-.at-tableclass h3 a { text-decoration:none; cursor: default; }
-.at-tableclass h3 {  border: 1px solid #eee; padding: 8px 10px; background: #FBFBFB; }
-.at-tableclass ul li a { text-decoration: none; }
-.at-number { float: right;
-  border-radius: 20px;
-  background-color: white;
-  height: 20px;
-  width: 20px;
-  border: 1px solid #eee;
-  text-align: center;
-  font-size: 0.8em;
-  font-weight: bold; }
-</style>
-<!-- Generato con il Plugin Wordpress Amministrazione Trasparente v.' . get_option('at_version_number') . '-->';
-
-if ($bar) {
-    echo '<div style="border: 1px solid #eee; padding: 8px 10px; background: #FBFBFB;">';
-    if ($bar > 2) {
-        echo do_shortcode( '[at-desc]' );
-    }
-    if ($bar > 1) {
-        echo '<span style="float:right;"><a href="'.get_post_type_archive_link( 'amm-trasparente' ).'"><small>'.__("Ultimi inseriti", 'wpscuola').'</small></a></span>';
-    }
-    echo do_shortcode( '[at-search]' ).'</div>';
-}
-
-$atcontatore = $atct = 0;
+?>
+<div class="container">
+ 	<div class="row shadow-sm p-3 mb-5 c-line analogue-1-bg-a1">
+  		<div class="col-10">
+  			<?php echo do_shortcode( '[at-search]' );?>
+  		</div>
+		<div class="col-2 text-monospace">
+			<a href="<?php echo get_post_type_archive_link( 'amm-trasparente' );?>"><?php _e("Ultimi inseriti", 'wpscuola');?></a>
+		</div>
+  	</div>
+<?php
+$atcontatore = $atnumvoci=0;
 foreach (amministrazionetrasparente_getarray() as $inner) {
-    $atcontatore++;
-
+	$atnumvoci++;
+	if($atcontatore%2==0) {?>	<div class="row"><?php }	
     //  Scan through inner loop
     $atreturn = '<ul>';
     $atcounter = 0;
@@ -73,22 +33,21 @@ foreach (amministrazionetrasparente_getarray() as $inner) {
         $atreturn .= '</li>';
     }
     $atreturn .= '</ul>';
-
-    echo '<div class="at-tableclass" id="at-s-'.++$atct.'">';
-
-    $sez_l = strtolower(preg_replace('/[^a-zA-Z]+/', '', $inner[0]));
-    echo '<h3>';
-    echo '<a id="'.$sez_l.'" href="#'.$sez_l.'">'.$inner[0].'</a>';
-    if ($con) { echo ' <span class="badge badge-primary">'.$atcounter.'</span>'; }
-    echo '</h3>';    	
-    echo $atreturn;
-
-    echo '</div>';
-
-    if ($col && $atcontatore == $col) {
-        echo '<div class="clear"></div>';
-        $atcontatore=0;
-    }
+    if($atnumvoci<23){
+?>			
+		<div class="col-lg-6 col-12 col-sm-12 rounded p-2">
+<?php }else{ ?>
+		<div class="col rounded p-2">
+<?php } ?>
+		
+				<h3 style="font-size: 1.4rem;"><a id="<?php echo $sez_l;?>" href="#<?php echo $sez_l;?>"><?php echo $inner[0];?></a>
+    	<?php if ($con) ?>
+    		 <span class="badge badge-primary"><?php echo$atcounter;?></span>
+    		 	</h3>    	
+    	<?php echo $atreturn;?>
+    	</div>
+    	<?php if($atcontatore%2==1) {?></div><?php }
+	    $atcontatore++;	
 }
 
 if ( at_option('show_love') ) {
@@ -99,6 +58,5 @@ if ( at_option('show_love') ) {
         Powered by <a href="http://wordpress.org/plugins/amministrazione-trasparente/" rel="nofollow" title="'.__("Plugin Amministrazione Trasparente per Wordpress", 'wpscuola').'">'.__("Amministrazione Trasparente", 'wpscuola').'</a>
         </span>';
 }
- echo '<div class="clear"></div>';
-
 ?>
+</div>
