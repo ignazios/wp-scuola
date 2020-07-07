@@ -22,6 +22,9 @@ facebook: https://www.facebook.com/wpscuola/
  - **Wordpress** 	*5.0* - *5.4.1*
  - **PHP** 		*7.0*
 ## Change log
+- **0.1.6**
+  - ***Ridisegnata*** l'interfaccia pubblica dell'albo in funzione dell'aggiornamento 4.5 del plugin Albo OnLine 
+  - ***Corretti*** alcuni bag minori
 - **0.1.5**
   - ***Ridisegnata*** l'interfaccia dello shortcode [at-sezioni] 
   - ***Corretti*** alcuni bag minori
