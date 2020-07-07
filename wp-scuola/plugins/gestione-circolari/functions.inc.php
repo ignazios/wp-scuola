@@ -258,7 +258,7 @@ function wps_GetCircolariDaFirmare($Tipo="N"){
             and ($wpdb->posts.ID IN (Select $wpdb->postmeta.post_ID from $wpdb->postmeta Where $wpdb->postmeta.meta_key = '_scadenza' and $wpdb->postmeta.meta_value >='$Oggi'))
 	        and ($wpdb->posts.ID NOT IN (Select $tabella_firme.post_ID from $tabella_firme Where $tabella_firme.user_ID=$IDUser))
             GROUP BY ID";
-//    echo $Sql;
+//echo $Sql;wp_die();
 	$ris= $wpdb->get_results($Sql);
 	if ($Tipo=="N")
 		$Circolari=0;

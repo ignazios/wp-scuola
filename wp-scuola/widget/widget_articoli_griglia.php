@@ -102,10 +102,11 @@ class Articoli_Griglia extends WP_Widget {
                    <?php if(is_sticky()) { echo '<div class="flag-icon"></div>'; } ?>
                   <div class="card-body">
                     <div class="category-top">
-                      <!-- <a class="category" href="#">Category</a> -->
+<?php				if($categories):?>
                          <strong>
                           <?php the_category(', '); ?>
                         </strong>
+<?php				endif;?>
                       <?php if( true === $date ) { ?> 
                         <span class="data">
                           <?php echo get_the_date( 'j M Y' ); ?>

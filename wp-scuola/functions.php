@@ -467,6 +467,9 @@ function scuola_comments_number($count) {
 	
 function scuola_inizialize() {
  add_editor_style('bootstrap-italia/css/bootstrap-italia.min.css');
+ if(!get_theme_mod("scuola_circolari_attiva"))
+	update_option('wps_Circolari_ModuloCircolari', 'No');
+
 }
 
 function scuola_register_Widget(){

@@ -2,67 +2,67 @@
 /**
  * Gestione FrontEnd.
  * @link       http://www.eduva.org
- * @since      4.2
+ * @since      4.4.5
  *
- * @package    ALbo On Line
+ * @package    Albo On Line
  */
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
+
 ob_start();
 
 if(isset($_REQUEST['id']) And !is_numeric($_REQUEST['id'])){
 	$_REQUEST['id']=0;
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>ID</span>";
-	return;
+	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">ID</span>');
 }
 if(isset($_REQUEST['action']) And $_REQUEST['action']!=wp_strip_all_tags($_REQUEST['action'])){
 	unset($_REQUEST['action']);
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>Action</span>";
+	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Action</span>');
 	return;
 }
 if(isset($_REQUEST['categoria']) And !is_numeric($_REQUEST['categoria'])){
 	$_REQUEST['categoria']=0;
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>".__("Categoria", 'wpscuola')."</span>";
+	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Categoria</span>');
 }
 if(isset($_REQUEST['numero']) And $_REQUEST['numero']!="" AND !is_numeric($_REQUEST['numero'])){
 	$_REQUEST['numero']="";
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>".__("Numero", 'wpscuola')."</span>";
+	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Numero</span>');
 }
 if(isset($_REQUEST['anno']) And !is_numeric($_REQUEST['anno'])){
 	$_REQUEST['anno']=0;
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>".__("Anno", 'wpscuola')."</span>";
+	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Anno</span>');
 }
 if(isset($_REQUEST['ente']) And !is_numeric($_REQUEST['ente'])){
 	$_REQUEST['ente']="-1";
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>".__("Ente", 'wpscuola')."</span>";
+	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Ente</span>');
 }
 if(isset($_REQUEST['Pag']) And !is_numeric($_REQUEST['Pag'])){
 	$_REQUEST['Pag']=1;
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>".__("Pag", 'wpscuola')."</span>";
+	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Pag</span>');
 }
 if(isset($_REQUEST['oggetto']) And $_REQUEST['oggetto']!=wp_strip_all_tags($_REQUEST['oggetto'])){
 	$_REQUEST['oggetto']="";
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>".__("Oggetto", 'wpscuola')."</span>";
+	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Oggetto</span>');
 }
 if(isset($_REQUEST['riferimento']) And $_REQUEST['riferimento']!=wp_strip_all_tags($_REQUEST['riferimento'])){
 	$_REQUEST['riferimento']="";
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>".__("Riferimento", 'wpscuola')."</span>";
+	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Riferimento</span>');
 }
 if(isset($_REQUEST['DataInizio']) And $_REQUEST['DataInizio']!=wp_strip_all_tags($_REQUEST['DataInizio'])){
 	$_REQUEST['DataInizio']="";
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>".__("Da Data", 'wpscuola')."</span>";
+	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Da Data</span>');
 }
 if(isset($_REQUEST['DataFine']) And $_REQUEST['DataFine']!=wp_strip_all_tags($_REQUEST['DataFine'])){
 	$_REQUEST['DataFine']="";
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>".__("A Data", 'wpscuola')."</span>";
+	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">A Data</span>');
 }
-if(isset($_REQUEST['filtra']) And $_REQUEST['filtra']!="Filtra"){
+if(isset($_REQUEST['filtra']) And ($_REQUEST['filtra']!=__("Filtra","albo-online") And $_REQUEST['filtra']!=__("Annulla Filtro","albo-online"))){
 	$_REQUEST['filtra']="Filtra";
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>".__("Filtra", 'wpscuola')."</span>";
+	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">filtra</span>');
 }
 if(isset($_REQUEST['vf']) And ($_REQUEST['vf']!="s" And $_REQUEST['vf']!="h" And $_REQUEST['vf']!="undefined")){
 	$_REQUEST['vf']="undefined";
-	echo "<br /><span style='color:red;'>ATTENZIONE:</span> ".__("E' stato indicato un VALORE non valido per il parametro", 'wpscuola')." <span style='color:red;'>vf</span>";
+	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">vf</span>');
 }
 foreach($_REQUEST as $Key => $Val){
 	$_REQUEST[$Key]=htmlspecialchars(wp_strip_all_tags($_REQUEST[$Key]));
@@ -80,14 +80,14 @@ if(isset($_REQUEST['action'])){
                     StampaAtto($_REQUEST['id'], 'a');
                 }
             }else{
-				_e("ATTENZIONE:<br />E' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO", 'wpscuola');
+				echo sprintf(__("ATTENZIONE:%sE' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO","albo-online"),"<br />");
 			}
             break;
 		case 'visatto':
 			if(is_numeric($_REQUEST['id']))
 				$ret=VisualizzaAtto($_REQUEST['id']);
 			else{
-				_e("ATTENZIONE:<br />E' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO", 'wpscuola');
+				echo sprintf(__("ATTENZIONE:%sE' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO","albo-online"),"<br />");
 			}
 			break;
 		case 'addstatall':
@@ -100,15 +100,15 @@ if(isset($_REQUEST['action'])){
 				   !is_numeric($_REQUEST['numero']) OR
 				   !is_numeric($_REQUEST['anno']) OR
 				   !is_numeric($_REQUEST['ente'])){
-						_e("ATTENZIONE:<br />E' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO", 'wpscuola');
+						echo sprintf(__("ATTENZIONE:%sE' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO","albo-online"),"<br />");
 						break;
 				}
 			if($_REQUEST['oggetto']!=wp_strip_all_tags($_REQUEST['oggetto'])){
-				_e("ATTENZIONE:<br />E' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO", 'wpscuola');
+				echo sprintf(__("ATTENZIONE:%sE' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO","albo-online"),"<br />");
 				break;
 			}
 			if($_REQUEST['riferimento']!=wp_strip_all_tags($_REQUEST['riferimento'])){
-				_e("ATTENZIONE:<br />E' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO", 'wpscuola');
+				echo sprintf(__("ATTENZIONE:%sE' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO","albo-online"),"<br />");
 				break;
 			}
 	 		$ret=Lista_Atti($Parametri,$_REQUEST['categoria'],(int)$_REQUEST['numero'],(int)$_REQUEST['anno'], htmlentities($_REQUEST['oggetto']),htmlentities($_REQUEST['DataInizio']),htmlentities($_REQUEST['DataFine']), htmlentities($_REQUEST['riferimento']),$_REQUEST['ente']);
@@ -132,15 +132,15 @@ if(isset($_REQUEST['action'])){
 			   (isset($_REQUEST['numero']) And $_REQUEST['numero']!="" AND !is_numeric($_REQUEST['numero'])) OR
 			   (isset($_REQUEST['anno']) And !is_numeric($_REQUEST['anno'])) OR
 			   (isset($_REQUEST['ente']) And !is_numeric($_REQUEST['ente']))){
-					_e("ATTENZIONE:<br />E' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO", 'wpscuola');
+					echo sprintf(__("ATTENZIONE:%sE' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO","albo-online"),"<br />");
 					return;
 			}
 			if($_REQUEST['oggetto']!=wp_strip_all_tags($_REQUEST['oggetto'])){
-				_e("ATTENZIONE:<br />E' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO", 'wpscuola');
+				echo sprintf(__("ATTENZIONE:%sE' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO","albo-online"),"<br />");
 				return;
 			}
 			if($_REQUEST['riferimento']!=wp_strip_all_tags($_REQUEST['riferimento'])){
-				_e("ATTENZIONE:<br />E' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO", 'wpscuola');
+				echo sprintf(__("ATTENZIONE:%sE' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO","albo-online"),"<br />");
 				return;
 			}
 			$ret=Lista_Atti($Parametri,(int)$_REQUEST['categoria'],(int)$_REQUEST['numero'],(int)$_REQUEST['anno'], htmlentities($_REQUEST['oggetto']),htmlentities($_REQUEST['DataInizio']),htmlentities($_REQUEST['DataFine']), htmlentities($_REQUEST['riferimento']),(int)$_REQUEST['ente']);			
@@ -167,14 +167,20 @@ function VisualizzaAtto($id){
 	$allegati=ap_get_all_allegati_atto($id);
 	ap_insert_log(5,5,$id,"Visualizzazione");
 	$coloreAnnullati=get_option('opt_AP_ColoreAnnullati');
+	$Unitao=ap_get_unitaorganizzativa($risultato->IdUnitaOrganizzativa);
+	$NomeResp=ap_get_responsabile($risultato->RespProc);
+	if(isset($NomeResp[0]))
+		$NomeResp=$NomeResp[0];
+	else
+		$NomeResp="";
 	if($risultato->DataAnnullamento!='0000-00-00')
-		$Annullato='<p style="background-color: '.$coloreAnnullati.';text-align:center;font-size:1.5em;">'.__("Atto Annullato dal Responsabile del Procedimento", 'wpscuola').'<br /><br />'.__("Motivo", 'wpscuola').': <span style="font-size:1;font-style: italic;">'.stripslashes($risultato->MotivoAnnullamento).'</span></p>';
+		$Annullato='<p style="background-color: '.$coloreAnnullati.';text-align:center;font-size:1.5em;">'.sprintf(__('Atto Annullato dal Responsabile del Procedimento %s Motivo: %s','albo-online'),'<br /><br />','<span style="font-size:1;font-style: italic;">'.stripslashes($risultato->MotivoAnnullamento).'</span>');
 	else
 		$Annullato='';
 ?>
 <section  id="DatiAtto">
 	<div class="container clearfix mb-3 pb-3">
-		<button class="btn btn-primary" onclick="window.location.href='<?php echo $_SERVER['HTTP_REFERER'];?>'"><i class="fas fa-arrow-circle-left"></i> <?php _e("Torna alla Lista", 'wpscuola');?></button>
+		<button class="btn btn-primary" onclick="window.location.href='<?php echo $_SERVER['HTTP_REFERER'];?>'"><i class="fas fa-arrow-circle-left"></i> <?php _e("Torna alla Lista","albo-online");?></button>
 		<h2 class="u-text-h2 pt-3 pl-2">Dati atto</h2>
 		<?php echo ($Annullato?"<h3>".$Annullato."</h3>":"");?>
 	   	<div class="row">
@@ -182,39 +188,51 @@ function VisualizzaAtto($id){
 				<table class="table table-striped table-hove">
 				    <tbody id="dati-atto">
 					<tr>
-						<th class="w-25 text-right"><?php _e("Ente titolare dell'Atto", 'wpscuola');?></th>
+						<th class="w-25 text-right"><?php _e("Ente titolare dell'Atto","albo-online");?></th>
 						<td class="align-middle"><?php echo stripslashes(ap_get_ente($risultato->Ente)->Nome);?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right"><?php _e("Numero Albo", 'wpscuola');?></th>
+						<th class="w-25 text-right"><?php _e("Numero Albo","albo-online");?></th>
 						<td class="align-middle"><?php echo $risultato->Numero."/".$risultato->Anno;?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right"><?php _e("Codice di Riferimento", 'wpscuola');?></th>
+						<th class="w-25 text-right"><?php _e("Codice di Riferimento","albo-online");?></th>
 						<td class="align-middle"><?php echo stripslashes($risultato->Riferimento);?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right"><?php _e("Oggetto", 'wpscuola');?></th>
+						<th class="w-25 text-right"><?php _e("Oggetto","albo-online");?></th>
 						<td class="align-middle"><?php echo stripslashes($risultato->Oggetto);?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right"><?php _e("Data inizio Pubblicazione", 'wpscuola');?></th>
+						<th class="w-25 text-right"><?php _e("Data di registrazione","albo-online");?></th>
+						<td class="align-middle"><?php echo ap_VisualizzaData($risultato->Data);?></td>
+					</tr>
+					<tr>
+						<th class="w-25 text-right"><?php _e("Data inizio Pubblicazione","albo-online");?></th>
 						<td class="align-middle"><?php echo ap_VisualizzaData($risultato->DataInizio);?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right"><?php _e("Data fine Pubblicazione", 'wpscuola');?></th>
+						<th class="w-25 text-right"><?php _e("Data fine Pubblicazione","albo-online");?></th>
 						<td class="align-middle"><?php echo ap_VisualizzaData($risultato->DataFine)?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right"><?php _e("Data oblio", 'wpscuola');?></th>
+						<th class="w-25 text-right"><?php _e("Data oblio","albo-online");?></th>
 						<td class="align-middle"><?php echo ap_VisualizzaData($risultato->DataOblio);?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right"><?php _e("Note", 'wpscuola');?></th>
-						<td class="align-middle"><?php echo stripslashes($risultato->Informazioni);?></td>
+						<th class="w-25 text-right"><?php _e("Richiedente","albo-online");?></th>
+						<td class="align-middle"><?php echo stripslashes($risultato->Richiedente);?></td>
 					</tr>
 					<tr>
-						<th class="w-25 text-right"><?php _e("Categoria", 'wpscuola');?></th>
+						<th class="w-25 text-right"><?php _e("Unità Organizzativa Responsabile","albo-online");?></th>
+						<td class="align-middle"><?php echo (isset($Unitao->Nome)?stripslashes($Unitao->Nome):"");?></td>
+					</tr>
+					<tr>
+						<th class="w-25 text-right"><?php _e("Responsabile del procedimento amministrativo","albo-online");?></th>
+						<td class="align-middle"><?php echo (is_object($NomeResp)?$NomeResp->Nome." ".$NomeResp->Cognome:$NomeResp);?></td>
+					</tr>
+					<tr>
+						<th class="w-25 text-right"><?php _e("Categoria","albo-online");?></th>
 						<td class="align-middle"><?php echo stripslashes($risultatocategoria->Nome)?></td>
 					</tr>
 <?php
@@ -226,10 +244,14 @@ if($MetaDati!==FALSE){
 	}
 	$Meta=substr($Meta,0,-3);?>
 					<tr>
-						<th><?php _e("Meta Dati", 'wpscuola');?></th>
+						<th class="w-25 text-right"><?php _e("Meta Dati","albo-online");?></th>
 						<td style="vertical-align: middle;"><?php echo $Meta;?></td>
 					</tr>
 <?php }?>
+					<tr>
+						<th class="w-25 text-right"><?php _e("Note","albo-online");?></th>
+						<td class="align-middle"><?php echo stripslashes($risultato->Informazioni);?></td>
+					</tr>
 		 	    </tbody>
 			</table>
 		</div>
@@ -239,7 +261,7 @@ $Soggetti=unserialize($risultato->Soggetti);
 $Soggetti=ap_get_alcuni_soggetti_ruolo(implode(",",$Soggetti));
 $Ruolo="";
 if($Soggetti){
-			echo "<h3 class=\"u-text-h2 pt-3 pl-2\">". __("Soggetti", 'wpscuola')."</h3>";
+			echo "<h3 class=\"u-text-h2 pt-3 pl-2\">". __("Soggetti","albo-online")."</h3>";
 }
 foreach($Soggetti as $Soggetto){
 	if(ap_get_Funzione_Responsabile($Soggetto->Funzione,"Display")=="No"){
@@ -253,32 +275,35 @@ foreach($Soggetti as $Soggetto){
 					<?php echo $Soggetto->Cognome." ".$Soggetto->Nome;?><br />
 <?php	} 
 	if ($Soggetto->Email)
-		echo'		<a href="mailto:'.$Soggetto->Email.'">'.$Soggetto->Email.'</a><br />';
+		echo __("Email","albo-online").' <a href="mailto:'.$Soggetto->Email.'">'.$Soggetto->Email.'</a><br />';
 	if ($Soggetto->Telefono)
-		echo __("Tel.", 'wpscuola')." ".$Soggetto->Telefono."<br />";
+		echo __("Telefono","albo-online")." ".$Soggetto->Telefono."<br />";
 	if ($Soggetto->Orario)
-		echo 	__("Orario ricevimento:", 'wpscuola')." ".$Soggetto->Orario.'<br />';
+		echo 	__("Orario ricevimento","albo-online")." ".$Soggetto->Orario.'<br />';
 	if ($Soggetto->Note)
-		echo __("Note:", 'wpscuola')." ".$Soggetto->Note;
+		echo __("Note","albo-online")." ".$Soggetto->Note;
 ?>
 				</div>
 			</div>
 <?php }?>
 		</div>
 	</div>
-	   	<div class="row">
-	   		<div class="col">
-			<h3 class="u-text-h2 pt-3 pb-2"><?php _e("Allegati", 'wpscuola');?></h3>
-<?php
+<?php	   	
+$TipidiFiles=ap_get_tipidifiles();
 if (strpos(get_permalink(),"?")>0)
 	$sep="&amp;";
 else
 	$sep="?";
-$TipidiFiles=ap_get_tipidifiles();
-foreach ($allegati as $allegato) {
+$documenti=ap_get_documenti_atto($id);
+if(count($documenti)>0){?>
+	<div class="row">
+	   	<div class="col">
+			<h3 class="u-text-h2 pt-3 pb-2"><?php _e("Documenti firmati","albo-online");?></h3>
+<?php
+foreach ($documenti as $allegato) {
 	$Estensione=ap_ExtensionType($allegato->Allegato);?>
-		<div class="row border-dashed border-primary mb-1">
-			<div class="col-1 icona-comunicazione">
+			<div class="row border-dashed border-primary mb-1">
+				<div class="col-1 icona-comunicazione">
 <?php
 	if(isset($allegato->TipoFile) and $allegato->TipoFile!="" and ap_isExtensioType($allegato->TipoFile)){
 		$Estensione=ap_ExtensionType($allegato->TipoFile);
@@ -286,18 +311,53 @@ foreach ($allegati as $allegato) {
 	}else{
 		echo '<img src="'.$TipidiFiles[strtolower($Estensione)]['Icona'].'" alt="'.$TipidiFiles[strtolower($Estensione)]['Descrizione'].'" height="30" width="30"allegato/>';
 	}?>
+				</div>
+				<div class="col-11">  				
+				<?php echo ($allegato->DocIntegrale!="1"?'<span class="evidenziato">'.__("Pubblicato per Estratto","albo-online")."</span><br />":"").'<strong>'.__("Descrizione","albo-online").'</strong>: '.strip_tags(($allegato->TitoloAllegato?$allegato->TitoloAllegato:basename( $allegato->Allegato))).'</strong><br /><strong>'.__("Impronta","albo-online").'</strong>: '.$allegato->Impronta.'<br /><strong>'.__("Dimensione file","albo-online").'</strong>: '.ap_Formato_Dimensione_File(is_file($allegato->Allegato)?filesize($allegato->Allegato):0)."<br /><br />";
+	if (is_file($allegato->Allegato))
+		echo '<a href="'.ap_DaPath_a_URL($allegato->Allegato).'" class="addstatdw noUnderLine" rel="'.get_permalink().$sep.'action=addstatall&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" title="'.__("Visualizza Allegato","albo-online").'" target="_blank"><span class="u-text-r-l Icon Icon-zoom-in"></span></a> '.htmlspecialchars_decode($TipidiFiles[strtolower($Estensione)]['Verifica']).' <a href="'.get_permalink().$sep.'action=dwnalle&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" class="noUnderLine" title="'.__("Scarica allegato","albo-online").'"><span class="u-text-r-l Icon Icon-download"></span></a>';	
+	else
+		echo basename( $allegato->Allegato).' '.__("File non trovato, il file è stato cancellato o spostato!","albo-online");?>
+				</div>
 			</div>
-			<div class="col-11">  				
-				<?php echo (isset($allegato->TitoloAllegato)?"<span class=\"font-weight-semibold Titolo\">".strip_tags($allegato->TitoloAllegato)."</span><br />":""); ?>
- <?php	if (is_file($allegato->Allegato))
-		echo '        <a href="'.ap_DaPath_a_URL($allegato->Allegato).'" class="addstatdw" rel="'.get_permalink().$sep.'action=addstatall&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" target="_blank">'. basename( $allegato->Allegato).'</a> ('.ap_Formato_Dimensione_File(filesize($allegato->Allegato)).')<br />'.htmlspecialchars_decode($TipidiFiles[strtolower($Estensione)]['Verifica']).' <a href="'.get_permalink().$sep.'action=dwnalle&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" >Scarica allegato</a>';		
-			else
-				echo basename( $allegato->Allegato)." ".__("File non trovato, il file &egrave; stato cancellato o spostato!", 'wpscuola');?>
-			</div>
-		</div>
 <?php	}?>
 		</div>
+	</div>
+<?php	}
+$allegati=ap_get_allegati_atto($id);
+if(count($allegati)>0) { ?>
+	<div class="row">
+	   	<div class="col">
+			<h3 class="u-text-h2 pt-3 pb-2"><?php _e("Allegati","albo-online");?></h3>
+<?php
+foreach ($allegati as $allegato) {
+	$Estensione=ap_ExtensionType($allegato->Allegato);?>
+			<div class="row border-dashed border-primary mb-1">
+				<div class="col-1 icona-comunicazione">
+<?php
+	if(isset($allegato->TipoFile) and $allegato->TipoFile!="" and ap_isExtensioType($allegato->TipoFile)){
+		$Estensione=ap_ExtensionType($allegato->TipoFile);
+		echo '<img src="'.$TipidiFiles[$Estensione]['Icona'].'" alt="'.$TipidiFiles[$Estensione]['Descrizione'].'" height="30" width="30"/>';
+	}else{
+		echo '<img src="'.$TipidiFiles[strtolower($Estensione)]['Icona'].'" alt="'.$TipidiFiles[strtolower($Estensione)]['Descrizione'].'" height="30" width="30"allegato/>';
+	}?>
+				</div>
+				<div class="col-11">  				
+				<?php echo ($allegato->DocIntegrale!="1"?'<span class="evidenziato">'.__("Pubblicato per Estratto","albo-online")."</span><br />":"").'<strong>'.__("Descrizione","albo-online").'</strong>: '.strip_tags(($allegato->TitoloAllegato?$allegato->TitoloAllegato:basename( $allegato->Allegato))).'</strong><br /><strong>'.__("Impronta","albo-online").'</strong>: '.$allegato->Impronta.'<br /><strong>'.__("Dimensione file","albo-online").'</strong>: '.ap_Formato_Dimensione_File(is_file($allegato->Allegato)?filesize($allegato->Allegato):0)."<br /><br />";
+	if (is_file($allegato->Allegato))
+		echo '<a href="'.ap_DaPath_a_URL($allegato->Allegato).'" class="addstatdw noUnderLine" rel="'.get_permalink().$sep.'action=addstatall&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" title="'.__("Visualizza Allegato","albo-online").'" target="_blank"><span class="u-text-r-l Icon Icon-zoom-in"></span></a> '.htmlspecialchars_decode($TipidiFiles[strtolower($Estensione)]['Verifica']).' <a href="'.get_permalink().$sep.'action=dwnalle&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" class="noUnderLine" title="'.__("Scarica allegato","albo-online").'"><span class="u-text-r-l Icon Icon-download"></span></a>';	
+	else
+		echo basename( $allegato->Allegato).' '.__("File non trovato, il file è stato cancellato o spostato!","albo-online");?>
+				</div>
+			</div>
+<?php	}?>
 		</div>
+	</div>
+<?php	}?>
+	</div>	
+	<div class="alert alert-info" role="alert">
+	    <h3 class="u-text-h3"><?php _e("Informazioni","albo-online");?></h3>
+	    <p class="u-text-p"><?php _e("L'impronta dei files è calcolata con algoritmo SHA256 al momento dell'upload","albo-online");?></p>
 	</div>
 </section>
 <?php
