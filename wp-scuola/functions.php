@@ -135,9 +135,7 @@ function scuola_setup()	{
 	add_theme_support('automatic-feed-links');
 	add_theme_support('post-thumbnails');
     add_theme_support('post-thumbnails' );
-  	add_theme_support('custom-logo', array('height' => 80,'width' => 80,'flex-height' => true) );
-    add_theme_support('custom-header', array('flex-width'    => true,'width' => 200,'flex-height' => true,'height' => 30) );
-    add_theme_support('custom-background', array('default-color' => 'ffffff','default-image' => get_template_directory_uri() . '/img/blank.png',));
+     add_theme_support('custom-background', array('default-color' => 'ffffff','default-image' => get_template_directory_uri() . '/img/blank.png',));
     add_theme_support( 'align-wide' );
     add_theme_support('editor-color-palette', array(
 			array(

@@ -73,10 +73,9 @@
                        <div class="it-brand-wrapper">
                          <a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_html( get_bloginfo( 'name' ) ); ?>" rel="home">
                            <?php 
-							    $custom_logo_id = get_theme_mod( 'custom_logo' );
-                              	$logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
-							    if(FALSE!== $logo){
-							    	$ImgLogo=esc_url( $logo[0] );
+							    $logo_scuola = wp_get_attachment_url(get_theme_mod('Scuola_Logo'));
+ 							    if ( $logo_scuola ) {
+							    	$ImgLogo=esc_url( $logo_scuola);
 								} else {
 									$ImgLogo=get_template_directory_uri() . '/img/logoStato.png';
 						        } ?>

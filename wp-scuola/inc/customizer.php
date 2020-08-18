@@ -212,13 +212,13 @@ $wp_customize->add_section('Scuola_Amministrazione_Settings',array(
 $wp_customize->add_section('Scuola_Header_Settings',array(
     'title'			 =>'Impostazione dell\'Header',
     'priority'		 =>2,
-    'description'	 => 'Personalizzazione dell\'Header',
+    'description'	 => '<h2>Personalizzazione dell\'Header</h2>',
     'panel'			 =>'scuola_settings'));
 $wp_customize->add_setting( 'Scuola_AmmAfferente_Nome' , array(
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'Scuola_AmmAfferente_Nome', array(
     'type' 		=> 'text',
-    'label' 	=> 'Nome:',
+    'label' 	=> 'Nome Amministrazione Afferente:',
     'section' 	=> 'Scuola_Header_Settings',
     'settings' => 'Scuola_AmmAfferente_Nome',
     'priority'	=> 1));
@@ -226,7 +226,7 @@ $wp_customize->add_setting( 'Scuola_AmmAfferente_URL' , array(
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'Scuola_AmmAfferente_URL', array(
     'type' 		=> 'text',
-    'label' 	=> 'URL (con HTTP o HTTPS):',
+    'label' 	=> 'URL Amministrazione Afferente (con HTTP o HTTPS):',
     'section' 	=> 'Scuola_Header_Settings',
     'settings' => 'Scuola_AmmAfferente_URL',
     'priority'	=> 2));	
@@ -237,9 +237,19 @@ $wp_customize->add_setting('Scuola_AmmAfferente_Logo', array(
 ));
 $wp_customize->add_control(new WP_Customize_Cropped_Image_Control($wp_customize, 'Scuola_AmmAfferente_Logo', array(
     'section' => 'Scuola_Header_Settings',
-    'label' => 'Immagine dim. 120x40',
+    'label' => 'Immagine Amministrazione Afferente dim. 120x40',
     'width' => 120,
     'height' => 40,
+    'priority'	=> 3)));
+$wp_customize->add_setting('Scuola_Logo', array(
+    'type' => 'theme_mod',
+    'capability' => 'edit_theme_options',
+    'sanitize_callback' => 'absint'
+));$wp_customize->add_control(new WP_Customize_Cropped_Image_Control($wp_customize, 'Scuola_Logo', array(
+    'section' => 'Scuola_Header_Settings',
+    'label' => 'Logo Scuola dim. 100x100',
+    'width' => 100,
+    'height' => 100,
     'priority'	=> 3)));
 /**
 *  Sotto Pannello Footer
