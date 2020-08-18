@@ -19,9 +19,12 @@ https://github.com/ignazios/wp-scuola
 ## Supporto
 facebook: https://www.facebook.com/wpscuola/
 ## Tema verificato per le seguenti versioni
- - **Wordpress** 	*5.0* - *5.4.1*
+ - **Wordpress** 	*5.0* - *5.5*
  - **PHP** 		*7.0*
 ## Change log
+- **0.1.7**
+  - ***Modificati*** alcuni menu della personalizzazione. Aggiunta la sezione Personalizzazione Header e dentro è stato spostato il menu di personalizzazione dell'Amministrazione afferente  
+- - ***Corretti*** alcuni bag minori
 - **0.1.6**
   - ***Ridisegnata*** l'interfaccia pubblica dell'albo in funzione dell'aggiornamento 4.5 del plugin Albo OnLine 
   - ***Corretti*** alcuni bag minori

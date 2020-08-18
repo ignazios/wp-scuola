@@ -82,7 +82,7 @@ function myFunction() {
                 Cod. Univoco <?php echo get_theme_mod('Scuola_Amministrazione_CodUni');	
 				if(get_theme_mod('scuola_mappa_attiva')){?>
 				<li> 
-				<?php if(!get_theme_mod('scuola_mappa_frame')){?> 
+				<?php if(!get_theme_mod('scuola_mappa_frame') And get_theme_mod('scuola_mappa_attiva')){?> 
 						<i class="fas fa-map-marked-alt"></i> <a href="<?php echo get_theme_mod('scuola_mappa_link'); ?>" target="_blank" title="<?php _e( "Mappa con la geolocalizzazione dell'Istituto", 'wpscuola' );?>" class="d-inline"><?php echo get_theme_mod('scuola_mappa_titolo'); ?></a>
 				<?php } ?>
 				</li>
@@ -169,7 +169,7 @@ function myFunction() {
 		} ?>   
           </div>
           <div class="col-lg-4 col-md-12 pb-2">
-				<?php if(get_theme_mod('scuola_mappa_frame')){?>
+				<?php if(get_theme_mod('scuola_mappa_frame') And get_theme_mod('scuola_mappa_attiva')){?>
 					<h4><i class="fas fa-map-marked"></i> <?php echo get_theme_mod('scuola_mappa_titolo');?></h4>
 					<div id="Cartina">
 				<?php	echo get_theme_mod('scuola_mappa_frame');?>

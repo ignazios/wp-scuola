@@ -111,7 +111,7 @@ function make_category($ID_Categoria,$NomeCategoria,$PL=true){
 <?php 				  else : ?>	
 						<div class="row">
 							<div class="col-1">
-								<a class="list-item" href="#<?php echo $ID_Categoria; ?>" data-toggle="collapse" aria-expanded="false" aria-controls="<?php echo $ID_Categoria; ?>">							
+								<a class="list-item" href="#SubCat<?php echo $ID_Categoria; ?>" data-toggle="collapse" aria-expanded="false" aria-controls="<?php echo $ID_Categoria; ?>">							
 								<i class="fas fa-angle-down espandi align-middle"></i>
 								</a>
 							</div>
@@ -124,7 +124,7 @@ function make_category($ID_Categoria,$NomeCategoria,$PL=true){
 								<span class="badge badge-pill badge-primary text-white"><?php echo count_PostCategory($ID_Categoria); ?></span>
 							</div>
  					  	</div>
-			  			<ul class="link-sublist collapse" id="<?php echo $ID_Categoria; ?>">
+			  			<ul class="link-sublist collapse" id="SubCat<?php echo $ID_Categoria; ?>">
 <?php	  foreach ($CatFiglie as $CategoriaFiglia){ 
 		 	  make_category($CategoriaFiglia->term_id,$CategoriaFiglia->name,FALSE);
 		  }?>
@@ -138,8 +138,8 @@ $Args=array('hide_empty'=> 0,
     		'parent' => 0,
     		'hierarchical'	=>false);
 $Categorie=get_categories($Args);
-$Anno=$search_query["year"];
-$Mese=$mesi[(int)$search_query["monthnum"]];
+$Anno=isset($search_query["year"])?$search_query["year"]:0;
+$Mese=isset($search_query["monthnum"])?$mesi[(int)$search_query["monthnum"]]:0;
 ?>
 <section id="content" role="main" class="container-fluid mb-3">
    <div class="container-fluid">

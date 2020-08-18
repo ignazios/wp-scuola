@@ -164,15 +164,15 @@ function VisualizzaAtto($id){
 	$risultato=$risultato[0];
 	$risultatocategoria=ap_get_categoria($risultato->IdCategoria);
 	$risultatocategoria=$risultatocategoria[0];
-	$allegati=ap_get_all_allegati_atto($id);
-	ap_insert_log(5,5,$id,"Visualizzazione");
-	$coloreAnnullati=get_option('opt_AP_ColoreAnnullati');
 	$Unitao=ap_get_unitaorganizzativa($risultato->IdUnitaOrganizzativa);
 	$NomeResp=ap_get_responsabile($risultato->RespProc);
-	if(isset($NomeResp[0]))
+	if (count($NomeResp)>0)
 		$NomeResp=$NomeResp[0];
 	else
 		$NomeResp="";
+	$allegati=ap_get_all_allegati_atto($id);
+	ap_insert_log(5,5,$id,"Visualizzazione");
+	$coloreAnnullati=get_option('opt_AP_ColoreAnnullati');
 	if($risultato->DataAnnullamento!='0000-00-00')
 		$Annullato='<p style="background-color: '.$coloreAnnullati.';text-align:center;font-size:1.5em;">'.sprintf(__('Atto Annullato dal Responsabile del Procedimento %s Motivo: %s','albo-online'),'<br /><br />','<span style="font-size:1;font-style: italic;">'.stripslashes($risultato->MotivoAnnullamento).'</span>');
 	else
@@ -184,7 +184,7 @@ function VisualizzaAtto($id){
 		<h2 class="u-text-h2 pt-3 pl-2">Dati atto</h2>
 		<?php echo ($Annullato?"<h3>".$Annullato."</h3>":"");?>
 	   	<div class="row">
-	   		<div class="col-12 col-xl-8">
+	   		<div class="col-12">
 				<table class="table table-striped table-hove">
 				    <tbody id="dati-atto">
 					<tr>
@@ -255,38 +255,40 @@ if($MetaDati!==FALSE){
 		 	    </tbody>
 			</table>
 		</div>
-		<div class="col-12 col-xl-4">
-<?php 
+<?php 		
 $Soggetti=unserialize($risultato->Soggetti);
-$Soggetti=ap_get_alcuni_soggetti_ruolo(implode(",",$Soggetti));
-$Ruolo="";
-if($Soggetti){
-			echo "<h3 class=\"u-text-h2 pt-3 pl-2\">". __("Soggetti","albo-online")."</h3>";
-}
-foreach($Soggetti as $Soggetto){
-	if(ap_get_Funzione_Responsabile($Soggetto->Funzione,"Display")=="No"){
-		continue;
+if(count($Soggetti)>0){
+	$Soggetti=ap_get_alcuni_soggetti_ruolo(implode(",",$Soggetti));
+	$Ruolo="";
+	if($Soggetti){
+				echo "<div class=\"col-8 ml-5 pl-5\">
+	<h3 class=\"u-text-h2 pt-3 pl-2\">". __("Soggetti","albo-online")."</h3>";
 	}
-	if($Soggetto->Funzione!=$Ruolo){
-			$Ruolo=$Soggetto->Funzione;?>
-			<div class="callout mycallout">
-  				<div class="callout-title"><?php echo ap_get_Funzione_Responsabile($Soggetto->Funzione,"Descrizione"); ?></div>
- 				<div>
-					<?php echo $Soggetto->Cognome." ".$Soggetto->Nome;?><br />
-<?php	} 
-	if ($Soggetto->Email)
-		echo __("Email","albo-online").' <a href="mailto:'.$Soggetto->Email.'">'.$Soggetto->Email.'</a><br />';
-	if ($Soggetto->Telefono)
-		echo __("Telefono","albo-online")." ".$Soggetto->Telefono."<br />";
-	if ($Soggetto->Orario)
-		echo 	__("Orario ricevimento","albo-online")." ".$Soggetto->Orario.'<br />';
-	if ($Soggetto->Note)
-		echo __("Note","albo-online")." ".$Soggetto->Note;
-?>
-				</div>
+	foreach($Soggetti as $Soggetto){
+		if(ap_get_Funzione_Responsabile($Soggetto->Funzione,"Display")=="No"){
+			continue;
+		}
+		if($Soggetto->Funzione!=$Ruolo){
+				$Ruolo=$Soggetto->Funzione;?>
+				<div class="callout mycallout">
+	  				<div class="callout-title"><?php echo ap_get_Funzione_Responsabile($Soggetto->Funzione,"Descrizione"); ?></div>
+	 				<div>
+						<?php echo $Soggetto->Cognome." ".$Soggetto->Nome;?><br />
+	<?php	} 
+		if ($Soggetto->Email)
+			echo __("Email","albo-online").' <a href="mailto:'.$Soggetto->Email.'">'.$Soggetto->Email.'</a><br />';
+		if ($Soggetto->Telefono)
+			echo __("Telefono","albo-online")." ".$Soggetto->Telefono."<br />";
+		if ($Soggetto->Orario)
+			echo 	__("Orario ricevimento","albo-online")." ".$Soggetto->Orario.'<br />';
+		if ($Soggetto->Note)
+			echo __("Note","albo-online")." ".$Soggetto->Note;
+	?>
+					</div>	
+<?php	}?>
 			</div>
-<?php }?>
 		</div>
+<?php }?>
 	</div>
 <?php	   	
 $TipidiFiles=ap_get_tipidifiles();
@@ -314,8 +316,8 @@ foreach ($documenti as $allegato) {
 				</div>
 				<div class="col-11">  				
 				<?php echo ($allegato->DocIntegrale!="1"?'<span class="evidenziato">'.__("Pubblicato per Estratto","albo-online")."</span><br />":"").'<strong>'.__("Descrizione","albo-online").'</strong>: '.strip_tags(($allegato->TitoloAllegato?$allegato->TitoloAllegato:basename( $allegato->Allegato))).'</strong><br /><strong>'.__("Impronta","albo-online").'</strong>: '.$allegato->Impronta.'<br /><strong>'.__("Dimensione file","albo-online").'</strong>: '.ap_Formato_Dimensione_File(is_file($allegato->Allegato)?filesize($allegato->Allegato):0)."<br /><br />";
-	if (is_file($allegato->Allegato))
-		echo '<a href="'.ap_DaPath_a_URL($allegato->Allegato).'" class="addstatdw noUnderLine" rel="'.get_permalink().$sep.'action=addstatall&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" title="'.__("Visualizza Allegato","albo-online").'" target="_blank"><span class="u-text-r-l Icon Icon-zoom-in"></span></a> '.htmlspecialchars_decode($TipidiFiles[strtolower($Estensione)]['Verifica']).' <a href="'.get_permalink().$sep.'action=dwnalle&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" class="noUnderLine" title="'.__("Scarica allegato","albo-online").'"><span class="u-text-r-l Icon Icon-download"></span></a>';	
+						if (is_file($allegato->Allegato))
+							echo '<a href="'.ap_DaPath_a_URL($allegato->Allegato).'" class="addstatdw noUnderLine" rel="'.get_permalink().$sep.'action=addstatall&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" title="'.__("Visualizza Allegato","albo-online").'" target="_blank"><i class="fas fa-desktop fa-2x"></i></a> '.htmlspecialchars_decode($TipidiFiles[strtolower($Estensione)]['Verifica']).' <a href="'.get_permalink().$sep.'action=dwnalle&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" class="noUnderLine" title="'.__("Scarica allegato","albo-online").'"><i class="fas fa-download  fa-2x"></i></a>';	
 	else
 		echo basename( $allegato->Allegato).' '.__("File non trovato, il file è stato cancellato o spostato!","albo-online");?>
 				</div>
@@ -343,9 +345,9 @@ foreach ($allegati as $allegato) {
 	}?>
 				</div>
 				<div class="col-11">  				
-				<?php echo ($allegato->DocIntegrale!="1"?'<span class="evidenziato">'.__("Pubblicato per Estratto","albo-online")."</span><br />":"").'<strong>'.__("Descrizione","albo-online").'</strong>: '.strip_tags(($allegato->TitoloAllegato?$allegato->TitoloAllegato:basename( $allegato->Allegato))).'</strong><br /><strong>'.__("Impronta","albo-online").'</strong>: '.$allegato->Impronta.'<br /><strong>'.__("Dimensione file","albo-online").'</strong>: '.ap_Formato_Dimensione_File(is_file($allegato->Allegato)?filesize($allegato->Allegato):0)."<br /><br />";
-	if (is_file($allegato->Allegato))
-		echo '<a href="'.ap_DaPath_a_URL($allegato->Allegato).'" class="addstatdw noUnderLine" rel="'.get_permalink().$sep.'action=addstatall&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" title="'.__("Visualizza Allegato","albo-online").'" target="_blank"><span class="u-text-r-l Icon Icon-zoom-in"></span></a> '.htmlspecialchars_decode($TipidiFiles[strtolower($Estensione)]['Verifica']).' <a href="'.get_permalink().$sep.'action=dwnalle&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" class="noUnderLine" title="'.__("Scarica allegato","albo-online").'"><span class="u-text-r-l Icon Icon-download"></span></a>';	
+				<?php echo ($allegato->DocIntegrale!="1"?'<span class="evidenziato">'.__("Pubblicato per Estratto","albo-online")."</span><br />":"").'<strong>'.__("Descrizione","albo-online").'</strong>: '.strip_tags(($allegato->TitoloAllegato?$allegato->TitoloAllegato:basename( $allegato->Allegato))).'</strong><br /><strong>'.__("Impronta","albo-online").'</strong>: '.$allegato->Impronta.'<br /><strong>'.__("Dimensione file","albo-online").'</strong>: '.ap_Formato_Dimensione_File(is_file($allegato->Allegato)?filesize($allegato->Allegato):0)."<br />";
+						if (is_file($allegato->Allegato))
+							echo '<a href="'.ap_DaPath_a_URL($allegato->Allegato).'" class="addstatdw noUnderLine" rel="'.get_permalink().$sep.'action=addstatall&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" title="'.__("Visualizza Allegato","albo-online").'" target="_blank"><i class="fas fa-desktop fa-2x"></i></a> '.htmlspecialchars_decode($TipidiFiles[strtolower($Estensione)]['Verifica']).' <a href="'.get_permalink().$sep.'action=dwnalle&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" class="noUnderLine" title="'.__("Scarica allegato","albo-online").'"><i class="fas fa-download  fa-2x"></i></a>';	
 	else
 		echo basename( $allegato->Allegato).' '.__("File non trovato, il file è stato cancellato o spostato!","albo-online");?>
 				</div>
