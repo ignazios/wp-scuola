@@ -562,7 +562,7 @@ $wp_customize->add_control( 'Scuola_Hero_LeggiTutto', array(
 $wp_customize->add_setting('Scuola_Hero_Overlay', array(
     'default' => false, 'capability' => 'edit_theme_options'));
 $wp_customize->add_control('Scuola_Hero_Overlay', array(
-    'label' => 'Attiva Blocco',
+    'label' => 'Effetto Overlay',
     'type' => 'select', 
     'section' => 'scuola_hero_settings', 
     'settings' => 'Scuola_Hero_Overlay',
@@ -609,6 +609,16 @@ $wp_customize->add_control( 'scuola_comeevidenza_numart', array(
     'settings' => 'scuola_comeevidenza_numart',
     'priority'	=> 3,
     'choices'   => 4));	
+$wp_customize->add_setting( 'scuola_comeevidenza_visimevidenza' , array(
+	'default' => true,
+	'capability' => 'edit_theme_options') );
+$wp_customize->add_control( 'scuola_comeevidenza_visimevidenza', array(
+    'type' 		=> 'checkbox',
+    'label' 	=> 'Visualizza Immagine in Evidenza',
+    'section' 	=> 'scuola_comeevidenza_settings',
+    'settings' => 'scuola_comeevidenza_visimevidenza',
+    'priority'	=> 3,
+    'choices'   => 5));	
 /**
 *  Sotto Pannello Blocco scuola
 */

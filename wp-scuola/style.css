@@ -7,7 +7,7 @@ Description: 		WPScuola è un tema di WordPress realizzato principalmente per le
 Requires at least: 	5.0
 Tested up to: 		5.5
 Requires PHP: 		7.0
-Version: 			0.1.7
+Version: 			0.1.8
 License: 			AGPL-3.0
 License URI: 		https://opensource.org/licenses/AGPL-3.0
 Tags: 				right-sidebar, custom-header, custom-footer, custom-colors, custom-logo, custom-menu, mega-menu, footer-widgets, footer-menu, editor-style, featured-images, post-formats, theme-options, blocco-scuola, blocco-in-evidenza, modulo-FAQ, modulo-Circolari, tempate-albo-online, template-amministrazione-trasparente.
@@ -26,6 +26,7 @@ You should have received a copy of the GNU Affero General Public License along w
 
 @import url("lib/bootstrap-italia/css/fonts.css");
 @import url("lib/block/block.css");
+
 
 /* WordPress WYSIWYG Editor Styles */
 .entry-content {
@@ -952,8 +953,6 @@ ul.page-numbers {
 
 #content {
 	background-color: #fff;
-	/*padding-top: 30px;
-	padding-bottom: 60px;*/
 }
 body.page-template-home .header {
 	display: none;
@@ -1481,9 +1480,7 @@ nav-tabs:after {
 #header-superiore{
 	background-color:#000!important;
 }
-#content {
-	padding-bottom: 0!important;
-}
+
 #PagineAlboOnLine{
 	margin-top: 0;
 	margin-left: 2em;
@@ -1513,7 +1510,7 @@ nav-tabs:after {
 @media screen and (max-width: 426px){
 	.it-nav-wrapper.sticky .show-menu-main {
 		top: 7px!important;
-		left: -75px!important;
+		left: -78px!important;
 	}
 	.it-nav-wrapper .show-menu-main {
 		top: -105px!important;
@@ -1780,11 +1777,7 @@ article .attachments h3{
 	display:inline;
 	position: inherit;
 }
-.search_menu{
-	display:none!important;
-	width:50px;
-	box-shadow: 0 0 0 #fff;
-}
+
 .sticky .search_menu{
 	display:block!important;
 }
@@ -1792,6 +1785,13 @@ article .attachments h3{
 	padding-bottom: 5px;
 }
 
+@media screen and (min-width: 768px){
+	.search_menu{
+		display:none!important;
+		width:50px;
+		box-shadow: 0 0 0 #fff;
+	}
+}
 @media screen and (min-width: 768px){
 	.sticky .search_menu{
 		padding: 0 0px;
@@ -1975,7 +1975,7 @@ article .attachments h3{
 	height:150px;
 }
 .img-carousel-evidenza img {
-    height:200px;
+    max-height:150px;
     width: auto!important;
     margin: auto;
     display: block;

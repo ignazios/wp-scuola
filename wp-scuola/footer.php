@@ -16,7 +16,7 @@
  * Text Domain:       	wpscuola
 */
 ?>
-			<div class="mx-auto text-center pb-3" style="width: 200px;">
+			<div class="mx-auto text-center pb-3 pt-3" style="width: 200px;">
 			  <a href="#" aria-hidden="true" data-attribute="back-to-top">
 			    <i class="fas fa-arrow-circle-up fa-3x"></i>
 			  </a>
@@ -75,11 +75,14 @@ function myFunction() {
             <div class="link-list-wrapper">
 			  <ul class="footer-list link-list clearfix">
                 <li><?php echo get_theme_mod('Scuola_Amministrazione_Indirizzo'); ?></li>
-                <li><?php echo get_theme_mod('Scuola_Amministrazione_CAP'); ?>, <?php echo get_theme_mod('Scuola_Amministrazione_Citta'); ?></li>
-                <li>C.M. <?php echo get_theme_mod('Scuola_Amministrazione_CM'); ?></li>
-                <li>C.F. <?php echo get_theme_mod('Scuola_Amministrazione_CFPA'); ?></li>
+                <li><?php echo get_theme_mod('Scuola_Amministrazione_CAP'); 
+                	if (get_theme_mod('Scuola_Amministrazione_CAP') And get_theme_mod('Scuola_Amministrazione_Citta')) echo ',';
+                	echo get_theme_mod('Scuola_Amministrazione_Citta'); ?></li>
+                <?php echo (get_theme_mod('Scuola_Amministrazione_CM')!=""?"<li>C.M. ".get_theme_mod('Scuola_Amministrazione_CM')."</li>":""); ?></li>
+                <?php echo (get_theme_mod('Scuola_Amministrazione_CFPA')!=""?"<li>C.F. ".get_theme_mod('Scuola_Amministrazione_CFPA')."</li>":""); ?></li>
                 <?php echo (get_theme_mod('Scuola_Amministrazione_PIVA')!=""?"<li>P.Iva ".get_theme_mod('Scuola_Amministrazione_PIVA')."</li>":""); ?></li>
-                Cod. Univoco <?php echo get_theme_mod('Scuola_Amministrazione_CodUni');	
+                <?php echo (get_theme_mod('Scuola_Amministrazione_CodUni')!=""?"<li>Cod. Univoco ".get_theme_mod('Scuola_Amministrazione_CodUni')."</li>":""); ?></li>
+                <?php
 				if(get_theme_mod('scuola_mappa_attiva')){?>
 				<li> 
 				<?php if(!get_theme_mod('scuola_mappa_frame') And get_theme_mod('scuola_mappa_attiva')){?> 
@@ -183,8 +186,13 @@ function myFunction() {
 		} ?>   
           </div>
           <div class="col-lg-4 col-md-12 pb-2">
-          <?php if(get_theme_mod('scuola_social_footersectionTesto')){?>
-              <h4><i class="fas fa-hashtag"></i> <?php echo get_theme_mod('scuola_social_footersectionTesto');?></h4>
+          <?php if(get_theme_mod('scuola_social_facebook') OR
+          		   get_theme_mod('scuola_social_twitter') OR 
+          		   get_theme_mod('scuola_social_youtube') OR
+          		   get_theme_mod('scuola_social_instagram') OR
+          		   get_theme_mod('scuola_social_telegram') OR
+          		   get_theme_mod('scuola_social_linkedin')){?>
+              <h4><i class="fas fa-hashtag"></i> <?php echo (get_theme_mod('scuola_social_footersectionTesto')!=""?get_theme_mod('scuola_social_footersectionTesto'):"");?></h4>
               <?php //
               get_MenuSocial("menu-social","nav list-inline text-left social","menu-item");
               //wp_nav_menu( array( 'theme_location' => 'menu-social', 'container' => 'ul', 'menu_class' => 'nav list-inline text-left social')); 
@@ -223,7 +231,9 @@ function myFunction() {
 		<div class="row">
 			<div class="col-md">
 		      <h3 class="sr-only"><?php _e( 'Sezione Legale', 'wpscuola' );?></h3>
-		      <?php wp_nav_menu( array( 'theme_location' => 'menu-footer-legale', 'container' => 'ul', 'menu_class' => 'nav it-footer-small-prints-list list-inline mb-0 d-flex flex-column flex-md-row', 'menu_id' =>"menu_legal")); ?>
+		      <?php if ( has_nav_menu( 'menu-footer-legale' ) ) {
+		      	 wp_nav_menu( array( 'theme_location' => 'menu-footer-legale', 'container' => 'ul', 'menu_class' => 'nav it-footer-small-prints-list list-inline mb-0 d-flex flex-column flex-md-row', 'menu_id' =>"menu_legal")); 
+				}?>
 		    </div>
 			<div class="col-md text-right copyright">
 				<small><?php echo sprintf( __( 'Copyright %1$s %2$s %3$s', 'wppa' ), '<i class="far fa-copyright"></i>', date( 'Y' ), esc_html( get_bloginfo( 'name' ) ) ); ?></small>

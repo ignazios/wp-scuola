@@ -12,6 +12,9 @@ WPScuola è rilasciato con licenza [**AGPL-3.0**](https://opensource.org/license
 ## Manuale
 ## Tema WPScuola
 https://github.com/ignazios/wp-scuola
+## Video
+[**Presentazione del tema**](https://www.youtube.com/watch?v=3DRjP9RIVzo&t=20s)
+[**Tutorial, funzionalità ed impostazioni**](https://www.youtube.com/playlist?list=PLqSQgRX-fP44XOIxEU6q7PD74QzYK0KEs)
 ## Sito demo
 [**ISItalia**](http://isitalia.eduva.org/)
 ## Scarica il tema 
@@ -22,6 +25,10 @@ facebook: https://www.facebook.com/wpscuola/
  - **Wordpress** 	*5.0* - *5.5*
  - **PHP** 		*7.0*
 ## Change log
+- **0.1.8**
+  - ***Aggiunta*** opzione al **Blocco Comunicazioni in evidenza**  ***Visualizza Immagine in Evidenza*** che permette di visualizzare/non visualizzare l'immagine in evidenza del post
+  - ***Aggiunta*** opzione al **Widget Scuola Articoli**  ***Visualizza Immagine in Evidenza*** che permette di visualizzare/non visualizzare l'immagine in evidenza del post
+  - ***Corretti*** alcuni bag minori
 - **0.1.7**
   - ***Modificati*** alcuni menu della personalizzazione. Aggiunta la sezione Personalizzazione Header e dentro è stato spostato il menu di personalizzazione dell'Amministrazione afferente  
   - ***Corretti*** alcuni bag minori

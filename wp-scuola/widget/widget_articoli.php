@@ -46,6 +46,7 @@
  			$catsecondoblocco=isset($instance['catsecondoblocco'])?$instance['catsecondoblocco']:"";
  			$numelementi=isset($instance['numelementi'])?$instance['numelementi']:"";
  			$linkLT=isset($instance['leggitutto'])?$instance['leggitutto']:"";
+ 			$VisImgEv=isset($instance['immagineevidenza'])?$instance['immagineevidenza']:"";
 
 			$TitoloPB=isset($instance['titolosx'])?$instance['titolosx']:"";
 			$Catargs = array( 'cat' => $catprimoblocco,
@@ -77,9 +78,11 @@
 <?php	foreach($ArticoliPB as $Articolo){	?>
 					    <li>
 					      <a href="<?php echo get_permalink($Articolo->ID);?>">
-				          	<div class="it-thumb">
+				     <?php if($VisImgEv!=1) :?>
+				     	    <div class="it-thumb">
 		             <?php   echo scuola_get_thumbnail($Articolo->ID);?>					          
 					        </div>
+				     <?php endif;?>
 				        	<div class="it-right-zone  border-0">
 				        		<span class="text"><?php echo $Articolo->post_title;?></span>
 				        		<span class="it-multiple">
@@ -110,9 +113,11 @@
 <?php	foreach($ArticoliSB as $Articolo){	?>
 					    <li>
 					      <a href="<?php echo get_permalink($Articolo->ID);?>">
-				          	<div class="it-thumb">
+					 <?php if($VisImgEv!=1) :?>				          	
+					 		<div class="it-thumb">
 		             <?php   echo scuola_get_thumbnail($Articolo->ID);?>    
 					        </div>
+					 <?php endif;?>
 				        	<div class="it-right-zone  border-0">
 				        		<span class="text"><?php echo $Articolo->post_title;?></span>
 				        		<span class="it-multiple">
@@ -155,6 +160,7 @@
             $instance['catsecondoblocco']=strip_tags($new_instance['catsecondoblocco']);   
             $instance['numelementi']=strip_tags($new_instance['numelementi']);   
 			$instance['leggitutto']=strip_tags($new_instance['leggitutto']);
+			$instance['immagineevidenza']=strip_tags($new_instance['immagineevidenza']);		
 			$instance['titolosx']=strip_tags($new_instance['titolosx']);
 			$instance['titolodx']=strip_tags($new_instance['titolodx']);
            return $instance;
@@ -206,7 +212,7 @@
 ?>
      </div>
      <div class="Servizi">
-    	<h3>Colonna di Destra</h3>
+    	<h3>Blocco di destra</h3>
     	<label for="<?php echo $this->get_field_id( 'titolodx' ); ?>">Titolo:</label>
     	<input type="text"  id="<?php echo $this->get_field_id( 'titolodx' ); ?>" name="<?php echo $this->get_field_name( 'titolodx' ); ?>" value="<?php echo $titolodx; ?>"><br />
     	<label for="<?php echo $this->get_field_id( 'catsecondoblocco' ); ?>">Categoria:</label>
@@ -229,6 +235,11 @@
 ?>
      </div>
      <div class="Servizi">
+    	<h3>Visualizza Immagine in Evidenza</h3>
+    	<label for="<?php echo $this->get_field_id( 'immagineevidenza' ); ?>">Attiva:</label>
+    	<input type="checkbox" id="<?php echo $this->get_field_id('immagineevidenza'); ?>" name="<?php echo $this->get_field_name('immagineevidenza'); ?>" value="1" <?php echo ($instance['immagineevidenza'] == '1') ? 'checked="checked"':''; ?>/>
+    </div>
+    <div class="Servizi">
     	<h3>Link Leggi Tutto</h3>
     	<label for="<?php echo $this->get_field_id( 'leggitutto' ); ?>">Attiva:</label>
     	<input type="checkbox" id="<?php echo $this->get_field_id('leggitutto'); ?>" name="<?php echo $this->get_field_name('leggitutto'); ?>" value="1" <?php echo ($instance['leggitutto'] == '1') ? 'checked="checked"':''; ?>/>

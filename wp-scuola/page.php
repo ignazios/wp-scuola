@@ -14,6 +14,8 @@
         'posts_per_page' => 1,
         'order'          => 'ASC',
         'post_parent'    => $post->ID,
+        'post_status'	 => 'Publish',
+        'post_type'		 => 'Page',
     );
  
     $padre = get_children( $args );

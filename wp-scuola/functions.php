@@ -231,7 +231,6 @@ if (!isset($content_width)) $content_width = 640;
 register_nav_menus(array(
 	'menu-main' => __('Main Menu', 'wpscuola'),
 	'mega-main' => __('Mega Menu', 'wpscuola'),
-	'menu-language'  => __( 'Lingua Menu', 'wpscuola' ),
 	'menu-social'  => __( 'Social Menu', 'wpscuola' ),
 	'menu-footer'  => __( 'Footer Menu', 'wpscuola' ),
 	'menu-footer-ente'  => __( 'Footer Menu Ente', 'wpscuola' ),

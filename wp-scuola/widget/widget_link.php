@@ -147,7 +147,7 @@ class Link extends WP_Widget {
 	/** @see WP_Widget::form */
 	function form($instance){
 		$instance = wp_parse_args( (array) $instance, array( ) ); 
-		$titolo = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Servizi', 'wpscuola' );
+		$titolo = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Link', 'wpscuola' );
 		$tipovis = ! empty( $instance['tipovis'] ) ? $instance['tipovis'] : 0;
 		$categoria= ! empty($instance["categoria"]) ? $instance["categoria"]: 0;
 		$args=array('taxonomy' => 'link_category','hide_empty' => false);

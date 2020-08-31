@@ -30,14 +30,17 @@
 	$Posts=get_posts($args);
 	if ($Posts ) {
 		if($PostsInEvidenza){
+//			var_dump($PostsInEvidenza);
 			$Image=get_the_post_thumbnail_url($PostsInEvidenza->ID);
 			$IDImgEvidenza=get_post_thumbnail_id($PostsInEvidenza->ID);
 			$Title=$PostsInEvidenza->post_title;
+			$Except=($PostsInEvidenza->post_excerpt==""?get_the_excerpt($PostsInEvidenza->ID):$PostsInEvidenza->post_excerpt);
 			$PermaLink=get_permalink($PostsInEvidenza->ID);
 		}else{
 			$Image=get_the_post_thumbnail_url($Posts[0]->ID);
 			$IDImgEvidenza=get_post_thumbnail_id($Posts[0]->ID);
 			$Title=$Posts[0]->post_title;
+			$Except=($Posts[0]->post_excerpt==""?get_the_excerpt($Posts[0]->ID):$Posts[0]->post_excerpt);
 			$PermaLink=get_permalink($Posts[0]->ID);
 			array_shift($Posts);		
 		}
@@ -66,6 +69,7 @@
 		      <div class="card card-bg card-big no-after border border-primary rounded">
 		      <div class="flag-icon"></div>
 		        <div class="card-body p-2">
+<?php if(get_theme_mod("scuola_comeevidenza_visimevidenza")):?>
 		            <div class="img-responsive p-2">
 		              <div class="img-wrapper img-carousel-evidenza">
 	<?php if(isset($Image) And $Image!==FALSE) :?>
@@ -81,6 +85,19 @@
 			            </a>
 			          </div>
 			        </div>
+<?php else:?>
+ 					<div class="p-2" style="min-height: 75px;">
+ 						<h5 class="card-title"><?php echo $Title;?></h5>
+ 					</div>
+		            <div class="p-2">
+			          <p class="card-text" style="min-height: 100px;"><?php echo $Except;?></p>
+			          <div class="it-card-footer">
+			          	<a class="read-more" href="<?php echo $PermaLink;?>">
+			              <span class="text"><i class="fas fa-link p-1"></i> <?php _e('Leggi articolo', 'wpscuola');?></span>
+			            </a>
+			          </div>
+			        </div> 					
+<?php endif;?>
 		        </div>
 		      </div>
 		    </div>
@@ -102,6 +119,7 @@
 				$ImageAlt = get_post_meta($IDImgEvidenza, '_wp_attachment_image_alt', TRUE); //The Caption
 				$ImageDescription = get_post($IDImgEvidenza)->post_content; // The Description				
 				$Title=$Post->post_title;
+				$Except=($Post->post_excerpt==""?get_the_excerpt($Post->ID):$Post->post_excerpt);
 				$PermaLink=get_permalink($Post->ID);
 	?>
 		    	<div class="it-single-slide-wrapper">
@@ -109,6 +127,7 @@
 			    	<div class="card-wrapper card-space">
 			      		<div class="card card-bg card-big no-after border-bottom-card">
 			        		<div class="card-body p-2">
+<?php if(get_theme_mod("scuola_comeevidenza_visimevidenza")):?>
 			            		<div class="img-responsive p-2">
 			              			<div class="img-wrapper img-carousel">
 	<?php if(isset($Image) And $Image!==FALSE) :?>
@@ -124,6 +143,19 @@
 				            	</a>
 					    	</div>
 					    </div>
+<?php else:?>
+ 					<div class="pt-2 pl-2" style="min-height: 100px;">
+ 						<h5 class="card-title"><?php echo $Title;?></h5>
+ 					</div>
+		            <div class="p-4">
+			          <p class="card-text" style="min-height: 100px;"><?php echo $Except;?></p>
+			          <div class="it-card-footer">
+			          	<a class="read-more" href="<?php echo $PermaLink;?>">
+			              <span class="text"><i class="fas fa-link p-1"></i> <?php _e('Leggi articolo', 'wpscuola');?></span>
+			            </a>
+			          </div>
+			        </div> 					
+<?php endif;?>
 			        </div>
 			      </div>
 			    </div>
