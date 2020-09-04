@@ -106,10 +106,11 @@
                <nav class="menu-main" role="navigation">
                <div class="container-fluid">
                  <div class="row">
-                 	<div class="col-2">
+                 	<div class="col-2 pt-3">
 	                 	<a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_html( get_bloginfo( 'name' ) ); ?>" rel="home">
 	                 		<img class="icon icona_piccola" src="<?php echo $ImgLogo;?>" alt="<?php echo esc_html( get_bloginfo( 'name' ) );?>">
 	                 	</a>
+	                 	<span id="titolo_corto"><?php echo get_theme_mod('Scuola_Titolo_Corto'); ?></span>
                  	</div>
                     <div class="col-10">
                      <input type="checkbox" id="show-menu-main" role="button">

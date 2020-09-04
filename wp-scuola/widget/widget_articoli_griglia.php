@@ -99,7 +99,7 @@ class Articoli_Griglia extends WP_Widget {
 		            </div>
 		          </div>
 		          <?php }?>
-                   <?php if(is_sticky()) { echo '<div class="flag-icon"></div>'; } ?>
+                   <?php //if(is_sticky()) { echo '<div class="flag-icon"></div>'; } ?>
                   <div class="card-body">
                     <div class="category-top">
 <?php				if($categories):?>
@@ -172,7 +172,7 @@ class Articoli_Griglia extends WP_Widget {
 
         $title      = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
         $number     = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
-        $cat_id     = isset( $instance['cat_id'] ) ? absint( $instance['cat_id'] ) : 1;
+        $cat_id     = isset( $instance['cat_id'] ) ? intval( $instance['cat_id'] ) : -1;
         $random     = isset( $instance['rand'] ) ? $instance['rand'] : false; 
         $excerpt    = isset( $instance['excerpt'] ) ? $instance['excerpt'] : false; 
         $thumbnail  = isset( $instance['thumbnail'] ) ? $instance['thumbnail'] : false; 
@@ -194,6 +194,7 @@ class Articoli_Griglia extends WP_Widget {
         <p>
             <label for="<?php echo $this->get_field_id('cat_id'); ?>"><?php _e( 'Seleziona la categoria:' )?></label>
             <select id="<?php echo $this->get_field_id('cat_id'); ?>" name="<?php echo $this->get_field_name('cat_id'); ?>">
+            	<option <?php echo ( -1 == esc_attr( $cat_id ) ) ? ' selected = "selected" ' : '';?> value="-1">Tutti gli articoli</option>
                 <?php 
                 $this->categories = get_categories(array('hide_empty' => false));
                 foreach ( $this->categories as $cat ) {
@@ -223,7 +224,7 @@ class Articoli_Griglia extends WP_Widget {
         <p>
             <?php $checked = ( $thumbnail ) ? ' checked=\"checked\" ' : ''; ?>
             <input type="checkbox" id="<?php echo $this->get_field_id( 'thumbnail' ); ?>" name="<?php echo $this->get_field_name( 'thumbnail' ); ?>" value="true" <?php echo $checked; ?> />    
-            <label for="<?php echo $this->get_field_id('thumbnail'); ?>"><?php _e( 'Visualizza le thumbnails degli articoli.' ); ?></label>
+            <label for="<?php echo $this->get_field_id('thumbnail'); ?>"><?php _e( 'Visualizza immagine in evidenza degli articoli.' ); ?></label>
         </p>
 
         <p>

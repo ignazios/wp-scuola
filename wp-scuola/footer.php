@@ -53,7 +53,7 @@ function myFunction() {
             <div class="it-brand-wrapper">
               <a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_html( get_bloginfo( 'name' ) ); ?>" rel="home">
               <?php 
-				    $custom_logo_id = get_theme_mod( 'custom_logo' );
+				    $custom_logo_id = get_theme_mod('Scuola_Logo');
                   	$logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
 				    if(FALSE!== $logo){
 				    	$ImgLogo=esc_url( $logo[0] );

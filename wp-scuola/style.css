@@ -5,9 +5,9 @@ Author: 			Ignazio Scimone
 Author URI: 		https://eduva.org/
 Description: 		WPScuola è un tema di WordPress realizzato principalmente per le scuole italiane. Il tema è basata sul tema originale Design Italia Versione: 0.32 https://github.com/italia/design-wordpress-theme autore Marco Gargano http://marcogargano.com/. Il tema utilizza la libreria Bootstrap Italia basata su Bootstrap 4.3.1, di cui eredita tutte le funzionalità, componenti, griglie e classi di utilità, personalizzandole secondo le Linee Guida di Design per i siti web della Pubblica Amministrazione. 
 Requires at least: 	5.0
-Tested up to: 		5.5
+Tested up to: 		5.5.1
 Requires PHP: 		7.0
-Version: 			0.1.8
+Version: 			0.1.9
 License: 			AGPL-3.0
 License URI: 		https://opensource.org/licenses/AGPL-3.0
 Tags: 				right-sidebar, custom-header, custom-footer, custom-colors, custom-logo, custom-menu, mega-menu, footer-widgets, footer-menu, editor-style, featured-images, post-formats, theme-options, blocco-scuola, blocco-in-evidenza, modulo-FAQ, modulo-Circolari, tempate-albo-online, template-amministrazione-trasparente.
@@ -29,10 +29,11 @@ You should have received a copy of the GNU Affero General Public License along w
 
 
 /* WordPress WYSIWYG Editor Styles */
-.entry-content {
+/*.entry-content {
 	margin-top: 40px;
 	margin-bottom: 40px;
 }
+*/
 .wp-block-file span{
 	color: #adb2b8;
 	font-size: 0.9em;
@@ -1487,10 +1488,11 @@ nav-tabs:after {
 	display: inline;
 }
 .icona_piccola{
-    float: right;
-    margin-top: 15px;
     display: none;
 } 
+#titolo_corto{
+	display: none!important;
+}
 
 @media screen and (max-width: 767px){
 	#show-menu-main[type="checkbox"]:checked ~ .nav li {
@@ -1498,7 +1500,9 @@ nav-tabs:after {
 	}
 	.it-nav-wrapper.sticky .show-menu-main {
 		top: 5px!important;
-		
+	}
+	.icona_piccola{
+		float: right;
 	}
 	.it-nav-wrapper .show-menu-main {
 		top: -115px!important;
@@ -1551,6 +1555,7 @@ nav-tabs:after {
 	.sticky .it-header-center-wrapper{
 		display: none;
 	}
+
 /*	.sticky .it-header-navbar-wrapper{
 		margin-top: 15px!important;
 	}
@@ -1731,6 +1736,9 @@ article .attachments h3{
 		color: #fff!important;
 		font-weight: 600;
 	}
+	.sticky #titolo_corto{
+		display: inline!important;
+	}
 /*	.sub-menu, .menu-item, .menu-main .mega-menu .sub-menu > li {
 		width: fit-content!important;
 	}
@@ -1793,14 +1801,7 @@ article .attachments h3{
 	}
 }
 @media screen and (min-width: 768px){
-	.sticky .search_menu{
-		padding: 0 0px;
-		width: 25px!important;
-		position: absolute!important;
-		top: 15px;
-		left: -100px;
-		box-shadow: 0 0 0 #fff;
-	}
+
 	.menu-main .nav .search_menu.current-menu-item, .menu-main .nav .search_menu.current-menu-ancestor{
 		box-shadow: 0 0 0 #fff;
 	}

@@ -25,6 +25,15 @@ facebook: https://www.facebook.com/wpscuola/
  - **Wordpress** 	*5.0* - *5.5*
  - **PHP** 		*7.0*
 ## Change log
+- **0.1.9**
+  - ***Aggiunta*** opzione al **Blocco Scuola**  ***Codice del video*** che permette di visualizzare nella prima cartella un video al posto del testo della pagina selezionata. Da usare per inserire, ad es. il video promozionale della scuola
+  - ***Aggiunta*** opzione al **Denominazione del sito**  ***Titolo corto*** che viene riportato nell'header in modalità sticky 
+  - ***Aggiunta*** voce al **Widget Scuola Articoli Griglia**  ***Seleziona la categoria: *** Tutti gli articoli in modo da visualizzare il blog 
+  - ***Aggiunta*** opzione al **Widget Scuola Link**  *** Visualizza a pieno schermo: *** che permette di visualizzare il blocco in full-width. Utili soprattutto per la presentazione degli indirizzi di studio 
+  - ***Aggiunto*** il conteggio della visualizzazione degli Articoli
+  - ***Aggiunto*** il supporto dei Tag alle circolari.Adesso possono essere taggate e vengono restituite insieme gli articoli nell'archivio per Tag
+  - ***Modificato*** l'**header in modalità sticky**, adesso viene riportato il nome della scuola/istituto in formato ridotto accanto al logo ed il pulsante di ricerca rimane sulla destra
+  - ***Corretti*** alcuni bag minori
 - **0.1.8**
   - ***Aggiunta*** opzione al **Blocco Comunicazioni in evidenza**  ***Visualizza Immagine in Evidenza*** che permette di visualizzare/non visualizzare l'immagine in evidenza del post
   - ***Aggiunta*** opzione al **Widget Scuola Articoli**  ***Visualizza Immagine in Evidenza*** che permette di visualizzare/non visualizzare l'immagine in evidenza del post

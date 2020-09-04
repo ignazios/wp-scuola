@@ -18,7 +18,8 @@ get_header();
 
       <div class="col-12 col-lg-9 pl-5 pr-5 pt-3">
 <?php 	if ( have_posts() ) : 
-			while ( have_posts() ) : the_post();?> 
+			while ( have_posts() ) : the_post();
+				scuola_set_post_view();?> 
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header>
 					<h3 class="entry-title"><?php the_title(); ?></h3><?php edit_post_link(); ?>

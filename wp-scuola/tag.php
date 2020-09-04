@@ -106,8 +106,11 @@ $Mese=$mesi[(int)$search_query["monthnum"]];
 		  if ( have_posts() )
 			  :
 		  while ( have_posts() )
-			  : the_post(); ?>
-		  		<?php get_template_part( 'template-parts/section', 'art_list-item' ); ?>
+			  : the_post(); 
+			  	if(get_post_type()!="circolari_scuola")
+		  			get_template_part( 'template-parts/section', 'art_list-item' ); 
+		  		else
+		  			get_template_part( 'template-parts/section', 'circ_list-item' ); ?>
 		  		<?php endwhile; endif; ?>
 		  	</div>
 <?php get_template_part( 'template-parts/pagin' ); ?>

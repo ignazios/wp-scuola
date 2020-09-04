@@ -20,6 +20,14 @@ if (count($posts)!=0)
 	foreach ($posts as $post) {
 		$articoli[$post->ID]=$post->post_title;
 	}  
+$wp_customize->add_setting( 'Scuola_Titolo_Corto' , array(
+	'capability' => 'edit_theme_options') );
+$wp_customize->add_control( 'Scuola_Titolo_Corto', array(
+    'type' 		=> 'text',
+    'label' 	=> 'Titolo corto:',
+    'section' 	=> 'title_tagline',
+    'settings' => 'Scuola_Titolo_Corto',
+    'priority'	=> 1));
 /**
 *  Crea pannello per impostazione Tema
 */
@@ -776,8 +784,24 @@ $wp_customize->add_control( 'scuola_scuola_PrimaTabPagina', array(
     'label' 	=> 'Seleziona la pagina Prima Cartella',
     'section' 	=> 'scuola_scuola_settings_home',
     'settings' => 'scuola_scuola_PrimaTabPagina',
-    'priority'	=> 16,
+    'priority'	=> 17,
     'choices'   => $pagine));	
+$wp_customize->add_setting( 'scuola_scuola_PrimaTabVideo' , array(
+		'capability' => 'edit_theme_options') );
+$wp_customize->add_control('scuola_scuola_PrimaTabVideo', array(
+    'type' => 'text', 
+    'label' => 'Codice del video',
+    'section' => 'scuola_scuola_settings_home', 
+    'settings' => 'scuola_scuola_PrimaTabVideo',
+    'priority'	=> 18));
+$wp_customize->add_setting( 'scuola_scuola_PrimaTabVideoDidascalia' , array(
+		'capability' => 'edit_theme_options') );
+$wp_customize->add_control('scuola_scuola_PrimaTabVideoDidascalia', array(
+    'type' => 'text', 
+    'label' => 'Codice del video',
+    'section' => 'scuola_scuola_settings_home', 
+    'settings' => 'scuola_scuola_PrimaTabVideoDidascalia',
+    'priority'	=> 19));
 $wp_customize->add_setting('scuola_scuola_PrimaTabLeggiTutto', array(
     'default' => "", 
     'capability' => 'edit_theme_options'));
@@ -786,7 +810,7 @@ $wp_customize->add_control('scuola_scuola_PrimaTabLeggiTutto', array(
     'label' => 'Testo del link leggi tutto',
     'section' => 'scuola_scuola_settings_home', 
     'settings' => 'scuola_scuola_PrimaTabLeggiTutto',
-    'priority'	=> 17));
+    'priority'	=> 20));
 $wp_customize->add_setting('scuola_scuola_SecondaTabTesto', array(
     'default' => "", 
     'capability' => 'edit_theme_options'));
@@ -795,7 +819,7 @@ $wp_customize->add_control('scuola_scuola_SecondaTabTesto', array(
     'label' => 'Testo della seconda Cartella',
     'section' => 'scuola_scuola_settings_home', 
     'settings' => 'scuola_scuola_SecondaTabTesto',
-    'priority'	=> 18));
+    'priority'	=> 21));
 $wp_customize->add_setting( 'scuola_scuola_SecondaTabPagina' , array(
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_scuola_SecondaTabPagina', array(
@@ -803,7 +827,7 @@ $wp_customize->add_control( 'scuola_scuola_SecondaTabPagina', array(
     'label' 	=> 'Seleziona la pagina Seconda Cartella',
     'section' 	=> 'scuola_scuola_settings_home',
     'settings' => 'scuola_scuola_SecondaTabPagina',
-    'priority'	=> 19,
+    'priority'	=> 22,
     'choices'   => $pagine));
 $wp_customize->add_setting('scuola_scuola_SecondaTabLeggiTutto', array(
     'default' => "", 
@@ -813,7 +837,7 @@ $wp_customize->add_control('scuola_scuola_SecondaTabLeggiTutto', array(
     'label' => 'Testo del link leggi tutto',
     'section' => 'scuola_scuola_settings_home', 
     'settings' => 'scuola_scuola_SecondaTabLeggiTutto',
-    'priority'	=> 20));
+    'priority'	=> 23));
 $wp_customize->add_setting('scuola_scuola_TerzaTabTesto', array(
     'default' => "", 
     'capability' => 'edit_theme_options'));
@@ -822,7 +846,7 @@ $wp_customize->add_control('scuola_scuola_TerzaTabTesto', array(
     'label' => 'Testo della terza Cartella',
     'section' => 'scuola_scuola_settings_home', 
     'settings' => 'scuola_scuola_TerzaTabTesto',
-    'priority'	=> 21));
+    'priority'	=> 24));
 $wp_customize->add_setting( 'scuola_scuola_TerzaTabPagina' , array(
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_scuola_TerzaTabPagina', array(
@@ -830,7 +854,7 @@ $wp_customize->add_control( 'scuola_scuola_TerzaTabPagina', array(
     'label' 	=> 'Seleziona la pagina Terza Cartella',
     'section' 	=> 'scuola_scuola_settings_home',
     'settings' => 'scuola_scuola_TerzaTabPagina',
-    'priority'	=> 22,
+    'priority'	=> 25,
     'choices'   => $pagine));
 $wp_customize->add_setting('scuola_scuola_TerzaTabLeggiTutto', array(
     'default' => "", 
@@ -840,7 +864,7 @@ $wp_customize->add_control('scuola_scuola_TerzaTabLeggiTutto', array(
     'label' => 'Testo del link leggi tutto',
     'section' => 'scuola_scuola_settings_home', 
     'settings' => 'scuola_scuola_TerzaTabLeggiTutto',
-    'priority'	=> 23));
+    'priority'	=> 26));
 /**
 *  Pannello Colori
 */ 

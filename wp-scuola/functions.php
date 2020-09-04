@@ -10,6 +10,7 @@
  * License URI: 		https://opensource.org/licenses/AGPL-3.0
  * Text Domain:       	wpscuola
 */
+
 add_filter( 'image_size_names_choose', 		'scuola_image_sizes');
 add_filter( 'wp_title', 					'scuola_filter_wp_title');
 add_filter( 'get_comments_number', 			'scuola_comments_number');
@@ -18,6 +19,7 @@ add_filter( 'excerpt_more', 				'new_excerpt_more');
 add_filter( 'excerpt_length', 				'custom_excerpt_length', 10 );
 add_filter( 'pre_get_posts',				'scuola_SearchFilter');
 add_filter( 'the_password_form', 			'scuola_password_form' );
+add_filter( 'manage_posts_columns', 		'scuola_posts_column_views' );
 /**
 * Riattiva la gestione dei link standard di Wordpress 
 * I link vengono utilizzati in home page nel widget GalleraLinks
@@ -36,8 +38,39 @@ add_action( 'wp_footer', 					'scuola_customize_footer');
 add_action( 'admin_enqueue_scripts', 		'enqueue_scuola_admin' );
 add_action( 'after_setup_theme', 			'scuola_setup');
 add_action( 'init', 						'personaliza_blocco_file' );
+add_action( 'manage_posts_custom_column', 	'scuola_posts_custom_column_views' );
 
 add_post_type_support ('page', 	'excerpt');
+
+/**
+*
+* Aggiunta del conteggio delle visualizzazioni dei post
+*
+*/
+
+function scuola_get_post_view() {
+    $count = get_post_meta( get_the_ID(), 'post_views_count', true );
+    return intval($count);
+}
+
+function scuola_set_post_view() {
+    $key = 'post_views_count';
+    $post_id = get_the_ID();
+    $count = (int) get_post_meta( $post_id, $key, true );
+    $count++;
+    update_post_meta( $post_id, $key, $count );
+}
+
+function scuola_posts_column_views( $columns ) {
+    $columns['post_views'] = __('Visualizzazioni','wpscuola');
+    return $columns;
+}
+
+function scuola_posts_custom_column_views( $column ) {
+    if ( $column === 'post_views') {
+        echo sprintf("%s %s %s",__('visto','wpscuola'),scuola_get_post_view(),__('volte','wpscuola'));
+    }
+}
 /**
 * 
 * Personalizzazione blocco file dell'editor Gutenberg
@@ -560,10 +593,10 @@ function scuola_customize_head() {
 <!-- Custom <head> content -->
   <style type="text/css">
   body {color: <?php echo get_theme_mod( 'scuola_text_color', "#000000" ); ?>;}
-  .it-header-center-wrapper .it-header-center-content-wrapper .it-brand-wrapper a, .it-header-center-wrapper .it-header-center-content-wrapper .it-right-zone, .it-right-zone .nav li a{color: <?php echo get_theme_mod( 'scuola_head_link_color', "#fff" );!important ?> }
-  .wp-block-file .wp-block-file__button{background-color: <?php echo get_theme_mod( 'scuola_link_color', "#0066cc" );!important ?> }
-   .mysearchform input[type="text"], .it-header-wrapper .mysearchform input[type="text"], .mysearchform [type="submit"]{color: <?php echo get_theme_mod( 'scuola_head_text_color', "#fff" );!important ?> }
-    .mysearchform input[type="text"], .it-header-wrapper .mysearchform input[type="text"]{box-shadow: 0 1px 0px <?php echo get_theme_mod( 'scuola_head_text_color', "#fff" );!important ?>;}
+  .it-header-center-wrapper .it-header-center-content-wrapper .it-brand-wrapper a, .it-header-center-wrapper .it-header-center-content-wrapper .it-right-zone, .it-right-zone .nav li a{color: <?php echo get_theme_mod( 'scuola_head_link_color', "#fff" ); ?>!important }
+  .wp-block-file .wp-block-file__button{background-color: <?php echo get_theme_mod( 'scuola_link_color', "#0066cc" ); ?>!important }
+   .mysearchform input[type="text"], .it-header-wrapper .mysearchform input[type="text"], .mysearchform [type="submit"]{color: <?php echo get_theme_mod( 'scuola_head_text_color', "#fff" ); ?>!important }
+    .mysearchform input[type="text"], .it-header-wrapper .mysearchform input[type="text"]{box-shadow: 0 1px 0px <?php echo get_theme_mod( 'scuola_head_text_color', "#fff" ); ?>!important;}
     .it-footer-main{color: <?php echo get_theme_mod( 'scuola_footer_text_color', "#000000" ); ?>;}
   	#content {background-color:#<?php echo get_theme_mod( 'background_color' ); ?>;}
     .it-header-center-wrapper, .it-header-navbar-wrapper, .it-header-wrapper { background-color: <?php echo get_theme_mod( 'scuola_head_color', "#0066cc" ); ?>;}
@@ -612,10 +645,14 @@ function scuola_SearchFilter($query) {
         $query->is_search = true;
         $query->is_home = false;
     }
-/*    if ($query-> is_home () && $query-> is_main_query ()) {
-    	$query-> set ( 'posts_per_page' , 1 );
-	}
-*/    return $query;
+ if( is_tag() && $query->is_main_query() ) {
+        // this gets all post types:
+        $post_types = get_post_types();
+        // alternately, you can add just specific post types using this line instead of the above:
+        // $post_types = array( 'post', 'your_custom_type' );
+        $query->set( 'post_type', $post_types );
+    }
+    return $query;
 }
 /* Enqueue WordPress theme styles within Gutenberg. */
 function gutenberg_styles() {

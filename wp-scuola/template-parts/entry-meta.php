@@ -2,6 +2,7 @@
 	<div class="row metarticoli p-2">
 		<i class="fas fa-calendar-alt pr-2"></i> <?php the_time('j M y'); ?>
 		<i class="fas fa-user-edit pr-2 pl-1"></i> <a href="<?php echo esc_url(home_url('/'))."author/".get_the_author_meta('user_nicename');?>"><?php the_author_meta('display_name'); ?></a>
+		<i class="far fa-eye pr-2 pl-1"> <?php echo scuola_get_post_view();?></i>
 	</div>
 <?php	    $postcats = get_the_category();
 			if ($postcats) :?>

@@ -41,12 +41,12 @@ class Link extends WP_Widget {
         	/** This filter is documented in wp-includes/default-widgets.php */
         	 $title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
              $tipovis = ! empty( $instance['tipovis'] ) ? $instance['tipovis'] :0;
-             $categoria = ! empty( $instance['categoria'] ) ? $instance['categoria'] :0;?>
- <section id="art_<?php echo $args['widget_id'];?>"  class="home-widget container">
+             $categoria = ! empty( $instance['categoria'] ) ? $instance['categoria'] :0;
+             $fulw    = isset( $instance['fulwidth'] ) ? $instance['fulwidth'] : false;?>
+ <section id="art_<?php echo $args['widget_id'];?>"  class="home-widget container<?php echo ($fulw?"-fluid pl-3":"");?> >
 		<div class="it-header-block">
 	    	<div class="it-header-block-title">
 <?php 
-            echo $args['before_widget'];
             if ( $title ) {
                 echo $args['before_title'] . $title . $args['after_title'];
             }
@@ -77,7 +77,7 @@ class Link extends WP_Widget {
 							$Links=get_bookmarks(array('orderby'=>'rating','category'=>$CatLink->term_id));?>
 							<div class="tab-pane p-4 fade show <?php echo ($Primo?"active":'');$Primo=false;?> shadow" id="<?php echo $CatLink->slug;?>" role="tabpanel" aria-labelledby="<?php echo $CatLink->slug;?>-tab">
 							  	<div class="">
-							  		<?php $this->Crea_blocchi($Links);?>
+							  		<?php $this->Crea_blocchi($Links, $fulw);?>
 							  	</div>
 	        				</div>
 <?php					}?>
@@ -86,12 +86,11 @@ class Link extends WP_Widget {
 					break;
 	           	case 2:
 						$Links=get_bookmarks(array('orderby'=>'rating','category'=>$categoria));
-						$this->Crea_blocchi($Links);
+						$this->Crea_blocchi($Links, $fulw);
 						break;
             } ?>   
 	    	</div>
 		</div>
-<?php echo $args['after_widget'];?>
 </section>	
 <?php
 	wp_reset_postdata();
@@ -109,14 +108,14 @@ class Link extends WP_Widget {
 * Funzione che stampa il codice per visualizzare i blocchi dei servizi
 * @return
 */
-	function Crea_blocchi($Links){?>
-		<div class="container">
+	function Crea_blocchi($Links, $fulw){?>
+		<div class="container<?php echo ($fulw?"-fluid":"");?>">
 	<div class="row">
 <?php 
 		foreach($Links as $Link){?>
 		<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 pb-2">
 		    <div class="hovereffect_Link">
-		        <img class="img-responsive" src="<?php echo $Link->link_image;?>" alt="logo link <?php $Link->link_name;?>" width="100%" height="200">
+		        <img class="img-responsive" src="<?php echo $Link->link_image;?>" alt="logo link <?php $Link->link_name;?>" width="100%" height="<?php echo ($fulw?"350":"200");?>">
 		            <div class="overlay">
 		                <h2><?php echo $Link->link_name;?></h2>
 		                <p class="text-white"><?php echo $Link->link_description;?></p>
@@ -141,6 +140,7 @@ class Link extends WP_Widget {
             $instance['title'] = strip_tags($new_instance['title']);
             $instance['tipovis'] = $new_instance['tipovis'];
             $instance["categoria"]= $new_instance["categoria"];
+            $instance["fulwidth"]= $new_instance["fulwidth"];
 		return $instance;
 	}
 
@@ -150,6 +150,7 @@ class Link extends WP_Widget {
 		$titolo = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Link', 'wpscuola' );
 		$tipovis = ! empty( $instance['tipovis'] ) ? $instance['tipovis'] : 0;
 		$categoria= ! empty($instance["categoria"]) ? $instance["categoria"]: 0;
+		$fulw    = isset( $instance['fulwidth'] ) ? $instance['fulwidth'] : false;
 		$args=array('taxonomy' => 'link_category','hide_empty' => false);
 		$CatsLink = get_terms($args);
 		$Elenco="<select id=\"".$this->get_field_id( 'categoria' )."\" name=\"".$this->get_field_name( 'categoria' )."\">
@@ -180,6 +181,11 @@ class Link extends WP_Widget {
 <?php 			echo $Elenco;?>
         	<br />
         	<em><?php _e( 'Questo valore viene utilizzato solo per</em> <strong>Tipologia di visualizzazione</strong>=<em>Singola categoria di Link', 'wpscuola' );?></em>
+        	</p>
+        	<p>
+	            <?php $checked = ( $fulw ) ? ' checked=\"checked\" ' : ''; ?>
+	            <input type="checkbox" id="<?php echo $this->get_field_id( 'fulwidth' ); ?>" name="<?php echo $this->get_field_name( 'fulwidth' ); ?>" value="true" <?php echo $checked; ?> />    
+	            <label for="<?php echo $this->get_field_id('fulwidth'); ?>"><?php _e( 'Visualizza a pieno schermo' ); ?></label>
         	</p>
 <?php
 	}

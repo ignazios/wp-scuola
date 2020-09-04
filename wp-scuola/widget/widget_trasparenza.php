@@ -66,7 +66,7 @@ class Trasparenza extends WP_Widget {
             if ( $title ) {
                 echo $args['before_title'] . $title . $args['after_title'];
             } ?>   
-  <div class="row d-flex justify-content-center" >
+  <div class="row d-flex justify-content-center pl-3 pr-3" >
     <div class="col-lg-4 col-sm-6 col-12 m-2 p-5 btn-primary rounded text-center">
     	<a href="<?php echo $LAT;?>" class="lead testo-bianco"><?php _e('Amministrazione Trasparente','wpscuola');?></a>
     </div>
