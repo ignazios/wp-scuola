@@ -97,7 +97,7 @@
 						<li>
 							<div class="it-card-footer">
 		          				<a class="read-more" href="<?php echo get_category_link($catprimoblocco);?>">
-		              				<span class="text"><i class="fas fa-link p-1"></i> Leggi tutto</span>
+		              				<span class="text"><i class="fas fa-link p-1"></i> <?php _e( 'Leggi tutto','wpscuola' );?></span>
 		            			</a>
 		          			</div>
 						</li>

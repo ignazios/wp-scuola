@@ -48,19 +48,21 @@ class Articoli_Griglia extends WP_Widget {
             $number = 5;
         }
         $cat_id         = $instance['cat_id'];
+        $cats_notin     = strip_tags( $instance['cats_notin'] );
         $random         = $instance['rand'] ? true : false; 
         $excerpt        = $instance['excerpt'] ? true : false; 
         $thumbnail      = $instance['thumbnail'] ? true : false; 
         $categories     = $instance['categories'] ? true : false; 
         $date           = $instance['date'] ? true : false; 
         $shadow         = $instance['shadow'] ? true : false; 
+        $leggitutto 	= isset( $instance['leggitutto'] ) ? $instance['leggitutto'] :"";
 
         /**
          * Filter the arguments for the Category Posts widget.
          * @since 1.0.0
          * @see WP_Query::get_posts()
          * @param array $args An array of arguments used to retrieve the category posts.
-         */
+         */ 
         if( true === $random ) {
             $query_args = [
                 'posts_per_page'    => $number,
@@ -73,6 +75,14 @@ class Articoli_Griglia extends WP_Widget {
                 'cat'               => $cat_id,
             ];
         }
+        if($cat_id==-1 And $cats_notin!=""){
+			$query_args['category__not_in'] = array( $cats_notin);
+			$query_args['ignore_sticky_posts'] = 1;
+		}
+		if($cat_id==-1)
+			$LinkLeggiTutto=get_permalink( get_option( 'page_for_posts' ) );
+		else 
+			$LinkLeggiTutto=get_category_link($cat_id);
         $q = new WP_Query( apply_filters( 'category_posts_args', $query_args ) );
 
         if( $q->have_posts() ) {?>
@@ -125,11 +135,18 @@ class Articoli_Griglia extends WP_Widget {
                     <?php } ?>
                    </div>
 		          <p  class="read-more text-right pb-2 pr-2">
-		          	<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><i class="fas fa-link p-1"></i> Leggi di pi&ugrave</a>
+		          	<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><i class="fas fa-link p-1"></i> <?php _e( 'Leggi di pi&ugrave','wpscuola' ); ?></a>
 		          </p>
             	</div>
         	</div>
-                <?php  } ?>
+                <?php  }
+                if($leggitutto):?>
+					<div class="it-card-footer">
+          				<a class="read-more" href="<?php echo $LinkLeggiTutto;?>">
+              				<span class="text"><i class="fas fa-link p-1"></i> <?php _e( 'Leggi tutto','wpscuola' );?></span>
+            			</a>
+		          	</div>
+		        <?php endif; ?>
 			</div>
 		</div>
 <?php   echo $args['after_widget']; ?>
@@ -152,12 +169,14 @@ class Articoli_Griglia extends WP_Widget {
         $instance['title']          = strip_tags( $new_instance['title'] );
         $instance['number']         = (int) $new_instance['number'];
         $instance['cat_id']         = (int) $new_instance['cat_id'];
+        $instance['cats_notin']     = strip_tags( $new_instance['cats_notin'] );
         $instance['rand']           = $new_instance['rand'];
         $instance['excerpt']        = $new_instance['excerpt'];
         $instance['thumbnail']      = $new_instance['thumbnail'];
         $instance['date']           = $new_instance['date'];
-        $instance['shadow']           = $new_instance['shadow'];
+        $instance['shadow']         = $new_instance['shadow'];
         $instance['categories']     = $new_instance['categories'];
+        $instance['leggitutto']		= $new_instance['leggitutto'];
         $this->flush_widget_cache();
         return $instance;
     }
@@ -173,26 +192,28 @@ class Articoli_Griglia extends WP_Widget {
         $title      = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
         $number     = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
         $cat_id     = isset( $instance['cat_id'] ) ? intval( $instance['cat_id'] ) : -1;
+        $catnotin	= isset( $instance['cats_notin'] ) ? esc_attr( $instance['cats_notin'] ) : '';
         $random     = isset( $instance['rand'] ) ? $instance['rand'] : false; 
         $excerpt    = isset( $instance['excerpt'] ) ? $instance['excerpt'] : false; 
         $thumbnail  = isset( $instance['thumbnail'] ) ? $instance['thumbnail'] : false; 
         $date       = isset( $instance['date'] ) ? $instance['date'] : false; 
         $shadow     = isset( $instance['shadow'] ) ? $instance['shadow'] : false; 
         $categories = isset( $instance['categories'] ) ? $instance['categories'] : false; 
+        $leggitutto = isset( $instance['leggitutto'] ) ? $instance['leggitutto'] :false;
         ?>
 
         <p>
-            <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
+            <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Titolo:','wpscuola' ); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" />
         </p>
 
         <p>
-            <label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Numero di articoli da visualizzare:' ); ?></label>
+            <label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Numero di articoli da visualizzare:','wpscuola' ); ?></label>
             <input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" value="<?php echo $number; ?>" size="3" />
         </p>
 
         <p>
-            <label for="<?php echo $this->get_field_id('cat_id'); ?>"><?php _e( 'Seleziona la categoria:' )?></label>
+            <label for="<?php echo $this->get_field_id('cat_id'); ?>"><?php _e( 'Seleziona la categoria:','wpscuola' )?></label>
             <select id="<?php echo $this->get_field_id('cat_id'); ?>" name="<?php echo $this->get_field_name('cat_id'); ?>">
             	<option <?php echo ( -1 == esc_attr( $cat_id ) ) ? ' selected = "selected" ' : '';?> value="-1">Tutti gli articoli</option>
                 <?php 
@@ -210,41 +231,52 @@ class Articoli_Griglia extends WP_Widget {
         </p>
 
         <p>
+            <label for="<?php echo $this->get_field_id( 'cats_notin' ); ?>"><?php _e( 'ID delle Categorie da escludere (separati da ,):' ); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id( 'cats_notin' ); ?>" name="<?php echo $this->get_field_name( 'cats_notin' ); ?>" type="text" value="<?php echo $catnotin; ?>" />
+            <i><?php _e( 'Impostazione valida solo se selezionato "Tutti gli articoli"','wpscuola' ); ?></i>
+        </p>
+
+       <p>
             <?php $checked = ( $random ) ? ' checked=\"checked\" ' : ''; ?>
             <input type="checkbox" id="<?php echo $this->get_field_id( 'rand' ); ?>" name="<?php echo $this->get_field_name( 'rand' ); ?>" value="true" <?php echo $checked; ?> />    
-            <label for="<?php echo $this->get_field_id('rand'); ?>"><?php _e( 'Visualizza articoli casualmente. Se deselezionato, verranno visualizzati prima i pi&ugrave; recenti.' ); ?></label>
+            <label for="<?php echo $this->get_field_id('rand'); ?>"><?php _e( 'Visualizza articoli casualmente. Se deselezionato, verranno visualizzati prima i pi&ugrave; recenti.','wpscuola' ); ?></label>
         </p>
 
         <p>
             <?php $checked = ( $excerpt ) ? ' checked=\"checked\" ' : ''; ?>
             <input type="checkbox" id="<?php echo $this->get_field_id( 'excerpt' ); ?>" name="<?php echo $this->get_field_name( 'excerpt' ); ?>" value="true" <?php echo $checked; ?> />    
-            <label for="<?php echo $this->get_field_id('excerpt'); ?>"><?php _e( 'Visualizza estratto. Se deselezionato, visualizza solo il titolo dell\'articolo.' ); ?></label>
+            <label for="<?php echo $this->get_field_id('excerpt'); ?>"><?php _e( 'Visualizza estratto. Se deselezionato, visualizza solo il titolo dell\'articolo.','wpscuola' ); ?></label>
         </p>
 
         <p>
             <?php $checked = ( $thumbnail ) ? ' checked=\"checked\" ' : ''; ?>
             <input type="checkbox" id="<?php echo $this->get_field_id( 'thumbnail' ); ?>" name="<?php echo $this->get_field_name( 'thumbnail' ); ?>" value="true" <?php echo $checked; ?> />    
-            <label for="<?php echo $this->get_field_id('thumbnail'); ?>"><?php _e( 'Visualizza immagine in evidenza degli articoli.' ); ?></label>
+            <label for="<?php echo $this->get_field_id('thumbnail'); ?>"><?php _e( 'Visualizza immagine in evidenza degli articoli.','wpscuola' ); ?></label>
         </p>
 
         <p>
             <?php $checked = ( $categories ) ? ' checked=\"checked\" ' : ''; ?>
             <input type="checkbox" id="<?php echo $this->get_field_id( 'categories' ); ?>" name="<?php echo $this->get_field_name( 'categories' ); ?>" value="true" <?php echo $checked; ?> />    
-            <label for="<?php echo $this->get_field_id('categories'); ?>"><?php _e( 'Visualizza le categorie degli articoli.' ); ?></label>
+            <label for="<?php echo $this->get_field_id('categories'); ?>"><?php _e( 'Visualizza le categorie degli articoli.','wpscuola' ); ?></label>
         </p>
 
         <p>
             <?php $checked = ( $date ) ? ' checked=\"checked\" ' : ''; ?>
             <input type="checkbox" id="<?php echo $this->get_field_id( 'date' ); ?>" name="<?php echo $this->get_field_name( 'date' ); ?>" value="true" <?php echo $checked; ?> />    
-            <label for="<?php echo $this->get_field_id('date'); ?>"><?php _e( 'Visualizza le date degli articoli.' ); ?></label>
+            <label for="<?php echo $this->get_field_id('date'); ?>"><?php _e( 'Visualizza le date degli articoli.','wpscuola' ); ?></label>
         </p>
 
         <p>
             <?php $checked = ( $shadow ) ? ' checked=\"checked\" ' : ''; ?>
             <input type="checkbox" id="<?php echo $this->get_field_id( 'shadow' ); ?>" name="<?php echo $this->get_field_name( 'shadow' ); ?>" value="true" <?php echo $checked; ?> />    
-            <label for="<?php echo $this->get_field_id('shadow'); ?>"><?php _e( 'Visualizza l\'ombra delle schede.' ); ?></label>
+            <label for="<?php echo $this->get_field_id('shadow'); ?>"><?php _e( 'Visualizza l\'ombra delle schede.','wpscuola' ); ?></label>
         </p>
 
+   		<p>
+   			<?php $checked = ( $leggitutto ) ? ' checked=\"checked\" ' : ''; ?>
+    		<input type="checkbox" id="<?php echo $this->get_field_id('leggitutto'); ?>" name="<?php echo $this->get_field_name('leggitutto'); ?>" value="true" <?php echo $leggitutto; ?>/>
+    		<label for="<?php echo $this->get_field_id('leggitutto'); ?>"><?php _e( 'Visualizza il link Leggi tutto.','wpscuola' ); ?></label>
+    	</p>
     <?php
     }
 

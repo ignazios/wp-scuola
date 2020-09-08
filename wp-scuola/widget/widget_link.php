@@ -53,7 +53,7 @@ class Link extends WP_Widget {
             switch ($tipovis){
             	case 0:
             		$Links=get_bookmarks(array('orderby'=>'rating'));
- 					$this->Crea_blocchi($Links);
+ 					$this->Crea_blocchi($Links,$fulw);
 					break;
 				case 1:
 					$CatsLink = get_categories(array('taxonomy' => 'link_category',

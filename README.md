@@ -25,6 +25,8 @@ facebook: https://www.facebook.com/wpscuola/
  - **Wordpress** 	*5.0* - *5.5*
  - **PHP** 		*7.0*
 ## Change log
+- **0.2.0**
+  - ***Corretti*** alcuni bag minori nel widget Link
 - **0.1.9**
   - ***Aggiunta*** opzione al **Blocco Scuola**  ***Codice del video*** che permette di visualizzare nella prima cartella un video al posto del testo della pagina selezionata. Da usare per inserire, ad es. il video promozionale della scuola
   - ***Aggiunta*** opzione al **Denominazione del sito**  ***Titolo corto*** che viene riportato nell'header in modalità sticky 
