@@ -20,6 +20,8 @@ add_filter( 'excerpt_length', 				'custom_excerpt_length', 10 );
 add_filter( 'pre_get_posts',				'scuola_SearchFilter');
 add_filter( 'the_password_form', 			'scuola_password_form' );
 add_filter( 'manage_posts_columns', 		'scuola_posts_column_views' );
+add_filter( 'render_block', 				'personaliza_file_render', 10, 3);
+
 /**
 * Riattiva la gestione dei link standard di Wordpress 
 * I link vengono utilizzati in home page nel widget GalleraLinks
@@ -37,7 +39,6 @@ add_action( 'enqueue_block_editor_assets', 	'gutenberg_styles' );
 add_action( 'wp_footer', 					'scuola_customize_footer');
 add_action( 'admin_enqueue_scripts', 		'enqueue_scuola_admin' );
 add_action( 'after_setup_theme', 			'scuola_setup');
-//add_action( 'init', 						'personaliza_blocco_file' );
 add_action( 'manage_posts_custom_column', 	'scuola_posts_custom_column_views' );
 
 add_post_type_support ('page', 	'excerpt');
@@ -76,64 +77,85 @@ function scuola_posts_custom_column_views( $column ) {
 * Personalizzazione blocco file dell'editor Gutenberg
 *
 */
-function personaliza_file_render( $attributes, $content ) {
-  $IDFile=$attributes['id'];
-  $Link=$attributes['href'];
+function personaliza_file_render( $block_content, $block ) {
+	
+	if( "core/file" !== $block['blockName'] ) {
+    return $block_content;
+  }
+  $IDFile=$block["attrs"]['id'];
+  $Link=$block["attrs"]['href'];
   $Title = get_post($IDFile)->post_title; //The Title
   $Description = get_post($IDFile)->post_content; // The Description	
   $filesize = size_format(filesize( get_attached_file( $IDFile ) ), 2); 
   $filetype = wp_check_filetype($Link);
   $IconaFile='<i class="far fa-file"></i>';
-/* 
-  ob_start();
+  $TipoFile="File";
+
+/*  ob_start();
+  var_dump($IDFile  );
 	var_dump($content);
 	$a=ob_get_contents();
   ob_end_clean();
-*/
-	$PosT=strpos($content,"target");
+	echo $a;
+*/	$PosT=strpos($block_content,"target");
 	$Target="";
 	if($PosT!==FALSE){
-		$Target=substr($content,$PosT,strpos($content," ",$PosT)-$PosT);	
+		$Target=substr($block_content,$PosT,strpos($block_content," ",$PosT)-$PosT);	
 	}
-	$Div=substr($content,0,strpos($content,">")+1);
-	$PosST=strpos($content,">",strlen($Div)+1)+1;
-	$Titolo=substr($content,$PosST,strpos($content,"<",$PosST+1)-$PosST);
+	$Div=substr($block_content,0,strpos($block_content,">")+1);
+	$PosST=strpos($block_content,">",strlen($Div)+1)+1;
+	$Titolo=substr($block_content,$PosST,strpos($block_content,"<",$PosST+1)-$PosST);
 	if($Title!=$Titolo) $Title=$Titolo;
   switch ($filetype['ext']){
   	case "txt": 
-  	case "odt": $IconaFile='<i class="far fa-file-alt fa-2x"></i>'; break;
-  	case "pdf": $IconaFile='<i class="far fa-file-pdf fa-2x"></i>'; break;
- 	case "csv": $IconaFile='<i class="fas fa-file-csv fa-2x"></i>'; break;
+  	case "odt": $IconaFile='<i class="far fa-file-alt fa-2x"></i>'; $TipoFile="Open Document Format for Office Applications";break;
+  	case "pdf": $IconaFile='<i class="far fa-file-pdf fa-2x"></i>'; $TipoFile="Portable Document Format";break;
+ 	case "csv": $IconaFile='<i class="fas fa-file-csv fa-2x"></i>'; $TipoFile="comma-separated values";break;
   	case "doc":
   	case "rtf":
-  	case "docx": $IconaFile='<i class="far fa-file-word fa-2x"></i>'; break;
+  	case "docx": $IconaFile='<i class="far fa-file-word fa-2x"></i>'; $TipoFile="Microsoft Word document";break;
   	case "xls":
   	case "ods":
-  	case "xlsx": $IconaFile='<i class="far fa-file-excel fa-2x"></i>'; break;
+  	case "xlsx": $IconaFile='<i class="far fa-file-excel fa-2x"></i>'; $TipoFile="Foglio di calcolo";break;
   	case "ppt":
   	case "odp": 
-  	case "pptx": $IconaFile='<i class="far fa-file-powerpoint fa-2x"></i>'; break;
-  	case "mp4":  $IconaFile='<i class="far fa-file-video fa-2x"></i>'; break;
-  	case "zip":  $IconaFile='<i class="far fa-file-archive fa-2x"></i>'; break;
+  	case "pptx": $IconaFile='<i class="far fa-file-powerpoint fa-2x"></i>'; $TipoFile="Presentazione";break;
+  	case "mp4":  $IconaFile='<i class="far fa-file-video fa-2x"></i>'; $TipoFile="File multimediale video e audio digitali";break;
+  	case "zip":  $IconaFile='<i class="far fa-file-archive fa-2x"></i>';$TipoFile="Archivio compresso"; break;
   	case "png":
   	case "jpg":
   	case "jpeg":
   	case "bmp":
-  	case "ico":$IconaFile='<i class="far fa-file-image fa-2x"></i>'; break;
+  	case "ico":$IconaFile='<i class="far fa-file-image fa-2x"></i>'; $TipoFile="Immagine";break;
   }
-  $Contenuto=$Div.
-  $IconaFile.' <a href="'.$Link.'" title="'.$Title.'" '.$Target.'>'.$Title.' ('.$filesize .')</a>';
-    	
-  if(strpos($content,"wp-block-file__button")!==FALSE) $Contenuto.='<a href="'.$Link.'" class="wp-block-file__button" download="">Download</a>';
-  if($Description) $Contenuto.='<br /><span>'.$Description.'</span>';
-  $Contenuto.='</div>';
-  return $Contenuto;
-}
-
-function personaliza_blocco_file() {
-	register_block_type( 'core/file', array(
-		'render_callback' => 'personaliza_file_render',
-	) );
+ob_start();?>  
+		<div class="card-wrapper border rounded">
+		    <div class="card-body">
+		        <div class="media stack-xs">
+		            <div class="media-body">
+		                <div class="media">
+		                    <div class="mr-3 img-48">
+		                    	<?php echo $IconaFile;?>
+		                    </div>
+		                    <div class="media-body">
+		                        <h4 class="h5"><a href="<?php echo $Link;?>" title="<?php echo $Title;?>"><?php echo  $Title;?></a></h4>
+		                        <div class="text-muted text-small"><i class="fas fa-hdd ml-3"></i> <?php echo $filesize;?> <i class="fas fa-file"></i> <?php echo $TipoFile;?></div>
+		                        <?php if($Description!=="") :?>
+		                        <div class="text-muted"><?php echo $Description;?></div>
+		                        <?php endif;?>
+		                    </div>
+		                </div>
+		            </div>
+		            <?php if(strpos($block_content,"wp-block-file__button")!==FALSE) :?>
+		            <div class="ml-3 wpdmdl-btn">
+		                <a class="btn btn-primary " rel="nofollow" href="<?php echo $Link;?>"><?php _e("Visualizza","wpscuola");</a>
+		            </div>
+		            <?php endif;?>
+		        </div>
+		    </div>
+		</div>
+<?php
+  return ob_get_clean();
 }
 
 

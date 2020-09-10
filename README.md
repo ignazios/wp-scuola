@@ -25,6 +25,11 @@ facebook: https://www.facebook.com/wpscuola/
  - **Wordpress** 	*5.0* - *5.5*
  - **PHP** 		*7.0*
 ## Change log
+- **0.2.1**
+  - ***Modificato*** la visualizzazione del blocco file di Gutenberg, adesso visualizza l'icona dle tipo file, la dimensione e la descrizione gon grafica compatibile con il tema
+  - ***Aggiunti*** i template del singolo link e della pagina dei dettagli per il plugin ***Download Manager*** con le impostazioni del tema
+  - ***Modificato*** l'Header delle pagine in formato mobile, con menu Hamburger fino alla risoluzione 1140px
+  - ***Corretti*** alcuni bag minori nel widget Link
 - **0.2.0**
   - ***Corretti*** alcuni bag minori nel widget Link
 - **0.1.9**
