@@ -148,7 +148,7 @@ ob_start();?>
 		            </div>
 		            <?php if(strpos($block_content,"wp-block-file__button")!==FALSE) :?>
 		            <div class="ml-3 wpdmdl-btn">
-		                <a class="btn btn-primary " rel="nofollow" href="<?php echo $Link;?>"><?php _e("Visualizza","wpscuola");</a>
+		                <a class="btn btn-primary " rel="nofollow" href="<?php echo $Link;?>"><?php _e("Visualizza","wpscuola");?></a>
 		            </div>
 		            <?php endif;?>
 		        </div>
