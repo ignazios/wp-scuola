@@ -18,7 +18,7 @@ require get_template_directory() . '/plugins/link/custom_link.php';
 require get_template_directory() . '/inc/customizer.php';
 // Inclusione libreria per la personalizzazione dell'elenco delle categorie
 
-* UPDATER THEME VERSION */
+/* UPDATER THEME VERSION */
 require 'inc/theme-update-checker.php';
 $update_checker = new ThemeUpdateChecker(
     'wp-scuola',
