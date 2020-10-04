@@ -18,7 +18,12 @@ require get_template_directory() . '/plugins/link/custom_link.php';
 require get_template_directory() . '/inc/customizer.php';
 // Inclusione libreria per la personalizzazione dell'elenco delle categorie
 
-
+* UPDATER THEME VERSION */
+require 'inc/theme-update-checker.php';
+$update_checker = new ThemeUpdateChecker(
+    'wp-scuola',
+    'https://raw.githubusercontent.com/ignazios/wp-scuola/master/wp-scuola.json'
+);
 
 add_filter( 'image_size_names_choose', 		'scuola_image_sizes');
 add_filter( 'wp_title', 					'scuola_filter_wp_title');
