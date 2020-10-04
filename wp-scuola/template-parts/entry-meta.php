@@ -1,19 +1,19 @@
 <section class="entry-meta">
 	<div class="row metarticoli p-2">
-		<i class="fas fa-calendar-alt pr-2"></i> <?php the_time('j M y'); ?>
-		<i class="fas fa-user-edit pr-2 pl-1"></i> <a href="<?php echo esc_url(home_url('/'))."author/".get_the_author_meta('user_nicename');?>"><?php the_author_meta('display_name'); ?></a>
-		<i class="far fa-eye pr-2 pl-1"> <?php echo scuola_get_post_view();?></i>
+		<span class="fas fa-calendar-alt pr-2" title="<?php _e('Data ultima modifica','wpscuola');?>"></span> <?php the_time('j M y'); ?>
+		<span class="fas fa-user-edit pr-2 pl-1" title="<?php _e("Autore dell'articolo",'wpscuola');?>"></span> <a href="<?php echo esc_url(home_url('/'))."author/".get_the_author_meta('user_nicename');?>"><?php the_author_meta('display_name'); ?></a>
+		<span class="far fa-eye pr-2 pl-1" title=<?php _e("Visualizzazioni",'wpscuola');?>> <?php echo scuola_get_post_view();?></span>
 	</div>
 <?php	    $postcats = get_the_category();
 			if ($postcats) :?>
 	<div class="row metarticoli p-2">
-		<i class="fas fa-hashtag pr-2" title="categorie"></i> <?php echo  get_the_category_list( " , ","",get_the_ID() ); ?>
+		<span class="fas fa-hashtag pr-2" title="<?php _e("Categorie",'wpscuola');?>"></span> <?php echo  get_the_category_list( " , ","",get_the_ID() ); ?>
 	</div>
 <?php		endif;
 			$posttags = get_the_tags ();
 			if ($posttags) :?>	
 	<div class="row metarticoli p-2">
-		<i class="fas fa-tags pr-2" title="tags"></i> <?php echo get_the_tag_list('<span class="listCatTag">',', ','</span>'); ?>
+		<span class="fas fa-tags pr-2" title=<?php _e("Tags",'wpscuola');?>></span> <?php echo get_the_tag_list('<span class="listCatTag">',', ','</span>'); ?>
 	</div>
 <?php		endif;?>
 	

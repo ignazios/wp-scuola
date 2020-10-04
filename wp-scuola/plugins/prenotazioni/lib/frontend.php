@@ -35,7 +35,8 @@ echo "</pre>";
 	if($NumPassate==0 And $NumOggi==0 And $NumProssime==0){?>
 		<div class="alert alert-info" role="alert">
 	      <header class="header">
-			  <h1 class="alert-heading"><?php _e( 'Informazioni:', 'wpscuola' ); ?></h1>
+			  <h3 class="alert-heading"><?php _e( 'Informazioni:', 'wpscuola' ); ?></h3>
+			  
 		  </header>
 		 <p><?php _e( 'Non ci sono prenotazioni registrate', 'wpscuola' ); ?></p>
 		</div>
@@ -149,21 +150,6 @@ function NuovaPrenotazione($Titoli,$NumSchede){
 <?php }
     $PathImg=Prenotazioni_URL."/img/Info.png";
     $Spazio=$G_Spaces->get_ListaSpazi("SpazioP","SpazioP","");?>	    
-	<div id="AreaDatiPrenotazioniSpazi">
-	<button type="button" class="btn btn-secondary bg-primary float-right" 
-			data-toggle="tooltip" data-html="true" data-placement="left"
-			title="<h4>Istruzioni per la compilazione</h4>
-				<ol>
-	                <li>Selezionare lo spazio</li>
-	                <li>Selezionare la Data prenotazione</li>
-	                <li>Nella tabella Ora Inizio cliccare sul pulsante <strong>Imposta ora inizio</strong> corrispondenete all'ora in cui deve iniziare la prenotazione</li>
-	                <li>Selezionare il N° Ore della prenotazione</li>
-	                <li>Se la prenotazione deve essere ripetuta più volte in settimane diverse, bisogna in dicare il N° settimane</li>
-	                <li>Indicare opzionalmente il Motivo Prenotazione</li>
-	                <li>Cliccare su Prenota</li>
-				</ol>">
-	  <i class="fas fa-info" title="<?php _e('Informazione per realizzare una prenotazione', 'wpscuola');?>"></i>
-	</button>	
 	<div id="loading" style="float:left;margin-left:15px;margin-top:15px;">LOADING!</div>
     <form name="Memo_Prenotazioni"  action="<?php echo $_SERVER["REQUEST_URI"];?>" method="post">
 	    <fieldset id="CampiPrenotazioniSpazi" >

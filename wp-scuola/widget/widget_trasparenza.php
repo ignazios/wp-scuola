@@ -56,13 +56,12 @@ class Trasparenza extends WP_Widget {
 	            	return;
 			}
 			$LAT=($Is_AT) ? $instance['AT']:$instance['LAT'];
-			$AP=($Is_AP) ? $instance['AAC']:$instance['LAP'];
+			$AP=($Is_AP) ? $instance['AP']:$instance['LAP'];
 			$AC=($Is_AC) ? $instance['AC']:$instance['LAC'];
 			$URP=($Is_URP) ? $instance['URP']:$instance['LURP'];
 ?>
 <section id="trasp_<?php echo $args['widget_id'];?>"  class="home-widget container ">
 <?php  
-            echo $args['before_widget'];
             if ( $title ) {
                 echo $args['before_title'] . $title . $args['after_title'];
             } ?>   
@@ -86,7 +85,6 @@ class Trasparenza extends WP_Widget {
 		<a href="<?php echo $AP; ?>" class="lead testo-bianco" ><?php _e('Albo OnLine','wpscuola');?></a>
     </div>
   </div>
-<?php   echo $args['after_widget']; ?>
 </section>
 <?php
 	wp_reset_postdata();

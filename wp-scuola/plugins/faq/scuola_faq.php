@@ -26,7 +26,7 @@ class ScuolaFAQ {
     }
 	function faq_add_descrizione_titolo($post) {
 		if($post->post_type == "faq"){
-			_e('<span><i>il <strong>Titolo</strong> &egrave; la <strong>domanda della FAQ</strong>.<br>', 'wpscuola' );
+			_e('il <strong>Titolo</strong> &egrave; la <strong>domanda della FAQ</strong>.<br>', 'wpscuola' );
 			_e('<h2>Risposta alla domanda della FAQ</h2>', 'wpscuola' );
 		}
 	}

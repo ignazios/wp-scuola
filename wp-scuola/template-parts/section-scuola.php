@@ -59,40 +59,40 @@
 	<h3 class="widget-title"><?php echo get_theme_mod('scuola_scuola_titolosezione');?></h3>
     <div class="row">
   		<div class="col-12 col-lg-3">
-  		<div class="row p-md-5">
-  			<div class="col-lg-12 col-6 col-sm-6">
-  				<a href="<?php echo $Blocco1Link;?>">
-					<figure class="figure bg-primary rounded pb-2 text-white">
-					  <img src="<?php echo wp_get_attachment_url($Blocco1Immagine);?>" class="figure-img img-fluid rounded">
-					  <figcaption class="figure-caption text-center font-weight-bold text-white"><?php echo $Blocco1Titolo;?></figcaption>
-					</figure>	
-				</a>			        
-			</div>  			
-  			<div class="col-lg-12 col-6 col-sm-6">
-  				<a href="<?php echo $Blocco2Link;?>">
-					<figure class="figure bg-primary rounded pb-2 text-white">
-					  <img src="<?php echo wp_get_attachment_url($Blocco2Immagine);?>" class="figure-img img-fluid rounded">
-					  <figcaption class="figure-caption text-center font-weight-bold text-white"><?php echo $Blocco2Titolo;?></figcaption>
-					</figure>
-				</a>				        
-			</div>  			
-  			<div class="col-lg-12 col-6 col-sm-6">
-  				<a href="<?php echo $Blocco3Link;?>">
-					<figure class="figure bg-primary rounded pb-2 text-white">
-					  <img src="<?php echo wp_get_attachment_url($Blocco3Immagine);?>" class="figure-img img-fluid rounded">
-					  <figcaption class="figure-caption text-center font-weight-bold text-white"><?php echo $Blocco3Titolo;?></figcaption>
-					</figure>
-				</a>				        
-			</div>  			
-  			<div class="col-lg-12 col-6 col-sm-6">
-  				<a href="<?php echo $Blocco4Link;?>">
-					<figure class="figure bg-primary rounded pb-2 text-white">
-					  <img src="<?php echo wp_get_attachment_url($Blocco4Immagine);?>" class="figure-img img-fluid rounded">
-					  <figcaption class="figure-caption text-center font-weight-bold text-white"><?php echo $Blocco4Titolo;?></figcaption>
-					</figure>
-				</a>				        
-			</div>  			
-  		</div>
+	  		<div class="row p-md-5">
+	  			<div class="col-lg-12 col-6 col-sm-6">
+	  				<a href="<?php echo $Blocco1Link;?>">
+						<figure class="figure bg-primary rounded pb-2 text-white">
+						  <img src="<?php echo wp_get_attachment_url($Blocco1Immagine);?>" alt="" class="figure-img img-fluid rounded">
+						  <figcaption class="figure-caption text-center font-weight-bold text-white"><?php echo $Blocco1Titolo;?></figcaption>
+						</figure>	
+					</a>			        
+				</div>  			
+	  			<div class="col-lg-12 col-6 col-sm-6">
+	  				<a href="<?php echo $Blocco2Link;?>">
+						<figure class="figure bg-primary rounded pb-2 text-white">
+						  <img src="<?php echo wp_get_attachment_url($Blocco2Immagine);?>" alt="" class="figure-img img-fluid rounded">
+						  <figcaption class="figure-caption text-center font-weight-bold text-white"><?php echo $Blocco2Titolo;?></figcaption>
+						</figure>
+					</a>				        
+				</div>  			
+	  			<div class="col-lg-12 col-6 col-sm-6">
+	  				<a href="<?php echo $Blocco3Link;?>">
+						<figure class="figure bg-primary rounded pb-2 text-white">
+						  <img src="<?php echo wp_get_attachment_url($Blocco3Immagine);?>" alt="" class="figure-img img-fluid rounded">
+						  <figcaption class="figure-caption text-center font-weight-bold text-white"><?php echo $Blocco3Titolo;?></figcaption>
+						</figure>
+					</a>				        
+				</div>  			
+	  			<div class="col-lg-12 col-6 col-sm-6">
+	  				<a href="<?php echo $Blocco4Link;?>">
+						<figure class="figure bg-primary rounded pb-2 text-white">
+						  <img src="<?php echo wp_get_attachment_url($Blocco4Immagine);?>" alt="" class="figure-img img-fluid rounded">
+						  <figcaption class="figure-caption text-center font-weight-bold text-white"><?php echo $Blocco4Titolo;?></figcaption>
+						</figure>
+					</a>				        
+				</div>  			
+	  		</div>
   		</div>
  		<div class="col-12 col-lg-9">
 			<nav>
@@ -113,7 +113,7 @@
 								echo $Testo_Prima;?>
 			  	</div>
 			  	<a class="read-more" href="<?php echo $Link_Prima;?>">
-            		<i class="fas fa-link p-1"></i>
+            		<span class="fas fa-link p-1"></span>
             		<span class="text"><?php echo $TestoLink_Prima;?></span>
           		</a>
 	        </div>
@@ -122,7 +122,7 @@
 			  		<?php echo $Testo_Seconda;?>
 			  	</div>
 			  	<a class="read-more" href="<?php echo $Link_Seconda;?>">
-            		<i class="fas fa-link p-1"></i>
+            		<span class="fas fa-link p-1"></span>
             		<span class="text"><?php echo $TestoLink_Seconda;?></span>
           		</a>
 	        </div>
@@ -131,7 +131,7 @@
 			  		<?php echo $Testo_Terza;?>
 			  	</div>
 			  	<a class="read-more" href="<?php echo $Link_Terza;?>">
-            		<i class="fas fa-link p-1"></i>
+            		<span class="fas fa-link p-1"></span>
             		<span class="text"><?php echo $TestoLink_Terza;?></span>
           		</a>
 	          </div>

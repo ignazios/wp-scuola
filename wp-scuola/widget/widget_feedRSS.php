@@ -64,12 +64,10 @@ class Feed_RSS extends WP_Widget {
 		$link  = '';
 ?>
 <section id="feedRSS_<?php echo $args['widget_id'];?>"  class="home-widget container">
-<?php echo $args['before_widget'];?>
 		<div class="it-header-block">
 	    	<div class="it-header-block-title">
 <?php 
-          	echo $args['before_widget'];          
-			if ( $title ) {
+ 			if ( $title ) {
           		$before_title=str_replace("<h2 class=\"","<h2 class=\"no_toc\"",$before_title);
                 echo $before_title . $title . $after_title;
             }
@@ -102,7 +100,6 @@ class Feed_RSS extends WP_Widget {
 			</div>
 <?php }?> 
 		</div>
-<?php   echo $args['after_widget']; ?>
 </section>
 <?php
 	}
@@ -175,7 +172,7 @@ class Feed_RSS extends WP_Widget {
 			<li>';
 			if ( !$link == '' ) {
 				$HTML.='
-				<a class="rsswidget" href="'.$link.'" target=\"_blank\">
+				<a class="rsswidget" href="'.$link.'" target="_blank">
 			        <div class="it-right p-3">
 			          <span class="text">'.$title.'<span class="nolink"><em><strong>'.$date.' '.$author."</strong>".($viscont?"<br />".$summary:"").'</em></span></span>
 			        </div>

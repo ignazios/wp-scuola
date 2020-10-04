@@ -50,7 +50,7 @@ ORDER BY post_date DESC";
 				<div class="row">
 					<div class="col-1">
 						<a class="list-item" href="'."#Tag".get_query_var('tag').'M'.$Data->Mese.'" data-toggle="collapse" aria-expanded="false" aria-controls="Tag'.get_query_var('tag').'M'.$Data->Mese.'">
-							<i class="fas fa-angle-down espandi align-middle"></i>
+							<span class="fas fa-angle-down espandi align-middle"></span>
 						</a>					
 					</div>
 					<div class="col-9 mb-0">
@@ -121,7 +121,7 @@ $Mese=$mesi[(int)$search_query["monthnum"]];
 				  	<div class="row">
 						<div class="col-1">
 							<a class="list-item" href="#ListaTag" data-toggle="collapse" aria-expanded="false" aria-controls="ListaTag">
-								<i class="fas fa-angle-down espandi align-middle"></i>
+								<span class="fas fa-angle-down espandi align-middle"></span>
 							</a>
 						</div>
 						<div class="col-11 mb-0">
@@ -149,7 +149,7 @@ $Mese=$mesi[(int)$search_query["monthnum"]];
 				  	<div class="row">
 						<div class="col-1 align-middle">
 							<a class="list-item" href="#ListaTagData" data-toggle="collapse" aria-expanded="false" aria-controls="ListaTagData">
-								<i class="fas fa-angle-down espandi align-middle"></i>
+								<span class="fas fa-angle-down espandi align-middle"></span>
 							</a>
 						</div>
 						<div class="col-11 mb-0">

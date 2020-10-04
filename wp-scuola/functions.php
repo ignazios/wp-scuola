@@ -10,6 +10,15 @@
  * License URI: 		https://opensource.org/licenses/AGPL-3.0
  * Text Domain:       	wpscuola
 */
+// Inclusione libreria personalizzazione dei menu
+include_once(get_template_directory().'/inc/class-wp-bootstrap-navwalker.php');
+// Inclusione libreria personalizzazione link
+require get_template_directory() . '/plugins/link/custom_link.php';
+// Inclusione libreria per la personalizzazione delle impostazioni del tema
+require get_template_directory() . '/inc/customizer.php';
+// Inclusione libreria per la personalizzazione dell'elenco delle categorie
+
+
 
 add_filter( 'image_size_names_choose', 		'scuola_image_sizes');
 add_filter( 'wp_title', 					'scuola_filter_wp_title');
@@ -21,7 +30,7 @@ add_filter( 'pre_get_posts',				'scuola_SearchFilter');
 add_filter( 'the_password_form', 			'scuola_password_form' );
 add_filter( 'manage_posts_columns', 		'scuola_posts_column_views' );
 add_filter( 'render_block', 				'personaliza_file_render', 10, 3);
-
+add_filter( 'wp_get_attachment_image_attributes', 'scuola_attributi_img',10,2);
 /**
 * Riattiva la gestione dei link standard di Wordpress 
 * I link vengono utilizzati in home page nel widget GalleraLinks
@@ -36,12 +45,87 @@ add_action( 'customize_register', 			'scuola_customize_register');
 add_action( 'wp_head', 						'scuola_opengraph');
 add_action( 'wp_head', 						'scuola_customize_head' );
 add_action( 'enqueue_block_editor_assets', 	'gutenberg_styles' );
-add_action( 'wp_footer', 					'scuola_customize_footer');
+//add_action( 'wp_footer', 					'scuola_customize_footer');
 add_action( 'admin_enqueue_scripts', 		'enqueue_scuola_admin' );
 add_action( 'after_setup_theme', 			'scuola_setup');
 add_action( 'manage_posts_custom_column', 	'scuola_posts_custom_column_views' );
+add_action( 'login_head', 					'scuola_custom_login_logo');
+add_action( 'admin_init', 					'mytheme_add_editor_styles' );
+add_action('template_redirect', 			'Gestione_DwnLink');
 
+function Gestione_DwnLink(){
+	if(isset($_REQUEST['action'])){
+		switch ($_REQUEST['action']){
+		case "dwnalle":
+//			var_dump($_SERVER);
+			if(!isset($_SERVER["HTTP_REFERER"])){
+				wp_die(__('Oooooo!<br />
+				        Stai tentando di fare il furbo!<br />
+				        Non puoi accedere a questo file direttamente.','albo-online'));
+				break;
+			}
+			$file_path	= get_attached_file($_REQUEST['id']);
+//			$file_path	=$file_path[0]->Allegato;
+//				echo "<pre>".$file_path."</pre>";
+			global $is_IE;
+			$chunksize	= 2*(1024*1024);
+//				wp_die($file_path);
+			$stat 		= @stat($file_path);
+			$etag		= sprintf('%x-%x-%x', $stat['ino'], $stat['size'], $stat['mtime'] * 1000000);
+			$path 		= pathinfo($file_path);
+			if ( isset($path['extension']) && strtolower($path['extension']) == 'zip' && $is_IE && ini_get('zlib.output_compression') ) {
+				ini_set('zlib.output_compression', 'Off');
+				// apache_setenv('no-gzip', '1');
+			}
+
+			header('Pragma: public');
+			header('Expires: 0');
+			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+			header('Cache-Control: private', FALSE);
+			header('Content-Type: application/force-download', FALSE);
+			header('Content-Type: application/octet-stream', FALSE);
+			header('Content-Type: application/download', FALSE);
+			header('Content-Disposition: attachment; filename="'.basename($file_path).'";');
+			header('Content-Transfer-Encoding: binary');
+			header('Last-Modified: ' . date('r', $stat['mtime']));
+			header('Etag: "' . $etag . '"');
+			header('Content-Length: '.$stat['size']);
+			header('Accept-Ranges: bytes');
+			ob_flush();
+			flush();
+			if ($stat['size'] < $chunksize) {
+				@readfile($file_path);
+			}
+			else {
+				$handle = fopen($file_path, 'rb');
+				while (!feof($handle)) {
+					echo fread($handle, $chunksize);
+					ob_flush();
+					flush();
+				}
+				fclose($handle);
+			}
+			exit();
+			break;
+		}
+	}
+}
+	
+function mytheme_add_editor_styles() {
+    add_editor_style( 'style-editor.css' );
+}
 add_post_type_support ('page', 	'excerpt');
+
+/**
+*
+* Aggiunta attributi immagine impostati
+*
+*/
+function scuola_attributi_img( $attr, $attachment = null) {
+    $attr["title"]=get_post( $attachment->ID )->post_title;
+// 	$attr["longdesc"]=get_post( $attachment->ID )->post_content;
+    return $attr;
+};
 
 /**
 *
@@ -88,7 +172,7 @@ function personaliza_file_render( $block_content, $block ) {
   $Description = get_post($IDFile)->post_content; // The Description	
   $filesize = size_format(filesize( get_attached_file( $IDFile ) ), 2); 
   $filetype = wp_check_filetype($Link);
-  $IconaFile='<i class="far fa-file"></i>';
+  $IconaFile='<span class="far fa-file"></span>';
   $TipoFile="File";
 
 /*  ob_start();
@@ -108,29 +192,29 @@ function personaliza_file_render( $block_content, $block ) {
 	if($Title!=$Titolo) $Title=$Titolo;
   switch ($filetype['ext']){
   	case "txt": 
-  	case "odt": $IconaFile='<i class="far fa-file-alt fa-2x"></i>'; $TipoFile="Open Document Format for Office Applications";break;
-  	case "pdf": $IconaFile='<i class="far fa-file-pdf fa-2x"></i>'; $TipoFile="Portable Document Format";break;
- 	case "csv": $IconaFile='<i class="fas fa-file-csv fa-2x"></i>'; $TipoFile="comma-separated values";break;
+  	case "odt": $IconaFile='<span class="far fa-file-alt fa-2x"></span>'; $TipoFile="Open Document Format for Office Applications";break;
+  	case "pdf": $IconaFile='<span class="far fa-file-pdf fa-2x"></span>'; $TipoFile="Portable Document Format";break;
+ 	case "csv": $IconaFile='<span class="fas fa-file-csv fa-2x"></span>'; $TipoFile="comma-separated values";break;
   	case "doc":
   	case "rtf":
-  	case "docx": $IconaFile='<i class="far fa-file-word fa-2x"></i>'; $TipoFile="Microsoft Word document";break;
+  	case "docx": $IconaFile='<span class="far fa-file-word fa-2x"></span>'; $TipoFile="Microsoft Word document";break;
   	case "xls":
   	case "ods":
-  	case "xlsx": $IconaFile='<i class="far fa-file-excel fa-2x"></i>'; $TipoFile="Foglio di calcolo";break;
+  	case "xlsx": $IconaFile='<span class="far fa-file-excel fa-2x"></span>'; $TipoFile="Foglio di calcolo";break;
   	case "ppt":
   	case "odp": 
-  	case "pptx": $IconaFile='<i class="far fa-file-powerpoint fa-2x"></i>'; $TipoFile="Presentazione";break;
-  	case "mp4":  $IconaFile='<i class="far fa-file-video fa-2x"></i>'; $TipoFile="File multimediale video e audio digitali";break;
-  	case "zip":  $IconaFile='<i class="far fa-file-archive fa-2x"></i>';$TipoFile="Archivio compresso"; break;
+  	case "pptx": $IconaFile='<span class="far fa-file-powerpoint fa-2x"></span>'; $TipoFile="Presentazione";break;
+  	case "zip":  $IconaFile='<span class="far fa-file-archive fa-2x"></span>';$TipoFile="Archivio compresso"; break;
+  	case "mp4":  $IconaFile='<span class="far fa-file-video fa-2x"></span>'; $TipoFile="File multimediale video e audio digitali";break;
   	case "png":
   	case "jpg":
   	case "jpeg":
   	case "bmp":
-  	case "ico":$IconaFile='<i class="far fa-file-image fa-2x"></i>'; $TipoFile="Immagine";break;
+  	case "ico":$IconaFile='<span class="far fa-file-image fa-2x"></span>'; $TipoFile="Immagine";break;
   }
 ob_start();?>  
 		<div class="card-wrapper border rounded">
-		    <div class="card-body">
+		    <div class="card-body p-2">
 		        <div class="media stack-xs">
 		            <div class="media-body">
 		                <div class="media">
@@ -138,8 +222,8 @@ ob_start();?>
 		                    	<?php echo $IconaFile;?>
 		                    </div>
 		                    <div class="media-body">
-		                        <h4 class="h5"><a href="<?php echo $Link;?>" title="<?php echo $Title;?>"><?php echo  $Title;?></a></h4>
-		                        <div class="text-muted text-small"><i class="fas fa-hdd ml-3"></i> <?php echo $filesize;?> <i class="fas fa-file"></i> <?php echo $TipoFile;?></div>
+		                        <h3 class="h5"><a href="<?php echo $Link;?>" title="<?php echo $Title;?>"><?php echo  $Title;?></a></h3>
+		                        <div class="text-muted text-small"><span class="fas fa-hdd ml-3"></span> <?php echo $filesize;?> <span class="fas fa-file"></span> <?php echo $TipoFile;?></div>
 		                        <?php if($Description!=="") :?>
 		                        <div class="text-muted"><?php echo $Description;?></div>
 		                        <?php endif;?>
@@ -148,7 +232,9 @@ ob_start();?>
 		            </div>
 		            <?php if(strpos($block_content,"wp-block-file__button")!==FALSE) :?>
 		            <div class="ml-3 wpdmdl-btn">
-		                <a class="btn btn-primary " rel="nofollow" href="<?php echo $Link;?>"><?php _e("Visualizza","wpscuola");?></a>
+		                <a class="btn btn-primary " rel="nofollow" href="<?php 
+		                $Link=get_home_url()."?action=dwnalle&id=".$IDFile;
+		                echo $Link;?>"><?php _e("Scarica","wpscuola");?></a>
 		            </div>
 		            <?php endif;?>
 		        </div>
@@ -157,15 +243,6 @@ ob_start();?>
 <?php
   return ob_get_clean();
 }
-
-
-/* UPDATER THEME VERSION */
-require 'inc/theme-update-checker.php';
-$update_checker = new ThemeUpdateChecker(
-    'wp-scuola',
-    'https://raw.githubusercontent.com/ignazios/wp-scuola/master/wp-scuola.json'
-);
-
 $mesi = array(1=>__( 'Gennaio', 'wpscuola' ), 
                  __( 'Febbraio', 'wpscuola' ), 
                  __( 'Marzo', 'wpscuola' ), 
@@ -186,11 +263,11 @@ function scuola_setup()	{
 *	Theme Support 
 */  
    if ( function_exists( 'add_theme_support' ) ) { 
+   	add_theme_support ('editor-styles');
  	add_theme_support('title-tag');
 	add_theme_support('automatic-feed-links');
-	add_theme_support('post-thumbnails');
     add_theme_support('post-thumbnails' );
-     add_theme_support('custom-background', array('default-color' => 'ffffff','default-image' => get_template_directory_uri() . '/img/blank.png',));
+    add_theme_support('custom-background', array('default-color' => 'ffffff','default-image' => get_template_directory_uri() . '/images/blank.png',));
     add_theme_support( 'align-wide' );
     add_theme_support('editor-color-palette', array(
 			array(
@@ -284,8 +361,7 @@ if( function_exists('add_image_size')){
 global $content_width;
 if (!isset($content_width)) $content_width = 640;
 register_nav_menus(array(
-	'menu-main' => __('Main Menu', 'wpscuola'),
-	'mega-main' => __('Mega Menu', 'wpscuola'),
+	'menu-principale' => __('Main Menu', 'wpscuola'),
 	'menu-social'  => __( 'Social Menu', 'wpscuola' ),
 	'menu-footer'  => __( 'Footer Menu', 'wpscuola' ),
 	'menu-footer-ente'  => __( 'Footer Menu Ente', 'wpscuola' ),
@@ -293,12 +369,12 @@ register_nav_menus(array(
 	'menu-footer-secondo'  => __( 'Footer Menu secondo', 'wpscuola' ),
 ));
 }
-// Inclusione libreria personalizzazione link
-require get_template_directory() . '/plugins/link/custom_link.php';
-// Inclusione libreria per la personalizzazione delle impostazioni del tema
-require get_template_directory() . '/inc/customizer.php';
-// Inclusione libreria per la personalizzazione dell'elenco delle categorie
-require get_template_directory() . '/inc/my_class-walker-category.php';
+function scuola_custom_login_logo() {
+    echo '<style type="text/css">';
+    echo '.login h1 a { background-image:url('.esc_url(get_site_icon_url()).') !important; }';
+    echo '</style>';
+}
+
 /**
 * Inclusione Moduli del tema
 */
@@ -370,25 +446,31 @@ include( get_template_directory() . '/inc/class-simplepie.php' );
   }
 
 function enqueue_scuola_admin() {
-    wp_enqueue_style('scuola_fonts_Awesome', get_template_directory_uri() . '/lib/bootstrap-italia/css/all.css');
-            wp_enqueue_script('jquery-ui-tooltip');
+    wp_enqueue_style('scuola_fonts_Awesome', get_template_directory_uri() . '/static/css/all.css');
+    wp_enqueue_script('jquery-ui-tooltip');
+    if (is_front_page()) {
+		wp_enqueue_script( 'scuola-image_hover_effects_JS', get_template_directory_uri() . '/static/js/production.min.js' );
+		wp_enqueue_style( 'scuola-image_hover_effects_CSS', get_template_directory_uri() . '/static/css/image_hover_effects.css');	
+	}
+
 }
 
 function enqueue_scuola_public() {
-    wp_enqueue_style( 'bootstrap-italia-min', get_template_directory_uri() . "/lib/bootstrap-italia/css/bootstrap-italia.min.css");
-    wp_enqueue_style( 'bootstrap-italia-map', get_template_directory_uri() . "/lib/bootstrap-italia/css/bootstrap-italia.min.css.map");
-    wp_enqueue_style( 'bootstrap-italia-icon-font', get_template_directory_uri() . "/lib/bootstrap-italia/css/italia-icon-font.css");
-    wp_enqueue_style( 'general-style', get_template_directory_uri() . "/style.css");
-    wp_enqueue_style( 'scuola_fonts_Awesome', get_template_directory_uri() . '/lib/bootstrap-italia/css/all.css');
-//	wp_enqueue_script( 'PopperScript', get_template_directory_uri().'/lib/js/popper.min.js', array('jquery'),null ,true );
-    wp_enqueue_script( 'bootstrap-italia_bundle_min_script', get_template_directory_uri().'/lib/bootstrap-italia/js/bootstrap-italia.bundle.min.js', array('jquery'),null ,true );
-	wp_enqueue_script('scuola-public-script', get_template_directory_uri().'/js/Public.js', array('jquery'),null ,true );
-	if (is_front_page()) {
-		wp_enqueue_script( 'scuola-image_hover_effects_JS', get_template_directory_uri() . '/lib/js/production.min.js' );
-		wp_enqueue_style( 'scuola-image_hover_effects_CSS', get_template_directory_uri() . '/lib/css/image_hover_effects.css');	
-	}
-};
+    wp_enqueue_style('wpscuola_bootstrap-italia.min_css', get_template_directory_uri() . '/static/css/bootstrap-italia.min.css');
+    wp_enqueue_style('wpscuola_owl.carousel.min_css', get_template_directory_uri() . '/static/css/owl.carousel.min.css');
+    wp_enqueue_style('wpscuola_owl.theme.default.min_css', get_template_directory_uri() . '/static/css/owl.theme.default.min.css');
 
+    wp_enqueue_style('wpscuola_jquery-ui_css', get_template_directory_uri() . '/static/css/jquery-ui.css');
+    wp_enqueue_style('wpscuola_tema_css', get_template_directory_uri() . '/static/css/tema.css');
+    wp_enqueue_style('wpscuola_magnific-popup_css', get_template_directory_uri() . '/inc/magnific-popup/magnific-popup.css');    
+    wp_enqueue_style( 'scuola_fonts_Awesome', get_template_directory_uri() . '/static/css/all.css');
+   if (is_front_page()) {
+		wp_enqueue_script( 'scuola-image_hover_effects_JS', get_template_directory_uri() . '/static/js/production.min.js' );
+		wp_enqueue_style( 'scuola-image_hover_effects_CSS', get_template_directory_uri() . '/static/css/image_hover_effects.css');	
+	}
+//	wp_enqueue_style('wpscuola_adjustments_css', get_template_directory_uri() . '/inc/adjustments.css');
+
+}
 function scuola_enqueue_comment_reply_script() {
 if (get_option('thread_comments')) {
 	wp_enqueue_script('comment-reply');
@@ -590,57 +672,6 @@ function scuola_opengraph() {
 
 }
 
-function scuola_customize_head() { 
-	$Regole="";
-	if (!is_admin_bar_showing ()) {
-//		$Regole=".sticky .it-header-navbar-wrapper, #myHeader{margin-top: 0!important;padding-top:0;}";
-		$Regole=".sticky{margin-top: 0!important;padding-top:0;}";
-	}else{
-		$Regole="@media screen and (min-width: 600px){
-	.sticky {
-	    margin-top: 25px;
-	}
-}
-@media screen and (min-width: 600px) and (max-width: 782px){
-	.sticky {
-	    margin-top: 45px;
-	}
-}
-@media screen and (max-width: 599px){
-	.sticky {
-	    margin-top: 0;
-	}
-}";
-	}?>
-<!-- Custom <head> content -->
-  <style type="text/css">
-  body {color: <?php echo get_theme_mod( 'scuola_text_color', "#000000" ); ?>;}
-  .it-header-center-wrapper .it-header-center-content-wrapper .it-brand-wrapper a, .it-header-center-wrapper .it-header-center-content-wrapper .it-right-zone, .it-right-zone .nav li a{color: <?php echo get_theme_mod( 'scuola_head_link_color', "#65dcdf" ); ?>!important }
-  .wp-block-file .wp-block-file__button{background-color: <?php echo get_theme_mod( 'scuola_link_color', "#0066cc" ); ?>!important }
-   .mysearchform input[type="text"], .it-header-wrapper .mysearchform input[type="text"], .mysearchform [type="submit"]{color: <?php echo get_theme_mod( 'scuola_head_text_color', "#fff" ); ?>!important }
-    .mysearchform input[type="text"], .it-header-wrapper .mysearchform input[type="text"]{box-shadow: 0 1px 0px <?php echo get_theme_mod( 'scuola_head_text_color', "#fff" ); ?>!important;}
-    .it-footer-main{color: <?php echo get_theme_mod( 'scuola_footer_text_color', "#fff" ); ?>;}
-  	#content {background-color:#<?php echo get_theme_mod( 'background_color' ); ?>;}
-    .it-header-center-wrapper, .it-header-navbar-wrapper, .it-header-wrapper { background-color: <?php echo get_theme_mod( 'scuola_head_color', "#0066cc" ); ?>;}
-    a, a:hover, a.read-more, .menu-main .nav li ul a, .menu-main .nav li ul a:hover, .menu-main .nav li:hover ul a { color: <?php echo get_theme_mod('scuola_link_color', "#0066cc"); ?>; }
-    button, input[type="submit"], .btn-primary { background-color: <?php echo get_theme_mod( 'scuola_link_color', "#0066cc" ); ?>; }
-    .btn-primary:hover, .btn-primary:not(:disabled):not(.disabled):active { background-color: <?php echo get_theme_mod( 'scuola_link_color', "#0066cc" ); ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1); }
-    .btn-outline-primary { color: <?php echo get_theme_mod( 'scuola_link_color', "#0066cc" ); ?>; box-shadow: inset 0 0 0 1px <?php echo get_theme_mod( 'scuola_link_color', "#0066cc" ); ?>; }
-    .btn-outline-primary:hover, .btn-outline-primary:not(:disabled):not(.disabled):active { color: <?php echo get_theme_mod( 'scuola_link_color', "#0066cc" ); ?>; box-shadow: inset 0 0 0 2px <?php echo get_theme_mod( 'scuola_link_color', "#0066cc" ); ?>; }
-    html, #footer, .it-footer-main { background-color: <?php echo get_theme_mod( 'scuola_footer_color', '#00264d' ); ?>; }
-    #footer a { color: <?php echo get_theme_mod('scuola_footer_link_color', "#65dcdf"); ?>!important; }
-    #footer {background-color: #004080; color: <?php echo get_theme_mod('scuola_footer_text_color', "#fff"); ?>!important; 
-}
-	.my-bg-primary { background-color: <?php echo get_theme_mod( 'scuola_head_color', "#0066cc" ); ?>; }
-	@media (min-width:1200px) {
-	     .it-list-wrapper .it-list a:hover {color: <?php echo get_theme_mod( 'scuola_link_color', "#0066cc" ); ?>;}
-	}   
-   	<?php echo $Regole; ?>
- </style>
-<!-- Fine Custom <head> content -->
-  <?php 
-  }
-
 function scuola_customize_footer(){ ?>
   <script>
     var isMobile = false; //initiate as false
@@ -687,42 +718,6 @@ function custom_excerpt_length( $length ) {
 function new_excerpt_more( $more ) {
     return ' ... ';
 }
-
-function get_MenuSocial($ulID="menu-social",$ulClass="nav",$liClass="menu-item"){?>
-	<ul id="<?php echo $ulID;?>" class="<?php echo $ulClass;?>">
-	<?php if (get_theme_mod('scuola_social_facebook')){?>
-		<li class="<?php echo $liClass;?>">
-			<a href="<?php echo get_theme_mod('scuola_social_facebook');?>" target="_blank"><i class="fab fa-facebook-f"></i> <span class="sr-only"> link al canale Facebook</span></a>
-		</li>
-	<?php }
-		if (get_theme_mod('scuola_social_twitter')){?>
-		<li class="<?php echo $liClass;?>">
-			<a href="<?php echo get_theme_mod('scuola_social_twitter');?>" target="_blank"><i class="fab fa-twitter"></i> <span class="sr-only"> link al canale Twitter</span></a>
-		</li>
-	<?php }		
-		if (get_theme_mod('scuola_social_youtube')){?>
-		<li class="<?php echo $liClass;?>">
-			<a href="<?php echo get_theme_mod('scuola_social_youtube');?>" target="_blank"><i class="fab fa-youtube"></i> <span class="sr-only"> link al canale YouTube</span></a>
-		</li>
-	<?php }		
-		if (get_theme_mod('scuola_social_instagram')){?>
-		<li class="<?php echo $liClass;?>">
-			<a href="<?php echo get_theme_mod('scuola_social_instagram');?>" target="_blank"><i class="fab fa-instagram"></i> <span class="sr-only"> link al canale Instagram</span></a>
-		</li>
-	<?php }		
-		if (get_theme_mod('scuola_social_telegram')){?>
-		<li class="<?php echo $liClass;?>">
-			<a href="<?php echo get_theme_mod('scuola_social_telegram');?>" target="_blank"><i class="fab fa-telegram-plane"></i> <span class="sr-only"> link al canale Telegram</span></a>
-		</li>
-	<?php }		
-		if (get_theme_mod('scuola_social_linkedin')){?>
-		<li class="<?php echo $liClass;?>">
-			<a href="<?php echo get_theme_mod('scuola_social_linkedin');?>" target="_blank"><i class="fab fa-linkedin-in"></i> <span class="sr-only"> link al canale LinkedIn</span></a>
-		</li>
-	<?php }?>
-	</ul>
-<?php
-}
 function scuola_password_form() {  
 global $post;
 	$content = '
@@ -731,7 +726,7 @@ global $post;
 			    <div class="form-row">
 					<div class="form-group col-md-6">
 						<input name="post_password" type="password" class="form-control input-password" id="exampleInputPassword" aria-labelledby="infoPassword" >
-				    	<span class="password-icon" aria-hidden="true"><i class="far fa-eye"></i></span>
+				    	<span class="password-icon" aria-hidden="true"></span><span class="far fa-eye"></span>
 				        <label for="exampleInputPassword">Inserire la password per visualizzare '.(get_post_type( $PostID) =="circolari_scuola"?"la Circolare":"l'Articolo").'</label>
 			    	</div>
 		    	<div class="form-group col-md-3">
@@ -745,12 +740,166 @@ global $post;
    	if(!isset($img_thumbnail) Or $img_thumbnail==""){
 		$IDImgEvidenza=get_theme_mod('scuola_DefautlImg');
 		if($IDImgEvidenza===FALSE){
-			return '<img src="'.get_template_directory_uri().'/img/thumbnail-default.png" title="Immagine di default" alt="Immagine di default">'; 
+			return '<img src="'.get_template_directory_uri().'/imgages/thumbnail-default.png" title="Immagine di default" alt="Immagine di default">'; 
 		}
 		$Image=wp_get_attachment_url($IDImgEvidenza);
 		$ImageTitle = get_post($IDImgEvidenza)->post_title; //The Title
 		$ImageAlt = get_post_meta($IDImgEvidenza, '_wp_attachment_image_alt', TRUE); //The Caption
 		$ImageDescription = get_post($IDImgEvidenza)->post_content; // The Description	
-     	return '<img src="'.$Image.'" title="'.$ImageTitle.'" alt="'.$ImageAlt.'" longdesc="'.$ImageDescription.'">';
+     	return '<img src="'.$Image.'" title="'.$ImageTitle.'" alt="'.$ImageAlt.'" >';
 	}else return $img_thumbnail;
  }
+function current_url() {
+    $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $validURL = str_replace("&", "&amp", $url);
+    return $validURL;
+}
+
+// Supporto ai tags per le pagine
+function tags_support_all() {
+    register_taxonomy_for_object_type('post_tag', 'page');
+}
+add_action('init', 'tags_support_all');
+
+// Inserimento dei tags nelle queries
+function tags_support_query($wp_query) {
+    if ($wp_query->get('tag')) {
+        $wp_query->set('post_type', 'any');
+    }
+}
+add_action('pre_get_posts', 'tags_support_query');
+
+function scuola_customize_head() { 
+
+	$Regole="";
+	if (!is_admin_bar_showing ()) {
+//		$Regole=".sticky .it-header-navbar-wrapper, #myHeader{margin-top: 0!important;padding-top:0;}";
+		$Regole="#mainheader.ridotto {top: 0!important;}";
+	}else{
+		$Regole="#mainheader.ridotto {top: 30px!important;}
+	@media (max-width: 780px){
+		#mainheader.ridotto {top: 45px!important;}
+	}"; 
+	}
+	$ColoreHeader=get_theme_mod( 'scuola_head_color', "#0066cc" );
+	$ColoreTestoHeader=get_theme_mod( 'scuola_head_text_color', "#fff" );
+	$ColoreLinkHeader=get_theme_mod( 'scuola_head_link_color', "#65dcdf" );
+	
+	$ColoreBody=get_theme_mod( 'background_color', "#fff" );
+	$ColoreTestoBody=get_theme_mod( 'scuola_text_color', "#000" );
+	$ColoreLinkBody=get_theme_mod( 'scuola_link_color', "#0066cc" );
+	
+	$ColoreFooter=get_theme_mod( 'scuola_footer_color', '#00264d' );
+	$ColoreTestoFooter=get_theme_mod('scuola_footer_text_color', "#fff");
+	$ColoreLinkFooter=get_theme_mod('scuola_footer_link_color', "#65dcdf");
+	?>
+<!-- Custom <head> content -->
+  <style type="text/css">
+  <?php echo $Regole; ?>
+  body {color: <?php echo $ColoreTestoBody; ?>;}
+     .navbar .navbar-collapsable .navbar-nav li a.nav-link,#mainheader, .my-bg-primary, .it-header-navbar-wrapper, .it-header-wrapper { background-color: <?php echo $ColoreHeader ?>!important;}
+     #mainheader .cerca input{
+		color: <?php echo $ColoreLinkHeader ?>;
+    	border-bottom: 1px solid <?php echo $ColoreLinkHeader ?>;
+	}
+
+ 	#mainheader.soclial {color: <?php echo $ColoreTestoHeader ; ?>!important }
+    .mysearchform input[type="text"], .it-header-wrapper .mysearchform input[type="text"]{box-shadow: 0 1px 0px <?php echo $ColoreTestoHeader; ?>!important;} 
+  
+   #menu-principale a.dropdown-toggle, #mainheader .social a,#mainheader .social a:hover, #mainheader .amministrazione .logotxt h1 a, #mainheader .amministrazione .logotxt h1 a:hover{color: <?php echo $ColoreLinkHeader; ?>!important }
+   .wp-block-file .wp-block-file__button{background-color: <?php echo $ColoreLinkBody; ?>!important }
+   
+    .it-footer-main{color: <?php echo get_theme_mod( 'scuola_footer_text_color', "#fff" ); ?>;}
+  	#content {background-color:<?php echo $ColoreBody; ?>;}
+     a, a:hover, a.read-more { color: <?php echo $ColoreLinkBody; ?>; }
+    button, input[type="submit"], .btn-primary { background-color: <?php echo $ColoreLinkBody; ?>; }
+    .btn-primary:hover, .btn-primary:not(:disabled):not(.disabled):active { background-color: <?php echo $ColoreLinkBody; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1); }
+    .btn-outline-primary { color: <?php echo $ColoreLinkBody; ?>; box-shadow: inset 0 0 0 1px <?php echo $ColoreLinkBody; ?>; }
+    .btn-outline-primary:hover, .btn-outline-primary:not(:disabled):not(.disabled):active { color: <?php echo $ColoreLinkBody; ?>; box-shadow: inset 0 0 0 2px <?php echo $ColoreLinkBody; ?>; }
+    #footer, .it-footer-main { background-color: <?php echo $ColoreFooter; ?>; }
+    #footer a { color: <?php echo $ColoreLinkFooter; ?>!important; }
+    #footer {color: <?php echo $ColoreTestoFooter; ?>!important; 
+}
+	@media (min-width:1200px) {
+	     .it-list-wrapper .it-list a:hover {color: <?php echo $ColoreLinkBody; ?>;}
+	}   
+   	
+ </style>
+<!-- Fine Custom <head> content -->
+  <?php 
+  }
+function HasSocial(){
+	if (   get_theme_mod('scuola_social_facebook') == "" && 
+		   get_theme_mod('scuola_social_twitter') == "" && 
+	       get_theme_mod('scuola_social_twitter') == "" && 
+	       get_theme_mod('scuola_social_instagram') == "" && 
+	       get_theme_mod('scuola_social_telegram') == "" && 
+	       get_theme_mod('scuola_social_linkedin') == "" )
+	    return FALSE;
+	else
+		return TRUE;
+}
+function get_MenuSocial(){?>
+                <?php if (get_theme_mod('scuola_social_facebook') != ""): ?>
+                    <li class="list-inline-item">
+                        <a  target="_blank" class="social-icon"
+                            aria-label="<?php echo __('Link ad unsito esterno','wpscuola'); ?> - Facebook"
+                            href="<?php echo get_theme_mod('scuola_social_facebook');?>">
+                            <span class="fab fa-facebook-f"></span> 
+                            <span class="sr-only"> <?php echo __('Seguici su Facebook','wpscuola'); ?></span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+                <?php if (get_theme_mod('scuola_social_twitter') != ""): ?>
+                    <li class="list-inline-item">
+                        <a  target="_blank" class="social-icon"
+                            aria-label="<?php echo __('Link ad unsito esterno','wpscuola'); ?> - Facebook"
+                            href="<?php echo get_theme_mod('scuola_social_twitter');?>">
+                            <span class="fab fa-twitter"></span> 
+                            <span class="sr-only"> <?php echo __('Seguici su Twitter','wpscuola'); ?></span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+                <?php if (get_theme_mod('scuola_social_youtube') != ""): ?>
+                    <li class="list-inline-item">
+                        <a  target="_blank" class="social-icon"
+                            aria-label="<?php echo __('Link ad unsito esterno','wpscuola'); ?> - Facebook"
+                            href="<?php echo get_theme_mod('scuola_social_youtube');?>">
+                            <span class="fab fa-youtube"></span> 
+                            <span class="sr-only"> <?php echo __('Seguici su YouTube','wpscuola'); ?></span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+                <?php if (get_theme_mod('scuola_social_instagram') != ""): ?>
+                    <li class="list-inline-item">
+                        <a  target="_blank" class="social-icon"
+                            aria-label="<?php echo __('Link ad unsito esterno','wpscuola'); ?> - Facebook"
+                            href="<?php echo get_theme_mod('scuola_social_instagram');?>">
+                            <span class="fab fa-instagram"></span> 
+                            <span class="sr-only"> <?php echo __('Seguici su Instagram','wpscuola'); ?></span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+               <?php if (get_theme_mod('scuola_social_telegram') != ""): ?>
+                    <li class="list-inline-item">
+                        <a  target="_blank" class="social-icon"
+                            aria-label="<?php echo __('Link ad unsito esterno','wpscuola'); ?> - Facebook"
+                            href="<?php echo get_theme_mod('scuola_social_telegram');?>">
+                            <span class="fab fa-telegram-plane"></span> 
+                            <span class="sr-only"> <?php echo __('Seguici su Telegram','wpscuola'); ?></span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+               <?php if (get_theme_mod('scuola_social_linkedin') != ""): ?>
+                    <li class="list-inline-item">
+                        <a  target="_blank" class="social-icon"
+                            aria-label="<?php echo __('Link ad unsito esterno','wpscuola'); ?> - Facebook"
+                            href="<?php echo get_theme_mod('scuola_social_linkedin');?>">
+                            <span class="fab fa-linkedin-in"></span> 
+                            <span class="sr-only"> <?php echo __('Seguici su LinkedIn','wpscuola'); ?></span>
+                        </a>
+                    </li>
+                <?php endif; ?>
+ 
+<?php }
+

@@ -46,7 +46,6 @@ class Servizi extends WP_Widget {
 		<div class="it-header-block">
 	    	<div class="it-header-block-title">
 <?php 
-            echo $args['before_widget'];
             if ( $title ) {
                 echo $args['before_title'] . $title . $args['after_title'];
             }
@@ -120,7 +119,6 @@ class Servizi extends WP_Widget {
             } ?>   
 	    	</div>
 		</div>
-<?php echo $args['after_widget'];?>
 </section>	
 <?php
 	wp_reset_postdata();

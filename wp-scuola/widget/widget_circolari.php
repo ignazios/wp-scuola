@@ -52,11 +52,10 @@
 ?>
   	<section id="ag_<?php echo $args['widget_id'];?>"  class="home-widget container ">
 <?php           
-		echo $args['before_widget'];          
            if ( $title ) {
-                echo $args['before_title'] . $title . ' <a href="'.site_url('/wp-admin/edit.php?post_type=circolari_scuola&page=Firma').'">';
+                echo $args['before_title'] . $title;
                 if(is_user_logged_in() and ($CircoDaFirmare=wps_GetCircolariDaFirmare("N"))>0){
-                	echo '<span class="badge badge-pill badge-danger" title="Circolari da firmare">'.$CircoDaFirmare.'</span></a>';
+                	echo ' <a href="'.site_url('/wp-admin/edit.php?post_type=circolari_scuola&page=Firma').'"> <span class="badge badge-pill badge-danger" title="Circolari da firmare">'.$CircoDaFirmare.'</span></a>';
                 }
                 echo $args['after_title'];
             } ?>
@@ -76,30 +75,29 @@
 						$Elenco=wps_GetEencoDestinatari($Circolare->ID);
 ?>
  			<div class="col-12 col-sm-6 col-lg-4">
-      			<div class="it-grid-item-wrapper shadow>
-			    <!--start card-->
+ 			    <!--start card-->
 				    <div class="card-wrapper card-space">
-				      <div class="card card-bg card-big no-after">
+				      <div class="card card-bg no-after">
 				        <div class="card-body">
-				          <div class="head-tags">
+				          <div class="head-tags mb-0">
 				            <ul>
-				            	<li><span class="data"><i class="far fa-calendar-alt"></i> <?php echo date('d/m/Y',strtotime($Circolare->post_date));?> <strong><i class="fas fa-ticket-alt"></i> <?php echo $numero."_".$anno;?></strong></span></li>
-				            	<li><span class="users"><i class="fa fa-users" aria-hidden="true"></i> <?php echo $Elenco;?></span></li>
+				            	<li><span class="data"><span class="far fa-calendar-alt"></span> <?php echo date('d/m/Y',strtotime($Circolare->post_date));?> <strong><span class="fas fa-ticket-alt"></span> <?php echo $numero."_".$anno;?></strong></span></li>
+				            	<li><span class="users"><span class="fa fa-users" aria-hidden="true"></span> <?php echo $Elenco;?></span></li>
 				            </ul>
 				            
 				          </div>
-				          	<h5 class="card-title">
+				          	<h4 class="card-title">
 				          		<a href="<?php echo get_permalink($Circolare->ID);?>"><?php echo get_the_title($Circolare->ID); ?></a>
-				          	</h5>
+				          	</h4>
 				          <p class="card-text"><?php echo $Circolare->post_excerpt; ?></p>
 				          <div class="it-card-footer">
-				            <span class="card-autore"><i class="fas fa-user-edit"></i> <?php echo get_the_author_meta('display_name', $Circolare->post_author);?></span>
+				            <span class="card-autore"><span class="fas fa-user-edit"></span> <?php echo get_the_author_meta('display_name', $Circolare->post_author);?></span>
 				            <?php	if (wps_Is_Circolare_Da_Firmare($Circolare->ID)){?>
 				            	  <span class="card-firma">
 							<?php		if (!wps_Is_Circolare_Firmata($Circolare->ID)) {
 											$ngiorni=wps_Get_scadenzaCircolare($Circolare->ID,"",True);					
 											if(wps_Is_Circolare_Scaduta($Circolare->ID)){?>
-									<i class="fa fa-pencil" aria-hidden="true" style="color:red;"></i> <?php _e('Scaduta e non Firmata','wpscuola');						
+									<span class="fa fa-pencil" aria-hidden="true" style="color:red;"></span> <?php _e('Scaduta e non Firmata','wpscuola');						
 											}else{
 												switch ($ngiorni){
 													case -1:							
@@ -120,10 +118,10 @@
 													$Tipo=sprintf(__('Esprimere adesione %s','wpscuola'),$entro);
 												else
 													$Tipo=sprintf(__('Firmare %s','wpscuola'),$entro);?>
-									<i class="fa fa-pencil" aria-hidden="true" style="color:red;"></i> <?php echo $Tipo;	
+									<span class="fa fa-pencil" aria-hidden="true" style="color:red;"></span> <?php echo $Tipo;	
 										}			
 									}else{ ?>
-									<i class="fa fa-pencil" aria-hidden="true" style="color:blue;"></i> <?php _e('Firmata','wpscuola');
+									<span class="fa fa-pencil" aria-hidden="true" style="color:blue;"></span> <?php _e('Firmata','wpscuola');
 						   			}?>
 								</span>
 				           <?php } ?>
@@ -140,12 +138,11 @@
 <?php		if($linkLT){?>							
 			<div class="it-card-footer">
 		    	<a class="read-more" href="<?php echo get_post_type_archive_link("circolari_scuola");?>">
-		        	<span class="text"><i class="fas fa-link p-1"></i> <?php _e('Leggi tutte le circolari','wpscuola');?></span>
+		        	<span class="text"><span class="fas fa-link p-1"></span> <?php _e('Leggi tutte le circolari','wpscuola');?></span>
 		        </a>
 		    </div>
 <?php 		} ?>
 		</div>
-<?php   echo $args['after_widget']; ?>
 	</section>      	
 <?php                   
 	wp_reset_postdata();

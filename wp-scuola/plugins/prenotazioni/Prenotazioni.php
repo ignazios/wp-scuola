@@ -134,7 +134,7 @@ class Plugin_Prenotazioni {
             wp_enqueue_script( 'wp-color-picker');         
             wp_enqueue_style( 'wp-color-picker' );
             wp_enqueue_style( 'wp-jquery-ui-dialog' );
-            wp_enqueue_style( 'jquery.ui.theme', Prenotazioni_URL. 'css/jquery-ui-custom.css');
+//            wp_enqueue_style( 'jquery.ui.theme', Prenotazioni_URL. 'css/jquery-ui-custom.css');
             wp_register_style($this->plugin_name,  Prenotazioni_URL. 'css/style.css');
             wp_enqueue_style( $this->plugin_name);
            if($hook_suffix == 'toplevel_page_Prenotazioni' And isset($_GET["PreviewPrint"])) {
@@ -572,7 +572,7 @@ Note
 	}
     // Nuova Colonna Report  
         function SpaziNuoveColonne($defaults) {  
-            if ($_GET['post_type']=="spazi"){
+            if (isset($_GET['post_type']) And $_GET['post_type']=="spazi"){
                 if (current_user_can('edit_posts')){
                             $defaults['report'] = 'Report';  
                     }
@@ -582,7 +582,7 @@ Note
   
     // Visualizzazione nuova colonna Report  
     function SpaziNuoveColonneContenuto($column_name, $post_ID) {  
-        if ($_GET['post_type']=="spazi"){
+        if (isset($_GET['post_type']) And $_GET['post_type']=="spazi"){
             if ($column_name == 'report' And current_user_can( 'edit_posts')) {
                 echo '<a href="'.admin_url().'edit.php?post_type=spazi&page=Prenotazioni&op=rsettimanale&event_id='.$post_ID.'">Settimanale</a>';
             }  

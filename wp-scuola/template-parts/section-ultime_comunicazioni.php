@@ -53,7 +53,7 @@
     endif;
     if ($showallarchivio){
 ?>	<div class="row float-right">
-			<a class="read-more" href="<?php echo esc_url(home_url()) .'/comunicazioni';?>"><i class="fas fa-link p-1"></i> <span class="text"><?php _e('Mostra tutte le comunicazioni', 'wpscuola');?></span>
+			<a class="read-more" href="<?php echo esc_url(home_url()) .'/comunicazioni';?>"><span class="fas fa-link p-1"></span> <span class="text"><?php _e('Mostra tutte le comunicazioni', 'wpscuola');?></span>
           	</a>
     </div>						
 <?php	} ?>				

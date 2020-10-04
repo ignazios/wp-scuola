@@ -31,7 +31,7 @@ if(get_theme_mod('Scuola_Hero_Active')){
 	  <div class="img-responsive-wrapper">
 	    <div class="img-responsive">
 	        <div class="img-wrapper">
-	        	<img src="<?php echo $Image;?>" title="<?php echo $ImageTitle;?>" alt="<?php echo $ImageAlt;?>" longdesc="<?php echo $ImageDescription;?>">
+	        	<img src="<?php echo $Image;?>" title="<?php echo $ImageTitle;?>" alt="<?php echo $ImageAlt;?>" >
 	        </div>
 	    </div>
 	  </div>
@@ -40,7 +40,7 @@ if(get_theme_mod('Scuola_Hero_Active')){
 	    <div class="row">
 	        <div class="col-12">
 	          <div class="it-hero-text-wrapper bg-dark">
-	              <h1 class="no_toc"><?php echo $Titolo;?></h1>
+	              <h2 class="no_toc"><?php echo $Titolo;?></h2>
 	              <p class="d-none d-lg-block"><?php echo $Testo?></p>
 	              <div class="it-btn-container"><a class="btn btn-sm btn-secondary" href="<?php echo $Link;?>"><?php echo get_theme_mod('Scuola_Hero_LeggiTutto');?></a></div>
 	          </div>
@@ -48,7 +48,7 @@ if(get_theme_mod('Scuola_Hero_Active')){
 	    </div>
 	  </div>
 	</div>         
-	</section>
+</section>
 <?php } ?>
 <section id="content-home" role="main" class="container-fluid home-content">
    <div class="container-fluid">
@@ -98,7 +98,6 @@ if(get_theme_mod('Scuola_Hero_Active')){
 	      </div>
 	      <?php endif; ?>
 	</section>
-	
-</section>
+
 <?php	
 get_footer();

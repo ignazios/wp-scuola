@@ -1,11 +1,15 @@
 # WPScuola
 è un tema per [**WordPress 5**](https://it.wordpress.org/) (CMS open-source) specifico per le scuole italiane. 
 
-Il tema è basata sul tema originale [**Design Italia Versione: 0.32**](https://github.com/italia/design-wordpress-theme) autore [**Marco Gargano**](http://marcogargano.com/). 
-Del tema originale è stato mantenuto il foglio di stile e parte del function.php. I template di pagine ed articoli sono stati completamente riorganizzati ed è stata eliminata l'integrazione dei plugin consigliati.
+Il tema è basata sul tema originale [**ItaliaWP2 Versione: 1.1.6**](https://github.com/italia/design-wordpress-theme-italiaWP2) autore [**Boris Amico**](http://italiawp.borisamico.it/). 
+Del tema originale è stato mantenuto il frmework e l'header compreso il menu principale. I template di pagine, articoli, archivi e l'impostazione della home page sono stati personalizzati in funzione delle esigenze del mondo della scuola.
 
-WPScuola utilizza la libreria [**Bootstrap Italia**](https://italia.github.io/bootstrap-italia/) basata su [**Bootstrap 4.3.1**](https://getbootstrap.com/),di cui eredita tutte le funzionalità, componenti, griglie e classi di utilità, personalizzandole secondo le Linee Guida di Design per i siti web della Pubblica Amministrazione. 
+WPScuola utilizza:
+- la libreria [**Bootstrap Italia**](https://italia.github.io/bootstrap-italia/) basata su [**Bootstrap 4.3.1**](https://getbootstrap.com/),di cui eredita tutte le funzionalità, componenti, griglie e classi di utilità, personalizzandole secondo le Linee Guida di Design per i siti web della Pubblica Amministrazione. 
+- la libreria [**jQuery (licenza)**](https://jquery.org/license/)
+- la libreria di icone [**Font Awesome (licenza)**](https://github.com/FortAwesome/Font-Awesome#license)
 
+***Si ricorda che il tema è ancora in fase di sviluppo e potrebbero essere apportate in futuro modifiche significative.***
 ![Logo](https://github.com/ignazios/wp-scuola/blob/master/screenshot.png)
 #Licenza
 WPScuola è rilasciato con licenza [**AGPL-3.0**](https://opensource.org/licenses/AGPL-3.0) (https://www.gnu.org/graphics/agplv3-155x51.png) che permette il libero utilizzo anche per uso commerciale.
@@ -25,6 +29,12 @@ facebook: https://www.facebook.com/wpscuola/
  - **Wordpress** 	*5.0* - *5.5*
  - **PHP** 		*7.0*
 ## Change log
+- **1.0.0**
+  - ***Revizione*** totale del codice. Il tema adesso è basato su Italiawp2 per quanto riguarda la configurazione del framework Bootstrap Italia. E' stato rivisto completamente l'header ed il menu principale.
+  - ***Sono stati tolti*** i menu: mega menu, menu social
+  - ***E' stato revisionato*** tutto il codice.
+  - ***Sono state effettuate*** verifiche sull'accessibilità delle principali pagine del tema che hanno ottenuto esito positivo. Stiamo lavorando per verificare l'intero tema.
+  - ***E' stato aggiunto*** un sistema che tiene traccia e visualizza il numero di volte che un articolo/pagina viene visualizzato.
 - **0.2.1**
   - ***Modificato*** la visualizzazione del blocco file di Gutenberg, adesso visualizza l'icona dle tipo file, la dimensione e la descrizione gon grafica compatibile con il tema
   - ***Aggiunti*** i template del singolo link e della pagina dei dettagli per il plugin ***Download Manager*** con le impostazioni del tema

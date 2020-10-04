@@ -180,7 +180,7 @@ function VisualizzaAtto($id){
 ?>
 <section  id="DatiAtto">
 	<div class="container clearfix mb-3 pb-3">
-		<button class="btn btn-primary" onclick="window.location.href='<?php echo $_SERVER['HTTP_REFERER'];?>'"><i class="fas fa-arrow-circle-left"></i> <?php _e("Torna alla Lista","albo-online");?></button>
+		<button class="btn btn-primary" onclick="window.location.href='<?php echo $_SERVER['HTTP_REFERER'];?>'"><span class="fas fa-arrow-circle-left"></span> <?php _e("Torna alla Lista","albo-online");?></button>
 		<h2 class="u-text-h2 pt-3 pl-2">Dati atto</h2>
 		<?php echo ($Annullato?"<h3>".$Annullato."</h3>":"");?>
 	   	<div class="row">
@@ -317,7 +317,7 @@ foreach ($documenti as $allegato) {
 				<div class="col-11">  				
 				<?php echo ($allegato->DocIntegrale!="1"?'<span class="evidenziato">'.__("Pubblicato per Estratto","albo-online")."</span><br />":"").'<strong>'.__("Descrizione","albo-online").'</strong>: '.strip_tags(($allegato->TitoloAllegato?$allegato->TitoloAllegato:basename( $allegato->Allegato))).'</strong><br /><strong>'.__("Impronta","albo-online").'</strong>: '.$allegato->Impronta.'<br /><strong>'.__("Dimensione file","albo-online").'</strong>: '.ap_Formato_Dimensione_File(is_file($allegato->Allegato)?filesize($allegato->Allegato):0)."<br /><br />";
 						if (is_file($allegato->Allegato))
-							echo '<a href="'.ap_DaPath_a_URL($allegato->Allegato).'" class="addstatdw noUnderLine" rel="'.get_permalink().$sep.'action=addstatall&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" title="'.__("Visualizza Allegato","albo-online").'" target="_blank"><i class="fas fa-desktop fa-2x"></i></a> '.htmlspecialchars_decode($TipidiFiles[strtolower($Estensione)]['Verifica']).' <a href="'.get_permalink().$sep.'action=dwnalle&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" class="noUnderLine" title="'.__("Scarica allegato","albo-online").'"><i class="fas fa-download  fa-2x"></i></a>';	
+							echo '<a href="'.ap_DaPath_a_URL($allegato->Allegato).'" class="addstatdw noUnderLine" rel="'.get_permalink().$sep.'action=addstatall&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" title="'.__("Visualizza Allegato","albo-online").'" target="_blank"><span class="fas fa-desktop fa-2x"></span></a> '.htmlspecialchars_decode($TipidiFiles[strtolower($Estensione)]['Verifica']).' <a href="'.get_permalink().$sep.'action=dwnalle&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" class="noUnderLine" title="'.__("Scarica allegato","albo-online").'"><span class="fas fa-download  fa-2x"></span></a>';	
 	else
 		echo basename( $allegato->Allegato).' '.__("File non trovato, il file è stato cancellato o spostato!","albo-online");?>
 				</div>
@@ -347,7 +347,7 @@ foreach ($allegati as $allegato) {
 				<div class="col-11">  				
 				<?php echo ($allegato->DocIntegrale!="1"?'<span class="evidenziato">'.__("Pubblicato per Estratto","albo-online")."</span><br />":"").'<strong>'.__("Descrizione","albo-online").'</strong>: '.strip_tags(($allegato->TitoloAllegato?$allegato->TitoloAllegato:basename( $allegato->Allegato))).'</strong><br /><strong>'.__("Impronta","albo-online").'</strong>: '.$allegato->Impronta.'<br /><strong>'.__("Dimensione file","albo-online").'</strong>: '.ap_Formato_Dimensione_File(is_file($allegato->Allegato)?filesize($allegato->Allegato):0)."<br />";
 						if (is_file($allegato->Allegato))
-							echo '<a href="'.ap_DaPath_a_URL($allegato->Allegato).'" class="addstatdw noUnderLine" rel="'.get_permalink().$sep.'action=addstatall&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" title="'.__("Visualizza Allegato","albo-online").'" target="_blank"><i class="fas fa-desktop fa-2x"></i></a> '.htmlspecialchars_decode($TipidiFiles[strtolower($Estensione)]['Verifica']).' <a href="'.get_permalink().$sep.'action=dwnalle&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" class="noUnderLine" title="'.__("Scarica allegato","albo-online").'"><i class="fas fa-download  fa-2x"></i></a>';	
+							echo '<a href="'.ap_DaPath_a_URL($allegato->Allegato).'" class="addstatdw noUnderLine" rel="'.get_permalink().$sep.'action=addstatall&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" title="'.__("Visualizza Allegato","albo-online").'" target="_blank"><span class="fas fa-desktop fa-2x"></span></a> '.htmlspecialchars_decode($TipidiFiles[strtolower($Estensione)]['Verifica']).' <a href="'.get_permalink().$sep.'action=dwnalle&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" class="noUnderLine" title="'.__("Scarica allegato","albo-online").'"><span class="fas fa-download  fa-2x"></span></a>';	
 	else
 		echo basename( $allegato->Allegato).' '.__("File non trovato, il file è stato cancellato o spostato!","albo-online");?>
 				</div>
@@ -432,23 +432,22 @@ function Lista_Atti($Parametri,$Categoria=0,$Numero=0,$Anno=0,$Oggetto='',$Dadat
 	   	<div class="row">
 	  	 	<div class="col-12 col-lg-6">
 	  	 		<div id="FiltriParametri" class="collapse-div collapse-background-active" role="tablist">
-					<div class="collapse-header" id="headingA1">
+					<div class="collapse-header" id="headingFP">
 				    	<button data-toggle="collapse" data-target="#Parametri" aria-expanded="false" aria-controls="Parametri" class="ButtonUF"><?php _e("Parametri", 'wpscuola');?></button>
 				  	</div>
-					<div id="Parametri" class="collapse" role="tabpanel" aria-labelledby="headingA1" data-parent="#FiltriParametri">
-						<div class="collapse-body border border-primary rounded-bottom">
- 
+					<div id="Parametri" class="collapse" role="tabpanel" aria-labelledby="headingFP" data-parent="#FiltriParametri">
+						<div class="collapse-body border border-primary rounded-bottom pt-5">
 							<?php echo get_FiltriParametri();?>
 					    </div>
 					</div>
 				</div>
 			</div>
 	  	 	<div class="col-12 col-lg-6">
-	  	 		<div id="FiltriParametri" class="collapse-div collapse-background-active" role="tablist">
-					<div class="collapse-header" id="headingA1">
+	  	 		<div id="FiltriCategorie" class="collapse-div collapse-background-active" role="tablist">
+					<div class="collapse-header" id="headingC">
 				    	<button data-toggle="collapse" data-target="#Categorie" aria-expanded="false" aria-controls="Categorie" class="ButtonUF"><?php _e("Categorie", 'wpscuola');?></button>    	
 				  	</div>
-					<div id="Categorie" class="collapse" role="tabpanel" aria-labelledby="headingA1" data-parent="#FiltriParametri">
+					<div id="Categorie" class="collapse" role="tabpanel" aria-labelledby="headingC" data-parent="#FiltriCategorie">
 						<div class="collapse-body border border-primary rounded-bottom">
 							<?php echo get_FiltriCategorie();?>
 					    </div>
@@ -462,7 +461,7 @@ function Lista_Atti($Parametri,$Categoria=0,$Numero=0,$Anno=0,$Oggetto='',$Dadat
 echo ' <div class="Visalbo">
 <a name="dati"></a> ';
 if (get_option('opt_AP_VisualizzaEnte')=='Si')
-		echo '<'.$titEnte.' ><span  class="titoloEnte">'.stripslashes(get_option('opt_AP_Ente')).'</span></'.$titEnte.'>';
+		echo '<'.$titEnte.' ><span class="titoloEnte">'.stripslashes(get_option('opt_AP_Ente')).'</span></'.$titEnte.'>';
 echo '<'.$titPagina.'>'.$TitoloAtti.'</'.$titPagina.'>';
 $Nav="";
 if ($TotAtti>$N_A_pp){
@@ -488,8 +487,8 @@ if ($TotAtti>$N_A_pp){
      	if (isset($_REQUEST['Pag']) And $_REQUEST['Pag']>1 ){
  			$Pagcur=$_REQUEST['Pag'];
 			$PagPre=$Pagcur-1; 
-				$Nav.= '<li><a href="'.$Para.'1" class="prev page-numbers" title="'.__("Vai alla prima pagina", 'wpscuola').'"><i class="it-arrow-left-triangle"></i></a></li>
-					  <li><a href="'.$Para.$PagPre.'" class="page-numbers" title="'.__("Vai alla pagina precedente", 'wpscuola').'"><i class="it-chevron-left"></i></a></li> ';
+				$Nav.= '<li><a href="'.$Para.'1" class="prev page-numbers" title="'.__("Vai alla prima pagina", 'wpscuola').'"><span class="it-arrow-left-triangle"></span></a></li>
+					  <li><a href="'.$Para.$PagPre.'" class="page-numbers" title="'.__("Vai alla pagina precedente", 'wpscuola').'"><span class="it-chevron-left"></span></a></li> ';
 		}else{
 			$Pagcur=1;
 		}
@@ -509,8 +508,8 @@ if ($TotAtti>$N_A_pp){
 		}
    		if (isset($_REQUEST['Pag']) And $_REQUEST['Pag']<$Npag ){
    			$PagSuc=($Pagcur==$Npag?$Npag:$Pagcur+1);
- 			$Nav.= '<li><a href="'.$Para.$PagSuc.'" class="next page-numbers" title="'.__("Vai alla pagina successiva", 'wpscuola').'"><i class="it-chevron-right"></i></a></li>
-				  <li><a href="'.$Para.$Npag.'" class="next page-numbers" title="'.__("Vai all'ultima pagina", 'wpscuola').'"><i class="it-arrow-right-triangle"></i></a>';
+ 			$Nav.= '<li><a href="'.$Para.$PagSuc.'" class="next page-numbers" title="'.__("Vai alla pagina successiva", 'wpscuola').'"><span class="it-chevron-right"></span></a></li>
+				  <li><a href="'.$Para.$Npag.'" class="next page-numbers" title="'.__("Vai all'ultima pagina", 'wpscuola').'"><span class="it-arrow-right-triangle"></span></a>';
 		}
 		$Nav.= '</ul>
 		</div>';
@@ -539,7 +538,7 @@ if(!is_array($FEColsOption)){
 				"DataOblio"=>0), json_decode($FEColsOption,TRUE),"");
 }	
 echo '	<div class="tabalbo">                               
-		<table class="table table-striped table-hover" summary="'.__("atti validi per riferimento, oggetto e categoria", 'wpscuola').'"> 
+		<table class="table table-striped table-hover"> 
 		<thead>
 	    	<tr>
 	        	<th scope="col">'.__("Prog.", 'wpscuola').'</th>';

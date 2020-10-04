@@ -56,7 +56,7 @@ function my_get_archivesAnnoMese()
 						</div>
 						<div class="col-2 p-0">
 						<a class="list-item" href="#M'.$Data->Anno.$Data->Mese.'" data-toggle="collapse" aria-expanded="false" aria-controls="'.'M'.$Data->Anno.$Data->Mese.'">
-						<i class="fas fa-angle-down fa-2x"></i>
+						<svg class="icon"><use xlink:href="/bootstrap-italia/dist/svg/sprite.svg#it-arrow-down-triangle"></use></svg>
 							</a>
 						</div>
 					</div>
@@ -108,11 +108,12 @@ $Archivio=my_get_archivesAnnoMese();?>
 			  	<div class="row">
 					<div class="col-1 align-middle">
 						<a class="list-item" href="#ListaCategorieData" data-toggle="collapse" aria-expanded="false" aria-controls="ListaCategorieData">
-							<i class="fas fa-angle-down espandi align-middle"></i>
+							<svg class="icon"><use xlink:href="/bootstrap-italia/dist/svg/sprite.svg#it-arrow-down-triangle"></use></svg>
 						</a>
 					</div>
 					<div class="col-11 mb-0">
-						<h4 class="TitoloArchivio"><?php _e( 'Data di Pubblicazione', 'wpscuola' ); ?></h4>
+						<h6><?php _e( 'Data di Pubblicazione', 'wpscuola' ); ?></h6>
+						<h6><?php _e( 'Data di Pubblicazione', 'wpscuola' ); ?></h6>
 					</div>
 				 </div> 
 				<ul class="link-list collapse" id="ListaCategorieData">				

@@ -55,6 +55,7 @@
 
 	//echo "<pre>";var_dump($Posts);echo "</pre>";
 	?>
+<div>
 	 <div class="it-carousel-wrapper it-carousel-landscape-abstract-three-cols">
 	  <div class="it-header-block">
 	    <div class="it-header-block-title">
@@ -65,7 +66,7 @@
 	    <div class="col-sm-12 col-md-4 col-lg-3">
 	         <div class="it-single-slide-wrapper">
 		     <!--start card-->
-		    <div class="card-wrapper card-space">
+		    <div class="card-wrapper card-space p-3">
 		      <div class="card card-bg card-big no-after border border-primary rounded">
 		      <div class="flag-icon"></div>
 		        <div class="card-body p-2">
@@ -73,27 +74,27 @@
 		            <div class="img-responsive p-2">
 		              <div class="img-wrapper img-carousel-evidenza">
 	<?php if(isset($Image) And $Image!==FALSE) :?>
-		              	<img src="<?php echo $Image;?>" title="<?php echo $ImageTitle;?>" alt="<?php echo $ImageAlt;?>" longdesc="<?php echo $ImageDescription;?>">
+		              	<img src="<?php echo $Image;?>" title="<?php echo $ImageTitle;?>" alt="<?php echo $ImageAlt;?>"/>
 	<?php endif;?>
 		              </div>
 		            </div>
 		            <div class="p-2">
-			          <h5 class="card-title card-title-fix"><?php echo $Title;?></h5>
+			          <h4 class="card-title card-title-fix"><?php echo $Title;?></h4>
 			          <div class="it-card-footer">
 			          	<a class="read-more" href="<?php echo $PermaLink;?>">
-			              <span class="text"><i class="fas fa-link p-1"></i> <?php _e('Leggi articolo', 'wpscuola');?></span>
+			              <span class="text"><span class="fas fa-link p-1"></span> <?php _e('Leggi articolo', 'wpscuola');?></span>
 			            </a>
 			          </div>
 			        </div>
 <?php else:?>
  					<div class="p-2" style="min-height: 75px;">
- 						<h5 class="card-title"><?php echo $Title;?></h5>
+ 						<h4 class="card-title"><?php echo $Title;?></h4>
  					</div>
 		            <div class="p-2">
 			          <p class="card-text" style="min-height: 100px;"><?php echo $Except;?></p>
 			          <div class="it-card-footer">
 			          	<a class="read-more" href="<?php echo $PermaLink;?>">
-			              <span class="text"><i class="fas fa-link p-1"></i> <?php _e('Leggi articolo', 'wpscuola');?></span>
+			              <span class="text"><span class="fas fa-link p-1"></span> <?php _e('Leggi articolo', 'wpscuola');?></span>
 			            </a>
 			          </div>
 			        </div> 					
@@ -124,34 +125,35 @@
 	?>
 		    	<div class="it-single-slide-wrapper">
 		      <!--start card-->
-			    	<div class="card-wrapper card-space">
+			    	<div class="card-wrapper card-space pl-1 pr-1">
 			      		<div class="card card-bg card-big no-after border-bottom-card">
 			        		<div class="card-body p-2">
 <?php if(get_theme_mod("scuola_comeevidenza_visimevidenza")):?>
 			            		<div class="img-responsive p-2">
 			              			<div class="img-wrapper img-carousel">
 	<?php if(isset($Image) And $Image!==FALSE) :?>
-			              				<img src="<?php echo $Image;?>" title="<?php echo $ImageTitle;?>" alt="<?php echo $ImageAlt;?>" longdesc="<?php echo $ImageDescription;?>">
+			              				<img src="<?php echo $Image;?>" title="<?php echo $ImageTitle;?>" alt="<?php echo $ImageAlt;?>"/>
+			              				
 	<?php endif;?>		              				
 			              			</div>
 			            </div>
 			            <div class="p-4">
-				        	<h5 class="card-title card-title-fix"><?php echo $Title;?></h5>
+				        	<h4 class="card-title card-title-fix"><?php echo $Title;?></h4>
 				          	<div class="it-card-footer">
 				          		<a class="read-more" href="<?php echo $PermaLink;?>">
-				              		<span class="text"><i class="fas fa-link p-1"></i> <?php _e('Leggi articolo', 'wpscuola');?></span>
+				              		<span class="text"><span class="fas fa-link p-1"></span> <?php _e('Leggi articolo', 'wpscuola');?></span>
 				            	</a>
 					    	</div>
 					    </div>
 <?php else:?>
  					<div class="pt-2 pl-2" style="min-height: 100px;">
- 						<h5 class="card-title"><?php echo $Title;?></h5>
+ 						<h4 class="card-title"><?php echo $Title;?></h4>
  					</div>
 		            <div class="p-4">
 			          <p class="card-text" style="min-height: 100px;"><?php echo $Except;?></p>
 			          <div class="it-card-footer">
 			          	<a class="read-more" href="<?php echo $PermaLink;?>">
-			              <span class="text"><i class="fas fa-link p-1"></i> <?php _e('Leggi articolo', 'wpscuola');?></span>
+			              <span class="text"><span class="fas fa-link p-1"></span> <?php _e('Leggi articolo', 'wpscuola');?></span>
 			            </a>
 			          </div>
 			        </div> 					

@@ -18,10 +18,9 @@ class my_ATWidget extends WP_Widget {
 		if ( $instance['logic'] && !( is_tax( 'tipologie' ) || is_singular( 'amm-trasparente' ) || is_page( at_option('page_id') )) ) {
 			return;
 		}
-
-        echo $before_widget;
-
-        echo $before_title.$instance['title'].$after_title;
+        if ( $title ) {
+                echo $args['before_title'] . $title . $args['after_title'];
+            }
 ?>
 <div class="link-list-wrapper">
   <ul class="link-list">
@@ -45,8 +44,6 @@ class my_ATWidget extends WP_Widget {
 	</ul>
 </div>
 <?php
-
-        echo $after_widget;
     }
 
     function update( $new_instance, $old_instance ) {

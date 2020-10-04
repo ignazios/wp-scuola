@@ -63,7 +63,7 @@ function my_get_archivesAnnoMese($NameAuthor)
 						</div>
 						<div class="col-2 p-0">
 						<a class="list-item" href="#M'.$Data->Anno.$Data->Mese.'" data-toggle="collapse" aria-expanded="false" aria-controls="'.'M'.$Data->Anno.$Data->Mese.'">
-						<i class="fas fa-angle-down fa-2x"></i>
+						<span class="fas fa-angle-down fa-2x"></span>
 							</a>
 						</div>
 					</div>
@@ -112,7 +112,7 @@ $Archivio=my_get_archivesAnnoMese(get_the_author_meta("display_name"));
 			  	<div class="row">
 					<div class="col-1 align-middle">
 						<a class="list-item" href="#ListaCategorieData" data-toggle="collapse" aria-expanded="false" aria-controls="ListaCategorieData">
-							<i class="fas fa-angle-down espandi align-middle"></i>
+							<span class="fas fa-angle-down espandi align-middle"></span>
 						</a>
 					</div>
 					<div class="col-11 mb-0">

@@ -63,7 +63,6 @@
 		<div class="it-header-block">
 	    	<div class="it-header-block-title">
 <?php 
-            echo $args['before_widget'];
             if ( $title ) {
                 echo $args['before_title'] . $title . $args['after_title'];
             } ?>   
@@ -86,8 +85,8 @@
 				        	<div class="it-right-zone  border-0">
 				        		<span class="text"><?php echo $Articolo->post_title;?></span>
 				        		<span class="it-multiple">
-				        			<span class="metadata metadatasmall"><i class="far fa-calendar-alt"></i> <?php echo date_i18n( get_option( 'date_format' ), strtotime($Articolo->post_date) );?></span>
-									<span class="metadata metadatasmall"><i class="fas fa-user-edit"></i> <?php echo get_the_author_meta('display_name', $Articolo->post_author);?></span>
+				        			<span class="metadata metadatasmall"><span class="far fa-calendar-alt"></span> <?php echo date_i18n( get_option( 'date_format' ), strtotime($Articolo->post_date) );?></span>
+									<span class="metadata metadatasmall"><span class="fas fa-user-edit"></span> <?php echo get_the_author_meta('display_name', $Articolo->post_author);?></span>
 								</span>
 							</div>
 					      </a>
@@ -97,7 +96,7 @@
 						<li>
 							<div class="it-card-footer">
 		          				<a class="read-more" href="<?php echo get_category_link($catprimoblocco);?>">
-									<span class="text"><i class="fas fa-link p-1"></i> <?php _e( 'Leggi tutto','wpscuola' );?></span>
+									<span class="text"><span class="fas fa-link p-1"></span> <?php _e( 'Leggi tutto','wpscuola' );?></span>
 		            			</a>
 		          			</div>
 						</li>
@@ -121,8 +120,8 @@
 				        	<div class="it-right-zone  border-0">
 				        		<span class="text"><?php echo $Articolo->post_title;?></span>
 				        		<span class="it-multiple">
-				        			<span class="metadata metadatasmall"><i class="far fa-calendar-alt"></i> <?php echo date_i18n( get_option( 'date_format' ), strtotime($Articolo->post_date) );?></span>
-									<span class="metadata metadatasmall"><i class="fas fa-user-edit"></i> <?php echo get_the_author_meta('display_name', $Articolo->post_author);?></span>
+				        			<span class="metadata metadatasmall"><span class="far fa-calendar-alt"></span> <?php echo date_i18n( get_option( 'date_format' ), strtotime($Articolo->post_date) );?></span>
+									<span class="metadata metadatasmall"><span class="fas fa-user-edit"></span> <?php echo get_the_author_meta('display_name', $Articolo->post_author);?></span>
 								</span>
 							</div>
 					      </a>
@@ -132,7 +131,7 @@
 						<li>
 							<div class="it-card-footer">
 		          				<a class="read-more" href="<?php echo get_category_link($catprimoblocco);?>">
-		              				<span class="text"><i class="fas fa-link p-1"></i> Leggi tutto</span>
+		              				<span class="text"><span class="fas fa-link p-1"></span> Leggi tutto</span>
 		            			</a>
 		          			</div>
 						</li>
@@ -141,7 +140,7 @@
 				</div>
 		 	</div>
 		</div>
-<?php   echo $args['after_widget']; ?>
+<?php   //echo $args['after_widget']; ?>
 </section>
 <?php                   
 	wp_reset_postdata();

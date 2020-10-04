@@ -49,7 +49,7 @@ if ( !have_comments() and !comments_open()) return;?>
 		<?php endif; 
 endif;
 if ( comments_open() ) comment_form(array(
-	'submit_button'	=>'<button class="btn btn-primary btn-icon" type="submit"><i class="fas fa-share-square pr-2"></i>'.__( 'Invia Commento', 'wpscuola' ).'</button>',
+	'submit_button'	=>'<button class="btn btn-primary btn-icon" type="submit"><span class="fas fa-share-square pr-2"></span>'.__( 'Invia Commento', 'wpscuola' ).'</button>',
 	'comment_field' =>'<div>
   		<div class="form-group">
     		<textarea id="comment" rows="5" name="comment" aria-required="true"></textarea>

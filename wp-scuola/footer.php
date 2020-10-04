@@ -17,33 +17,14 @@
 */
 ?>
 			<div class="mx-auto text-center pb-3 pt-3" style="width: 200px;">
-			  <a href="#" aria-hidden="true" data-attribute="back-to-top">
-			    <i class="fas fa-arrow-circle-up fa-3x"></i>
+			  <a href="#" aria-hidden="true" data-attribute="back-to-top" title="<?php _e('Torna ad inizio pagina','wpscuola');?>">
+			    <span class="fas fa-arrow-circle-up fa-3x"></span>
 			  </a>
 			</div>
 			<div class="clear"></div>
-		</div>
-	</section>
-<script>
-
-window.__PUBLIC_PATH__ = "<?php echo get_template_directory_uri();?>/lib/bootstrap-italia/fonts"
-
-window.onscroll = function() {myFunction()};
-
-var header = document.getElementById("myHeader");
-var container = document.getElementById("main");
-var sticky = header.offsetTop;
-
-function myFunction() {
-  if (window.pageYOffset > sticky) {
-    header.classList.add("sticky");
-    container.classList.add("stickycontainer");
-  } else {
-    header.classList.remove("sticky");
-    container.classList.remove("stickycontainer");
-  }
-}
-</script>
+    </main>
+</div>
+    
 <footer class="it-footer" id="footer">
   <div class="it-footer-main">
     <div class="container">
@@ -58,12 +39,12 @@ function myFunction() {
 				    if(FALSE!== $logo){
 				    	$ImgLogo=esc_url( $logo[0] );
 					} else {
-						$ImgLogo=get_template_directory_uri() . '/img/logoStato.png';
+						$ImgLogo=get_template_directory_uri() . '/images/logoStato.png';
 			        } ?>
 					<img class="icon" src="<?php echo $ImgLogo;?>" alt="<?php echo esc_html( get_bloginfo( 'name' ) );?>">
 	                <div class="it-brand-text">
-	                  <h4><?php echo esc_html( get_bloginfo( 'name' ) ); ?></h4>
-	                  <h5><?php bloginfo( 'description' ); ?></h5>
+	                  <p class="h4"><?php echo esc_html( get_bloginfo( 'name' ) ); ?></p>
+	                  <p class="h5"><?php bloginfo( 'description' ); ?></p>
 	                </div>
 	              </a>
             </div>
@@ -71,22 +52,22 @@ function myFunction() {
         </div>
          <div class="row">
           <div class="col-lg-3 col-md-6 col-sm-6 pb-2">
-            <h4><i class="fas fa-info-circle"></i> <?php _e( 'Informazioni', 'wpscuola' );?></h4>
+            <h3><span class="fas fa-info-circle"></span> <?php _e( 'Informazioni', 'wpscuola' );?></h3>
             <div class="link-list-wrapper">
 			  <ul class="footer-list link-list clearfix">
                 <li><?php echo get_theme_mod('Scuola_Amministrazione_Indirizzo'); ?></li>
                 <li><?php echo get_theme_mod('Scuola_Amministrazione_CAP'); 
                 	if (get_theme_mod('Scuola_Amministrazione_CAP') And get_theme_mod('Scuola_Amministrazione_Citta')) echo ',';
                 	echo get_theme_mod('Scuola_Amministrazione_Citta'); ?></li>
-                <?php echo (get_theme_mod('Scuola_Amministrazione_CM')!=""?"<li>C.M. ".get_theme_mod('Scuola_Amministrazione_CM')."</li>":""); ?></li>
-                <?php echo (get_theme_mod('Scuola_Amministrazione_CFPA')!=""?"<li>C.F. ".get_theme_mod('Scuola_Amministrazione_CFPA')."</li>":""); ?></li>
-                <?php echo (get_theme_mod('Scuola_Amministrazione_PIVA')!=""?"<li>P.Iva ".get_theme_mod('Scuola_Amministrazione_PIVA')."</li>":""); ?></li>
-                <?php echo (get_theme_mod('Scuola_Amministrazione_CodUni')!=""?"<li>Cod. Univoco ".get_theme_mod('Scuola_Amministrazione_CodUni')."</li>":""); ?></li>
+                <?php echo (get_theme_mod('Scuola_Amministrazione_CM')!=""?"<li>C.M. ".get_theme_mod('Scuola_Amministrazione_CM')."</li>":""); ?>
+                <?php echo (get_theme_mod('Scuola_Amministrazione_CFPA')!=""?"<li>C.F. ".get_theme_mod('Scuola_Amministrazione_CFPA')."</li>":""); ?>
+                <?php echo (get_theme_mod('Scuola_Amministrazione_PIVA')!=""?"<li>P.Iva ".get_theme_mod('Scuola_Amministrazione_PIVA')."</li>":""); ?>
+                <?php echo (get_theme_mod('Scuola_Amministrazione_CodUni')!=""?"<li>Cod. Univoco ".get_theme_mod('Scuola_Amministrazione_CodUni')."</li>":""); ?>
                 <?php
 				if(get_theme_mod('scuola_mappa_attiva')){?>
 				<li> 
 				<?php if(!get_theme_mod('scuola_mappa_frame') And get_theme_mod('scuola_mappa_attiva')){?> 
-						<i class="fas fa-map-marked-alt"></i> <a href="<?php echo get_theme_mod('scuola_mappa_link'); ?>" target="_blank" title="<?php _e( "Mappa con la geolocalizzazione dell'Istituto", 'wpscuola' );?>" class="d-inline"><?php echo get_theme_mod('scuola_mappa_titolo'); ?></a>
+						<span class="fas fa-map-marked-alt"></span> <a href="<?php echo get_theme_mod('scuola_mappa_link'); ?>" target="_blank" title="<?php _e( "Mappa con la geolocalizzazione dell'Istituto", 'wpscuola' );?>" class="d-inline"><?php echo get_theme_mod('scuola_mappa_titolo'); ?></a>
 				<?php } ?>
 				</li>
 		  <?php }?>
@@ -94,7 +75,7 @@ function myFunction() {
             </div>
           </div>
           <div class="col-lg-3 col-md-6 col-sm-6 pb-2">
-            <h4><i class="fas fa-address-book"></i> <?php _e( 'Recapiti', 'wpscuola' );?></h4>
+            <h3><span class="fas fa-address-book"></span> <?php _e( 'Recapiti', 'wpscuola' );?></h3>
             <div class="link-list-wrapper">
               <ul class="footer-list link-list clearfix">
           <?php if (get_theme_mod('Scuola_Amministrazione_DesTelefono')!=""){
@@ -129,7 +110,7 @@ function myFunction() {
             </div>
           </div>
           <div class="col-lg-3 col-md-6 col-sm-6 pb-2">
-            <h4><i class="fas fa-at"></i> <?php _e( 'Mail', 'wpscuola' );?></h4>
+            <h3><span class="fas fa-at"></span> <?php _e( 'Mail', 'wpscuola' );?></h3>
             <div class="link-list-wrapper">
               <ul class="footer-list link-list clearfix">
        <?php	if (get_theme_mod('Scuola_Amministrazione_Email')!=""){
@@ -153,7 +134,7 @@ function myFunction() {
 				$locations = get_nav_menu_locations();
 				$menu = get_term( $locations["menu-footer-ente"], 'nav_menu' );
 			?>
-			<h4><?php echo htmlspecialchars_decode($menu->name); ?></h4><?php
+			<h3><?php echo htmlspecialchars_decode($menu->name); ?></h3><?php
 			wp_nav_menu(array( 'theme_location' => 'menu-footer-ente', 'container' => 'ul', 'menu_class' => 'footer-list link-list clearfix' ));
 		} ?>          
           </div>
@@ -173,7 +154,7 @@ function myFunction() {
           </div>
           <div class="col-lg-4 col-md-12 pb-2">
 				<?php if(get_theme_mod('scuola_mappa_frame') And get_theme_mod('scuola_mappa_attiva')){?>
-					<h4><i class="fas fa-map-marked"></i> <?php echo get_theme_mod('scuola_mappa_titolo');?></h4>
+					<h4><span class="fas fa-map-marked"></span> <?php echo get_theme_mod('scuola_mappa_titolo');?></h4>
 					<div id="Cartina">
 				<?php	echo get_theme_mod('scuola_mappa_frame');?>
 					</div>
@@ -181,22 +162,19 @@ function myFunction() {
 				if ( has_nav_menu( 'menu-footer-secondo' ) ) {
 					$locations = get_nav_menu_locations();
 					$menu = get_term( $locations["menu-footer-secondo"], 'nav_menu' );?>
-			<h4><?php echo htmlspecialchars_decode($menu->name); ?></h4><?php
+			<h3><?php echo htmlspecialchars_decode($menu->name); ?></h3><?php
 			wp_nav_menu(array( 'theme_location' => 'menu-footer-secondo', 'container' => 'ul', 'menu_class' => 'footer-list link-list clearfix' ));
 		} ?>   
           </div>
           <div class="col-lg-4 col-md-12 pb-2">
-          <?php if(get_theme_mod('scuola_social_facebook') OR
-          		   get_theme_mod('scuola_social_twitter') OR 
-          		   get_theme_mod('scuola_social_youtube') OR
-          		   get_theme_mod('scuola_social_instagram') OR
-          		   get_theme_mod('scuola_social_telegram') OR
-          		   get_theme_mod('scuola_social_linkedin')){?>
-              <h4><i class="fas fa-hashtag"></i> <?php echo (get_theme_mod('scuola_social_footersectionTesto')!=""?get_theme_mod('scuola_social_footersectionTesto'):"");?></h4>
+          <?php if(HasSocial()) {?>
+            <h4><span class="fas fa-hashtag"></span> <?php echo get_theme_mod('scuola_social_footersectionTesto'  );?></h4>       	
+            <ul class="list-inline social">
+
               <?php //
-              get_MenuSocial("menu-social","nav list-inline text-left social","menu-item");
-              //wp_nav_menu( array( 'theme_location' => 'menu-social', 'container' => 'ul', 'menu_class' => 'nav list-inline text-left social')); 
-           } ?>
+              get_MenuSocial();?>
+            </ul>
+        <?php   } ?>
          </div>
         </div>
       </section>
@@ -236,12 +214,20 @@ function myFunction() {
 				}?>
 		    </div>
 			<div class="col-md text-right copyright">
-				<small><?php echo sprintf( __( 'Copyright %1$s %2$s %3$s', 'wppa' ), '<i class="far fa-copyright"></i>', date( 'Y' ), esc_html( get_bloginfo( 'name' ) ) ); ?></small>
+				<small><?php echo sprintf( __( 'Copyright %1$s %2$s %3$s', 'wppa' ), '<span class="far fa-copyright"></span>', date( 'Y' ), esc_html( get_bloginfo( 'name' ) ) ); ?></small>
 			</div>
  		</div>	
     </div>
    	</div>
 </footer>
 <?php wp_footer(); ?>
+    <script src="<?php bloginfo('template_url'); ?>/static/js/popper.min.js"></script>
+    <script src="<?php bloginfo('template_url'); ?>/static/js/bootstrap-italia.min.js"></script>
+    <script src="<?php bloginfo('template_url'); ?>/static/js/tema.js"></script>
+    <script src="<?php bloginfo('template_url'); ?>/static/js/jquery-ui.min.js"></script>
+    <script src="<?php bloginfo('template_url'); ?>/static/js/i18n/datepicker-it.js"></script>
+    <script src="<?php bloginfo('template_url'); ?>/static/js/owl.carousel.min.js"></script>
+    <script src="<?php bloginfo('template_url'); ?>/inc/magnific-popup/jquery.magnific-popup.min.js"></script>
+
 </body>
 </html>

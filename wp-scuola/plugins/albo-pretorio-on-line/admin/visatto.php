@@ -60,7 +60,7 @@ function Visualizza_Atto($Parametri){
 ?>
 <section  id="DatiAtto">
 	<div class="container clearfix mb-3 pb-3">
-		<h2 class="u-text-h2 pt-3 pl-2"><?php echo $Titolo;?></h2>
+		<h3 class="u-text-h2 pt-3 pl-2"><?php echo $Titolo;?></h3>
 		<?php echo ($Annullato?"<h3>".$Annullato."</h3>":"");?>
 	   	<div class="row">
 	   		<div class="col-12 col-xl-8">
@@ -114,7 +114,6 @@ if($MetaDati!==FALSE){
 		$Meta.="{".$Metadato->Meta."=".$Metadato->Value."} - ";
 	}
 	$Meta=substr($Meta,0,-3);?>
-					<h2 class="u-text-h2 pt-3 pl-2"><?php echo $Titolo;?></h2>
 					<tr>
 						<th><?php _e("Meta Dati", 'wpscuola');?></th>
 						<td style="vertical-align: middle;"><?php echo $Meta;?></td>

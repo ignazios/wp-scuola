@@ -15,7 +15,7 @@ global $msg,$wps_TestiRisposte,$wps_Testi;
 	$DataCreazioneUtente=substr(get_userdata($current_user->ID)->user_registered,0,10);
 	echo'
 		<div class="wrap">
-			<i class="fa fa-archive fa-3x" aria-hidden="true"></i> <h2 style="display:inline;margin-left:10px;vertical-align:super;">Archivio Circolari</h2>
+			<span class="fa fa-archive fa-3x" aria-hidden="true"></span> <h2 style="display:inline;margin-left:10px;vertical-align:super;">Archivio Circolari</h2>
 		</div>';
 	if($msg!="") 
 		echo '<div id="message" class="updated"><p>'.$msg.'</p></div>';
@@ -60,7 +60,7 @@ global $msg,$wps_TestiRisposte,$wps_Testi;
 		if($Scadenza>date("Y-m-d") and $sign!="NoFirma" And wps_Is_Circolare_Firmata($post->ID)){
 			$Titolo="Rimuovi ".($sign=="Firma"?"Firma":"Espressione");
 			$LinkRmFirma=admin_url()."edit.php?post_type=circolari_scuola&page=Archivio&op=RemoveFirma&pid=".$post->ID."&circoRmFir=".wp_create_nonce('RmFirmaCircolare');
-			$RimuoviFirma='<a href="'.$LinkRmFirma.'"<i class="fa fa-times" aria-hidden="true" title="'.$Titolo.'" style="color:red;"></i></a>';		
+			$RimuoviFirma='<a href="'.$LinkRmFirma.'"<span class="fa fa-times" aria-hidden="true" title="'.$Titolo.'" style="color:red;"></span></a>';		
 		}
 		if ($Scadenza>=$DataCreazioneUtente){
 			if($sign!="NoFirma"){			
@@ -116,7 +116,7 @@ function wps_circolari_GestioneFirme()
 global $msg;
 echo'
 		<div class="wrap">
-			<i class="fa fa-pencil fa-3x" aria-hidden="true"></i> <h2 style="display:inline;margin-left:10px;vertical-align:super;">Circolari da firmare</h2>
+			<span class="fa fa-pencil fa-3x" aria-hidden="true"></span> <h2 style="display:inline;margin-left:10px;vertical-align:super;">Circolari da firmare</h2>
 		</div>';
 if($msg!="") 
 	echo '<div id="message" class="updated"><p>'.$msg.'</p></div>';

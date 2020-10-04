@@ -1,6 +1,6 @@
 <?php
-	$prev_arrow = is_rtl() ? '<i class="it-chevron-right"></i>' : '<i class="it-chevron-left"></i>';
-	$next_arrow = is_rtl() ? '<i class="it-chevron-left"></i>' : '<i class="it-chevron-right"></i>';
+	$prev_arrow = is_rtl() ? '<span class="it-chevron-right"></span>' : '<span class="it-chevron-left"></span>';
+	$next_arrow = is_rtl() ? '<span class="it-chevron-left"></span>' : '<span class="it-chevron-right"></span>';
 	
 	global $wp_query;
 	$total = $wp_query->max_num_pages;

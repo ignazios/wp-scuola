@@ -57,10 +57,10 @@ get_header();
    <div class="container-fluid">
       <div class="row">
 	      <div class="col-lg-8 offset-sm-1">
-	         <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+	         <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); scuola_set_post_view();?>
 	         <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	            <header class="header mt-5">
-	               <h1 class="entry-title"><?php the_title(); ?></h1>
+	               <h2 class="entry-title"><?php the_title(); ?></h2>
 	               <?php edit_post_link(); ?>
 	            </header>
 	            <section class="entry-content">

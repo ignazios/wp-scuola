@@ -368,12 +368,12 @@ function wps_circolari_FiltroVisualizzaCircolare( $content ){
 	    				$Primo=false;
 						}
 						$Campo_Firma.='
-										<button class="btn btn-primary btn-icon inviaadesione" type="submit" name="inviaadesione" id="'.$PostID.'" value="Firma" rel="'.get_the_title($PostID).'"><i class="fas fa-signature pr-2"></i> <span>'.__( 'Esprimi scelta', 'wpscuola' ).'</span>
+										<button class="btn btn-primary btn-icon inviaadesione" type="submit" name="inviaadesione" id="'.$PostID.'" value="Firma" rel="'.get_the_title($PostID).'"><span class="fas fa-signature pr-2"></span> <span>'.__( 'Esprimi scelta', 'wpscuola' ).'</span>
 									</div>
 								</div>
 							</form>';
 						}else
-							$Campo_Firma='<button class="btn btn-primary btn-icon" onclick="window.location.href=\''.get_permalink($PostID).'?op=Firma&pid='.$PostID.'&circoFir='.wp_create_nonce('FirmaCircolare').'\'"><i class="fas fa-signature pr-2"></i> <span>'.__( 'Firma la Circolare', 'wpscuola' ).'</span>';					
+							$Campo_Firma='<button class="btn btn-primary btn-icon" onclick="window.location.href=\''.get_permalink($PostID).'?op=Firma&pid='.$PostID.'&circoFir='.wp_create_nonce('FirmaCircolare').'\'"><span class="fas fa-signature pr-2"></span> <span>'.__( 'Firma la Circolare', 'wpscuola' ).'</span>';					
 					}
 				}
 			}
@@ -669,7 +669,7 @@ function wps_circolari_GestioneRisposteTesti(){
 	}	
 	$UrlB=get_site_url()."/wp-admin/edit.php";
 echo '<div class="wrap">
-	<i class="fas fa-pencil-alt fa-3x" aria-hidden="true"></i>
+	<span class="fas fa-pencil-alt fa-3x" aria-hidden="true"></span>
 		<h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Gestione Risposte', 'wpscuola' ).'</h2>
 	</div> 
 		<br />
@@ -732,7 +732,7 @@ function wps_circolari_GestioneTesti(){
 		$Operazione=__( 'Nuovo', 'wpscuola' );
 	$UrlB=get_site_url()."/wp-admin/edit.php";
 echo '<div class="wrap">
-	<i class="fas fa-pencil-alt fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.$Operazione.' '.__( 'Testo Circolare', 'wpscuola' ).'</h2>
+	<span class="fas fa-pencil-alt fa-3x" aria-hidden="true"></span><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.$Operazione.' '.__( 'Testo Circolare', 'wpscuola' ).'</h2>
 	</div> 
 		<form action="'.$UrlB.'" name="MTesti" metod="post">
 		<input type="hidden" name="opT" value="Memorizza"/>
@@ -789,7 +789,7 @@ function wps_circolari_GestioneRisposte(){
 		$Operazione="Nuovo";
 	$UrlB=get_site_url()."/wp-admin/edit.php";
 echo '<div class="wrap">
-	<i class="fas fa-pencil-alt fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.$Operazione.' '.__( 'Risposta Circolare', 'wpscuola' ).'</h2>
+	<span class="fas fa-pencil-alt fa-3x" aria-hidden="true"></span><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.$Operazione.' '.__( 'Risposta Circolare', 'wpscuola' ).'</h2>
 	</div> 
 		<form action="'.$UrlB.'" name="MRisposte" metod="post">
 		<input type="hidden" name="opR" value="Memorizza"/>
@@ -818,7 +818,7 @@ echo '<div class="wrap">
 function wps_circolari_NewTesto(){
 	$UrlB=get_site_url()."/wp-admin/edit.php";
 echo '<div class="wrap">
-	<i class="fas fa-pencil-alt fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Nuovo Tipo Circolare', 'wpscuola' ).'</h2>
+	<span class="fas fa-pencil-alt fa-3x" aria-hidden="true"></span><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Nuovo Tipo Circolare', 'wpscuola' ).'</h2>
 	</div> 
 		<form action="'.$UrlB.'" name="MTesti" metod="post">
 		<input type="hidden" name="opT" value="MemorizzaNew"/>
@@ -866,7 +866,7 @@ function wps_circolari_NewRisposta(){
 	global $wps_TestiRisposte;
 	$UrlB=get_site_url()."/wp-admin/edit.php";
 echo '<div class="wrap">
-	<i class="fas fa-pencil-alt fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Nuova Risposta Circolare', 'wpscuola' ).'</h2>
+	<span class="fas fa-pencil-alt fa-3x" aria-hidden="true"></span><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Nuova Risposta Circolare', 'wpscuola' ).'</h2>
 	</div> 
 		<form action="'.$UrlB.'" name="MRisposte" metod="post">
 		<input type="hidden" name="opR" value="MemorizzaNew"/>
@@ -897,12 +897,12 @@ function wps_circolari_Testi(){
 	global $wps_TestiRisposte,$wps_Testi;
 	$UrlB=get_site_url()."/wp-admin/edit.php?post_type=circolari_scuola&page=Testi";
 echo '<div class="wrap">
-	<i class="fas fa-pencil-alt fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Tipi di Circolari', 'wpscuola' ).'</h2>
+	<span class="fas fa-pencil-alt fa-3x" aria-hidden="true"></span><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Tipi di Circolari', 'wpscuola' ).'</h2>
 	</div> 
 		<p></p>
 		<div class="widefat">
 <div style="width:100px;margin:0 auto;font-size:1.5em;font-weight: bold;">
-			'.__( 'Tipi', 'wpscuola' ).' <a href="'.$UrlB.'&opT=NewTipo"><i class="fa fa-plus-square" aria-hidden="true"></i></a>
+			'.__( 'Tipi', 'wpscuola' ).' <a href="'.$UrlB.'&opT=NewTipo"><span class="fa fa-plus-square" aria-hidden="true"></span></a>
 			</div>
 			<p style="text-align:left;font-size:1em;font-style: italic;">
 			<table class="widefat">
@@ -916,9 +916,9 @@ echo '<div class="wrap">
 					<th>'.__( 'Operazioni', 'wpscuola' ).'</th>
 				</tr>';
 	foreach($wps_Testi as $Testo){
-		$RisposteModifica="<a href='".$UrlB."&opT=Edit&id=".$Testo->get_Tipo()."' title='".__( 'Modifica Testi Tipo Circolare', 'wpscuola' )."'><i class=\"fas fa-pencil-alt\" aria-hidden=\"true\"></i></a> ";
-		$RisposteCancella="<a href='".$UrlB."&opT=Canc&id=".$Testo->get_Tipo()."' title='".__( 'Cancella Tipo Circolare', 'wpscuola' )."'><i class=\"fas fa-trash-alt\" aria-eraser=\"true\" style=\"color:red;\"></i></a> ";
-		$Risposte="<a href='".$UrlB."&opT=Risp&id=".$Testo->get_Tipo()."' title='".__( 'Modifica le risposte', 'wpscuola' )."'><i class=\"fas fa-edit\" aria-eraser=\"true\" style=\"color:green;\"></i></a> ";
+		$RisposteModifica="<a href='".$UrlB."&opT=Edit&id=".$Testo->get_Tipo()."' title='".__( 'Modifica Testi Tipo Circolare', 'wpscuola' )."'><span class=\"fas fa-pencil-alt\" aria-hidden=\"true\"></span></a> ";
+		$RisposteCancella="<a href='".$UrlB."&opT=Canc&id=".$Testo->get_Tipo()."' title='".__( 'Cancella Tipo Circolare', 'wpscuola' )."'><span class=\"fas fa-trash-alt\" aria-eraser=\"true\" style=\"color:red;\"></span></a> ";
+		$Risposte="<a href='".$UrlB."&opT=Risp&id=".$Testo->get_Tipo()."' title='".__( 'Modifica le risposte', 'wpscuola' )."'><span class=\"fas fa-edit\" aria-eraser=\"true\" style=\"color:green;\"></span></a> ";
 		if($Testo->get_Tipo()=="NoFirma"){
 			$RisposteCancella=$Risposte="";
 		}
@@ -939,7 +939,7 @@ echo '
 			</table>
 			</p>
 			<div style="width:150px;margin:0 auto;font-size:1.5em;font-weight: bold;">
-			Risposte <a href="'.$UrlB.'&amp;opR=NewRisp"><i class="fa fa-plus-square" aria-hidden="true"></i></a>
+			Risposte <a href="'.$UrlB.'&amp;opR=NewRisp"><span class="fa fa-plus-square" aria-hidden="true"></span></a>
 			</div>
 			<p style="text-align:left;font-size:1em;font-style: italic;">
 			<table class="widefat">
@@ -951,11 +951,11 @@ echo '
 				</tr>';
 	foreach($wps_TestiRisposte as $TestoRisposta){
 		$RisposteModifica="
-		<a href='".$UrlB."&opR=Edit&id=".$TestoRisposta->get_IDRisposta()."'><i class=\"fas fa-pencil-alt\" aria-hidden=\"true\"></i></a>
+		<a href='".$UrlB."&opR=Edit&id=".$TestoRisposta->get_IDRisposta()."'><span class=\"fas fa-pencil-alt\" aria-hidden=\"true\"></span></a>
 		";
 		if ($TestoRisposta->get_IDRisposta()>4)
 			$RisposteCancella="
-		<a href='".$UrlB."&opR=Canc&id=".$TestoRisposta->get_IDRisposta()."'><i class=\"fas fa-trash-alt\" aria-eraser=\"true\" style=\"color:red;\"></i></a>
+		<a href='".$UrlB."&opR=Canc&id=".$TestoRisposta->get_IDRisposta()."'><span class=\"fas fa-trash-alt\" aria-eraser=\"true\" style=\"color:red;\"></span></a>
 		";
 		else
 			$RisposteCancella="";
@@ -998,7 +998,7 @@ function wps_split_GroupsGruppo($Gruppi){
 
 function wps_circolari_Utility($Stato=""){
 echo '<div class="wrap">
-		<i class="fa fa-cogs fa-3x" aria-hidden="true"></i> <h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Utility Circolari', 'wpscuola' ).'</h2>';
+		<span class="fa fa-cogs fa-3x" aria-hidden="true"></span> <h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Utility Circolari', 'wpscuola' ).'</h2>';
 $lista="";
 $azione= filter_input(INPUT_GET, "action");
 if($azione){
@@ -1343,7 +1343,7 @@ function wps_circolari_VisualizzaLog($IDPost){
 	$Dati=wps_Get_Log_Circolare($IDPost);
 ?>	
 	<div class="wrap">
-		<i class="fa fa-th-list fa-3x" aria-hidden="true"></i>
+		<span class="fa fa-th-list fa-3x" aria-hidden="true"></span>
 		<h2 style="display:inline;margin-left:10px;vertical-align:super;"><?php _e("Log Firme Circolare n°", 'wpscuola' );?> <?php echo $numero[0].'_'.$anno[0];?></h2>
 		<h3><?php echo $circolare->post_title;?></h3>
 			<table  id="TabellaCircolari" class="widefat"  cellspacing="0" width="99%">
@@ -1401,7 +1401,7 @@ $my_post = array(
   		'post_type' => 'newsletter');
 $post_id =wp_insert_post( $my_post );
 echo '<div class="wrap">
-	  	<i class="fa fa-envelope fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__("Crea NewsLetter", 'wpscuola' ).'
+	  	<span class="fa fa-envelope fa-3x" aria-hidden="true"></span><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__("Crea NewsLetter", 'wpscuola' ).'
 	  	<a href="'.site_url().'/wp-admin/edit.php?post_type=circolari_scuola" class="add-new-h2 tornaindietro">'.__("Torna indietro", 'wpscuola' ).'</a></h2>';
 
 	if($post_id>0){
@@ -1448,7 +1448,7 @@ function wps_circolari_Parametri(){
 	}
 	echo'
 <div class="wrap">
-	  <i class="fa fa-magic fa-3x" aria-hidden="true"></i><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__("Configurazione Circolari", 'wpscuola' ).'</h2>
+	  <span class="fa fa-magic fa-3x" aria-hidden="true"></span><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__("Configurazione Circolari", 'wpscuola' ).'</h2>
 	  <form name="Circolari_cnf" action="'.get_bloginfo('wpurl').'/wp-admin/index.php" method="post">
 	  <input type="hidden" name="circoPar" value="'.wp_create_nonce('ParametriCircolare').'" />
 	  <table class="form-table circolari-config">
@@ -1548,7 +1548,7 @@ echo'</select></td>
 }
 // Nuova Colonna Gestione  
 function wps_circolari_NuoveColonne($defaults) {  
-	if ($_GET['post_type']=="circolari_scuola"){
+	if (isset($_GET['post_type']) And $_GET['post_type']=="circolari_scuola"){
 		$defaults['stato'] = 'Parametri Circolare'; 
 	    if (current_user_can('edit_others_posts')){
 			$defaults['gestionecircolari'] = 'Gestione';  
@@ -1560,7 +1560,7 @@ function wps_circolari_NuoveColonne($defaults) {
 // Visualizzazione nuova colonna Gestione  
 function wps_circolari_NuoveColonneContenuto($column_name, $post_ID) {  
 	global $wpdb;
- 	if ($_GET['post_type']=="circolari_scuola"){
+ 	if (isset($_GET['post_type']) And $_GET['post_type']=="circolari_scuola"){
 		$sign=get_post_meta($post_ID, "_sign",TRUE);
 		$tipo=wps_Circolari_find_Tipo($sign);
 		if($tipo===FALSE){
@@ -1578,9 +1578,9 @@ function wps_circolari_NuoveColonneContenuto($column_name, $post_ID) {
 			$Linkfirma="";
 			$LinkLog="";
 			if ($tipo->get_Tipo()=="Firma" )
-				$Linkfirma='<a class="function" href="'.admin_url().'edit.php?post_type=circolari_scuola&page=circolari&op=Firme&post_id='.$post_ID.'"><i class="fas fa-pencil-alt tooltip" title="Visualizza '.$Prefisso.'"></i></a>';
+				$Linkfirma='<a class="function" href="'.admin_url().'edit.php?post_type=circolari_scuola&page=circolari&op=Firme&post_id='.$post_ID.'"><span class="fas fa-pencil-alt tooltip" title="Visualizza '.$Prefisso.'"></span></a>';
 			elseif($tipo->get_Tipo()!="NoFirma")
-				$Linkfirma='<a class="function" href="'.admin_url().'edit.php?post_type=circolari_scuola&page=circolari&op=Adesioni&post_id='.$post_ID.'"><i class="fas fa-pencil-alt tooltip" title="Visualizza '.$Prefisso.'"></i></a>';
+				$Linkfirma='<a class="function" href="'.admin_url().'edit.php?post_type=circolari_scuola&page=circolari&op=Adesioni&post_id='.$post_ID.'"><span class="fas fa-pencil-alt tooltip" title="Visualizza '.$Prefisso.'"></span></a>';
 	    	if ( defined( 'ALO_EM_INTERVAL_MIN' ) ){
 				$DataInvio = get_post_meta( $post_ID, "_sendNewsLetter", true); 
 				$IDNL=$wpdb->get_results("SELECT meta_value FROM $wpdb->postmeta Where post_id=$post_ID And meta_key='_placeholder_easymail_post';");
@@ -1588,12 +1588,12 @@ function wps_circolari_NuoveColonneContenuto($column_name, $post_ID) {
 					$NL=$wpdb->get_results("SELECT ID FROM $wpdb->posts Where ID=".$IDNL[0]->meta_value.";");
 				}
 	    		if ($DataInvio And count($IDNL)>0 And count($NL)>0){
-					$LinkNL.=' <a class="function" href="'.admin_url().'post.php?post='.$IDNL[0]->meta_value.'&action=edit"><i class="fa fa-envelope tooltip" title="Visualizza NewsLetter <br />generata in data '. $DataInvio.'"></i></a>';
+					$LinkNL.=' <a class="function" href="'.admin_url().'post.php?post='.$IDNL[0]->meta_value.'&action=edit"><span class="fa fa-envelope tooltip" title="Visualizza NewsLetter <br />generata in data '. $DataInvio.'"></span></a>';
 				}else
-	            	$LinkNL.=' <a class="function" href="'.admin_url().'edit.php?post_type=circolari_scuola&page=circolari&op=email&post_id='.$post_ID.'"><i class="fa fa-inbox tooltip" title="Genera NewsLetter"></i></a>';  
+	            	$LinkNL.=' <a class="function" href="'.admin_url().'edit.php?post_type=circolari_scuola&page=circolari&op=email&post_id='.$post_ID.'"><span class="fa fa-inbox tooltip" title="Genera NewsLetter"></span></a>';  
 			}
 			if ($tipo->get_Tipo()!='NoFirma'){
-				$LinkLog=' <a class="function" href="'.admin_url().'edit.php?post_type=circolari_scuola&page=circolari&op=Log&post_id='.$post_ID.'"><i class="fa fa-th-list tooltip" aria-hidden="true" title="Visualizza Log delle Firme della Circolare"></i></a>';
+				$LinkLog=' <a class="function" href="'.admin_url().'edit.php?post_type=circolari_scuola&page=circolari&op=Log&post_id='.$post_ID.'"><span class="fa fa-th-list tooltip" aria-hidden="true" title="Visualizza Log delle Firme della Circolare"></span></a>';
 			}
 			echo '<div class="btn-group">'.$Linkfirma.$LinkNL.$LinkLog.'</div>';
 	     }
@@ -1601,17 +1601,17 @@ function wps_circolari_NuoveColonneContenuto($column_name, $post_ID) {
 			$Dati=""; 
 			$numero=get_post_meta($post_ID, "_numero",TRUE);
 			$anno=get_post_meta($post_ID, "_anno",TRUE);
-			$Info= '<i class="fa fa-vcard-o" aria-hidden="true"></i> '.$numero.'_'.$anno." ";		 
+			$Info= '<span class="fa fa-vcard-o" aria-hidden="true"></span> '.$numero.'_'.$anno." ";		 
 			$Dati="Circolare N° ".$numero.'_'.$anno."<br />"; 
 			if(get_post_meta($post_ID, "_visibilita", "d")=="d"){
-				$Info.= '<i class="fa fa-lock" aria-hidden="true"></i><br />';
+				$Info.= '<span class="fa fa-lock" aria-hidden="true"></span><br />';
 				$Dati.=__("Visibilità:Riservata", 'wpscuola' )." <br>";
 			}else{
-				$Info.= '<i class="fa fa-unlock" aria-hidden="true"></i><br />';
+				$Info.= '<span class="fa fa-unlock" aria-hidden="true"></span><br />';
 				$Dati.=__("Visibilità:Pubblica", 'wpscuola' )." <br>";
 			}
 			$Dati.=__("Tipo", 'wpscuola' ).": <strong>".$tipo->get_Tipo()."</strong> <br>";
-			$Info.= '<i class="fa fa-hand-pointer-o" aria-hidden="true"></i> '.$tipo->get_Tipo().'<br />';
+			$Info.= '<span class="fa fa-hand-pointer-o" aria-hidden="true"></span> '.$tipo->get_Tipo().'<br />';
 			if (wps_Is_da_Firmare($post_ID)){
 				if(wps_Is_Circolare_Scaduta($post_ID)){
 					$Color="red;";
@@ -1636,11 +1636,11 @@ function wps_circolari_NuoveColonneContenuto($column_name, $post_ID) {
 					$DaVis="(".$DaVis.")";
 					$DaVisDati=" Firmate ".$Firmate." su ".$NU."<br />";
 				}
-				$Info.= ' <i class="fas fa-pencil-alt" aria-hidden="true" style="color:'.$Color.'"></i> '.wps_FormatDataItalianoBreve(get_post_meta($post_ID, "_scadenza",TRUE)).$DaVis."<br />";
+				$Info.= ' <span class="fas fa-pencil-alt" aria-hidden="true" style="color:'.$Color.'"></span> '.wps_FormatDataItalianoBreve(get_post_meta($post_ID, "_scadenza",TRUE)).$DaVis."<br />";
 				$Dati.=__("Data scadenza firma", 'wpscuola' )." ".wps_FormatDataItalianoBreve(get_post_meta($post_ID, "_scadenza",TRUE))."<br>".$DaVisDati;
 			}
 			$DesDest=wps_GetEencoDestinatari($post_ID,TRUE);
-			$Info.= '<i class="fa fa-users" aria-hidden="true"></i> '.$DesDest;
+			$Info.= '<span class="fa fa-users" aria-hidden="true"></span> '.$DesDest;
 			$Dati.=__("Destinatari Circolari", 'wpscuola' ).": ".$DesDest;
 			echo '<a href="#" title="'.$Dati.'" class="nolink tooltip">'.$Info."</a>";
 		}
@@ -1810,7 +1810,7 @@ function wps_circolari_VisualizzaFirme($post_id,$Tipo=0){
 	}
 	echo'
 		<p style="font-style:italic;font-weight:bold;margin-top:20px;">
-			<i class="fa fa-users fa-2x" aria-hidden="true"></i> '.$Elenco.'</p>
+			<span class="fa fa-users fa-2x" aria-hidden="true"></span> '.$Elenco.'</p>
 	</div>
 	';
 	$utenti=wps_Get_Users_per_Circolare($post_id);

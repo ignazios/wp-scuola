@@ -18,14 +18,14 @@ get_header();
       <div class="row">
 
       <div class="col-12 col-lg-9">
-		   <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+		   <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); scuola_set_post_view();?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header>
 					<h3 class="entry-title"><?php the_title(); ?></h3><?php edit_post_link(); ?>
 <?php 				if ( ! post_password_required() ):?>
 					<div class="row metarticoli">
-								<i class="fas fa-calendar-alt pr-1"></i> <a href="<?php echo esc_url(home_url('/')).get_the_time('Y')."/".get_the_time('m');?>"><?php the_time('j M y'); ?></a>
-								<i class="fas fa-user-edit pr-1 pl-1"></i> <a href="<?php echo esc_url(home_url('/'))."author/".get_the_author_meta('user_nicename');?>"><?php the_author_meta('display_name'); ?></a>
+								<span class="fas fa-calendar-alt pr-1"></span> <a href="<?php echo esc_url(home_url('/')).get_the_time('Y')."/".get_the_time('m');?>"><?php the_time('j M y'); ?></a>
+								<span class="fas fa-user-edit pr-1 pl-1"></span> <a href="<?php echo esc_url(home_url('/'))."author/".get_the_author_meta('user_nicename');?>"><?php the_author_meta('display_name'); ?></a>
 					</div>	
 <?php		endif;?>				
 				</header>
@@ -37,7 +37,7 @@ get_header();
 	    <div class="col-lg-3">
 			<div class="link-list-wrapper shadow p-1">
 				<div class="row p-2">
-					<h6 class="TitoloArchivio"><i class="far fa-newspaper"></i> <?php _e("Servizio", "wpscuola");?></h6>
+					<h6 class="TitoloArchivio"><span class="far fa-newspaper"></span> <?php _e("Servizio", "wpscuola");?></h6>
 				</div> 
 				<ul class="link-list" id="ListaPagine">
 		<?php

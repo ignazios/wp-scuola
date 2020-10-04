@@ -57,12 +57,11 @@ ORDER BY post_date DESC";
 				<div class="row">
 					<div class="col-1">
 						<a class="list-item" href="'."#Cat".get_query_var('cat').'M'.$Data->Mese.'" data-toggle="collapse" aria-expanded="false" aria-controls="Cat'.get_query_var('cat').'M'.$Data->Mese.'">
-							<i class="fas fa-angle-down espandi align-middle"></i>
+							<span class="fas fa-angle-down espandi align-middle"></span>
 						</a>							
 					</div>
 					<div class="col-9 mb-0">
-						<a class="list-item large" href="'.esc_url(home_url('/')).$Data->Anno."/?cat=".get_query_var('cat').'">
-							<span class="m-0">'.$Data->Anno.'</span>
+						<a class="list-item large" href="'.esc_url(home_url('/')).$Data->Anno."/?cat=".get_query_var('cat').'"><span class="m-0">'.$Data->Anno.'</span>
 						</a>						
 					</div>
 					<div class="col-2 m-0 p-0">
@@ -74,16 +73,16 @@ ORDER BY post_date DESC";
 		}
 		$Result.='
 					<li>
-						<a class="list-item subele pl-0" href="'.esc_url(home_url('/')).$Data->Anno."/".$Data->Mese."/?cat=".get_query_var('cat').'">
-							<div class="row">
-								<div class="col-10">	
-									<span class="m-0">'.$mesi[$Data->Mese].'</span>
-								</div>
-								<div class="col-2 m-0">
-									<span class="badge badge-pill badge-primary text-white">'.$Data->NumArt.'</span>
-								</div>
+						<div class="row">
+							<div class="col-10">
+								<a class="list-item medium pl-0 pt-2 pb-2" href="'.esc_url(home_url('/')).$Data->Anno."/".$Data->Mese."/?cat=".get_query_var('cat').'"><span class="m-0">'.$mesi[$Data->Mese].'</span>
+								</a>
 							</div>
-						</a>
+							<div class="col-2 m-0">
+								<span class="badge badge-pill badge-primary text-white">'.$Data->NumArt.'</span>
+							</div>
+						</div>
+
 					</li>';			  			
 	}
 	return $Result;
@@ -100,7 +99,7 @@ function make_category($ID_Categoria,$NomeCategoria,$PL=true){
 						  <div class="row">
 						  	<div class="col-1"></div>
 							<div class="col-9 p-0 mb-2">
-								  <a class="list-item medium pl-2" href="<?php echo get_category_link($ID_Categoria); ?>">
+								  <a class="list-item medium pl-2 pt-2" href="<?php echo get_category_link($ID_Categoria); ?>">
  									<span class="m-0"><?php echo $NomeCategoria; ?></span> 
  								  </a>
 							  	</div>
@@ -111,12 +110,12 @@ function make_category($ID_Categoria,$NomeCategoria,$PL=true){
 <?php 				  else : ?>	
 						<div class="row">
 							<div class="col-1">
-								<a class="list-item" href="#SubCat<?php echo $ID_Categoria; ?>" data-toggle="collapse" aria-expanded="false" aria-controls="<?php echo $ID_Categoria; ?>">							
-								<i class="fas fa-angle-down espandi align-middle"></i>
+								<a class="list-item pt-1" href="#SubCat<?php echo $ID_Categoria; ?>" data-toggle="collapse" aria-expanded="false" aria-controls="<?php echo $ID_Categoria; ?>">							
+								<span class="fas fa-angle-down espandi align-middle"></span>
 								</a>
 							</div>
 							<div class="col-9 p-0 mb-0">
-							  <a class="list-item medium pl-2" href="<?php echo get_category_link($ID_Categoria); ?>" style="line-height: 1.5em;">				  
+							  <a class="list-item medium pl-2 pt-2" href="<?php echo get_category_link($ID_Categoria); ?>" style="line-height: 1.5em;">				  
 								<span class="m-0"><?php echo $NomeCategoria; ?></span>
 							 </a>
 							</div>
@@ -142,11 +141,11 @@ $Anno=isset($search_query["year"])?$search_query["year"]:0;
 $Mese=isset($search_query["monthnum"])?$mesi[(int)$search_query["monthnum"]]:0;
 ?>
 <section id="content" role="main" class="container-fluid mb-3">
-   <div class="container-fluid">
+   <div class="container">
       <div class="row">
 		  <div class="col-12 col-lg-9">
 		  	<header class="header">
-		  		<h3 class="entry-title"><?php _e( 'Articoli della Categoria', 'wpscuola' ); ?> <?php echo single_cat_title(). ($Mese!=""?" del mese di ".$Mese:"").($Anno!=""?" dell'anno ".$Anno:""); ?></h3>
+		  		<h2 class="entry-title"><?php _e( 'Articoli della Categoria', 'wpscuola' ); ?> <?php echo single_cat_title(). ($Mese!=""?" del mese di ".$Mese:"").($Anno!=""?" dell'anno ".$Anno:""); ?></h2>
 		  	</header>
 		  	<div class="container">
 <?php
@@ -165,11 +164,11 @@ $Mese=isset($search_query["monthnum"])?$mesi[(int)$search_query["monthnum"]]:0;
 				  	<div class="row">
 						<div class="col-1">
 							<a class="list-item" href="#ListaCategorie" data-toggle="collapse" aria-expanded="false" aria-controls="ListaCategorie">
-								<i class="fas fa-angle-down espandi align-middle"></i>
+								<span class="fas fa-angle-down espandi align-middle"></span>
 							</a>
 						</div>
 						<div class="col-11 mb-0">
-							<h4 class="TitoloArchivio"><?php _e( 'Argomenti', 'wpscuola' ); ?></h4>
+							<h3 class="h5"><?php _e( 'Argomenti', 'wpscuola' ); ?></h3>
 						</div>
 					</div> 
 					<ul class="link-list collapse" id="ListaCategorie">
@@ -184,11 +183,11 @@ $Mese=isset($search_query["monthnum"])?$mesi[(int)$search_query["monthnum"]]:0;
 				  	<div class="row">
 						<div class="col-1 align-middle">
 							<a class="list-item" href="#ListaCategorieData" data-toggle="collapse" aria-expanded="false" aria-controls="ListaCategorieData">
-								<i class="fas fa-angle-down espandi align-middle"></i>
+								<span class="fas fa-angle-down espandi align-middle"></span>
 							</a>
 						</div>
 						<div class="col-11 mb-0">
-							<h4 class="TitoloArchivio"><?php _e( 'Data di Pubblicazione', 'wpscuola' ); ?></h4>
+							<h3 class="h5"><?php _e( 'Data di Pubblicazione', 'wpscuola' ); ?></h3>
 						</div>
 					 </div> 
 					<ul class="link-list collapse" id="ListaCategorieData">				

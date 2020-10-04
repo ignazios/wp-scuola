@@ -314,7 +314,7 @@ class ScuolaServizi {
 * Aggiungo colonna con ordine di visualizzazione
 */	
 	function servizi_NuoveColonne($defaults) {  
-		if ($_GET['post_type']=="servizio"){
+		if (isset($_GET['post_type']) And $_GET['post_type']=="servizio"){
 			$defaults['ordine'] = 'Ordine di visualizzazione'; 
 		}
 	   return $defaults;  
@@ -392,7 +392,7 @@ function tiposervizio_column_content($content,$column_name,$term_id){
 */
 add_action( 'manage_posts_custom_column', 'servizi_NCContenuto', 10, 2 );
 function servizi_NCContenuto($column_name, $post_ID) { 
-	if ($_GET['post_type']=="servizio"){
+	if (isset($_GET['post_type']) And $_GET['post_type']=="servizio"){
 		 if ($column_name == 'ordine'){
 		 	echo get_post_meta($post_ID, "servizio_ordine",TRUE);
 		}

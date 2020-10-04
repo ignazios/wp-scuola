@@ -13,7 +13,7 @@
 get_header(); 
 ?>
 <section id="content" role="main" class="container-fluid">
-   <div class="container-fluid">
+   <div class="container">
       <div class="row">
 
       <div class="col-12 col-lg-9 pl-5 pr-5 pt-3">
@@ -22,10 +22,10 @@ get_header();
 				scuola_set_post_view();?> 
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header>
-					<h3 class="entry-title"><?php the_title(); ?></h3><?php edit_post_link(); ?>
+					<h2 class="entry-title"><?php the_title(); ?></h2><?php edit_post_link(); ?>
 					<?php if ( ! post_password_required() ) get_template_part('template-parts/entry', 'meta'); ?>
 				</header>
-<?php			if ( ! post_password_required() ) get_template_part( 'template-parts/entry','excerpt' );
+<?php			//if ( ! post_password_required() ) get_template_part( 'template-parts/entry','excerpt' );
 				get_template_part( 'template-parts/entry','content' ) ; ?>
 			</article>	   
 <?php 				if ( ! post_password_required() ) comments_template( '', true );

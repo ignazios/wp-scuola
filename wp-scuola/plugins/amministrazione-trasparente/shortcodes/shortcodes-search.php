@@ -25,7 +25,7 @@ $args = array('order'=>'ASC','hide_empty'=>true);
  			<input type="text" name="s" placeholder="Cerca..." />
     	</div>
  		<div class="col-md-1 col-4">
-    		<button class="btn btn-primary text-center" type="submit" id="searchsubmit" value="Cerca"><i class="fas fa-search"></i></button>
+    		<button class="btn btn-primary text-center" type="submit" id="searchsubmit" value="Cerca"><span class="fas fa-search"></span></button>
     	</div>
 	  	<div class="col-md-2">
 			<?php echo get_terms_dropdown($taxonomies, $args);?>

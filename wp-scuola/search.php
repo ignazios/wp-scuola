@@ -65,7 +65,7 @@ function my_get_archives()
 							</div>
 							<div class="col-2 p-0">
 							<a class="list-item" href="'."#S".$Anno.'M'.$Mese.'" data-toggle="collapse" aria-expanded="false" aria-controls="S'.$Anno.'M'.$Mese.'">
-							<i class="fas fa-angle-down fa-2x"></i>
+							<span class="fas fa-angle-down fa-2x"></span>
 								</a>
 							</div>
 						</div>
@@ -112,7 +112,7 @@ if ( have_posts() And (strlen( trim(get_search_query()))) >= 1){
  			<div class="col d-flex justify-content-center">
            		<div class="callout callout-highlight danger">
   					<div class="callout-title">
-  						<i class="fas fa-info-circle"></i> <?php _e( 'Attenzione', 'wpscuola' ); ?>
+  						<span class="fas fa-info-circle"></span> <?php _e( 'Attenzione', 'wpscuola' ); ?>
   					</div>
   					<p><?php _e( 'Non sono stati trovati contenuti con i parametri indicati', 'wpscuola' ); ?></p>
 				</div>

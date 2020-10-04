@@ -53,7 +53,7 @@ function my_get_archivesAnnoMese()
 						</div>
 						<div class="col-2 p-0">
 						<a class="list-item" href="#M'.$Data->Anno.$Data->Mese.'" data-toggle="collapse" aria-expanded="false" aria-controls="'.'M'.$Data->Anno.$Data->Mese.'">
-						<i class="fas fa-angle-down fa-2x"></i>
+						<span class="fas fa-angle-down fa-2x"></span>
 							</a>
 						</div>
 					</div>
@@ -81,7 +81,7 @@ $Anno=$search_query["year"];
 $Mese=$mesi[(int)$search_query["monthnum"]];
 $Archivio=my_get_archivesAnnoMese();?>
 <section id="content" role="main" class="container-fluid">
-   <div class="container-fluid">
+   <div class="container">
       <div class="row">
 		  <div class="col-12 col-lg-9">
 		  	<header class="header">
@@ -102,7 +102,7 @@ $Archivio=my_get_archivesAnnoMese();?>
 			  	<div class="row">
 					<div class="col-1 align-middle">
 						<a class="list-item" href="#ListaCategorieData" data-toggle="collapse" aria-expanded="false" aria-controls="ListaCategorieData">
-							<i class="fas fa-angle-down espandi align-middle"></i>
+							<span class="fas fa-angle-down espandi align-middle"></span>
 						</a>
 					</div>
 					<div class="col-11 mb-0">

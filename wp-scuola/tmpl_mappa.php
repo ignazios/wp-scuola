@@ -12,6 +12,7 @@
  * Text Domain:       	wpscuola
 */
 get_header();
+scuola_set_post_view();
 ?>
 <section id="content" role="main">
    	<div class="container" id="Mappa">

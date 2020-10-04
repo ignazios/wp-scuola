@@ -39,7 +39,7 @@ class my_EM_Widget_Calendar extends WP_Widget {
 	function my_em_get_link( $text = '' ) {
 		$text = ($text == '') ? get_option ( "dbem_events_page_title" ) : $text;
 		$text = ($text == '') ? __('Events','events-manager') : $text; //In case options aren't there....
-		return '<a href="'.esc_url(EM_URI).'" title="'.esc_attr($text).'"><i class="fas fa-link p-1"></i><span class="text">'.esc_html($text).'</span></a>';
+		return '<a href="'.esc_url(EM_URI).'" title="'.esc_attr($text).'"><span class="fas fa-link p-1"></span><span class="text">'.esc_html($text).'</span></a>';
 	}
 
     /** @see WP_Widget::widget */
@@ -49,8 +49,7 @@ class my_EM_Widget_Calendar extends WP_Widget {
 		$VisLocalita=($instance['vis_localita']==0?FALSE:TRUE);?>
 <section id="sec_<?php echo $args['widget_id'];?>"  class="home-widget container Eventi">
 <?php 
-   	echo $args['before_widget'];
-    	if( !empty($instance['title']) ){
+     	if( !empty($instance['title']) ){
 		    echo $args['before_title'];
 		    echo apply_filters('widget_title',$instance['title'], $instance, $this->id_base);
 		    echo $args['after_title'];
@@ -84,17 +83,17 @@ class my_EM_Widget_Calendar extends WP_Widget {
 	if($VisEventi AND $VisLocalita){?>
 	<nav>
 		<div class="nav nav-tabs auto" id="nav-tab-calendar" role="tablist">
-		<a class="nav-item nav-link active" id="Eventi-tab" data-toggle="tab" href="#Eventi" role="tab" aria-controls="Eventi" aria-selected="true"><i class="far fa-calendar-alt pr-3"></i>Eventi</a>
-		<a class="nav-item nav-link"  id="Localita-tab" data-toggle="tab" href="#Localita" role="tab" aria-controls="Localita" aria-selected="false"><i class="fas fa-map-marked pr-3"></i>Località</a>
+		<a class="nav-item nav-link active" id="Eventi-tab" data-toggle="tab" href="#EventiCartella" role="tab" aria-controls="Eventi" aria-selected="true"><span class="far fa-calendar-alt pr-3"></span>Eventi</a>
+		<a class="nav-item nav-link"  id="Localita-tab" data-toggle="tab" href="#LocalitaCartella" role="tab" aria-controls="Localita" aria-selected="false"><span class="fas fa-map-marked pr-3"></span>Località</a>
 		</div>
 	</nav>	    
   	<div class="tab-content" id="EM-Events_EventiLocalita">
-  		<div class="tab-pane fade show active primary-border-color" id="Eventi" role="tabpanel" aria-labelledby="Eventi">
+  		<div class="tab-pane fade show active primary-border-color" id="EventiCartella" role="tabpanel" aria-labelledby="Eventi">
 <?php	}
 	if($VisEventi){?>
 		<div id="Eventi">
 <?php		//orderby fix for previous versions with old orderby values
-		if(!$VisLocalita) echo '<h4><i class="far fa-calendar-alt pr-3"></i> Eventi</h4>';
+		if(!$VisLocalita) echo '<h4><span class="far fa-calendar-alt pr-3"></span> Eventi</h4>';
 		if( !array_key_exists($instance['orderby'], $this->em_orderby_options) ){
 			//replace old values
 			$old_vals = array(
@@ -131,12 +130,12 @@ class my_EM_Widget_Calendar extends WP_Widget {
 <?php   }
 		if($VisEventi AND $VisLocalita){?>
 		</div>
-		<div class="tab-pane fade primary-border-color" id="Localita" role="tabpanel" aria-labelledby="Localita" >
+		<div class="tab-pane fade primary-border-color" id="LocalitaCartella" role="tabpanel" aria-labelledby="Localita" >
 <?php	}
 	if($VisLocalita){?>
 			<div id="Localita">
 <?php	    //make sure no owner searches are being run
-		if(!$VisEventi) echo '<h4><i class="fas fa-map-marked pr-3"></i>Località</h4>';
+		if(!$VisEventi) echo '<h4>span class="fas fa-map-marked pr-3"></span>Località</h4>';
 		$loc_instance=array('scope' 	=> $instance["scope_loc"],
     							'order' 	=> $instance['order_loc'],
     							'limit' 	=> $instance['limit_loc'],
@@ -166,7 +165,6 @@ class my_EM_Widget_Calendar extends WP_Widget {
 <?php }?>
 	</div>
   </div>
-<?php echo $args['after_widget'];?>
 </section>	
 <?php
     }

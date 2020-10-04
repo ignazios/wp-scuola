@@ -36,6 +36,7 @@
       <div class="col-12 pl-5 pr-5 pt-3">
 <?php 	if ( have_posts() ) : 
 			while ( have_posts() ) : the_post();
+				scuola_set_post_view();
 		   		$ID_post=get_the_ID();
 				$numero=get_post_meta($ID_post, "_numero",TRUE);
 				$anno=get_post_meta($ID_post, "_anno",TRUE);
@@ -47,18 +48,18 @@
 <?php			if ( ! post_password_required() ) :?>
 					<div class="metarticoli">
 						<p>
-							<i class="fas fa-calendar-alt pr-1"></i> <?php the_time('j M y'); ?> 
-							<i class="fas fa-ticket-alt pl-2 pr-1"></i> <?php echo $numero."_".$anno;?>
-							<i class="fas fa-user-edit pl-2 pr-1"></i> <a href="<?php echo esc_url(home_url('/'))."author/".get_the_author_meta('user_nicename');?>"><?php the_author_meta('display_name'); ?></a>
+							<span class="fas fa-calendar-alt pr-1"></span> <?php the_time('j M y'); ?> 
+							<span class="fas fa-ticket-alt pl-2 pr-1"></span> <?php echo $numero."_".$anno;?>
+							<span class="fas fa-user-edit pl-2 pr-1"></span> <a href="<?php echo esc_url(home_url('/'))."author/".get_the_author_meta('user_nicename');?>"><?php the_author_meta('display_name'); ?></a>
 						</p>
 						<p>
-							<i class="fa fa-users pr-1" aria-hidden="true"></i> <?php echo $Elenco;?>
+							<span class="fa fa-users pr-1" aria-hidden="true"></span> <?php echo $Elenco;?>
 				            <?php	if (wps_Is_Circolare_Da_Firmare($ID_post)){?>
 				            	  <span class="card-firma pl-2 pr-1">
 							<?php		if (!wps_Is_Circolare_Firmata($ID_post)) {
 											$ngiorni=wps_Get_scadenzaCircolare($ID_post,"",True);					
 											if(wps_Is_Circolare_Scaduta($ID_post)){
-												echo' <i class="fas fa-pencil-alt" aria-hidden="true" style="color:red;"></i> Scaduta e non Firmata ';						
+												echo' <span class="fas fa-pencil-alt" aria-hidden="true" style="color:red;"></span> Scaduta e non Firmata ';						
 											}else{
 												switch ($ngiorni){
 													case -1:							
@@ -79,10 +80,10 @@
 													$Tipo=sprintf(__("Esprimere adesione %s","wpscuola"),$entro);
 												else
 													$Tipo=sprintf(__("Firmare %s","wpscuola"),$entro);
-												echo' <i class="fas fa-pencil-alt" style="color:red;"></i> '.$Tipo;	
+												echo' <span class="fas fa-pencil-alt" style="color:red;"></span> '.$Tipo;	
 										}			
 									}else{
-										echo' <i class="fas fa-pencil-alt" aria-hidden="true" style="color:blue;"></i> '.__("Firmata","wpscuola");				
+										echo' <span class="fas fa-pencil-alt" aria-hidden="true" style="color:blue;"></span> '.__("Firmata","wpscuola");				
 									}?>
 								</span>
 						<?php }?>

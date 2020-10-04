@@ -1,7 +1,7 @@
 			  <div class="container">
 				  <div class="link-list-wrapper shadow p-1">
 				  	<div class="row p-2">
-						<h6 class="TitoloArchivio"><i class="far fa-newspaper"></i> Navigazione Pagine</h6>
+						<h3 class="h5"><span class="far fa-newspaper"></span> Navigazione Pagine</h3>
 					</div> 
 					<ul class="link-list" id="ListaPagine">
 		<?php global $figli;

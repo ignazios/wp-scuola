@@ -89,7 +89,6 @@ class Articoli_Griglia extends WP_Widget {
 
  	<section id="ag_<?php echo $args['widget_id'];?>"  class="home-widget container ">
 <?php           
-		echo $args['before_widget'];          
            if ( $title ) {
                 echo $args['before_title'] . $title . $args['after_title'];
             } ?>
@@ -124,7 +123,7 @@ class Articoli_Griglia extends WP_Widget {
                       <?php } ?>
                     </div>
                     <header class="entry-header">
-                      <?php the_title( '<h5 class="card-title big-heading">', '</h5>' ); ?>
+                      <?php the_title( '<h4 class="card-title big-heading h5">', '</h4>' ); ?>
                     </header><!-- .entry-header -->
 
                     <?php if( true === $excerpt ) { ?>    
@@ -135,7 +134,7 @@ class Articoli_Griglia extends WP_Widget {
                     <?php } ?>
                    </div>
 		          <p  class="read-more text-right pb-2 pr-2">
-		          	<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><i class="fas fa-link p-1"></i> <?php _e( 'Leggi di pi&ugrave','wpscuola' ); ?></a>
+		          	<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><span class="fas fa-link p-1"></span> <?php _e( 'Leggi di pi&ugrave','wpscuola' ); ?></a>
 		          </p>
             	</div>
         	</div>
@@ -143,13 +142,12 @@ class Articoli_Griglia extends WP_Widget {
                 if($leggitutto):?>
 					<div class="it-card-footer">
           				<a class="read-more" href="<?php echo $LinkLeggiTutto;?>">
-              				<span class="text"><i class="fas fa-link p-1"></i> <?php _e( 'Leggi tutto','wpscuola' );?></span>
+              				<span class="text"><span class="fas fa-link p-1"></span> <?php _e( 'Leggi tutto','wpscuola' );?></span>
             			</a>
 		          	</div>
 		        <?php endif; ?>
 			</div>
 		</div>
-<?php   echo $args['after_widget']; ?>
 	</section>
 <?php            
             wp_reset_postdata();
@@ -233,7 +231,7 @@ class Articoli_Griglia extends WP_Widget {
         <p>
             <label for="<?php echo $this->get_field_id( 'cats_notin' ); ?>"><?php _e( 'ID delle Categorie da escludere (separati da ,):' ); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id( 'cats_notin' ); ?>" name="<?php echo $this->get_field_name( 'cats_notin' ); ?>" type="text" value="<?php echo $catnotin; ?>" />
-            <i><?php _e( 'Impostazione valida solo se selezionato "Tutti gli articoli"','wpscuola' ); ?></i>
+            <?php _e( 'Impostazione valida solo se selezionato "Tutti gli articoli"','wpscuola' ); ?>
         </p>
 
        <p>

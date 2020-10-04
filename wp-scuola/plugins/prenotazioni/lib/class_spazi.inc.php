@@ -230,7 +230,7 @@ class Spazi{
 			  	<div class="row">
 			  		<div class="col-12 col-md-8 order-md-2">
 					    <div class="media-body">
-					      <h5 class="mt-0 mb-1"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $post->post_title;?></a></h5>
+					      <h3 class="mt-0 mb-1"><a href="<?php echo get_permalink($post->ID);?>"><?php echo $post->post_title;?></a></h3>
 						     <?php echo $Riassunto;?>
 					    </div>			  	
 					</div>			  		
