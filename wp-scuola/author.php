@@ -92,9 +92,9 @@ $Mese=isset($search_query["monthnum"])?$mesi[(int)$search_query["monthnum"]]:"";
 $Archivio=my_get_archivesAnnoMese(get_the_author_meta("display_name"));
 ?>
 <section id="content" role="main" class="container-fluid">
-   <div class="container-fluid">
+   <div class="container">
       <div class="row">
-		  <div class="col-12 col-lg-9">
+		  <div class="col-12">
 		  	<header class="header">
 				<h3 class="entry-title"><?php _e( 'Archivio articoli di', 'wpscuola' ); ?> <?php echo get_the_author_meta("display_name")." ".($Mese!=""?__( 'del mese di', 'wpscuola' )." ".$Mese:"").($Anno!=""?" ".__( 'dell\'anno', 'wpscuola' )." ".$Anno:""); ?></h3>
 		  	</header>
@@ -107,23 +107,6 @@ $Archivio=my_get_archivesAnnoMese(get_the_author_meta("display_name"));
 		  	</div>
 <?php get_template_part( 'template-parts/pagin' ); ?>
 		  </div>
-		  <div class="col-12 col-lg-3">
-			<div class="link-list-wrapper shadow p-1 mt-3">
-			  	<div class="row">
-					<div class="col-1 align-middle">
-						<a class="list-item" href="#ListaCategorieData" data-toggle="collapse" aria-expanded="false" aria-controls="ListaCategorieData">
-							<span class="fas fa-angle-down espandi align-middle"></span>
-						</a>
-					</div>
-					<div class="col-11 mb-0">
-						<h4 class="TitoloArchivio"><?php _e( 'Data di Pubblicazione', 'wpscuola' ); ?></h4>
-					</div>
-				 </div> 
-				<ul class="link-list collapse" id="ListaCategorieData">				
-					<?php echo $Archivio; ?>
-				</ul>
-			</div>
-		</div>
 	  </div>
 	</div>
 </section>

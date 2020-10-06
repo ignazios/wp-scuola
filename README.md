@@ -29,6 +29,11 @@ facebook: https://www.facebook.com/wpscuola/
  - **Wordpress** 	*5.0* - *5.5*
  - **PHP** 		*7.0*
 ## Change log
+- **1.0.1**
+  - ***Modificata*** la visualizzazione dell'archivio temporale
+  - ***Creato*** lo shortcode [articoli id_categoria="0" numero="5" imgevidenza="si"] che permette di visualizzare gli ultimi **numero** articoli della categoria **id_categoria** e si può visualizzare l'immagine in evidenza impostando ilparametro **imgevidenza** uguale a si
+  - ***Modificata*** la visualizzazione dell'archivio temporale
+  - ***Aggiunta*** la gestione integrata dei breadcrumb. Vengono visualizzati in tutte le pagine del sito tranne che in Home Page
 - **1.0.0**
   - ***Revizione*** totale del codice. Il tema adesso è basato su Italiawp2 per quanto riguarda la configurazione del framework Bootstrap Italia. E' stato rivisto completamente l'header ed il menu principale.
   - ***Sono stati tolti*** i menu: mega menu, menu social

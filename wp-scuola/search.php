@@ -97,14 +97,24 @@ if ( have_posts() And (strlen( trim(get_search_query()))) >= 1){
 	$SearchOk=FALSE;
 }
 ?>
-<section id="content" role="main" class="container-fluid">
-   <div class="container-fluid affix-parent">
+<section id="content" role="main" class="container">
+   <div class="container affix-parent">
 		<div class="row">
 	      	<div class="col d-flex justify-content-center pagesearch">
 	           <header class="header mt-5">
-	                  <h3 class='entry-title'><?php printf( __(  'Inserisci un termine per la ricerca: ', 'wpscuola' ) ); ?></h3>
-	            <?php get_search_form(); ?>
-	            </header>
+	                <h3 class='entry-title'><?php printf( __(  'Inserisci un termine per la ricerca: ', 'wpscuola' ) ); ?></h3>
+	                <div class="cerca">
+						<form class="Form" method="get" role="search" action="<?php echo esc_url(home_url('/')); ?>">
+							<label class="sr-only" for="search_text_page"><?php _e("Ricerca all'interno del sito","wpscuola");?></label>
+							<input type="text" value="" name="s" required id="search_text_page">
+							<button class="btn btn-default btn-cerca pull-right" name="submit" title="<?php echo __('Avvia la ricerca','wpscuola'); ?>" aria-label="<?php echo __('Avvia la ricerca','wpscuola'); ?>">
+								<svg class="icon">
+								<use xlink:href="<?php bloginfo('template_url'); ?>/static/img/ponmetroca.svg#ca-search"></use>
+								</svg>
+							</button>
+						</form>	       
+					</div>     
+				</header>
 	        </div>
 		</div>
 <?php if ( !$SearchOk ) : ?>

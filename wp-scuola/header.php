@@ -225,16 +225,14 @@
 		</section>
     </header>
 
-    <main id="main_container" class="pt-3">
-		<?php if(function_exists('bcn_display') And !is_front_page()){?>
+    <main id="main_container">
 		<section id="breadcrumbs" role="main" class="container-fluid">
 		   <div class="container pt-3 pb-3">
 		      <div class="row">
 			      <div class="col-md-12">
-	         		<?php bcn_display();?>
+	         		<?php custom_breadcrumbs();?>
 				  </div>
 			  </div>
 			</div>
 		</section>
-		<?php } ?>
         

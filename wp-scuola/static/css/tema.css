@@ -14,6 +14,20 @@ Tags: 				right-sidebar, custom-header, custom-footer, custom-colors, custom-log
 .pt-55,.py-55{
 	padding-top:62px!important;
 }
+#breadcrumbs span.separator {
+    display: inline-block;
+    font-weight: 600;
+    padding: 0 .5em;
+}
+#breadcrumbs .breadcrumb-item {
+    padding-left: 0;
+}
+#breadcrumbs .breadcrumb-item.active {
+    color: #656566;
+}
+#breadcrumbs .breadcrumb-item+.breadcrumb-item {
+    padding-left: .5rem;
+}
 
 .thead-dark th {
     color: #fff;
@@ -2502,7 +2516,7 @@ article .attachments h3{
 	width: 100%;
 	min-height: 400px;
 }
-#Mappa ul.it-list li.page_item,#Mappa ul.it-list li.cat-item{
+#Mappa ul.it-list li.page_item,#Mappa ul.it-list li.cat-item, #content .it-list-wrapper .it-list .nolist{
 	list-style-type: none!important;
 }
 #Mappa ul.it-list li.cat-item .metadata{
@@ -2644,4 +2658,7 @@ a.read-more {
 }
 #StoriaFalcone .card:after {
   margin-top: 0!important; 
+}
+#search_text_page{
+	width:80%;
 }

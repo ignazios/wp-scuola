@@ -882,7 +882,7 @@ $wp_customize->add_setting( 'scuola_text_color' , array(
     'default'     => "#0066cc",
     'sanitize_callback' => 'sanitize_hex_color',
   ) );
-   $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'header_textcolor', array(
+   $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'scuola_link_color', array(
     'label'       => __( 'Colore dei link', 'scuola' ),
     'section'     => 'colors',
     'settings'     => 'scuola_link_color'
