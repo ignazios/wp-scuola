@@ -1,4 +1,4 @@
- <div class="row">
+ <div class="row metarticoli">
 	<div class="col-12 border-bottom border-primary">
 		<h2 class="Titolo">
 			<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>

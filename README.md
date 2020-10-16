@@ -29,6 +29,11 @@ facebook: https://www.facebook.com/wpscuola/
  - **Wordpress** 	*5.0* - *5.5*
  - **PHP** 		*7.0*
 ## Change log
+- **1.0.2**
+  - ***Aggiunto*** il supporto per gli stili del plugin ***Gutenberg Avanzato***(https://it.wordpress.org/plugins/advanced-gutenberg/)
+  - ***Modificata*** la gestione del Menu di navigazione sottopagine sulla destra. Adesso con meno di 5 elementi ilmenu si attacca in alto e non scrolla insieme alla pagina
+  - ***Corretto*** il template di pagina Mappa del sito
+  - ***Coretti*** alcuni Bug minori
 - **1.0.1**
   - ***Modificata*** la visualizzazione dell'archivio temporale
   - ***Creato*** lo shortcode [articoli id_categoria="0" numero="5" imgevidenza="si"] che permette di visualizzare gli ultimi **numero** articoli della categoria **id_categoria** e si può visualizzare l'immagine in evidenza impostando ilparametro **imgevidenza** uguale a si

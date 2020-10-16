@@ -2,7 +2,7 @@
  	$IDCircolare=get_the_ID();
  	$numero=get_post_meta($IDCircolare, "_numero",TRUE);
 	$anno=get_post_meta($IDCircolare, "_anno",TRUE);
-	$Elenco=wps_GetEencoDestinatari($IDCircolare);
+	$Elenco=wps_GetEencoDestinatari($IDCircolare,FALSE,TRUE);
  ?>
  <div class="row">
 	<div class="col-12 border-bottom border-primary">
@@ -10,7 +10,8 @@
 			<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 		</h3>
 		<p class="text-muted">
-			<span class="far fa-calendar-alt"></span> <?php echo date('d/m/Y',strtotime(get_the_date()));?> <strong> <span class="fas fa-user-edit"></span> <a href="<?php echo esc_url(home_url('/'))."author/".get_the_author_meta('user_nicename');?>"><?php the_author_meta('display_name');?></a><br />
+			<span class="far fa-calendar-alt"></span>
+			<strong><a href="<?php echo esc_url(home_url('/'))."circolari-scuola/".get_the_time('Y')."/".get_the_time('m');?>"><?php the_time('j M y'); ?></a> <span class="fas fa-user-edit"></span> <a href="<?php echo esc_url(home_url('/'))."author/".get_the_author_meta('user_nicename');?>"><?php the_author_meta('display_name');?></a><br />
 			<span class="fas fa-ticket-alt"></span> <?php echo $numero."_".$anno;?></strong> <span class="users"><span class="fa fa-users" aria-hidden="true"></span> <?php echo $Elenco;?>
 <?php	
 	if (wps_Is_Circolare_Da_Firmare($IDCircolare)){?>

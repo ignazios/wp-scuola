@@ -8,11 +8,13 @@ License URI: 		https://opensource.org/licenses/AGPL-3.0
 Tags: 				right-sidebar, custom-header, custom-footer, custom-colors, custom-logo, custom-menu, mega-menu, footer-widgets, footer-menu, editor-style, featured-images, post-formats, theme-options, blocco-scuola, blocco-in-evidenza, modulo-FAQ, modulo-Circolari, tempate-albo-online, template-amministrazione-trasparente.
 */
 /* Bootstrap-italia */
-.pt-6,.py-6{
-	padding-top:96px!important;
-}
-.pt-55,.py-55{
-	padding-top:62px!important;
+@media (min-width: 1200px){
+	.pt-66,.py-66{
+		padding-top:96px!important;
+	}
+	.pt-55,.py-55{
+		padding-top:62px!important;
+	}
 }
 #breadcrumbs span.separator {
     display: inline-block;
@@ -54,6 +56,53 @@ Tags: 				right-sidebar, custom-header, custom-footer, custom-colors, custom-log
 	font-size: 0.9em;
 	font-style: italic;
 }
+.wp-block-table td{
+	padding: 1rem;
+}
+
+	.has-blu-color{color:#004d99;}
+	.has-grigioscuro-color{color:#3d4955;}
+	.has-bluscuro-color{color:#17324d;}
+	.has-azzurro-color{color:#0073e6;}
+	.has-grigio-color{color:#5c6f82;}
+	.has-grigiochiaro-color{color:#94a1ae;}
+	.has-Verde-color{color:#00cc85;}
+	.has-rosso-color{color:#f73e5a;}
+	.has-arancione-color{color:#ff9900;}
+	.has-argento-color{color:#3d4955;}
+	.has-bianco-color{color:#ffffff;}
+
+	.has-blu-background-color{background-color:#004d99;}
+	.has-grigioscuro-background-color{background-color:#3d4955;}
+	.has-bluscuro-background-color{background-color:#17324d;}
+	.has-azzurro-background-color{background-color:#0073e6;}
+	.has-grigio-background-color{background-color:#5c6f82;}
+	.has-grigiochiaro-background-color{background-color:#94a1ae;}
+	.has-Verde-background-color{background-color:#00cc85;}
+	.has-rosso-background-color{background-color:#f73e5a;}
+	.has-arancione-background-color{background-color:#ff9900;}
+	.has-argento-background-color{background-color:#3d4955;}
+	.has-bianco-background-color{background-color:#ffffff;}
+	
+	.has-small-font-size{font-size:0.5em;}
+	.has-normal-font-size{font-size:1em;}
+	.has-medium-font-size{font-size:1.5em;}
+	.has-big-font-size{font-size:2em;}
+	
+	#content .wp-block-advgb-summary li{
+		list-style: none!important;
+		margin-left: 0!important;
+		padding-bottom: 0.5em;
+		font-weight: bold;
+		font-size: 0.8em;
+	}
+	#content .wp-block-advgb-summary li.toc-level-2{
+		padding-left: 5px!important;
+	}
+	#content .wp-block-advgb-summary li.toc-level-3{
+		padding-left: 15px!important;
+	}
+	
 /* =WordPress Core */
 @media screen and (max-width: 600px){
 	#wpadminbar {
@@ -2332,7 +2381,7 @@ body.search article {
     list-style: none!important;
     list-style-position: outside!important;
 }
-#content ul li,#content ul li ul ,#content ul li ul li{
+#content ul li,#content ul li ul {
 	padding-left: 1em!important;
 	list-style: disc!important;
 	list-style-position: inside!important;
@@ -2340,6 +2389,11 @@ body.search article {
 #content ul{
 	padding-left: 0em!important;
 	list-style: disc!important;
+	list-style-position: inside!important;
+}
+#content ul li ul li {
+	padding-left: 1em!important;
+    list-style: square!important;
 	list-style-position: inside!important;
 }
 .h-48 {
@@ -2388,8 +2442,8 @@ body.search article {
 	height: 31em;
 	overflow: hidden;
 }
-.Titolo{
-	font-size: 1.2em!important;
+.Titolo,.metarticoli .Titolo a{
+	font-size: 1.5rem!important;
 }
 .text-muted{
 	font-size: 0.8em!important;
@@ -2519,13 +2573,20 @@ article .attachments h3{
 #Mappa ul.it-list li.page_item,#Mappa ul.it-list li.cat-item, #content .it-list-wrapper .it-list .nolist{
 	list-style-type: none!important;
 }
+#Mappa ul.it-list ul.children{
+	padding-top: 0.1rem;
+} 
 #Mappa ul.it-list li.cat-item .metadata{
 	    font-size: 1em!important;
+}
+#archdest ul li a {
+    padding: 0;
+    line-height: 2em!important;
 }
 #archcat {
     top: 100px!important;
 }
-#archcat .link-list-wrapper ul li a {
+#archcat ul li a {
     padding: 0;
     line-height: 1em!important;
 }
@@ -2536,7 +2597,7 @@ article .attachments h3{
 	text-decoration: none;	
 }
 .metarticoli a{
-	font-size: 0.8em!important;
+	font-size: 1rem!important;
 }
 .metarticoli {
 	line-height: 1em;
@@ -2661,4 +2722,7 @@ a.read-more {
 }
 #search_text_page{
 	width:80%;
+}
+table.advgb-table-frontend td, table.advgb-table-frontend tr {
+    border: 1px solid #dddddd!important;
 }

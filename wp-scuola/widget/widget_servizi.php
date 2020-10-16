@@ -169,7 +169,7 @@ class Servizi extends WP_Widget {
         $instance = $old_instance;
         $instance['title'] = strip_tags($new_instance['title']);
         $instance['tipovis'] = $new_instance['tipovis'];
-        $instance['tipologias'] = $new_instance['tipologias'];
+        $instance['tipologias'] = $instance['tipovis']==2?$new_instance['tipologias']:0;
 		return $instance;
 	}
 

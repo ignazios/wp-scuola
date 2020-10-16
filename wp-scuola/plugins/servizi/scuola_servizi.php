@@ -330,7 +330,7 @@ function add_tiposervizio_field($taxonomy) {
     global $feature_groups;
     ?><div class="form-field term-ordine">
         <label for="ordine"><?php _e('Ordine', 'wpscuola' );; ?></label>
- 		<input type="number" name="term_meta[ordine]" id="term_meta[ordine]"  min="1" max="100" style="width: 5em;" value="<?php echo $term_meta['ordine'] ? $term_meta['ordine'] : '1'; ?>">
+ 		<input type="number" name="term_meta[ordine]" id="term_meta[ordine]"  min="1" max="100" style="width: 5em;" value="<?php echo $term_meta['ordine'] ? $term_meta['ordine'] : '1'; ?>" min="1">
  		<br />
 		<span class="description"><?php _e('Ordine di visualizzazione', 'wpscuola' ); ?></span>
     </div><?php

@@ -90,12 +90,16 @@ function wps_GetNumeroCircolare($PostID){
 	$NumeroCircolare=$numero.'_'.$anno ;
 return $NumeroCircolare;
 }
-function wps_GetEencoDestinatari($PostID,$Bold=FALSE){
+function wps_GetEencoDestinatari($PostID,$Bold=FALSE,$Link=FALSE){
 	$fgs = wp_get_object_terms($PostID, 'gruppiutenti');
 	$Elenco="";
 	if(!empty($fgs)){
 		foreach($fgs as $fg){
-			$Elenco.=($Bold?"<strong>":"").$fg->name.($Bold?"</strong>":"")." - ";
+			if($Link){
+				$Elenco.='<a href="'.esc_url(home_url('/')).'destinatari/'.$fg->slug.'" >'.($Bold?"<strong>":"").$fg->name.($Bold?"</strong>":"").'</a> - ';
+			}else{
+				$Elenco.=($Bold?"<strong>":"").$fg->name.($Bold?"</strong>":"")." - ";
+			}
 		}
 		$Elenco=substr($Elenco,0,strlen($Elenco)-3);
 	}

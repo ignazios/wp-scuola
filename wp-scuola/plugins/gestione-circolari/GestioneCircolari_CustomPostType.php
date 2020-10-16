@@ -55,7 +55,7 @@ function wps_crea_custom_circolari() {
 		'hierarchical' => false,
 		'has_archive' => true,
 		'menu_icon' => wps_Circolari_URL.'/img/circolare.png',
-	   'taxonomies' => array('post_tag'),  
+	    'taxonomies' => array('post_tag'),  
 		'supports' => $ArrSupports));
 }
 ?>

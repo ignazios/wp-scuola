@@ -1,5 +1,10 @@
-			  <div class="container">
-				  <div class="link-list-wrapper shadow p-1">
+<?php	global $figli;
+		if(substr_count($figli, '<li')>5){?>
+			<div class="container">
+<?php	}else{?>
+			<div class="container affix-top">
+<?php	}?>				
+				<div class="link-list-wrapper shadow p-1">
 				  	<div class="row p-2">
 						<h3 class="h5"><span class="far fa-newspaper"></span> Navigazione Pagine</h3>
 					</div> 

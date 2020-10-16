@@ -173,7 +173,7 @@ function wps_Crea_tassonomia_GruppoUtenti()
 		'show_in_nav_menus'          => true,
 		'show_tagcloud'              => true,
 		'show_in_rest' 				 => true,
-		'rewrite' => array('with_front' => true,'slug' => 'gruppo/utente'),
+		'rewrite' => array('with_front' => true,'slug' => 'destinatari'),
 		'capabilities' => array(
 			'manage_terms' => 'edit_users', // Using 'edit_users' cap to keep this simple.
 			'edit_terms'   => 'edit_users',

@@ -2,6 +2,10 @@ $(document).ready(function () {
 
 });
 
+window.addEventListener("hashchange", function () {
+    window.scrollTo(window.scrollX, window.scrollY - 100);
+});
+
 $(window).on("scroll touchmove", function () {
     $('#mainheader').toggleClass('ridotto', $(document).scrollTop() > 40);
     $('body').toggleClass('ridotto', $(document).scrollTop() > 40);
@@ -184,9 +188,3 @@ jQuery(document).ready(function ($) {
 $('.megamenu .dropdown-menu').click(function(e) {
     e.stopPropagation();
 });
-var windowsize = $(window).width();
-if (windowsize > 990) {
-    $('#menup').remove();
-}else{
-	$('#sub_nav').remove();
-}

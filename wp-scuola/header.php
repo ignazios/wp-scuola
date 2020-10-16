@@ -226,6 +226,7 @@
     </header>
 
     <main id="main_container">
+<?php if ( !is_front_page() ) :?>
 		<section id="breadcrumbs" role="main" class="container-fluid">
 		   <div class="container pt-3 pb-3">
 		      <div class="row">
@@ -235,4 +236,5 @@
 			  </div>
 			</div>
 		</section>
+<?php endif;?>
         

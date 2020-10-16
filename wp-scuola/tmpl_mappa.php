@@ -29,27 +29,27 @@ scuola_set_post_view();
 	            </div>
 			</div>
 			<div class="col-lg-4 col-md-12">
-				<h2>Categorie</h2>
+				<h2><?php _e('Categorie','wpscuola');?></h2>
 				<div class="it-list-wrapper">
   					<ul class="it-list">
   						<?php 
-  						echo my_wp_list_categories( array('hide_empty'         => 0,
-    														 'echo'         => 1,
-    														 'taxonomy'     => 'category',
-    														 'title_li'		=>"",
-    														 'hierarchical'  =>1,
-  												   "link_before"	=> "<div class=\"it-right-zone\"><span class=\"text\">",
-  												   "link_after"		=> "</span>",
-  												   "link_close"		=> "</div>",
-  												   "count_before"	=> "<span class=\"it-multiple\"><span class=\"metadata\">",
-  												   "count_after"		=> "</span></span>",
-     														 'show_count' 	=> 1));
+		echo my_wp_list_categories(array('hide_empty'         => 0,
+									'echo'         => 1,
+									'taxonomy'     => 'category',
+									'title_li'		=>"",
+									'hierarchical'  =>1,
+								   	"link_before"	=> "<div class=\"it-right-zone\"><span class=\"text\">",
+								   	"link_after"	=> "</span>",
+								   	"link_close"	=> "</div>",
+								   	"count_before"	=> "<span class=\"it-multiple\"><span class=\"metadata\">",
+								   	"count_after"	=> "</span></span>",
+									'show_count' 	=> 1));
  									?>
 	                </ul>
 	            </div>
 			</div>	
 			<div class="col-lg-4 col-md-12">
-				<h2>Tag</h2>
+				<h2><?php _e('Tag','wpscuola');?></h2>
 				<div class="it-list-wrapper">
   					<ul class="it-list">
   						<?php wp_tag_cloud(array("show_count"	=>1,

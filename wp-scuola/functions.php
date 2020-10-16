@@ -17,6 +17,8 @@ require get_template_directory() . '/plugins/link/custom_link.php';
 // Inclusione libreria per la personalizzazione delle impostazioni del tema
 require get_template_directory() . '/inc/customizer.php';
 // Inclusione libreria per la personalizzazione dell'elenco delle categorie
+// Inclusione libreria per la personalizzazione dell'elenco delle categorie
+require get_template_directory() . '/inc/my_class-walker-category.php';
 
 /* UPDATER THEME VERSION */
 require 'inc/theme-update-checker.php';
@@ -36,6 +38,7 @@ add_filter( 'the_password_form', 			'scuola_password_form' );
 add_filter( 'manage_posts_columns', 		'scuola_posts_column_views' );
 add_filter( 'render_block', 				'personaliza_file_render', 10, 3);
 add_filter( 'wp_get_attachment_image_attributes', 'scuola_attributi_img',10,2);
+
 /**
 * Riattiva la gestione dei link standard di Wordpress 
 * I link vengono utilizzati in home page nel widget GalleraLinks
@@ -56,9 +59,10 @@ add_action( 'after_setup_theme', 			'scuola_setup');
 add_action( 'manage_posts_custom_column', 	'scuola_posts_custom_column_views' );
 add_action( 'login_head', 					'scuola_custom_login_logo');
 add_action( 'admin_init', 					'mytheme_add_editor_styles' );
-add_action('template_redirect', 			'Gestione_DwnLink');
+add_action( 'template_redirect', 			'Gestione_DwnLink');
 
 add_shortcode('articoli', 					'GetArticoliCategoria');
+
 /****************************************************** 
 * Funzione per la gestione del download dei files
 *******************************************************/
@@ -524,7 +528,7 @@ function enqueue_scuola_public() {
     wp_enqueue_style('wpscuola_bootstrap-italia.min_css', get_template_directory_uri() . '/static/css/bootstrap-italia.min.css');
     wp_enqueue_style('wpscuola_owl.carousel.min_css', get_template_directory_uri() . '/static/css/owl.carousel.min.css');
     wp_enqueue_style('wpscuola_owl.theme.default.min_css', get_template_directory_uri() . '/static/css/owl.theme.default.min.css');
-
+	wp_enqueue_script("jquery");
     wp_enqueue_style('wpscuola_jquery-ui_css', get_template_directory_uri() . '/static/css/jquery-ui.css');
     wp_enqueue_style('wpscuola_tema_css', get_template_directory_uri() . '/static/css/tema.css');
     wp_enqueue_style('wpscuola_magnific-popup_css', get_template_directory_uri() . '/inc/magnific-popup/magnific-popup.css');    
@@ -1041,8 +1045,11 @@ function custom_breadcrumbs() {
                 }
              
             }
-              
-            // If it's a custom post type within a custom taxonomy
+            $tax=get_queried_object()->taxonomy;
+ 			global $wp_taxonomies;
+    		$cpt=isset( $wp_taxonomies[$tax] )  ? $wp_taxonomies[$tax]->object_type : array();
+            $post_type=end($cpt);
+             // If it's a custom post type within a custom taxonomy
             $taxonomy_exists = taxonomy_exists($custom_taxonomy);
             if(empty($last_category) && !empty($custom_taxonomy) && $taxonomy_exists) {
                    

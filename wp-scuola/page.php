@@ -24,7 +24,6 @@
 //echo "<pre>";var_dump($padre);echo "</pre>";
 //echo "<pre>";var_dump($Primo_Livello);echo "</pre>";
    	$Are_Child=FALSE;
-	$Figli=array();
 	if(count($Primo_Livello)==0)
 		$Partenza=$post->ID;
 	else
@@ -59,9 +58,10 @@ get_header();
 	      <div class="col-lg-8 offset-sm-1">
 	         <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); scuola_set_post_view();?>
 	         <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	            <header class="header mt-5">
-	               <h2 class="entry-title"><?php the_title(); ?></h2>
-	               <?php edit_post_link(); ?>
+	            <header class="header">
+	               <h2 class="entry-title"><?php the_title(); ?></h2><?php edit_post_link(); 
+	                if ( ! post_password_required() ) get_template_part('template-parts/entry', 'meta'); ?>
+
 	            </header>
 	            <section class="entry-content">
 	               <?php if ( has_post_thumbnail() ) { the_post_thumbnail(); } ?>
@@ -76,7 +76,7 @@ get_header();
 	         <?php endwhile; endif; ?>
         <?php dynamic_sidebar("page-footer-widget-area"); ?>         
 	      </div>     
-	      <div class="col-lg-3">
+	      <div class="col-lg-3 pt-66">
 <?php	if($Are_Child){
 	    	get_template_part('template-parts/nav',"subpage");
 	    }

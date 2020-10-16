@@ -59,6 +59,10 @@ class Trasparenza extends WP_Widget {
 			$AP=($Is_AP) ? $instance['AP']:$instance['LAP'];
 			$AC=($Is_AC) ? $instance['AC']:$instance['LAC'];
 			$URP=($Is_URP) ? $instance['URP']:$instance['LURP'];
+			$ELAT=(!$Is_AT) ? 'target="_blank"':'';
+			$EAP=(!$Is_AP) ? 'target="_blank"':'';
+			$EAC=(!$Is_AC) ? 'target="_blank"':'';
+			$EURP=(!$Is_URP) ? 'target="_blank"':'';
 ?>
 <section id="trasp_<?php echo $args['widget_id'];?>"  class="home-widget container ">
 <?php  
@@ -67,22 +71,22 @@ class Trasparenza extends WP_Widget {
             } ?>   
   <div class="row d-flex justify-content-center pl-3 pr-3" >
     <div class="col-lg-4 col-sm-6 col-12 m-2 p-5 btn-primary rounded text-center">
-    	<a href="<?php echo $LAT;?>" class="lead testo-bianco"><?php _e('Amministrazione Trasparente','wpscuola');?></a>
+    	<a href="<?php echo $LAT;?>" class="lead testo-bianco" <?php echo $ELAT;?>><?php _e('Amministrazione Trasparente','wpscuola');?></a>
     </div>
     <div class="col-lg-3 col-sm-6 col-12 m-2">
     	  <div class="row mb-2 h-48">
 		    <div class="col p-2 btn-primary rounded text-center">
-				<a href="<?php echo $URP; ?>" class="lead testo-bianco" ><?php _e('URP','wpscuola');?></a>
+				<a href="<?php echo $URP; ?>" class="lead testo-bianco" <?php echo $EURP;?>><?php _e('URP','wpscuola');?></a>
 			</div>
 		  </div>
 		  <div class="row h-48 pb-1">
 		    <div class="col p-2 btn-primary rounded text-center">
-		    	<a href="<?php echo $AC;?>" class="lead testo-bianco" ><?php _e('Accesso Civico','wpscuola');?></a>
+		    	<a href="<?php echo $AC;?>" class="lead testo-bianco" <?php echo $EAC;?>><?php _e('Accesso Civico','wpscuola');?></a>
 		    </div>
 		  </div> 	
     </div>
     <div class="col-lg-4 col-sm-6 col-12 m-2 p-5 btn-primary rounded text-center">
-		<a href="<?php echo $AP; ?>" class="lead testo-bianco" ><?php _e('Albo OnLine','wpscuola');?></a>
+		<a href="<?php echo $AP; ?>" class="lead testo-bianco" <?php echo $EAP;?>><?php _e('Albo OnLine','wpscuola');?></a>
     </div>
   </div>
 </section>

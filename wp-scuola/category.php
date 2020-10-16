@@ -61,7 +61,7 @@ ORDER BY post_date DESC";
 						</a>							
 					</div>
 					<div class="col-9 mb-0">
-						<a class="list-item large" href="'.esc_url(home_url('/')).$Data->Anno."/?cat=".get_query_var('cat').'"><span class="m-0">'.$Data->Anno.'</span>
+						<a class="list-item large" href="'.esc_url(home_url('/')).$Data->Anno."/?cat=".get_query_var('cat').'"><span class="m-0"><strong>'.$Data->Anno.'</strong></span>
 						</a>						
 					</div>
 					<div class="col-2 m-0 p-0">

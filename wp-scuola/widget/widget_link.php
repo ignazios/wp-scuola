@@ -117,7 +117,7 @@ class Link extends WP_Widget {
 		    <div class="hovereffect_Link">
 		        <img class="img-responsive" src="<?php echo $Link->link_image;?>" alt="logo link <?php $Link->link_name;?>" width="100%" height="<?php echo ($fulw?"350":"200");?>">
 		            <div class="overlay">
-		                <h4><?php echo $Link->link_name;?></h4>
+		                <h4 class="text-white"><?php echo $Link->link_name;?></h4>
 		                <p class="text-white"><?php echo $Link->link_description;?></p>
 						<p>
 							<a href="<?php echo $Link->link_url;?>" target="<?php echo $Link->link_target;?>"  class="text-white">Vai al link</a>

@@ -29,8 +29,8 @@
   		<p class="mb-0">Loggati per accedere alla circolare.</p>
 	</div>';
 <?php }else{?>
-<section id="content" role="main" class="container-fluid">
-   <div class="container-fluid">
+<section id="content" role="main" class="container">
+   <div class="container">
       <div class="row">
 
       <div class="col-12 pl-5 pr-5 pt-3">
@@ -40,7 +40,7 @@
 		   		$ID_post=get_the_ID();
 				$numero=get_post_meta($ID_post, "_numero",TRUE);
 				$anno=get_post_meta($ID_post, "_anno",TRUE);
-				$Elenco=wps_GetEencoDestinatari($ID_post);
+				$Elenco=wps_GetEencoDestinatari($ID_post,FALSE,TRUE);
  ?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header>
@@ -48,7 +48,7 @@
 <?php			if ( ! post_password_required() ) :?>
 					<div class="metarticoli">
 						<p>
-							<span class="fas fa-calendar-alt pr-1"></span> <?php the_time('j M y'); ?> 
+							<span class="fas fa-calendar-alt pr-1"></span> <strong><a href="<?php echo esc_url(home_url('/'))."circolari-scuola/".get_the_time('Y')."/".get_the_time('m');?>"><?php the_time('j M y'); ?></a> 
 							<span class="fas fa-ticket-alt pl-2 pr-1"></span> <?php echo $numero."_".$anno;?>
 							<span class="fas fa-user-edit pl-2 pr-1"></span> <a href="<?php echo esc_url(home_url('/'))."author/".get_the_author_meta('user_nicename');?>"><?php the_author_meta('display_name'); ?></a>
 						</p>

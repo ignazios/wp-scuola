@@ -1,6 +1,7 @@
 <section class="entry-meta">
 	<div class="row metarticoli p-2">
-		<span class="fas fa-calendar-alt pr-2" title="<?php _e('Data ultima modifica','wpscuola');?>"></span> <?php the_time('j M y'); ?>
+		<span class="fas fa-calendar-alt pr-2" title="<?php _e('Data ultima modifica','wpscuola');?>"></span> 
+		<a href="<?php echo esc_url(home_url('/')).get_the_time('Y')."/".get_the_time('m');?>"><?php the_time('j M y'); ?></a>
 		<span class="fas fa-user-edit pr-2 pl-1" title="<?php _e("Autore dell'articolo",'wpscuola');?>"></span> <a href="<?php echo esc_url(home_url('/'))."author/".get_the_author_meta('user_nicename');?>"><?php the_author_meta('display_name'); ?></a>
 		<span class="far fa-eye pr-2 pl-1" title=<?php _e("Visualizzazioni",'wpscuola');?>> <?php echo scuola_get_post_view();?></span>
 	</div>
