@@ -29,6 +29,8 @@ facebook: https://www.facebook.com/wpscuola/
  - **Wordpress** 	*5.0* - *5.5*
  - **PHP** 		*7.0*
 ## Change log
+- **1.0.4**
+  - ***Corretti*** alcuni errori nel modulo Gestione Circolari
 - **1.0.3**
   - ***Sospesa*** la visualizzazione personalizzata dell'Albo OnLine in attesa della pubblicazione dell'aggiornamento del plugin
 - **1.0.2**

@@ -206,7 +206,7 @@ function wps_circolari_Inizializzazione(){
     	$wps_Testi=wps_circolari_CreaTesti();
     }
 /**
-* Operazione eseguite per la memorizzazione dei parametri delle Circoalri
+* Operazione eseguite per la memorizzazione dei parametri delle Circolari
 */
     if(isset($_POST['Circolari_submit_button']) And 
        $_POST['Circolari_submit_button'] == 'Salva Modifiche'){
@@ -1001,20 +1001,42 @@ echo '<div class="wrap">
 		<span class="fa fa-cogs fa-3x" aria-hidden="true"></span> <h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__( 'Utility Circolari', 'wpscuola' ).'</h2>';
 $lista="";
 $azione= filter_input(INPUT_GET, "action");
+
 if($azione){
 	switch ($azione){
+		case "ResetTipiCirc":
+			if (!isset($_REQUEST['versec'])) {
+					$Stato=__("ATTENZIONE. Rilevato potenziale pericolo di attacco informatico, l'operazione è stata annullata","wpscuola");
+					break;
+				}
+			if (!wp_verify_nonce($_REQUEST['versec'],'secur')){
+				$Stato=__("ATTENZIONE. Rilevato potenziale pericolo di attacco informatico, l'operazione è stata annullata","wpscuola");
+				break;
+			} 		
+			wps_circolari_CreaTestiRisposta();
+			$Stato=__('Tipi di Circolare reimpostati','wpscuola');
+			break;
 		case "versca":			
-			echo "<p style='text-align:center;font-size:1.5em;font-weight: bold;'>'.__( 'Stato Operazioni', 'wpscuola' ).':</p>";
+			if (!isset($_REQUEST['versec'])) {
+					$Stato=__("ATTENZIONE. Rilevato potenziale pericolo di attacco informatico, l'operazione è stata annullata","wpscuola");
+					break;
+				}
+			if (!wp_verify_nonce($_REQUEST['versec'],'secur')){
+				$Stato=__("ATTENZIONE. Rilevato potenziale pericolo di attacco informatico, l'operazione è stata annullata","wpscuola");
+				break;
+			} 		
+			echo "<p style='text-align:center;font-size:1.5em;font-weight: bold;'>".__( 'Stato Operazioni', 'wpscuola' ).":</p>";
 				$GGscadenza=get_option("Circolari_GGScadenza");
 				$Posts = get_posts('post_type=circolari_scuola&numberposts=-1');
 				foreach($Posts as $post){
 					$Adesione=get_post_meta($post->ID, "_sciopero",TRUE);
 					$firma=get_post_meta($post->ID, "_sign",TRUE);
+					$scadenza=get_post_meta($post->ID, "_scadenza",TRUE);
 					if (($firma!="NoFirma") and empty($scadenza)){
 						$lista.="			<li>$post->ID $post->post_title $post->post_date_gmt";
 						if (isset($_GET['opt']) && $_GET['opt']=="aggsca"){
-							$Scadenza=date('Y-m-d', strtotime(substr($post->post_date_gmt,0,10). " + $GGscadenza days"));
-							if (update_post_meta($post->ID,"_scadenza",$Scadenza ))
+							$scadenza=date('Y-m-d', strtotime(substr($post->post_date_gmt,0,10). " + $GGscadenza days"));
+							if (update_post_meta($post->ID,"_scadenza",$scadenza ))
 								$lista.= ' <img src="'.wps_Circolari_URL.'/img/verificato.png" alt="Icona Permessi" style="display:inline;margin-left:5px;"/>';
 						}else
 						$lista.=" ".__( 'la data verrà aggiornata a', 'wpscuola' ).":".date('Y-m-d', strtotime(substr($post->post_date_gmt,0,10). " + $GGscadenza days"));
@@ -1027,15 +1049,23 @@ if($azione){
 					$lista
 			</ul>";
 			if (isset($_GET['opt']) && $_GET['opt']=="aggsca")
-				_e( 'Aggiornamento effettuato', 'wpscuola' );
+				$Stato=__('Aggiornamento effettuato', 'wpscuola' );
 			else
-				echo '<p style="text-align:left;font-size:1em;font-style: italic;">'.sprintf(__( 'Aggiorna la Data entro cui firmare = aggiunngendo %s giorni alla data di pubblicazione', 'wpscuola' ),$GGscadenza).' <spam style="text-align:center;font-size:1.5em;font-weight: bold;"> <a href="edit.php?post_type=circolari_scuola&page=Utility&action=versca&opt=aggsca">'.__( 'Aggiorna', 'wpscuola' ).'</a></spam>
+				echo '<p style="text-align:left;font-size:1em;font-style: italic;">'.sprintf(__( 'Aggiorna la Data entro cui firmare = aggiunngendo %s giorni alla data di pubblicazione', 'wpscuola' ),$GGscadenza).' <spam style="text-align:center;font-size:1.5em;font-weight: bold;"> <a href="edit.php?post_type=circolari_scuola&page=Utility&action=versca&opt=aggsca&versec='.wp_create_nonce( 'secur' ).'">'.__( 'Aggiorna', 'wpscuola' ).'</a></spam>
 	</p>
 	</div>';			
 			}else
-				echo "<h4>".__( 'Tutte le circolari da firmare hanno la data di scadenza', 'wpscuola' )."</h4>";
+				$Stato=__( 'Tutte le circolari da firmare hanno la data di scadenza', 'wpscuola' );
 			break;
 		case "verforsca":
+			if (!isset($_REQUEST['versec'])) {
+					$Stato=__("ATTENZIONE. Rilevato potenziale pericolo di attacco informatico, l'operazione è stata annullata","wpscuola");
+					break;
+				}
+			if (!wp_verify_nonce($_REQUEST['versec'],'secur')){
+				$Stato=__("ATTENZIONE. Rilevato potenziale pericolo di attacco informatico, l'operazione è stata annullata","wpscuola");
+				break;
+			} 		
 				echo "<p style='text-align:center;font-size:1.5em;font-weight: bold;'>".__( 'Stato Operazioni', 'wpscuola' ).":</p>";
 				$Posts = get_posts('post_type=circolari_scuola&numberposts=-1');
 				foreach($Posts as $post){
@@ -1057,15 +1087,23 @@ if($azione){
 					$lista
 			</ul>";
 			if (isset($_GET['opt']) && $_GET['opt']=="aggsca")
-				_e("Aggiornamento effettuato", 'wpscuola' );
+				$Stato=__("Aggiornamento effettuato", 'wpscuola' );
 			else
 				echo '<p style="text-align:left;font-size:1em;font-style: italic;">'.__( 'Aggiorna il formato della Data entro cui firmare', 'wpscuola' ).' <spam style="text-align:center;font-size:1.5em;font-weight: bold;"> <a href="edit.php?post_type=circolari_scuola&page=Utility&action=verforsca&opt=aggsca">'.__( 'Aggiorna', 'wpscuola' ).'</a></spam>
 	</p>
 	</div>';			
 			}else
-				echo "<h4>".__( 'Tutte le circolari da firmare hanno la data di scadenza in formato corretto', 'wpscuola' )."</h4>";
+				$Stato=__( 'Tutte le circolari da firmare hanno la data di scadenza in formato corretto', 'wpscuola' );
 			break;
 		case "updfirme":
+			if (!isset($_REQUEST['versec'])) {
+					$Stato=__("ATTENZIONE. Rilevato potenziale pericolo di attacco informatico, l'operazione è stata annullata","wpscuola");
+					break;
+				}
+			if (!wp_verify_nonce($_REQUEST['versec'],'secur')){
+				$Stato=__("ATTENZIONE. Rilevato potenziale pericolo di attacco informatico, l'operazione è stata annullata","wpscuola");
+				break;
+			} 		
 			if (!isset($_GET["CircoUtility"])) {
 				header('Location: '.get_bloginfo('wpurl').'/wp-admin/edit.php?post_type=circolari_scuola&page=Utility');    
 				exit;	
@@ -1107,10 +1145,17 @@ if($azione){
 				}
 				echo "<br />";
 			}
-			echo "<div class='update-nag'><em><strong>".__("Operazione conclusa con successo!", 'wpscuola' )."</em></strong></div>";
-			echo '<meta http-equiv="refresh" content="5;url=edit.php?post_type=circolari_scuola&page=Utility"/>';
+			echo $Stato=__("Operazione conclusa con successo!", 'wpscuola' )."</em></strong></div>";
 			break;
 		case "importa":
+			if (!isset($_REQUEST['versec'])) {
+					$Stato=__("ATTENZIONE. Rilevato potenziale pericolo di attacco informatico, l'operazione è stata annullata","wpscuola");
+					break;
+				}
+			if (!wp_verify_nonce($_REQUEST['versec'],'secur')){
+				$Stato=__("ATTENZIONE. Rilevato potenziale pericolo di attacco informatico, l'operazione è stata annullata","wpscuola");
+				break;
+			} 		
 			if(class_exists( "Groups_Group" ) And count(get_terms('gruppiutenti', array('hide_empty' => false)))==0){
 				$Obj_Gruppi=new Groups_Group(array(1));
 				$Gruppi=array();
@@ -1181,6 +1226,16 @@ if($azione){
 			}
 			break;
 		case "importacircolarigroups":
+			if (!isset($_REQUEST['versec'])) {
+					$Stato=__("ATTENZIONE. Rilevato potenziale pericolo di attacco informatico, l'operazione è stata annullata","wpscuola");
+					menu($Stato);
+					break;
+				}
+			if (!wp_verify_nonce($_REQUEST['versec'],'secur')){
+				$Stato=__("ATTENZIONE. Rilevato potenziale pericolo di attacco informatico, l'operazione è stata annullata","wpscuola");
+				menu($Stato);
+				break;
+			} 		
 			$Circolari = get_posts( "post_type=circolari&numberposts=-1" );
 			if(count($Circolari)==0){
 				echo "<p style=\"color:red;font-size:1.5em;font-weight: bold;\">".__("Non ci sono Circolari da importare da Circolari Groups", 'wpscuola' )."</p>";
@@ -1213,21 +1268,23 @@ if($azione){
 			}
 			break;
 		}
-	return;	
+//	return;	
 }
 	if ($Stato!="") 
 		echo '<div id="message" class="updated"><p>'.str_replace("%%br%%","<br />",$Stato).'</p></div>
-		  <meta http-equiv="refresh" content="5;url=admin.php?page=utility"/>';
-	echo '		</div> 
-			<p></p>
+		  <meta http-equiv="refresh" content="5;url=edit.php?post_type=circolari_scuola&page=Utility"/>';
+	echo ' </div>
+			<p></p>		
 			<div class="widefat" style="padding:10px;">
 				<p style="text-align:center;font-size:1.5em;font-weight: bold;">'.__("Verifica procedura", 'wpscuola' ).'</p>
 				<ul>
+					<li> '.__('Resetta Testi e Risposte dei Tipi di Circolare','wpscuola').'. <spam style="text-align:center;font-size:1.5em;font-weight: bold;"> <a href="edit.php?post_type=circolari_scuola&page=Utility&action=ResetTipiCirc&versec='.wp_create_nonce( 'secur' ).'">'.__("Aggiorna", 'wpscuola' ).'</a></spam>
+					</li>
 					<li> '.__("Questa procedura esegue un test generale della procedura e riporta eventuali anomalie nei dati e nelle impostazioni.", 'wpscuola' ).'</spam><br /><spam style="font-size:1em;font-style: italic;margin-left:10px;font-weight: bold;">
-		'.__("Verifica Presenza data scadenza firma", 'wpscuola' ).' <spam style="text-align:center;font-size:1.5em;font-weight: bold;"> <a href="edit.php?post_type=circolari_scuola&page=Utility&action=versca">'.__("Verifica", 'wpscuola' ).'</a></spam>
+		'.__("Verifica Presenza data scadenza firma", 'wpscuola' ).' <spam style="text-align:center;font-size:1.5em;font-weight: bold;"> <a href="edit.php?post_type=circolari_scuola&page=Utility&action=versca&versec='.wp_create_nonce( 'secur' ).'">'.__("Verifica", 'wpscuola' ).'</a></spam>
 					</li>
 					<li style="text-align:left;font-size:1em;">'.__("Questa procedura verifica il formato delle date di scadenza.", 'wpscuola' ).'<br /><spam style="font-size:1em;font-style: italic;margin-left:10px;font-weight: bold;">
-		'.__("Verifica Formato data scadenza firma", 'wpscuola' ).' <spam style="text-align:center;font-size:1.5em;font-weight: bold;"> <a href="edit.php?post_type=circolari_scuola&page=Utility&action=verforsca">'.__("Verifica", 'wpscuola' ).'</a></spam>
+		'.__("Verifica Formato data scadenza firma", 'wpscuola' ).' <spam style="text-align:center;font-size:1.5em;font-weight: bold;"> <a href="edit.php?post_type=circolari_scuola&page=Utility&action=verforsca&versec='.wp_create_nonce( 'secur' ).'">'.__("Verifica", 'wpscuola' ).'</a></spam>
 					</li>
 				</ul>
 				<p style="text-align:center;font-size:1.5em;font-weight: bold;">'.__("Importa Gruppi da Groups", 'wpscuola' ).'</p>
@@ -1244,7 +1301,7 @@ if($azione){
 						</p>
 					</ul>
 					<spam style="text-align:center;font-size:1.5em;font-weight: bold;">
-						<a href="edit.php?post_type=circolari_scuola&page=Utility&action=importa">'.__("Importa Gruppi", 'wpscuola' ).'</a>
+						<a href="edit.php?post_type=circolari_scuola&page=Utility&action=importa&versec='.wp_create_nonce( 'secur' ).'">'.__("Importa Gruppi", 'wpscuola' ).'</a>
 					</spam>	
 				<p style="text-align:center;font-size:1.5em;font-weight: bold;">'.__("Importa Circolari da Circolari Groups", 'wpscuola' ).'</p>
 					<ul>
@@ -1261,7 +1318,7 @@ if($azione){
 						</p>
 					</ul>
 					<spam style="text-align:center;font-size:1.5em;font-weight: bold;">
-						<a href="edit.php?post_type=circolari_scuola&page=Utility&action=importacircolarigroups">'.__("Importa Circolari", 'wpscuola' ).'</a>
+						<a href="edit.php?post_type=circolari_scuola&page=Utility&action=importacircolarigroups&versec='.wp_create_nonce( 'secur' ).'">'.__("Importa Circolari", 'wpscuola' ).'</a>
 					</spam>';
 }
 function wps_circolari_Testata() {
