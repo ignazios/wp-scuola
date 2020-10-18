@@ -29,6 +29,8 @@ facebook: https://www.facebook.com/wpscuola/
  - **Wordpress** 	*5.0* - *5.5*
  - **PHP** 		*7.0*
 ## Change log
+- **1.0.3**
+  - ***Sospesa*** la visualizzazione personalizzata dell'Albo OnLine in attesa della pubblicazione dell'aggiornamento del plugin
 - **1.0.2**
   - ***Aggiunto*** il supporto per gli stili del plugin ***Gutenberg Avanzato***(https://it.wordpress.org/plugins/advanced-gutenberg/)
   - ***Modificata*** la gestione del Menu di navigazione sottopagine sulla destra. Adesso con meno di 5 elementi ilmenu si attacca in alto e non scrolla insieme alla pagina
