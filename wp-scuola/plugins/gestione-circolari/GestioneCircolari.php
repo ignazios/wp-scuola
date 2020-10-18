@@ -459,12 +459,12 @@ Grazie per la collaborazione', 'wpscuola' ),"{Dati_Utente}","{Data}","{Operazion
 	}
 }
 function wps_circolari_CreaTestiRisposta(){
-$wps_TestiRisposte=array(new Circolari_Risposta(0,__( "Non Firmata", 'wpscuola' ),__( "Non Firmare la, 'wpscuola' )"),
-				 new Circolari_Risposta(1,__( "Si", 'wpscuola' ),__( "Aderire alla", 'wpscuola' )),
-                 new Circolari_Risposta(2,__( "No", 'wpscuola' ),__( "Non Aderire alla", 'wpscuola' )),
-                 new Circolari_Risposta(3,__( "Presa Visione", 'wpscuola' ),__( "Prendere Visione in merito alla", 'wpscuola' )),
-                 new Circolari_Risposta(4,__( "Firma", 'wpscuola' ),__( "Firmare la", 'wpscuola' ))));
-add_option('Circolari_TestiRisposte', serialize($wps_TestiRisposte));
+$wps_TestiRisposte=array(new Circolari_Risposta(0,__( 'Non Firmata', 'wpscuola' ),__( 'Non Firmare la', 'wpscuola' )),
+				 new Circolari_Risposta(1,__( 'Si', 'wpscuola' ),__( 'Aderire alla', 'wpscuola' )),
+                 new Circolari_Risposta(2,__( 'No', 'wpscuola' ),__( 'Non Aderire alla', 'wpscuola' )),
+                 new Circolari_Risposta(3,__( 'Presa Visione', 'wpscuola' ),__( 'Prendere Visione in merito alla', 'wpscuola' )),
+                 new Circolari_Risposta(4,__( 'Firma', 'wpscuola' ),__( 'Firmare la', 'wpscuola' )));
+update_option ('Circolari_TestiRisposte', serialize($wps_TestiRisposte));
 return $wps_TestiRisposte;
 }
 function wps_circolari_CreaTesti(){
@@ -472,7 +472,7 @@ $wps_Testi=array(new Circolari_Tipo(__( "NoFirma", 'wpscuola' ),__( "Informativa
 		new Circolari_Tipo(__( "Sciopero", 'wpscuola' ),__( "Adesioni allo sciopero", 'wpscuola' ),__( "Sciopero", 'wpscuola' ),__( "Adesione", 'wpscuola' ),__( "La circolare si riferisce ad uno sciopero.<br />Bisogna indicare Si/No/Presa Visione", 'wpscuola' ),__( "Adesione allo sciopero", 'wpscuola' ),array(1,2,3)),
         new Circolari_Tipo(__( "Firma", 'wpscuola' ),__( "Firme", 'wpscuola' ),__( "Circolare ordinaria", 'wpscuola' ),__( "Da Firmare", 'wpscuola' ),__( "&Egrave; richiesta la firma alla circolare ordinaria", 'wpscuola' ),__( "Firma la circolare ordinaria", 'wpscuola' ),array(4)),
         new Circolari_Tipo(__( "Assemblea", 'wpscuola' ),__( "Partecipazioni all'assemblea", 'wpscuola' ),__( "Assembea Sindacale", 'wpscuola' ),__( "Partecipazione", 'wpscuola' ),__( "La circolare si riferisce ad una assemblea sindacale.<br />Bisogna indicare Si/No", 'wpscuola' ),__( "Partecipazione all'assemblea", 'wpscuola' ),array(1,2)));
-add_option('Circolari_Tipo', serialize($wps_Testi));
+update_option ('Circolari_Tipo', serialize($wps_Testi));
 return $wps_Testi;
 }
 function wps_circolari_create_Testi_Risposte(){
@@ -793,7 +793,7 @@ echo '<div class="wrap">
 	</div> 
 		<form action="'.$UrlB.'" name="MRisposte" metod="post">
 		<input type="hidden" name="opR" value="Memorizza"/>
-		<input type="hidden" name="post_type" value="circolari"/>
+		<input type="hidden" name="post_type" value="circolari_scuola"/>
 		<input type="hidden" name="page" value="Testi"/>
 		<input type="hidden" name="id" value="'.$Risposta->get_IDRisposta().'"/>
 		<input type="hidden" name="circoTesti" value="'.wp_create_nonce('GestioneTestiCircolari').'"/>
