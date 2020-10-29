@@ -63,7 +63,7 @@ get_header();
 	                if ( ! post_password_required() ) get_template_part('template-parts/entry', 'meta'); ?>
 
 	            </header>
-	            <section class="entry-content">
+	            <section class="entry-content pt-2">
 	               <?php if ( has_post_thumbnail() ) { the_post_thumbnail(); } ?>
 	               <?php the_content();
 	                $LinkPages=wp_link_pages("echo=0");

@@ -154,7 +154,7 @@ class Servizi extends WP_Widget {
 		            </div>
 		    </div>
 		</div>
-		<div class="clearfix visible-sm-block"></div>
+		<div class="visible-sm-block"></div>
 <?php } ?>		
 	</div>
   </div>

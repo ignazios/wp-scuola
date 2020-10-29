@@ -152,6 +152,7 @@
 		                        <?php echo bloginfo('name'); ?>
 		                    </a>
 		                </h1>
+		                <p class="d-xl-block"><?php echo get_bloginfo('description');?></p>
 		            </div>
 		        </div>
 
@@ -228,7 +229,7 @@
     <main id="main_container">
 <?php if ( !is_front_page() ) :?>
 		<section id="breadcrumbs" role="main" class="container-fluid">
-		   <div class="container pt-3 pb-3">
+		   <div class="container">
 		      <div class="row">
 			      <div class="col-md-12">
 	         		<?php custom_breadcrumbs();?>

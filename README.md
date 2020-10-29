@@ -29,6 +29,8 @@ facebook: https://www.facebook.com/wpscuola/
  - **Wordpress** 	*5.0* - *5.5*
  - **PHP** 		*7.0*
 ## Change log
+- **1.0.6**
+  - ***Corretti*** inserita descrizione del sito nell'Header solo per schermi > 1200px
 - **1.0.5**
   - ***Corretti*** alcuni errori nel modulo Gestione Circolari
 - **1.0.4**
