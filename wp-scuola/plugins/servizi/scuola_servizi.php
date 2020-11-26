@@ -46,14 +46,20 @@ class ScuolaServizi {
 
 		// Retrieve an existing value from the database.
 		$servizio_link_servizio = get_post_meta( $post->ID, 'servizio_link_servizio', true );
+		$servizio_link2_servizio = get_post_meta( $post->ID, 'servizio_link2_servizio', true );
 		$servizio_link_descrizione = get_post_meta( $post->ID, 'servizio_link_descrizione', true );
+		$servizio_titolo_servizio = get_post_meta( $post->ID, 'servizio_titolo_servizio', true );
+		$servizio_titolo2_servizio = get_post_meta( $post->ID, 'servizio_titolo2_servizio', true );
+		$servizio_titolo_descrizione = get_post_meta( $post->ID, 'servizio_titolo_descrizione', true );
 		$servizio_attivazione_servizio = get_post_meta( $post->ID, 'servizio_attivazione_servizio', true );
 		$servizio_codice_ipa = get_post_meta( $post->ID, 'servizio_codice_ipa', true );
 		$servizio_ordine = get_post_meta( $post->ID, 'servizio_ordine', true );
 		$servizio_targetServizio = get_post_meta( $post->ID, 'servizio_targetservizo', true );
+		$servizio_target2Servizio = get_post_meta( $post->ID, 'servizio_target2servizo', true );
 		$servizio_targetDescrizione = get_post_meta( $post->ID, 'servizio_targetdescrizione', true );
 		// Set default values.
 		if( empty( $servizio_link_servizio ) ) $servizio_link_servizio = 'https://';
+		if( empty( $servizio_link2_servizio ) ) $servizio_link_servizio = 'https://';
 		if( empty( $servizio_link_descrizione ) ) $servizio_link_descrizione = 'https://';
 		if( empty( $servizio_attivazione_servizio ) ) $servizio_attivazione_servizio = '';
 		if( empty( $servizio_codice_ipa ) ) $servizio_codice_ipa = '';
@@ -91,7 +97,16 @@ class ScuolaServizi {
 			</tr>
 			<tr>
 				<th>
-					<label for="servizio_link_servizio" class=""> <?php _e( 'Destinazione link Servizio', 'wpscuola' );?> </label>
+					<label for="servizio_titolo_servizio" class=""> <?php _e( 'Titolo del pulsante', 'wpscuola' );?> </label>
+				</th>
+				<td>
+					<input type="text" id="servizio_titolo_servizio" name="servizio_titolo_servizio" class="" value="<?php esc_attr_e( $servizio_titolo_servizio );?>" style="width:90%;">
+					<p><em><?php _e( 'Se lasciato vuoto verrà visualizzato Erogazione', 'wpscuola' );?></em></p>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label> <?php _e( 'Destinazione link Servizio', 'wpscuola' );?> </label>
 				</th>
 				<td>
 					<p>
@@ -109,6 +124,49 @@ class ScuolaServizi {
 					<p>
 						<label for="linkservizio_target_none" class="selectit">
 							<input id="linkservizio_target_none" type="radio" name="linkservizio_target" value=""  <?php echo ( isset( $servizio_targetServizio ) && ($servizio_targetServizio == '') ? 'checked="checked"' : ''); ?> />
+							<?php _e('<code>_none</code> &mdash; same window or tab.'); ?>
+						</label>
+					</p>
+				</td>
+			</tr>
+
+			<tr>
+				<th>
+					<label for="servizio_link2_servizio" class=""> <?php _e( 'URL di erogazione del Secondo Servizio', 'wpscuola' );?> </label>
+				</th>
+				<td>
+					<input type="text" id="servizio_link2_servizio" name="servizio_link2_servizio" class="" placeholder="<?php esc_attr_e( 'https://', 'wpscuola' );?>" value="<?php esc_attr_e( $servizio_link2_servizio );?>" style="width:90%;">
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="servizio_titolo2_servizio" class=""> <?php _e( 'Titolo del pulsante', 'wpscuola' );?> </label>
+				</th>
+				<td>
+					<input type="text" id="servizio_titolo2_servizio" name="servizio_titolo2_servizio" class="" value="<?php esc_attr_e( $servizio_titolo2_servizio );?>" style="width:90%;">
+					<p><em><?php _e( 'Se lasciato vuoto verrà visualizzato Erogazione', 'wpscuola' );?></em></p>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<label> <?php _e( 'Destinazione link Secondo Servizio', 'wpscuola' );?> </label>
+				</th>
+				<td>
+					<p>
+						<label for="linkservizio2_target_blank" class="selectit">
+							<input id="linkservizio2_target_blank" type="radio" name="linkservizio2_target" value="_blank" <?php echo ( isset( $servizio_target2Servizio ) && ($servizio_target2Servizio == '_blank') ? 'checked="checked"' : ''); ?> />
+							<?php _e('<code>_blank</code> &mdash; new window or tab.'); ?>
+						</label>
+					</p>
+					<p>
+						<label for="linkservizio2_target_top" class="selectit">
+							<input id="linkservizio2_target_top" type="radio" name="linkservizio2_target" value="_top" <?php echo ( isset( $servizio_target2Servizio ) && ($servizio_target2Servizio == '_top') ? 'checked="checked"' : ''); ?> />
+							<?php _e('<code>_top</code> &mdash; current window or tab, with no frames.'); ?>
+						</label>
+					</p>
+					<p>
+						<label for="linkservizio2_target_none" class="selectit">
+							<input id="linkservizio2_target_none" type="radio" name="linkservizio2_target" value=""  <?php echo ( isset( $servizio_target2Servizio ) && ($servizio_target2Servizio == '') ? 'checked="checked"' : ''); ?> />
 							<?php _e('<code>_none</code> &mdash; same window or tab.'); ?>
 						</label>
 					</p>
@@ -186,19 +244,27 @@ class ScuolaServizi {
 			return;
 		// Sanitize user input.
 		$servizio_link_servizio = isset( $_POST[ 'servizio_link_servizio' ] ) ? sanitize_text_field( $_POST[ 'servizio_link_servizio' ] ) : '';
+		$servizio_titolo_servizio = isset( $_POST[ 'servizio_titolo_servizio' ] ) ? sanitize_text_field( $_POST[ 'servizio_titolo_servizio' ] ) : '';
+		$servizio_link2_servizio = isset( $_POST[ 'servizio_link2_servizio' ] ) ? sanitize_text_field( $_POST[ 'servizio_link2_servizio' ] ) : '';
+		$servizio_titolo2_servizio = isset( $_POST[ 'servizio_titolo2_servizio' ] ) ? sanitize_text_field( $_POST[ 'servizio_titolo2_servizio' ] ) : '';
 		$servizio_link_descrizione = isset( $_POST[ 'servizio_link_descrizione' ] ) ? sanitize_text_field( $_POST[ 'servizio_link_descrizione' ] ) : '';
 		$servizio_attivazione_servizio = isset( $_POST[ 'servizio_attivazione_servizio' ] ) ? 'si' : 'no';
 		$servizio_codice_ipa = isset( $_POST[ 'servizio_codice_ipa' ] ) ? sanitize_text_field( $_POST[ 'servizio_codice_ipa' ] ) : '';
 		$servizio_ordine = isset( $_POST[ 'servizio_ordine' ] ) ? sanitize_text_field( $_POST[ 'servizio_ordine' ] ) : 0;
 		$servizio_targetServizio = isset( $_POST[ 'linkservizio_target' ] ) ? sanitize_text_field( $_POST[ 'linkservizio_target' ] ) : 0;
+		$servizio_target2Servizio = isset( $_POST[ 'linkservizio2_target' ] ) ? sanitize_text_field( $_POST[ 'linkservizio2_target' ] ) : 0;
 		$servizio_targetdescrizione = isset( $_POST[ 'linkdescrizione_target' ] ) ? sanitize_text_field( $_POST[ 'linkdescrizione_target' ] ) : '';
 		// Update the meta field in the database.
 		update_post_meta( $post_id, 'servizio_link_servizio', 			$servizio_link_servizio );
+		update_post_meta( $post_id, 'servizio_titolo_servizio', 		$servizio_titolo_servizio );
+		update_post_meta( $post_id, 'servizio_link2_servizio', 			$servizio_link2_servizio );
+		update_post_meta( $post_id, 'servizio_titolo2_servizio', 		$servizio_titolo2_servizio );
 		update_post_meta( $post_id, 'servizio_link_descrizione', 		$servizio_link_descrizione );
 		update_post_meta( $post_id, 'servizio_attivazione_servizio',	$servizio_attivazione_servizio );
 		update_post_meta( $post_id, 'servizio_codice_ipa', 				$servizio_codice_ipa );
 		update_post_meta( $post_id, 'servizio_ordine', 					$servizio_ordine );
 		update_post_meta( $post_id, 'servizio_targetservizo', 			$servizio_targetServizio );
+		update_post_meta( $post_id, 'servizio_target2servizo', 			$servizio_target2Servizio );
 		update_post_meta( $post_id, 'servizio_targetdescrizione', 		$servizio_targetdescrizione );
 	}
 	 

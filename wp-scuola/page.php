@@ -55,8 +55,12 @@ get_header();
 <section id="content" role="main" class="container-fluid">
    <div class="container-fluid">
       <div class="row">
-	      <div class="col-lg-8 offset-sm-1">
-	         <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); scuola_set_post_view();?>
+<?php	if($Are_Child OR is_active_sidebar( 'page-widget-area' ) ) { ?>
+	      <div class="col-lg-8 offset-sm-05">
+<?php   }else{ ?>
+		  <div class="col-lg-10 offset-sm-1">		      
+<?php   }
+		if (have_posts()) : while ( have_posts() ) : the_post(); scuola_set_post_view();?>
 	         <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	            <header class="header">
 	               <h2 class="entry-title"><?php the_title(); ?></h2><?php edit_post_link(); 
@@ -76,18 +80,20 @@ get_header();
 	         <?php endwhile; endif; ?>
         <?php dynamic_sidebar("page-footer-widget-area"); ?>         
 	      </div>     
-	      <div class="col-lg-3 pt-66">
-<?php	if($Are_Child){
-	    	get_template_part('template-parts/nav',"subpage");
-	    }
-	   	if ( is_active_sidebar( 'page-widget-area' ) ) : ?>
-   			<div class="container-fluid widget-area page-widget-area">
-	   		   <ul class="xoxo">
-	   		      <?php dynamic_sidebar( 'page-widget-area' ); ?>
-	   		   </ul>
-   			</div>
-<?php endif; ?>
-		</div>      
+<?php	if($Are_Child Or is_active_sidebar( 'page-widget-area' ) ) { ?>
+	      <div class="col-lg-3 pt-66">		      
+<?php		if($Are_Child){
+		    	get_template_part('template-parts/nav',"subpage");
+		    }
+		   	if ( is_active_sidebar( 'page-widget-area' ) ) : ?>
+	   			<div class="container-fluid widget-area page-widget-area">
+		   		   <ul class="xoxo">
+		   		      <?php dynamic_sidebar( 'page-widget-area' ); ?>
+		   		   </ul>
+	   			</div>
+<?php 		endif; ?>
+			</div>      
+<?php 	} ?>
       </div>
    </div>
 </section>

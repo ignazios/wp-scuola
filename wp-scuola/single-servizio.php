@@ -29,7 +29,9 @@ get_header();
 					</div>	
 <?php		endif;?>				
 				</header>
+				<section class="entry-content pt-2">
 <?php			get_template_part( 'template-parts/entry','content' ) ; ?>
+				</section>
 			</article>	   
 <?php		endwhile; 
 		endif;?>
@@ -42,9 +44,14 @@ get_header();
 				<ul class="link-list" id="ListaPagine">
 		<?php
 			$servizio_link_servizio = get_post_meta( get_the_ID(), 'servizio_link_servizio', true );
+			$servizio_link2_servizio = get_post_meta( get_the_ID(), 'servizio_link2_servizio', true );
+
+			$servizio_titolo_servizio = get_post_meta( get_the_ID(), 'servizio_titolo_servizio', true );
+			$servizio_titolo2_servizio = get_post_meta( get_the_ID(), 'servizio_titolo2_servizio', true );
 			$servizio_link_descrizione = get_post_meta( get_the_ID(), 'servizio_link_descrizione', true );
 			$servizio_codice_ipa = get_post_meta( get_the_ID(), 'servizio_codice_ipa', true );
 			$servizio_targetS = get_post_meta( get_the_ID(), 'servizio_targetservizo', true );
+			$servizio_target2S = get_post_meta( get_the_ID(), 'servizio_target2servizo', true );
 			$servizio_targetD = get_post_meta( get_the_ID(), 'servizio_targetdescrizione', true );
 			if( !isset( $servizio_targetS ) ) $servizio_targetS = '_blank';
 			if( !isset( $servizio_targetD ) ) $servizio_targetD = '_blank';
@@ -52,7 +59,12 @@ get_header();
 			// Set default values.
 			if(!empty( $servizio_link_servizio)) :?>
 					<li class="pb-2">
-						<a href="<?php echo$servizio_link_servizio;?>" class="badge badge-primary" <?php echo ($servizio_targetS!="" ? "target=\"".$servizio_targetS."\"":"");?>><?php _e("Erogazione", "wpscuola");?></a>
+						<a href="<?php echo $servizio_link_servizio;?>" class="badge badge-primary" <?php echo ($servizio_targetS!="" ? "target=\"".$servizio_targetS."\"":"");?>><?php echo ($servizio_titolo_servizio==""?__("Erogazione", "wpscuola"):$servizio_titolo_servizio);?></a>
+					</li>
+<?php		endif;
+			if(!empty( $servizio_link2_servizio)) :?>
+					<li class="pb-2">
+						<a href="<?php echo $servizio_link2_servizio;?>" class="badge badge-primary" <?php echo ($servizio_targetS!="" ? "target=\"".$servizio_target2S."\"":"");?>><?php echo ($servizio_titolo2_servizio==""?__("Erogazione", "wpscuola"):$servizio_titolo2_servizio);?></a>
 					</li>
 <?php		endif;
 			if(!empty( $servizio_link_descrizione)) :?>

@@ -226,6 +226,9 @@
     <script src="<?php bloginfo('template_url'); ?>/static/js/i18n/datepicker-it.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/static/js/owl.carousel.min.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/inc/magnific-popup/jquery.magnific-popup.min.js"></script>
-
+    <script type='text/javascript'>
+    	var wpscuolajaxsec = "<?php echo wp_create_nonce('WPScuolaSecret');?>";
+    	var ajaxurl = '/wp-admin/admin-ajax.php';
+	</script>
 </body>
 </html>

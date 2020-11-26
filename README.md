@@ -29,6 +29,14 @@ facebook: https://www.facebook.com/wpscuola/
  - **Wordpress** 	*5.0* - *5.5*
  - **PHP** 		*7.0*
 ## Change log
+- **1.0.7**
+  - ***Aggiunta*** la gestione dell'orario da Argo Darwin, la gestione viene fatta attraverso il file XML esportato dall'applicazione. Modulo attivabile
+  - ***Aggiornata*** la personalizzazione dell'albo in base all'ultimo aggiornamento del plugin 
+  - ***Aggiunta*** la possibilità di impostare il colre dei bottoni
+  - ***Aggiunto*** ai Servizi il terzo link
+  - ***Aggiunta*** nei Servizi la possibilità di impostare il testo dei bottoni
+  - ***Modificato*** il Breadcrumb che adesso viene allineato a sinistra
+  - ***Modificato*** l'offset delle pagine
 - **1.0.6**
   - ***Corretti*** inserita descrizione del sito nell'Header solo per schermi > 1200px
 - **1.0.5**

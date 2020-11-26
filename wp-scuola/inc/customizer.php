@@ -517,6 +517,17 @@ $wp_customize->add_control('scuola_modpren_attiva', array(
     'type' => 'checkbox', 
     'section' => 'Scuola_Moduli_Settings', 
     'settings' => 'scuola_modpren_attiva'));
+$wp_customize->add_setting('scuola_modorarioArgo_attiva', array(
+    'default' => false, 
+    'capability' => 'edit_theme_options', 
+    'sanitize_callback' => 'scuola_sanitize_checkbox'));
+$wp_customize->add_control('scuola_modorarioArgo_attiva', array(
+    'label' => 'Attiva il modulo Orario Argo',
+    'description'	=>' Il modulo permette di visualizzare l\'orario scolastico attraverso l\'importazione dei dati dal programma ARGO Darwin' ,
+    'priority'	=> 5,
+    'type' => 'checkbox', 
+    'section' => 'Scuola_Moduli_Settings', 
+    'settings' => 'scuola_modorarioArgo_attiva'));
 /**
 *  Crea pannello per impostazione Home Page
 */
@@ -915,11 +926,31 @@ $wp_customize->add_setting( 'scuola_text_color' , array(
     'section'     => 'colors',
     'settings'     => 'scuola_head_link_color'
   ) ) );
+//Colori dei Bottoni
+  $wp_customize->add_setting( 'scuola_button_color' , array(
+    'default'     => "#0066cc",
+    'sanitize_callback' => 'sanitize_hex_color',
+  ) );
+  $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'scuola_button_color', array(
+    'label'       => __( 'Colore dei Bottoni', 'scuola' ),
+    'section'     => 'colors',
+    'settings'     => 'scuola_button_color'
+  ) ) );
+  $wp_customize->add_setting( 'scuola_button_text_color' , array(
+    'default'     => "#fff",
+    'sanitize_callback' => 'sanitize_hex_color',
+  ) );
+  $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'scuola_button_text_color', array(
+    'label'       => __( 'Footer Colore del testo', 'scuola' ),
+    'section'     => 'colors',
+    'settings'     => 'scuola_button_text_color'
+  ) ) );
 //Colori del Footer  
   $wp_customize->add_setting( 'scuola_footer_color' , array(
     'default'     => "#00264d",
     'sanitize_callback' => 'sanitize_hex_color',
   ) );
+
   $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'scuola_footer_color', array(
     'label'       => __( 'Footer Colore di sfondo', 'scuola' ),
     'section'     => 'colors',

@@ -458,11 +458,13 @@ if(get_theme_mod('scuola_servizi_attiva')){
 	require get_template_directory() . '/plugins/servizi/scuola_servizi.php';
 	$my_servizi=new ScuolaServizi();
 }	  
-
-//var_dump(get_theme_mod('scuola_prenotazioni_attiva'));wp_die();
 if(get_theme_mod('scuola_modpren_attiva')){
 	require get_template_directory() . '/plugins/prenotazioni/Prenotazioni.php';
 }
+if(get_theme_mod('scuola_modorarioArgo_attiva')){
+	require get_template_directory() . '/plugins/orario_argo_darwin/OrarioDarwin.php';
+}
+
 function calc_NumArticoliMA($ArchivioDate){
 	$Dati=array();
 	foreach ($ArchivioDate as $Data) {
@@ -858,6 +860,9 @@ function scuola_customize_head() {
 	$ColoreTestoBody=get_theme_mod( 'scuola_text_color', "#000" );
 	$ColoreLinkBody=get_theme_mod( 'scuola_link_color', "#0066cc" );
 	
+	$ColoreBottone=get_theme_mod( 'scuola_button_color', "#0066cc" );
+	$ColoreTestoBottone=get_theme_mod( 'scuola_button_text_color', "#fff" );
+	
 	$ColoreFooter=get_theme_mod( 'scuola_footer_color', '#00264d' );
 	$ColoreTestoFooter=get_theme_mod('scuola_footer_text_color', "#fff");
 	$ColoreLinkFooter=get_theme_mod('scuola_footer_link_color', "#65dcdf");
@@ -872,16 +877,18 @@ function scuola_customize_head() {
     	border-bottom: 1px solid <?php echo $ColoreLinkHeader ?>;
 	}
 
- 	#mainheader.soclial {color: <?php echo $ColoreTestoHeader ; ?>!important }
+ 	#mainheader, #mainheader.soclial, .navbar .navbar-collapsable .navbar-nav li a.nav-link {color: <?php echo $ColoreTestoHeader ; ?>!important }
     .mysearchform input[type="text"], .it-header-wrapper .mysearchform input[type="text"]{box-shadow: 0 1px 0px <?php echo $ColoreTestoHeader; ?>!important;} 
   
-   #menu-principale a.dropdown-toggle, #mainheader .social a,#mainheader .social a:hover, #mainheader .amministrazione .logotxt h1 a, #mainheader .amministrazione .logotxt h1 a:hover{color: <?php echo $ColoreLinkHeader; ?>!important }
+   #menu-principale a.dropdown-toggle, #mainheader .social a,#mainheader .social a:hover, #mainheader .amministrazione .logotxt h1 a, #mainheader .amministrazione .logotxt h1 a:hover,#mainheader #sub_nav {color: <?php echo $ColoreLinkHeader; ?>!important }
    .wp-block-file .wp-block-file__button{background-color: <?php echo $ColoreLinkBody; ?>!important }
    
     .it-footer-main{color: <?php echo get_theme_mod( 'scuola_footer_text_color', "#fff" ); ?>;}
   	#content {background-color:<?php echo $ColoreBody; ?>;}
      a, a:hover, a.read-more { color: <?php echo $ColoreLinkBody; ?>; }
-    button, input[type="submit"], .btn-primary, .btn-primary:hover, .btn-primary:not(:disabled):not(.disabled):active { background-color: <?php echo $ColoreLinkBody; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1); }
+    button, input[type="submit"], .btn-primary, .btn-primary:hover, .btn-primary:not(:disabled):not(.disabled):active,.badge-primary { color: <?php echo $ColoreTestoBottone; ?>;background-color: <?php echo $ColoreBottone; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1); }
+    a.badge-primary:active,a.badge-primary:hover{color: <?php echo $ColoreBottone; ?>;background-color: <?php echo $ColoreTestoBottone; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1);
+	}
     .btn-outline-primary { color: <?php echo $ColoreLinkBody; ?>; box-shadow: inset 0 0 0 1px <?php echo $ColoreLinkBody; ?>; }
     .btn-outline-primary:hover, .btn-outline-primary:not(:disabled):not(.disabled):active { color: <?php echo $ColoreLinkBody; ?>; box-shadow: inset 0 0 0 2px <?php echo $ColoreLinkBody; ?>; }
     #footer, .it-footer-main { background-color: <?php echo $ColoreFooter; ?>; }

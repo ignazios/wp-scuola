@@ -16,6 +16,11 @@ Tags: 				right-sidebar, custom-header, custom-footer, custom-colors, custom-log
 		padding-top:62px!important;
 	}
 }
+@media (min-width: 576px){
+	.offset-sm-05 {
+	    margin-left: 4.166665%;
+	}
+}
 #breadcrumbs span.separator {
     display: inline-block;
     font-weight: 600;
@@ -89,7 +94,7 @@ Tags: 				right-sidebar, custom-header, custom-footer, custom-colors, custom-log
 	.has-medium-font-size{font-size:1.5em;}
 	.has-big-font-size{font-size:2em;}
 	
-	#content .wp-block-advgb-summary li{
+	#content .wp-block-advgb-summary li,#content .nf-field-element li{
 		list-style: none!important;
 		margin-left: 0!important;
 		padding-bottom: 0.5em;
@@ -2391,10 +2396,17 @@ body.search article {
 	list-style: disc!important;
 	list-style-position: inside!important;
 }
+#content .dropdown-menu ul li{
+	list-style: none!important;
+}
 #content ul li ul li {
 	padding-left: 1em!important;
     list-style: square!important;
 	list-style-position: inside!important;
+}
+.labelNoFormat{
+	position: relative!important;
+	line-height: 1.5em!important;
 }
 .h-48 {
 	height: 48%!important;
@@ -2725,4 +2737,10 @@ a.read-more {
 }
 table.advgb-table-frontend td, table.advgb-table-frontend tr {
     border: 1px solid #dddddd!important;
+}
+.w-35{
+	width: 35%!important;
+}
+.icoGrab{
+	cursor: -webkit-grab; cursor: grab;
 }
