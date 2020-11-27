@@ -33,19 +33,12 @@ facebook: https://www.facebook.com/wpscuola/
   - ***Modificato*** shortcode del modulo per la gestione dell'orario da Argo Darwin. Lo shortcode è:
 		
 		[orarioDarwin orari="docenti;classi;classiorario;classiricevimento;aule"]
-		
-		l'opzione orari può assumere una qualsiasi combinazione degli elementi tra:
-		
-		docenti           => Visualizza una comboBox con l'elenco degli insegnati. Dopo aver selezionato il docente bisogna premere sul pulsante a forma di calendario per visualizzare la tabella con l'orario settimanale del docente
-		
-		classi            => Visualizza una comboBox con l'elenco delle classi. Dopo aver selezionato la classe bisogna premere sul pulsante a forma di calendario per visualizzare la tabella con l'orario settimanale delle lezioni della classe o il pulsante a forma di dialogo per visualizzare la tabella con l'orario settimanale di ricevimento dei docenti della classe
-		
-		classiorario      => Visualizza una comboBox con l'elenco delle classi. Dopo aver selezionato la classe bisogna premere sul pulsante a forma di calendario per visualizzare la tabella con l'orario settimanale delle lezioni della classe
-		
-		classiricevimento => Visualizza una comboBox con l'elenco delle classi. Dopo aver selezionato la classe bisogna premere sul pulsante a forma di dialogo per visualizzare la tabella con l'orario settimanale di ricevimento dei docenti della classe
-		
-		aule              => Visualizza una comboBox con l'elenco delle aule. Dopo aver selezionato l'aula bisogna premere sul pulsante a forma di calendario per visualizzare la tabella con l'orario settimanale dell'aula
-		
+		l'opzione orari può assumere una qualsiasi combinazione degli elementi tra:		
+		docenti           => Visualizza una comboBox con l'elenco degli insegnati. Dopo aver selezionato il docente bisogna premere sul pulsante a forma di calendario per visualizzare la tabella con l'orario settimanale del docente		
+		classi            => Visualizza una comboBox con l'elenco delle classi. Dopo aver selezionato la classe bisogna premere sul pulsante a forma di calendario per visualizzare la tabella con l'orario settimanale delle lezioni della classe o il pulsante a forma di dialogo per visualizzare la tabella con l'orario settimanale di ricevimento dei docenti della classe	
+		classiorario      => Visualizza una comboBox con l'elenco delle classi. Dopo aver selezionato la classe bisogna premere sul pulsante a forma di calendario per visualizzare la tabella con l'orario settimanale delle lezioni della classe	
+		classiricevimento => Visualizza una comboBox con l'elenco delle classi. Dopo aver selezionato la classe bisogna premere sul pulsante a forma di dialogo per visualizzare la tabella con l'orario settimanale di ricevimento dei docenti della classe	
+		aule              => Visualizza una comboBox con l'elenco delle aule. Dopo aver selezionato l'aula bisogna premere sul pulsante a forma di calendario per visualizzare la tabella con l'orario settimanale dell'aula	
 		questi parametri possono devono essere inseriti nella posizione in cui si vuole che vengano visualizzati ed è possibile specifica solo quelli che interessano
 - **1.0.7**
   - ***Aggiunta*** la gestione dell'orario da Argo Darwin, la gestione viene fatta attraverso il file XML esportato dall'applicazione. Modulo attivabile
