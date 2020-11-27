@@ -84,6 +84,7 @@ function OAD_caricaDati(){
 
 function OAD_impostazioni(){
 	global $target_dir,$arrOrario;
+	$CurrentOrario=get_option('wps_OrarioArgoDarwin',"");
 	if(isset($_POST["submit"])) {
 		$NomeFile= basename($_FILES["fileOrario"]["name"]);
 		$target_file=$target_dir.substr($NomeFile,0,strrpos($NomeFile,".")).date("Ymd_Gis").substr($NomeFile,strrpos($NomeFile,"."),strlen($NomeFile)-strrpos($NomeFile,"."));
