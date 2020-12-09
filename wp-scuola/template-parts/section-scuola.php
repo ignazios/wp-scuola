@@ -19,6 +19,9 @@
 	 $Blocco4Link=get_theme_mod('scuola_scuola_Linkblocco4');
 	 $Video=get_theme_mod('scuola_scuola_PrimaTabVideo');
 	 $Didascalia=get_theme_mod('scuola_scuola_PrimaTabVideoDidascalia');
+	 $ImgLinkPT=get_theme_mod('scuola_scuola_PrimaTabLinkImg');
+	 $TestoLinkPT=get_theme_mod('scuola_scuola_PrimaTabLinkTesto');
+	 $LinkPT=get_theme_mod('scuola_scuola_PrimaTabLink');
 	 
 	 $Eti_Prima=get_theme_mod('scuola_scuola_PrimaTabTesto');
 	 $Pag_Prima=get_theme_mod('scuola_scuola_PrimaTabPagina');
@@ -106,9 +109,19 @@
 			  <div class="tab-pane p-4 fade show active shadow" id="nav-tab1" role="tabpanel" aria-labelledby="nav-tab1-tab">
 			  	<div class="BloccoScuola">
 			  		<?php 	if($Video!=""){?>
+ 					
 			  		<div class="embed-responsive embed-responsive-16by9">
   						<iframe class="embed-responsive-item" title="Video YouTube" src="https://www.youtube.com/embed/<?php echo $Video;?>" allowfullscreen></iframe>
+ 					</div>
+  					<p class="text-center font-italic font-weight-semibold border rounded border-top-0"><?php echo $Didascalia;?></p>
+					<?php if($LinkPT!=""){?>
+					<div>
+					<?php if($ImgLinkPT!=""){?>
+						<img src="<?php echo wp_get_attachment_url($ImgLinkPT);?>" alt="" class="figure-img img-fluid rounded">
+					<?php }?>
+						<a href="<?php echo $LinkPT;?>" target="_blank"><?php echo $TestoLinkPT;?></a>
 					</div>
+					<?php	}?>
 					<?php	}else 
 								echo $Testo_Prima;?>
 			  	</div>

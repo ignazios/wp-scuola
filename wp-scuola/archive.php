@@ -80,12 +80,12 @@ function my_get_archivesAnnoMese()
 $Anno=$search_query["year"];
 $Mese=(isset($search_query["monthnum"])?$mesi[(int)$search_query["monthnum"]]:0);
 $Archivio=my_get_archivesAnnoMese();?>
-<section id="content" role="main" class="container-fluid">
+<section id="content" role="main" class="container-fluid mb-3">
    <div class="container">
       <div class="row">
 		  <div class="col-12 col-lg-9">
 		  	<header class="header">
-		  		<h3 class="entry-title"><?php _e( 'Archivio articoli', 'wpscuola' ); ?> <?php echo (isset($Mese)?__( 'del mese di', 'wpscuola' )." ".$Mese:"").(isset($Anno)?" ".__( 'dell\'anno', 'wpscuola' )." ".$Anno:""); ?></h3>
+		  		<h3 class="entry-title"><?php _e( 'Archivio articoli', 'wpscuola' ); ?> <?php echo ($Mese!=0?__( 'del mese di', 'wpscuola' )." ".$Mese:"").($Anno!=0?" ".__( 'dell\'anno', 'wpscuola' )." ".$Anno:""); ?></h3>
 		  	</header>
 		  	<div class="container">
 <?php	if (have_posts() ):
@@ -97,7 +97,7 @@ $Archivio=my_get_archivesAnnoMese();?>
 		  	</div>
 <?php get_template_part( 'template-parts/pagin' ); ?>
 		  </div>
-		  <div class="col-12 col-lg-3">
+		  <div class="col-12 col-lg-3 mt-5">
 		  	<div id="archcat" class="container">
 				<div class="link-list-wrapper shadow p-1 mt-3">
 				  	<div class="row">

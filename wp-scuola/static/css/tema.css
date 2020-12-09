@@ -94,7 +94,7 @@ Tags: 				right-sidebar, custom-header, custom-footer, custom-colors, custom-log
 	.has-medium-font-size{font-size:1.5em;}
 	.has-big-font-size{font-size:2em;}
 	
-	#content .wp-block-advgb-summary li,#content .nf-field-element li{
+	#content .wp-block-advgb-summary li,#content .nf-field-element li, #content li.coblocks-gallery--item,#content .wp-block-coblocks-gallery-collage__item {
 		list-style: none!important;
 		margin-left: 0!important;
 		padding-bottom: 0.5em;
@@ -212,7 +212,11 @@ a img.aligncenter {
 	box-shadow: 0 2px 30px rgba(0, 0, 0, .3);
 }
 
-
+blockquote {
+    border-left: 3px solid #ccc;
+    margin: 15px;
+    padding: 15px;
+}
 @media print {
 	html {
 		background: transparent;
@@ -2401,7 +2405,7 @@ body.search article {
 }
 #content ul li ul li {
 	padding-left: 1em!important;
-    list-style: square!important;
+    list-style: circle!important;
 	list-style-position: inside!important;
 }
 .labelNoFormat{
@@ -2743,4 +2747,107 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
 }
 .icoGrab{
 	cursor: -webkit-grab; cursor: grab;
+}
+.acapo{
+	clear: both;
+}
+.bachecaButton_primary{
+	width: 150px;
+    line-height: 150px;
+    border: 2px solid #06c;
+	color:#06c;
+    border-radius: 50%;
+    -webkit-transition: all .2s ease-in;
+    transition: all .2s ease-in;
+    text-align: center;
+	font-size:4em;
+}
+.bachecaButton_primary:hover{
+	color:#fff;
+	background-color:#06c;
+}
+.bachecaText_primary{
+	color:#06c;
+	font-weight:bold;
+	font-size:1.5em;
+}
+.bachecaButton_secondary{
+	width: 150px;
+    line-height: 150px;
+    border: 2px solid #5c6f82;
+	color:#5c6f82;
+    border-radius: 50%;
+    -webkit-transition: all .2s ease-in;
+    transition: all .2s ease-in;
+    text-align: center;
+	font-size:4em;
+}
+.bachecaButton_secondary:hover{
+	color:#fff;
+	background-color:#5c6f82;
+}
+.bachecaText_secondary{
+	color:#5c6f82;
+	font-weight:bold;
+	font-size:1.5em;
+}
+.bachecaButton_success{
+	width: 150px;
+    line-height: 150px;
+    border: 2px solid #008758;
+	color:#008758;
+    border-radius: 50%;
+    -webkit-transition: all .2s ease-in;
+    transition: all .2s ease-in;
+    text-align: center;
+	font-size:4em;
+}
+.bachecaButton_success:hover{
+	color:#fff;
+	background-color:#008758;
+}
+.bachecaText_success{
+	color:#008758;
+	font-weight:bold;
+	font-size:1.5em;
+}
+.bachecaButton_danger{
+	width: 150px;
+    line-height: 150px;
+    border: 2px solid #d9364f;
+	color:#d9364f;
+    border-radius: 50%;
+    -webkit-transition: all .2s ease-in;
+    transition: all .2s ease-in;
+    text-align: center;
+	font-size:4em;
+}
+.bachecaButton_danger:hover{
+	color:#fff;
+	background-color:#d9364f;
+}
+.bachecaText_danger{
+	color:#d9364f;
+	font-weight:bold;
+	font-size:1.5em;
+}
+.bachecaButton_warning{
+	width: 150px;
+    line-height: 150px;
+    border: 2px solid #a66300;
+	color:#a66300;
+    border-radius: 50%;
+    -webkit-transition: all .2s ease-in;
+    transition: all .2s ease-in;
+    text-align: center;
+	font-size:4em;
+}
+.bachecaButton_warning:hover{
+	color:#fff;
+	background-color:#a66300;
+}
+.bachecaText_warning{
+	color:#a66300;
+	font-weight:bold;
+	font-size:1.5em;
 }

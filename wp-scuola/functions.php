@@ -62,7 +62,31 @@ add_action( 'admin_init', 					'mytheme_add_editor_styles' );
 add_action( 'template_redirect', 			'Gestione_DwnLink');
 
 add_shortcode('articoli', 					'GetArticoliCategoria');
+add_shortcode('gfolderdrive', 				'VisualizzaCartellaDrive');
 
+/****************************************************** 
+* Shortcode per incorporare le cartelle di Google
+* [gfolderdrive idfolder=Id della cartella che è l'ultimo elemento del link 
+                tipovis=grid/list modaità di visualizzazione
+                border=dimensione del bordo (0)
+                width=larghezza del frame in %
+                height=altezza del frame in px
+                scrolling=yes/no/auto]
+*******************************************************/
+function VisualizzaCartellaDrive($Parametri) {
+	$ret="";
+	$Parametri=shortcode_atts(array(
+		'idfolder' 	=> 0,
+		'tipovis'	=>"grid",
+		'border'	=> 0,
+		'width'		=>"100%",
+		'height'	=>"500px",
+		'scrolling' =>"auto",
+	), $Parametri,"gdrive");
+	ob_start();?>
+	<iframe src = "https://drive.google.com/embeddedfolderview?id=<?php echo $Parametri['idfolder'];?>#<?php echo $Parametri['tipovis'];?>" frameborder = "<?php echo $Parametri['border'];?>" width = "<?php echo $Parametri['width'];?>" height = "<?php echo $Parametri['height'];?>" scrolling = "<?php echo $Parametri['scrolling'];?>"> </iframe>
+<?php return ob_get_clean();
+}
 /****************************************************** 
 * Funzione per la gestione del download dei files
 *******************************************************/
@@ -231,8 +255,11 @@ $update_checker = new ThemeUpdateChecker(
 function personaliza_file_render( $block_content, $block ) {
 	
 	if( "core/file" !== $block['blockName'] ) {
-    return $block_content;
-  }
+    	return $block_content;
+  	}
+  	if(!isset($block["attrs"]['id'])){
+		return $block_content;
+	}
   $IDFile=$block["attrs"]['id'];
   $Allegato=get_post($IDFile);
   if(is_null($Allegato)) return;
@@ -683,6 +710,7 @@ function scuola_register_Widget(){
 	register_widget( 'Trasparenza' );
 	register_widget( 'Feed_RSS' );
 	register_widget( 'Link' );
+	register_widget( 'Bacheca' );
 	if(class_exists("EM_Event")) 					register_widget( 'my_EM_Widget_Calendar' );
 	if(get_theme_mod('scuola_servizi_attiva'))		register_widget( 'Servizi' );
 	if(function_exists("at_sezioni_shtc"))			register_widget( 'my_ATWidget' );	
@@ -697,6 +725,7 @@ require get_template_directory() . '/widget/widget_trasparenza.php';
 require get_template_directory() . '/widget/widget_articoli.php';
 require get_template_directory() . '/widget/widget_articoli_griglia.php';
 require get_template_directory() . '/widget/widget_link.php';
+require get_template_directory() . '/widget/widget_bacheca.php';
 if(get_theme_mod('scuola_servizi_attiva'))		require get_template_directory() . '/widget/widget_servizi.php';
 if(function_exists("at_sezioni_shtc"))			require get_template_directory() . '/widget/widget_AT.php';
 if(get_theme_mod("scuola_circolari_attiva"))	require get_template_directory() . '/widget/widget_circolari.php';
@@ -885,8 +914,8 @@ function scuola_customize_head() {
    
     .it-footer-main{color: <?php echo get_theme_mod( 'scuola_footer_text_color', "#fff" ); ?>;}
   	#content {background-color:<?php echo $ColoreBody; ?>;}
-     a, a:hover, a.read-more { color: <?php echo $ColoreLinkBody; ?>; }
-    button, input[type="submit"], .btn-primary, .btn-primary:hover, .btn-primary:not(:disabled):not(.disabled):active,.badge-primary { color: <?php echo $ColoreTestoBottone; ?>;background-color: <?php echo $ColoreBottone; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1); }
+     a, a:hover, a.read-more,.ui-widget-content a { color: <?php echo $ColoreLinkBody; ?>; }
+    button, input[type="submit"], .btn-primary, .btn-primary:hover, .btn-primary:not(:disabled):not(.disabled):active,.badge-primary { color: <?php echo $ColoreTestoBottone; ?>!Important;background-color: <?php echo $ColoreBottone; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1); }
     a.badge-primary:active,a.badge-primary:hover{color: <?php echo $ColoreBottone; ?>;background-color: <?php echo $ColoreTestoBottone; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1);
 	}
     .btn-outline-primary { color: <?php echo $ColoreLinkBody; ?>; box-shadow: inset 0 0 0 1px <?php echo $ColoreLinkBody; ?>; }

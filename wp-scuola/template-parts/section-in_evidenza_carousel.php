@@ -28,7 +28,7 @@
 	        			'order'       	=> 'DESC');			
 	}
 	$Posts=get_posts($args);
-	if ($Posts ) {
+	if ($Posts Or $PostsInEvidenza ) {
 		if($PostsInEvidenza){
 //			var_dump($PostsInEvidenza);
 			$Image=get_the_post_thumbnail_url($PostsInEvidenza->ID);

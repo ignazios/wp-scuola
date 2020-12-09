@@ -29,6 +29,18 @@ facebook: https://www.facebook.com/wpscuola/
  - **Wordpress** 	*5.0* - *5.5*
  - **PHP** 		*7.0*
 ## Change log
+- **1.0.9**
+  - ***Creato*** lo shortcode [gfolderdrive idfolder=Id della cartella che è l'ultimo elemento del link 
+                tipovis=grid/list modaità di visualizzazione
+                border=dimensione del bordo (0)
+                width=larghezza del frame in %
+                height=altezza del frame in px
+                scrolling=yes/no/auto] che permette di visualizzare una cartella condivisa di Google Drive
+  - ***Aggiunto*** widget che simulauna bacheca, al momento, con la possibilitàdi visualizzare 4 bottoni sensibili all'Hover con icona di fontawesome, testo e link
+  - ***Sistemata*** il template di pagina della pagina degli articoli (Blog) in cui vengono visualizzati tutti gli articoli
+  - ***Corretti*** alcuni bug minori
+  - ***Aggiunto*** nel Blocco Scuola la possibilità di inserire nella prima cartella un link; Immagine + Testo e la didascalia del video
+  - ***Modificato*** il Widget Trasparenza, adesso si possono personalizzare i testi dei 4 pulsanti  
 - **1.0.8**
   - ***Modificato*** shortcode del modulo per la gestione dell'orario da Argo Darwin. Lo shortcode è:
 		

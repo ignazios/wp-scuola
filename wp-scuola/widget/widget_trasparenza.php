@@ -40,7 +40,6 @@ class Trasparenza extends WP_Widget {
 	        }
 
 	        ob_start();
-
   	        $title = ( ! empty( $instance['title'] ) ) ? $instance['title'] : __( 'Trasparenza','wpscuola' );
         	/** This filter is documented in twp-includes/default-widgets.php */
         	$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
@@ -63,6 +62,8 @@ class Trasparenza extends WP_Widget {
 			$EAP=(!$Is_AP) ? 'target="_blank"':'';
 			$EAC=(!$Is_AC) ? 'target="_blank"':'';
 			$EURP=(!$Is_URP) ? 'target="_blank"':'';
+            $Testo_AC=((isset($instance['TAC']) And $instance['TAC']!="")?$instance['TAC']:__("Accesso Civico"));
+            $Testo_URP=((isset($instance['TURP']) And $instance['TURP']!="")?$instance['TURP']:__("URP"));
 ?>
 <section id="trasp_<?php echo $args['widget_id'];?>"  class="home-widget container ">
 <?php  
@@ -76,12 +77,12 @@ class Trasparenza extends WP_Widget {
     <div class="col-lg-3 col-sm-6 col-12 m-2">
     	  <div class="row mb-2 h-48">
 		    <div class="col p-2 btn-primary rounded text-center">
-				<a href="<?php echo $URP; ?>" class="lead testo-bianco" <?php echo $EURP;?>><?php _e('URP','wpscuola');?></a>
+				<a href="<?php echo $URP; ?>" class="lead testo-bianco" <?php echo $EURP;?>><?php echo $Testo_URP;?></a>
 			</div>
 		  </div>
 		  <div class="row h-48 pb-1">
 		    <div class="col p-2 btn-primary rounded text-center">
-		    	<a href="<?php echo $AC;?>" class="lead testo-bianco" <?php echo $EAC;?>><?php _e('Accesso Civico','wpscuola');?></a>
+		    	<a href="<?php echo $AC;?>" class="lead testo-bianco" <?php echo $EAC;?>><?php echo $Testo_AC;?></a>
 		    </div>
 		  </div> 	
     </div>
@@ -126,7 +127,9 @@ class Trasparenza extends WP_Widget {
         $instance['AT'] = strip_tags($new_instance['AT']);
         $instance['LAT'] = strip_tags($new_instance['LAT']);
         $instance['LAP'] = strip_tags($new_instance['LAP']);
+        $instance['TAC'] = strip_tags($new_instance['TAC']);
         $instance['LAC'] = strip_tags($new_instance['LAC']);
+        $instance['TURP'] = strip_tags($new_instance['TURP']);
         $instance['LURP'] = strip_tags($new_instance['LURP']);
         $instance['AP'] = strip_tags($new_instance['AP']);
         $instance['AC'] = strip_tags($new_instance['AC']);
@@ -147,7 +150,9 @@ class Trasparenza extends WP_Widget {
     	$Link_AT=(isset($instance['LAT'])?$instance['LAT']:"");
        	$Link_AP=(isset($instance['LAP'])?$instance['LAP']:"");
        	$Link_AC=(isset($instance['LAC'])?$instance['LAC']:"");
+       	$Testo_AC=(isset($instance['TAC'])?$instance['TAC']:"Accesso Civico");
        	$Link_URP=(isset($instance['LURP'])?$instance['LURP']:"");
+       	$Testo_URP=(isset($instance['TURP'])?$instance['TURP']:"URP");
         $ElencoAP=$this->make_List_Pages($Pagine,$this->get_field_id( 'AP' ),$this->get_field_name( 'AP' ),! empty( $instance['AP'] ) ? $instance['AP'] :"");
         $ElencoAC=$this->make_List_Pages($Pagine,$this->get_field_id( 'AC' ),$this->get_field_name( 'AC' ),! empty( $instance['AC'] ) ? $instance['AC'] :"");
         $ElencoURP=$this->make_List_Pages($Pagine,$this->get_field_id( 'URP' ),$this->get_field_name( 'URP' ),! empty( $instance['URP'] ) ? $instance['URP'] :"");
@@ -165,19 +170,27 @@ class Trasparenza extends WP_Widget {
 		    <label for="<?php echo $this->get_field_id( 'LAP' );?>"><?php _e('Link Esterno Albo OnLine','wpscuola');?>:</label><br />
        		<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'LAP' ); ?>" name="<?php echo $this->get_field_name( 'LAP' ); ?>" value="<?php echo esc_attr( $Link_AP ); ?>" />
         </p>
-       <p>
-		    <label for="<?php echo $this->get_field_id( 'LAC' );?>"><?php _e('Link Accesso Civico','wpscuola');?>:</label><br />
-       		<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'LAC' ); ?>" name="<?php echo $this->get_field_name( 'LAC' ); ?>" value="<?php echo esc_attr( $Link_AC ); ?>" />
+     	<p>
+		    <label for="<?php echo $this->get_field_id( 'TURP' );?>"><?php _e('Etichetta blocco centrale piccolo alto (URP)','wpscuola');?>:</label><br />
+       		<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'TURP' ); ?>" name="<?php echo $this->get_field_name( 'TURP' ); ?>" value="<?php echo esc_attr( $Testo_URP ); ?>" />
         </p>
-      <p>
-		    <label for="<?php echo $this->get_field_id( 'LAC' );?>"><?php _e('Link URP','wpscuola');?>:</label><br />
+      	<p>
+		    <label for="<?php echo $this->get_field_id( 'LURP' );?>"><?php _e('Link blocco centrale piccolo alto (URP)','wpscuola');?>:</label><br />
        		<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'LURP' ); ?>" name="<?php echo $this->get_field_name( 'LURP' ); ?>" value="<?php echo esc_attr( $Link_URP ); ?>" />
         </p>
-       <p>
+       	<p>
+		    <label for="<?php echo $this->get_field_id( 'TAC' );?>"><?php _e('Etichetta blocco centrale piccolo basso (Accesso Civico)','wpscuola');?>:</label><br />
+       		<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'TAC' ); ?>" name="<?php echo $this->get_field_name( 'TAC' ); ?>" value="<?php echo esc_attr( $Testo_AC ); ?>" />
+     	</p>
+       	<p>
+		    <label for="<?php echo $this->get_field_id( 'LAC' );?>"><?php _e('Link blocco centrale piccolo basso (Accesso Civico)','wpscuola');?>:</label><br />
+       		<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'LAC' ); ?>" name="<?php echo $this->get_field_name( 'LAC' ); ?>" value="<?php echo esc_attr( $Link_AC ); ?>" />
+        </p>
+       	<p>
 		    <label for="<?php echo $this->get_field_id( 'AT' );?>"><?php _e('Pagina Amministrazione Trasparente','wpscuola');?>:</label><br />
        		<?php echo $ElencoAT; ?>
         </p>
-       <p>
+       	<p>
 		    <label for="<?php echo $this->get_field_id( 'AP' );?>"><?php _e('Pagina Albo','wpscuola');?>:</label><br />
        		<?php echo $ElencoAP; ?>
        </p>
