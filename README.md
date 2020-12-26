@@ -30,18 +30,26 @@ facebook: https://www.facebook.com/wpscuola/
  - **PHP** 		*7.0*
 ## Shortcode
 	[articoli id_categoria=ID della categoria da cui estrarre gli articoli (=0 oppure omesso se si vogliono elencare gli articoli per tag) 
-	          id_tag=ID del tag da cui estrarre gli articoli (=0 oppure omesso se si vogliono elencare gli articoli per categoria) 
+	          
+			  id_tag=ID del tag da cui estrarre gli articoli (=0 oppure omesso se si vogliono elencare gli articoli per categoria) 
+			  
 			  numero=Numero degli articoli da visualizzare (Default 5)
+			  
 			  imgevidenza=si/no Indica se visualizzare l'immagine in evidenza (Default no)]
 			  
 	Visualizza ***numero*** di articoli di una specifica categoria/tag
 		
 	[gfolderdrive idfolder=Id della cartella che è l'ultimo elemento del link 
-                tipovis=grid/list modaità di visualizzazione
-                border=dimensione del bordo (0)
-                width=larghezza del frame in %
-                height=altezza del frame in px
-                scrolling=yes/no/auto]
+                
+				tipovis=grid/list modaità di visualizzazione
+                
+				border=dimensione del bordo (0)
+                
+				width=larghezza del frame in %
+                
+				height=altezza del frame in px
+                
+				scrolling=yes/no/auto]
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
