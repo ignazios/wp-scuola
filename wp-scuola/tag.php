@@ -94,7 +94,7 @@ $Mese=$mesi[(int)$search_query["monthnum"]];
 
 ?>
 <section id="content" role="main" class="container-fluid mb-3">
-   <div class="container-fluid">
+   <div class="container">
       <div class="row">
 		  <div class="col-12 col-lg-9">
 
@@ -125,7 +125,7 @@ $Mese=$mesi[(int)$search_query["monthnum"]];
 							</a>
 						</div>
 						<div class="col-11 mb-0">
-							<h4 class="TitoloArchivio"><?php _e( 'Etichette', 'wpscuola' ); ?></h4>
+							<h3 class="h5"><?php _e( 'Etichette', 'wpscuola' ); ?></h3>
 						</div>
 					</div> 
 					<ul class="link-list collapse" id="ListaTag">
@@ -153,7 +153,7 @@ $Mese=$mesi[(int)$search_query["monthnum"]];
 							</a>
 						</div>
 						<div class="col-11 mb-0">
-							<h4 class="TitoloArchivio"><?php _e( 'Data di Pubblicazione', 'wpscuola' ); ?></h4>
+							<h3 class="h5"><?php _e( 'Data di Pubblicazione', 'wpscuola' ); ?></h3>
 						</div>
 					 </div> 
 					<ul class="link-list collapse" id="ListaTagData">				

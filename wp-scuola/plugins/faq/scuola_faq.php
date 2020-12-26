@@ -230,7 +230,7 @@ class ScuolaFAQ {
 	               // echo $q->request;
 	                if ( $q->have_posts() ) {
 	                    $html .= '  <div class="collapse-header" id="heading' . $term->term_id . '">
-	<button data-toggle="collapse" data-target="#collapse' . $term->term_id . '" aria-expanded="false" aria-controls="collapse' . $term->term_id . '">' . $term->name . '</button>';
+	<button data-toggle="collapse" data-target="#collapse' . $term->term_id . '" aria-expanded="false" aria-controls="collapse' . $term->term_id . '" class="faq">' . $term->name . '</button>';
 	                     // If the term has a description, show it
 	                    if ( $term->description )
 	                        $html .= '<p>' . $term->description . '</p>';
@@ -241,7 +241,7 @@ class ScuolaFAQ {
 							$html .='    	     
 	    	<div id="collapseDiv' . $term->term_id . '" class="collapse-div" role="tablist">
 				<div class="collapse-header" id="headingInt'. get_the_ID().'">
-	      			<button data-toggle="collapse" data-target="#collapseVoce'. get_the_ID().'" aria-expanded="false" aria-controls="collapseVoce'. get_the_ID().'">'.get_the_title().'</button>
+	      			<button data-toggle="collapse" data-target="#collapseVoce'. get_the_ID().'" aria-expanded="false" aria-controls="collapseVoce'. get_the_ID().'" class="faq">'.get_the_title().'</button>
 	    		</div>
 		        <div id="collapseVoce'. get_the_ID().'" class="collapse " role="tabpanel" aria-labelledby="headingInt'. get_the_ID().'">
 		    		<div class="collapse-body">' . apply_filters( 'the_content', get_the_content() ).' </div>

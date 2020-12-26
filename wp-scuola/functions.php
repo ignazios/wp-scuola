@@ -60,10 +60,24 @@ add_action( 'manage_posts_custom_column', 	'scuola_posts_custom_column_views' );
 add_action( 'login_head', 					'scuola_custom_login_logo');
 add_action( 'admin_init', 					'mytheme_add_editor_styles' );
 add_action( 'template_redirect', 			'Gestione_DwnLink');
+add_action( 'wp_ajax_ResetCounter',			'scuola_reset_counter' );
 
 add_shortcode('articoli', 					'GetArticoliCategoria');
 add_shortcode('gfolderdrive', 				'VisualizzaCartellaDrive');
 
+function scuola_reset_counter(){
+	global $wpdb;
+ 	$Result=$wpdb->update($wpdb->postmeta,
+		 array('meta_value' => 0 ),
+		 array('meta_key' => "post_views_count"),
+		 array('%d'),
+		 array('%s'));
+	if($Result===FALSE)
+		echo "Si è verificato un errore";
+	else
+		echo "Sono stati azzerati ".$Result." Oggetti";
+	die();
+}
 /****************************************************** 
 * Shortcode per incorporare le cartelle di Google
 * [gfolderdrive idfolder=Id della cartella che è l'ultimo elemento del link 
@@ -94,21 +108,43 @@ function GetArticoliCategoria($Parametri){
 	$ret="";
 	$Parametri=shortcode_atts(array(
 		'id_categoria' => 0,
+		'id_tag' => 0,
 		'numero' => 5,
-		'imgevidenza' => 'si'
+		'imgevidenza' => 'no'
 	), $Parametri,"articoli");
-	$Catargs = array( 'cat' => $Parametri['id_categoria'],
-				   'posts_per_page'  => $Parametri['numero'],
-				   'post_status' => (is_user_logged_in()? array('publish','private'):'publish'));
-	$Articoli = get_posts( $Catargs );	 
+	if($Parametri['id_categoria']!=0){
+		$Catargs = array( 'cat' => $Parametri['id_categoria'],
+					   'posts_per_page'  => $Parametri['numero'],
+					   'post_status' => (is_user_logged_in()? array('publish','private'):'publish'));
+		$Articoli = get_posts( $Catargs );
+		$TipoComNoArt=__('Non ci sono articoli nella categoria','wpscuola');
+		$TipoComTit=__('Articoli della categoria','wpscuola');
+		$TipoComReadAll=__('Leggi tutti gli articoli della categoria','wpscuola');
+		$Tax=get_cat_name($Parametri['id_categoria']);
+		$TaxLink=get_category_link($Parametri['id_categoria']);
+	}	
+	if($Parametri['id_categoria']==0 And $Parametri['id_tag']!=0){
+		$Tagargs = array( 'tag_id' => $Parametri['id_tag'],
+					   'posts_per_page'  => $Parametri['numero'],
+					   'post_status' => (is_user_logged_in()? array('publish','private'):'publish'));
+		$Articoli = get_posts( $Tagargs );		
+		$TipoComNoArt=__('Non ci sono articoli con etichetta','wpscuola');
+		$TipoComTit=__('Articoli con etichetta','wpscuola');
+		$TipoComReadAll=__('Leggi tutti gli articoli con etichetta','wpscuola');
+		$Tax=get_tag($Parametri['id_tag']);
+		$Tax=$Tax->name;
+		$TaxLink=get_tag_link($Parametri['id_tag']);
+	} 
 	ob_start();
 	if(count($Articoli)==0){?>
-		<div class="alert alert-info" role="alert">
-  			<?php echo __('Non ci sono articoli nella categoria','wpscuola').": <strong>".get_cat_name($Parametri['id_categoria'])."</strong>";?>
+		<div class="alert alert-info mt-3" role="alert">
+  			<?php echo $TipoComNoArt.": <strong>".$Tax."</strong>";?>
 		</div>
-<?php }?>
-	<div class="it-list-wrapper">
-		<ul class="it-list">
+<?php return ob_get_clean();
+	}?>
+	<div class="it-list-wrapper mt-3">
+		<p class="h4"><?php echo $TipoComTit.": ".$Tax;?></p>
+		<ul class="it-list p-3 mb-2 shadow-sm">
 <?php	foreach($Articoli as $Articolo){	?>
 			<li class="nolist">
 			    <a href="<?php echo get_permalink($Articolo->ID);?>">
@@ -132,6 +168,9 @@ function GetArticoliCategoria($Parametri){
 <?php			} ?>
 		</ul>
 	</div>
+	<p class="read-more p-2 ">
+	    <a href="<?php echo $TaxLink;?>" title="Archio articoli della categoria <?php echo $Tax;?>"><span class="fas fa-book-reader p-1"></span> <?php echo $TipoComReadAll." ".$Tax;?></a>
+	</p>
 <?php	return ob_get_clean();
 }
 /****************************************************** 
@@ -223,7 +262,8 @@ function scuola_get_post_view() {
 }
 
 function scuola_set_post_view() {
-    $key = 'post_views_count';
+	if(!get_theme_mod('scuola_docconteggio_attiva')) return;
+	$key = 'post_views_count';
     $post_id = get_the_ID();
     $count = (int) get_post_meta( $post_id, $key, true );
     $count++;
@@ -544,6 +584,7 @@ include( get_template_directory() . '/inc/class-simplepie.php' );
   }
 
 function enqueue_scuola_admin() {
+	wp_enqueue_script( 'scuola-customize-controls', get_template_directory_uri() . '/static/js/customize-controls.js',array( 'jquery', 'customize-controls' ), false, true );
     wp_enqueue_style('scuola_fonts_Awesome', get_template_directory_uri() . '/static/css/all.css');
     wp_enqueue_script('jquery-ui-tooltip');
     if (is_front_page()) {
@@ -555,6 +596,7 @@ function enqueue_scuola_admin() {
 
 function enqueue_scuola_public() {
     wp_enqueue_style('wpscuola_bootstrap-italia.min_css', get_template_directory_uri() . '/static/css/bootstrap-italia.min.css');
+    wp_enqueue_style( 'bootstrap-italia-map', get_template_directory_uri() . "/static/css/bootstrap-italia.min.css.map");
     wp_enqueue_style('wpscuola_owl.carousel.min_css', get_template_directory_uri() . '/static/css/owl.carousel.min.css');
     wp_enqueue_style('wpscuola_owl.theme.default.min_css', get_template_directory_uri() . '/static/css/owl.theme.default.min.css');
 	wp_enqueue_script("jquery");
@@ -914,7 +956,11 @@ function scuola_customize_head() {
    
     .it-footer-main{color: <?php echo get_theme_mod( 'scuola_footer_text_color', "#fff" ); ?>;}
   	#content {background-color:<?php echo $ColoreBody; ?>;}
-     a, a:hover, a.read-more,.ui-widget-content a { color: <?php echo $ColoreLinkBody; ?>; }
+    a, a:hover, a.read-more,.ui-widget-content a { color: <?php echo $ColoreLinkBody; ?>; }
+	#collapseDivFAQ button.faq[aria-expanded="true"]{color: <?php echo $ColoreTestoBottone; ?>!important;}
+    
+    #collapseDivFAQ button.faq  {color: <?php echo $ColoreLinkBody; ?>!important;}
+   
     button, input[type="submit"], .btn-primary, .btn-primary:hover, .btn-primary:not(:disabled):not(.disabled):active,.badge-primary { color: <?php echo $ColoreTestoBottone; ?>!Important;background-color: <?php echo $ColoreBottone; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1); }
     a.badge-primary:active,a.badge-primary:hover{color: <?php echo $ColoreBottone; ?>;background-color: <?php echo $ColoreTestoBottone; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1);
 	}

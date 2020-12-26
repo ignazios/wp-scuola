@@ -42,7 +42,10 @@ class Link extends WP_Widget {
         	 $title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
              $tipovis = ! empty( $instance['tipovis'] ) ? $instance['tipovis'] :0;
              $categoria = ! empty( $instance['categoria'] ) ? $instance['categoria'] :0;
-             $fulw    = isset( $instance['fulwidth'] ) ? $instance['fulwidth'] : false;?>
+             $fulw    = isset( $instance['fulwidth'] ) ? $instance['fulwidth'] : false;
+             $nsLg= ! empty($instance["nsLg"]) ? $instance["nsLg"]: 4;
+             $nsLg=($nsLg==3)?4:3;
+             ?>
  <section id="art_<?php echo $args['widget_id'];?>"  class="home-widget container<?php echo ($fulw?"-fluid pl-3":"");?>" >
 		<div class="it-header-block">
 	    	<div class="it-header-block-title">
@@ -53,7 +56,7 @@ class Link extends WP_Widget {
             switch ($tipovis){
             	case 0:
             		$Links=get_bookmarks(array('orderby'=>'rating'));
- 					$this->Crea_blocchi($Links,$fulw);
+ 					$this->Crea_blocchi($Links,$fulw,$nsLg);
 					break;
 				case 1:
 					$CatsLink = get_categories(array('taxonomy' => 'link_category',
@@ -77,7 +80,7 @@ class Link extends WP_Widget {
 							$Links=get_bookmarks(array('orderby'=>'rating','category'=>$CatLink->term_id));?>
 							<div class="tab-pane p-4 fade show <?php echo ($Primo?"active":'');$Primo=false;?> shadow" id="<?php echo $CatLink->slug;?>" role="tabpanel" aria-labelledby="<?php echo $CatLink->slug;?>-tab">
 							  	<div class="">
-							  		<?php $this->Crea_blocchi($Links, $fulw);?>
+							  		<?php $this->Crea_blocchi($Links, $fulw,$nsLg);?>
 							  	</div>
 	        				</div>
 <?php					}?>
@@ -86,7 +89,7 @@ class Link extends WP_Widget {
 					break;
 	           	case 2:
 						$Links=get_bookmarks(array('orderby'=>'rating','category'=>$categoria));
-						$this->Crea_blocchi($Links, $fulw);
+						$this->Crea_blocchi($Links, $fulw,$nsLg);
 						break;
             } ?>   
 	    	</div>
@@ -108,12 +111,12 @@ class Link extends WP_Widget {
 * Funzione che stampa il codice per visualizzare i blocchi dei servizi
 * @return
 */
-	function Crea_blocchi($Links, $fulw){?>
+	function Crea_blocchi($Links, $fulw,$nsLg){?>
 		<div class="container<?php echo ($fulw?"-fluid":"");?>">
 	<div class="row">
 <?php 
 		foreach($Links as $Link){?>
-		<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 pb-2">
+		<div class="col-lg-<?php echo $nsLg;?> col-md-6 col-sm-12 col-xs-12 pb-2">
 		    <div class="hovereffect_Link">
 		        <img class="img-responsive" src="<?php echo $Link->link_image;?>" alt="logo link <?php $Link->link_name;?>" width="100%" height="<?php echo ($fulw?"350":"200");?>">
 		            <div class="overlay">
@@ -141,6 +144,7 @@ class Link extends WP_Widget {
             $instance['tipovis'] = $new_instance['tipovis'];
             $instance["categoria"]= $new_instance["categoria"];
             $instance["fulwidth"]= $new_instance["fulwidth"];
+            $instance["nsLg"]= $new_instance["nsLg"];
 		return $instance;
 	}
 
@@ -151,6 +155,7 @@ class Link extends WP_Widget {
 		$tipovis = ! empty( $instance['tipovis'] ) ? $instance['tipovis'] : 0;
 		$categoria= ! empty($instance["categoria"]) ? $instance["categoria"]: 0;
 		$fulw    = isset( $instance['fulwidth'] ) ? $instance['fulwidth'] : false;
+		$nsLg= ! empty($instance["nsLg"]) ? $instance["nsLg"]: 4;
 		$args=array('taxonomy' => 'link_category','hide_empty' => false);
 		$CatsLink = get_terms($args);
 		$Elenco="<select id=\"".$this->get_field_id( 'categoria' )."\" name=\"".$this->get_field_name( 'categoria' )."\">
@@ -187,6 +192,10 @@ class Link extends WP_Widget {
 	            <input type="checkbox" id="<?php echo $this->get_field_id( 'fulwidth' ); ?>" name="<?php echo $this->get_field_name( 'fulwidth' ); ?>" value="true" <?php echo $checked; ?> />    
 	            <label for="<?php echo $this->get_field_id('fulwidth'); ?>"><?php _e( 'Visualizza a pieno schermo' ); ?></label>
         	</p>
+            <p>
+                <label for="<?php echo $this->get_field_id( 'nsLg' ); ?>"><?php echo __( 'Numero schede su schermi Large', 'wpscuola' );?>:</label>
+                <input type="number" class="widefat" id="<?php echo $this->get_field_id( 'nsLg' ); ?>" name="<?php echo $this->get_field_name( 'nsLg' ); ?>" value="<?php echo $nsLg; ?>" min="3" max="4"/>
+             </p>
 <?php
 	}
 }

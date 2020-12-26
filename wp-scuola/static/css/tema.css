@@ -2851,3 +2851,6 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
 	font-weight:bold;
 	font-size:1.5em;
 }
+.tag-cloud-link{
+	padding:0.5em;
+}

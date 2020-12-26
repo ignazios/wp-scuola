@@ -528,6 +528,27 @@ $wp_customize->add_control('scuola_modorarioArgo_attiva', array(
     'type' => 'checkbox', 
     'section' => 'Scuola_Moduli_Settings', 
     'settings' => 'scuola_modorarioArgo_attiva'));
+$wp_customize->add_setting('scuola_docconteggio_attiva', array(
+    'default' => false, 
+    'capability' => 'edit_theme_options', 
+    'sanitize_callback' => 'scuola_sanitize_checkbox'));
+$wp_customize->add_control('scuola_docconteggio_attiva', array(
+    'label' => 'Attiva il conteggio delle pagine/articoli/CPT',
+    'description'	=>' Questa opzioni permette di visualizzare il numero di visualizzazioni di ogni Pagina/Articolo/Custom Post Type' ,
+    'priority'	=>6,
+    'type' => 'checkbox', 
+    'section' => 'Scuola_Moduli_Settings', 
+    'settings' => 'scuola_docconteggio_attiva'));
+$wp_customize->add_control( 'scuola_docconteggio_reset', array(
+    'type' => 'button',
+    'settings' => array(),
+    'priority' => 7,
+    'section' => 'Scuola_Moduli_Settings',
+    'input_attrs' => array(
+        'value' => __( 'Azzera Conteggio', 'textdomain' ), 
+        'class' => 'button button-primary', 
+    ),
+) );
 /**
 *  Crea pannello per impostazione Home Page
 */

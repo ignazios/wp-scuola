@@ -219,6 +219,10 @@
 	</footer>
 </div>
 <?php wp_footer(); ?>
+    <!-- HTML5shim per Explorer 8 -->
+    <script src="<?php bloginfo('template_url'); ?>/static/js/modernizr.js"></script>
+    <script src="<?php bloginfo('template_url'); ?>/static/js/jquery.min.js"></script>
+
     <script src="<?php bloginfo('template_url'); ?>/static/js/popper.min.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/static/js/bootstrap-italia.min.js"></script>
     <script src="<?php bloginfo('template_url'); ?>/static/js/tema.js"></script>

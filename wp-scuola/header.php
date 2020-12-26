@@ -20,9 +20,7 @@
     <link rel="icon" type="image/png" href="<?php echo esc_url($ImgLogo); ?>">  
     <?php wp_head(); ?>
 
-    <!-- HTML5shim per Explorer 8 -->
-    <script src="<?php bloginfo('template_url'); ?>/static/js/modernizr.js"></script>
-    <script src="<?php bloginfo('template_url'); ?>/static/js/jquery.min.js"></script>
+
  </head>
 
 <body class="t-Pac">
