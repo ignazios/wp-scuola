@@ -44,6 +44,8 @@ facebook: https://www.facebook.com/wpscuola/
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
+- **1.1.1**
+  - ***Corretto*** un bug nella gestione dei Servizi
 - **1.1**
   - ***Modificato*** lo shortcode [articoli ]. Aggiunto il parametro id_tag, se specificato al posto di id_categoria visualizza l'elendo di articoli per tag
   - ***Modificato*** il widget Scuola Link, aggiunto il parametro **Numero schede su schermi Large:** si possono psecificare 3/4 schede per la viusalizzazione su schermi Large

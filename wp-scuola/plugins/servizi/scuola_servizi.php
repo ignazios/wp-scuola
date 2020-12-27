@@ -59,7 +59,7 @@ class ScuolaServizi {
 		$servizio_targetDescrizione = get_post_meta( $post->ID, 'servizio_targetdescrizione', true );
 		// Set default values.
 		if( empty( $servizio_link_servizio ) ) $servizio_link_servizio = 'https://';
-		if( empty( $servizio_link2_servizio ) ) $servizio_link_servizio = 'https://';
+		if( empty( $servizio_link2_servizio ) ) $servizio_link2_servizio = 'https://';
 		if( empty( $servizio_link_descrizione ) ) $servizio_link_descrizione = 'https://';
 		if( empty( $servizio_attivazione_servizio ) ) $servizio_attivazione_servizio = '';
 		if( empty( $servizio_codice_ipa ) ) $servizio_codice_ipa = '';
