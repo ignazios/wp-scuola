@@ -182,6 +182,15 @@ class ScuolaServizi {
 			</tr>
 			<tr>
 				<th>
+					<label for="servizio_titolo_descrizione" class=""> <?php _e( 'Titolo del pulsante', 'wpscuola' );?> </label>
+				</th>
+				<td>
+					<input type="text" id="servizio_titolo_descrizione" name="servizio_titolo_descrizione" class="" value="<?php esc_attr_e( $servizio_titolo_descrizione );?>" style="width:90%;">
+					<p><em><?php _e( 'Se lasciato vuoto verrà visualizzato Descrizione', 'wpscuola' );?></em></p>
+				</td>
+			</tr>
+			<tr>
+				<th>
 					<label for="servizio_link_servizio" class=""> <?php _e( 'Destinazione link Descrizione', 'wpscuola' );?> </label>
 				</th>
 				<td>
@@ -247,6 +256,7 @@ class ScuolaServizi {
 		$servizio_titolo_servizio = isset( $_POST[ 'servizio_titolo_servizio' ] ) ? sanitize_text_field( $_POST[ 'servizio_titolo_servizio' ] ) : '';
 		$servizio_link2_servizio = isset( $_POST[ 'servizio_link2_servizio' ] ) ? sanitize_text_field( $_POST[ 'servizio_link2_servizio' ] ) : '';
 		$servizio_titolo2_servizio = isset( $_POST[ 'servizio_titolo2_servizio' ] ) ? sanitize_text_field( $_POST[ 'servizio_titolo2_servizio' ] ) : '';
+		$servizio_titolo_descrizione = isset( $_POST[ 'servizio_titolo_descrizione' ] ) ? sanitize_text_field( $_POST[ 'servizio_titolo_descrizione' ] ) : '';
 		$servizio_link_descrizione = isset( $_POST[ 'servizio_link_descrizione' ] ) ? sanitize_text_field( $_POST[ 'servizio_link_descrizione' ] ) : '';
 		$servizio_attivazione_servizio = isset( $_POST[ 'servizio_attivazione_servizio' ] ) ? 'si' : 'no';
 		$servizio_codice_ipa = isset( $_POST[ 'servizio_codice_ipa' ] ) ? sanitize_text_field( $_POST[ 'servizio_codice_ipa' ] ) : '';
@@ -260,6 +270,7 @@ class ScuolaServizi {
 		update_post_meta( $post_id, 'servizio_link2_servizio', 			$servizio_link2_servizio );
 		update_post_meta( $post_id, 'servizio_titolo2_servizio', 		$servizio_titolo2_servizio );
 		update_post_meta( $post_id, 'servizio_link_descrizione', 		$servizio_link_descrizione );
+		update_post_meta( $post_id, 'servizio_titolo_descrizione', 		$servizio_titolo_descrizione );
 		update_post_meta( $post_id, 'servizio_attivazione_servizio',	$servizio_attivazione_servizio );
 		update_post_meta( $post_id, 'servizio_codice_ipa', 				$servizio_codice_ipa );
 		update_post_meta( $post_id, 'servizio_ordine', 					$servizio_ordine );

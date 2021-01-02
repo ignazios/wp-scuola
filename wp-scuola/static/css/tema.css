@@ -241,9 +241,9 @@ blockquote {
 body {
     color: #555;
     background-color: #fff;
-    -webkit-transition: all .3s ease 0s;
+/*    -webkit-transition: all .3s ease 0s;
     -o-transition: all .3s ease 0s;
-    transition: all .3s ease 0s;
+    transition: all .3s ease 0s;*/
     position: relative;
     height: auto !important;
 }
@@ -258,7 +258,7 @@ body .menu-underlayer {
     visibility: hidden;
     background-color: rgba(0, 56, 130, 1);
     opacity: 1;
-    -webkit-transition: all .3s ease 0s;
+   -webkit-transition: all .3s ease 0s;
     -o-transition: all .3s ease 0s;
     transition: all .3s ease 0s;
 }
@@ -1914,7 +1914,7 @@ ul.page-numbers {
 	padding-left: initial;
 }
 .entry-content li {
-	list-style: initial;
+/*	list-style: initial;*/
 }
 
 .panel-grid > div {

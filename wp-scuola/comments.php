@@ -43,7 +43,7 @@ if ( !have_comments() and !comments_open()) return;?>
 			<section id="trackbacks-list" class="comments">
 			<h3 class="comments-title"><?php echo '<span class="ping-count">' . $ping_count . '</span> ' . ( $ping_count > 1 ? __( 'Trackbacks', 'wpscuola' ) : __( 'Trackback', 'wpscuola' ) ); ?></h3>
 			<ul>
-			<?php wp_list_comments( 'type=pings&callback=wppa_custom_pings' ); ?>
+			<?php wp_list_comments( 'type=pings&callback=scuola_custom_pings' ); ?>
 			</ul>
 			</section>
 		<?php endif; 

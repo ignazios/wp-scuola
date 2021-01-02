@@ -39,8 +39,8 @@ AND $wpdb->term_taxonomy.term_id in ".$C."
 AND $wpdb->posts.ID = $wpdb->term_relationships.object_id
 AND $wpdb->term_taxonomy.term_taxonomy_id = $wpdb->term_relationships.term_taxonomy_id
 GROUP BY YEAR(post_date), MONTH(post_date)
-ORDER BY post_date DESC";
-	//		echo "<br />".$Sql;exit;
+ORDER BY YEAR(post_date), MONTH(post_date) DESC";
+//			echo "<br />".$Sql;die();
 	$ArchivioDate = $wpdb->get_results($Sql);
 	$Anno=0;
 	$ArticoliAnni=calc_NumArticoliMA($ArchivioDate);
@@ -145,7 +145,7 @@ $Mese=isset($search_query["monthnum"])?$mesi[(int)$search_query["monthnum"]]:0;
       <div class="row">
 		  <div class="col-12 col-lg-9">
 		  	<header class="header">
-		  		<h2 class="entry-title"><?php _e( 'Articoli della Categoria', 'wpscuola' ); ?> <?php echo single_cat_title(). ($Mese!=""?__( 'del mese di', 'wpscuola' ).$Mese:"").($Anno!=""?" ".__( 'dell\'anno', 'wpscuola' ).$Anno:""); ?></h2>
+		  		<h2 class="entry-title"><?php _e( 'Articoli della Categoria', 'wpscuola' ); ?> <?php echo single_cat_title()." ". ($Mese!=""?__( 'del mese di', 'wpscuola' )." ".$Mese:"").($Anno!=""?" ".__( 'dell\'anno', 'wpscuola' )." ".$Anno:""); ?></h2>
 		  	</header>
 		  	<div class="container">
 <?php

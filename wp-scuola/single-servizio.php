@@ -48,6 +48,7 @@ get_header();
 
 			$servizio_titolo_servizio = get_post_meta( get_the_ID(), 'servizio_titolo_servizio', true );
 			$servizio_titolo2_servizio = get_post_meta( get_the_ID(), 'servizio_titolo2_servizio', true );
+			$servizio_titolo_descrizione = get_post_meta( get_the_ID(), 'servizio_titolo_descrizione', true );
 			$servizio_link_descrizione = get_post_meta( get_the_ID(), 'servizio_link_descrizione', true );
 			$servizio_codice_ipa = get_post_meta( get_the_ID(), 'servizio_codice_ipa', true );
 			$servizio_targetS = get_post_meta( get_the_ID(), 'servizio_targetservizo', true );
@@ -69,7 +70,7 @@ get_header();
 <?php		endif;
 			if(!empty( $servizio_link_descrizione)) :?>
 					<li class="pb-2">
-						<a href="<?php echo$servizio_link_descrizione;?>" class="badge badge-primary" <?php echo ($servizio_targetD!="" ? "target=\"".$servizio_targetD."\"":"");?>><?php _e("Descrizione", "wpscuola");?></a>
+						<a href="<?php echo$servizio_link_descrizione;?>" class="badge badge-primary" <?php echo ($servizio_targetD!="" ? "target=\"".$servizio_targetD."\"":"");?>><?php echo $servizio_titolo_descrizione;?></a>
 					</li>
 <?php		endif;
 			if(!empty( $servizio_codice_ipa)) :?>

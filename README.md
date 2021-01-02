@@ -44,6 +44,9 @@ facebook: https://www.facebook.com/wpscuola/
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
+- **1.1.2**
+  - ***Corretti*** alcuni bugs minori
+  - ***Modificata*** la gestione dei servizi, aggiunta la possibilit di personalizzare il testo del terzo pulsante di default Descrizione
 - **1.1.1**
   - ***Corretto*** un bug nella gestione dei Servizi
 - **1.1**

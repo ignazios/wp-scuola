@@ -44,6 +44,7 @@ add_filter( 'wp_get_attachment_image_attributes', 'scuola_attributi_img',10,2);
 * I link vengono utilizzati in home page nel widget GalleraLinks
 */
 add_filter( 'pre_option_link_manager_enabled', '__return_true' );
+add_filter( 'widget_text', 'do_shortcode' );
 
 add_action( 'wp_enqueue_scripts', 			'enqueue_scuola_public' );
 add_action( 'comment_form_before', 			'scuola_enqueue_comment_reply_script');
@@ -657,9 +658,9 @@ if (function_exists('register_sidebar')) {
 		'name' => __('Footer Widget Area', 'wpscuola') ,
 		'id' => 'footer-widget-area',
 		'description'   => __( 'Widget area che compare nel footer.', 'wpscuola' ),
-		'before_widget' => '<div id="%1$s" class="col-lg widget-container shadow p-2 %2$s">',
+		'before_widget' => '<div id="%1$s" class="col-lg widget-container bg-white p-2 %2$s">',
 		'after_widget' => "</div>",
-		'before_title' => '<h4 class="widget-title">',
+		'before_title' => '<h4 class="text-primary">',
 		'after_title' => '</h4>',
 	));
 
@@ -667,7 +668,7 @@ if (function_exists('register_sidebar')) {
 		'name' => __('Footer Sub Widget Area', 'wpscuola') ,
 		'id' => 'footer-sub-widget-area',
 		'description'   => __( 'Widget area che compare sotto la footer widget area.', 'wpscuola' ),
-		'before_widget' => '<div id="%1$s" class="col-lg widget-container shadow p-2 %2$s">',
+		'before_widget' => '<div id="%1$s" class="col-lg widget-container text-white p-2 %2$s">',
 		'after_widget' => "</div>",
 		'before_title' => '<h4 class="widget-title">',
 		'after_title' => '</h4>',
@@ -956,12 +957,12 @@ function scuola_customize_head() {
    
     .it-footer-main{color: <?php echo get_theme_mod( 'scuola_footer_text_color', "#fff" ); ?>;}
   	#content {background-color:<?php echo $ColoreBody; ?>;}
-    a, a:hover, a.read-more,.ui-widget-content a { color: <?php echo $ColoreLinkBody; ?>; }
+    a, a:hover, a.read-more,.ui-widget-content a{ color: <?php echo $ColoreLinkBody; ?>; }
 	#collapseDivFAQ button.faq[aria-expanded="true"]{color: <?php echo $ColoreTestoBottone; ?>!important;}
     
     #collapseDivFAQ button.faq  {color: <?php echo $ColoreLinkBody; ?>!important;}
    
-    button, input[type="submit"], .btn-primary, .btn-primary:hover, .btn-primary:not(:disabled):not(.disabled):active,.badge-primary { color: <?php echo $ColoreTestoBottone; ?>!Important;background-color: <?php echo $ColoreBottone; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1); }
+    button, input[type="submit"], .btn-primary, .btn-primary:hover, .btn-primary:not(:disabled):not(.disabled):active,.badge-primary, #ListaPagine a:hover { color: <?php echo $ColoreTestoBottone; ?>!Important;background-color: <?php echo $ColoreBottone; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1); }
     a.badge-primary:active,a.badge-primary:hover{color: <?php echo $ColoreBottone; ?>;background-color: <?php echo $ColoreTestoBottone; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1);
 	}
     .btn-outline-primary { color: <?php echo $ColoreLinkBody; ?>; box-shadow: inset 0 0 0 1px <?php echo $ColoreLinkBody; ?>; }
@@ -993,65 +994,92 @@ function get_MenuSocial(){?>
                 <?php if (get_theme_mod('scuola_social_facebook') != ""): ?>
                     <li class="list-inline-item">
                         <a  target="_blank" class="social-icon"
-                            aria-label="<?php echo __('Link ad unsito esterno','wpscuola'); ?> - Facebook"
-                            href="<?php echo get_theme_mod('scuola_social_facebook');?>">
+                        aria-label="<?php echo __('Link ad un sito esterno','wpscuola'); ?> - Facebook"
+                        href="<?php echo get_theme_mod('scuola_social_facebook');?>"
+                        title="<?php echo __('Seguici su Twitter','wpscuola'); ?>">
                             <span class="fab fa-facebook-f"></span> 
                             <span class="sr-only"> <?php echo __('Seguici su Facebook','wpscuola'); ?></span>
                         </a>
                     </li>
-                <?php endif; ?>
-                <?php if (get_theme_mod('scuola_social_twitter') != ""): ?>
+                <?php endif; 
+                    if (get_theme_mod('scuola_social_twitter') != ""): ?>
                     <li class="list-inline-item">
                         <a  target="_blank" class="social-icon"
-                            aria-label="<?php echo __('Link ad unsito esterno','wpscuola'); ?> - Facebook"
-                            href="<?php echo get_theme_mod('scuola_social_twitter');?>">
+                        aria-label="<?php echo __('Link ad un sito esterno','wpscuola'); ?> - Facebook"
+                        href="<?php echo get_theme_mod('scuola_social_twitter');?>"
+                        title="<?php echo __('Seguici su Twitter','wpscuola'); ?>">
                             <span class="fab fa-twitter"></span> 
                             <span class="sr-only"> <?php echo __('Seguici su Twitter','wpscuola'); ?></span>
                         </a>
                     </li>
-                <?php endif; ?>
-                <?php if (get_theme_mod('scuola_social_youtube') != ""): ?>
+                <?php endif;
+                 if (get_theme_mod('scuola_social_youtube') != ""): ?>
                     <li class="list-inline-item">
                         <a  target="_blank" class="social-icon"
-                            aria-label="<?php echo __('Link ad unsito esterno','wpscuola'); ?> - Facebook"
-                            href="<?php echo get_theme_mod('scuola_social_youtube');?>">
+                        aria-label="<?php echo __('Link ad un sito esterno','wpscuola'); ?> - Facebook"
+                        href="<?php echo get_theme_mod('scuola_social_youtube');?>"
+                        title="<?php echo __('Seguici su YouTube','wpscuola'); ?>">
                             <span class="fab fa-youtube"></span> 
                             <span class="sr-only"> <?php echo __('Seguici su YouTube','wpscuola'); ?></span>
                         </a>
                     </li>
-                <?php endif; ?>
-                <?php if (get_theme_mod('scuola_social_instagram') != ""): ?>
+                <?php endif; 
+                 if (get_theme_mod('scuola_social_instagram') != ""): ?>
                     <li class="list-inline-item">
                         <a  target="_blank" class="social-icon"
-                            aria-label="<?php echo __('Link ad unsito esterno','wpscuola'); ?> - Facebook"
-                            href="<?php echo get_theme_mod('scuola_social_instagram');?>">
+                        aria-label="<?php echo __('Link ad un sito esterno','wpscuola'); ?> - Facebook"
+                        href="<?php echo get_theme_mod('scuola_social_instagram');?>"
+                        title="<?php echo __('Seguici su Instagram','wpscuola'); ?>">
                             <span class="fab fa-instagram"></span> 
                             <span class="sr-only"> <?php echo __('Seguici su Instagram','wpscuola'); ?></span>
                         </a>
                     </li>
-                <?php endif; ?>
-               <?php if (get_theme_mod('scuola_social_telegram') != ""): ?>
+                <?php endif; 
+                 if (get_theme_mod('scuola_social_telegram') != ""): ?>
                     <li class="list-inline-item">
                         <a  target="_blank" class="social-icon"
-                            aria-label="<?php echo __('Link ad unsito esterno','wpscuola'); ?> - Facebook"
-                            href="<?php echo get_theme_mod('scuola_social_telegram');?>">
+                        aria-label="<?php echo __('Link ad un sito esterno','wpscuola'); ?> - Facebook"
+                        href="<?php echo get_theme_mod('scuola_social_telegram');?>"
+                        title="<?php echo __('Seguici su Telegram','wpscuola'); ?>">
                             <span class="fab fa-telegram-plane"></span> 
                             <span class="sr-only"> <?php echo __('Seguici su Telegram','wpscuola'); ?></span>
                         </a>
                     </li>
-                <?php endif; ?>
-               <?php if (get_theme_mod('scuola_social_linkedin') != ""): ?>
+                <?php endif; 
+                 if (get_theme_mod('scuola_social_linkedin') != ""): ?>
                     <li class="list-inline-item">
                         <a  target="_blank" class="social-icon"
-                            aria-label="<?php echo __('Link ad unsito esterno','wpscuola'); ?> - Facebook"
-                            href="<?php echo get_theme_mod('scuola_social_linkedin');?>">
+                        aria-label="<?php echo __('Link ad un sito esterno','wpscuola'); ?> - Facebook"
+                        href="<?php echo get_theme_mod('scuola_social_linkedin');?>"
+                        title="<?php echo __('Seguici su LinkedIn','wpscuola'); ?>">
                             <span class="fab fa-linkedin-in"></span> 
                             <span class="sr-only"> <?php echo __('Seguici su LinkedIn','wpscuola'); ?></span>
                         </a>
                     </li>
-                <?php endif; ?>
- 
-<?php }
+                <?php endif;
+                 if (get_theme_mod('scuola_social_Nomefree1') != ""): ?>
+                    <li class="list-inline-item">
+                        <a  target="_blank" class="social-icon"
+                        aria-label="<?php echo __('Link ad un sito esterno','wpscuola'); ?> - Facebook"
+                        href="<?php echo get_theme_mod('scuola_social_Indirizzofree1');?>"
+                        title="<?php echo __('Seguici su ','wpscuola')." ".get_theme_mod('scuola_social_Nomefree1'); ?>">
+                            <?php echo get_theme_mod('scuola_social_Iconafree1');?> 
+                            <span class="sr-only"> <?php echo __('Seguici su ','wpscuola')." ".get_theme_mod('scuola_social_Nomefree1'); ?></span>
+                        </a>
+                    </li>
+                <?php endif;
+                 if (get_theme_mod('scuola_social_Nomefree2') != ""): ?>
+                    <li class="list-inline-item">
+                        <a  target="_blank" class="social-icon"
+                        aria-label="<?php echo __('Link ad un sito esterno','wpscuola'); ?> - Facebook"
+                        href="<?php echo get_theme_mod('scuola_social_Indirizzofree2');?>"
+                        title="<?php echo __('Seguici su ','wpscuola')." ".get_theme_mod('scuola_social_Nomefree2'); ?>">
+                            <?php echo get_theme_mod('scuola_social_Iconafree2');?> 
+                            <span class="sr-only"> <?php echo __('Seguici su ','wpscuola')." ".get_theme_mod('scuola_social_Nomefree2'); ?></span>
+                        </a>
+                    </li>
+                <?php endif; 
+}
 // Breadcrumbs
 // Breadcrumbs
 function custom_breadcrumbs() {

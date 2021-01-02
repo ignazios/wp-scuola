@@ -27,7 +27,7 @@ function my_get_archivesAnnoMese()
 				WHERE $wpdb->posts.post_status = 'publish'
 				AND $wpdb->posts.post_type = 'post'
 				GROUP BY YEAR(post_date), MONTH(post_date)
-				ORDER BY post_date DESC";
+				ORDER BY YEAR(post_date), MONTH(post_date) DESC";
 	//		echo "<br />".$Sql;exit;
 	$ArchivioDate = $wpdb->get_results($Sql);
 	$Anno=0;

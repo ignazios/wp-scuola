@@ -25,11 +25,10 @@ function sum_ArtAnno($ArchivioDate,$Anno){
 		$TotPost=$TotPost+$CountArt;
 	return $TotPost;
 }
-function my_get_archivesAnnoMese($NameAuthor)
+function my_get_archivesAnnoMese($IDAuthor)
 {
 	global $wpdb, $wp_locale,$mesi,$query_string;
-	$Author=get_user_by("slug",$NameAuthor);
-	$IDAuthor=$Author->ID;
+	$Author=get_user_by("display_name",$NameAuthor);
 	$Result="";
 	$Sql = "SELECT YEAR(post_date) AS `Anno`, MONTH(post_date) AS `Mese`, count(DISTINCT ID) as NumArt
 				FROM $wpdb->posts
@@ -37,8 +36,8 @@ function my_get_archivesAnnoMese($NameAuthor)
 				AND $wpdb->posts.post_type = 'post'
 				AND $wpdb->posts.post_author = ".$IDAuthor."
 				GROUP BY YEAR(post_date), MONTH(post_date)
-				ORDER BY post_date DESC";
-	//		echo "<br />".$Sql;exit;
+				ORDER BY YEAR(post_date), MONTH(post_date) DESC";
+//			echo "<br />".$Sql;exit;
 	$ArchivioDate = $wpdb->get_results($Sql);
 	$Anno=0;
 	$ArticoliAnni=calc_NumArticoliMA($ArchivioDate);
@@ -89,7 +88,7 @@ function my_get_archivesAnnoMese($NameAuthor)
 }
 $Anno=isset($search_query["year"])?$search_query["year"]:"";
 $Mese=isset($search_query["monthnum"])?$mesi[(int)$search_query["monthnum"]]:"";
-$Archivio=my_get_archivesAnnoMese(get_the_author_meta("display_name"));
+$Archivio=my_get_archivesAnnoMese(get_the_author_meta("ID"));
 ?>
 <section id="content" role="main" class="container-fluid">
    <div class="container">

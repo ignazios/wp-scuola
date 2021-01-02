@@ -424,7 +424,57 @@ $wp_customize->add_control( 'scuola_social_linkedin', array(
     'label' 	=> 'LinkedIn:',
     'section' 	=> 'Scuola_Social_Settings',
     'settings' => 'scuola_social_linkedin',
-    'priority'	=> 6));         
+    'priority'	=> 6));     
+// Campo Social Free 1
+$wp_customize->add_setting( 'scuola_social_Nomefree1' , array(
+	'capability' => 'edit_theme_options') );
+$wp_customize->add_control( 'scuola_social_Nomefree1', array(
+    'type' 		=> 'text',
+    'label' 	=> 'Nome Social personale 1:',
+    'section' 	=> 'Scuola_Social_Settings',
+    'settings' => 'scuola_social_Nomefree1',
+    'priority'	=> 7));  
+$wp_customize->add_setting( 'scuola_social_Iconafree1' , array(
+	'capability' => 'edit_theme_options') );
+$wp_customize->add_control( 'scuola_social_Iconafree1', array(
+    'type' 		=> 'text',
+    'label' 	=> 'Icona Social personale 1:',
+    'section' 	=> 'Scuola_Social_Settings',
+    'settings' => 'scuola_social_Iconafree1',
+    'priority'	=> 8));  
+$wp_customize->add_setting( 'scuola_social_Indirizzofree1' , array(
+	'capability' => 'edit_theme_options') );
+$wp_customize->add_control( 'scuola_social_Indirizzofree1', array(
+    'type' 		=> 'text',
+    'label' 	=> 'Link Social personale 1:',
+    'section' 	=> 'Scuola_Social_Settings',
+    'settings' => 'scuola_social_Indirizzofree1',
+    'priority'	=> 9));  
+// Campo Social Free 2
+$wp_customize->add_setting( 'scuola_social_Nomefre2' , array(
+	'capability' => 'edit_theme_options') );
+$wp_customize->add_control( 'scuola_social_Nomefree2', array(
+    'type' 		=> 'text',
+    'label' 	=> 'Nome Social personale 2:',
+    'section' 	=> 'Scuola_Social_Settings',
+    'settings' => 'scuola_social_Nomefree2',
+    'priority'	=> 10));  
+$wp_customize->add_setting( 'scuola_social_Iconafree2' , array(
+	'capability' => 'edit_theme_options') );
+$wp_customize->add_control( 'scuola_social_Iconafree2', array(
+    'type' 		=> 'text',
+    'label' 	=> 'Icona Social personale 2:',
+    'section' 	=> 'Scuola_Social_Settings',
+    'settings' => 'scuola_social_Iconafree2',
+    'priority'	=> 11));  
+$wp_customize->add_setting( 'scuola_social_Indirizzofree2' , array(
+	'capability' => 'edit_theme_options') );
+$wp_customize->add_control( 'scuola_social_Indirizzofree2', array(
+    'type' 		=> 'text',
+    'label' 	=> 'Link Social personale 2:',
+    'section' 	=> 'Scuola_Social_Settings',
+    'settings' => 'scuola_social_Indirizzofree2',
+    'priority'	=> 12));           
 // Campo Titolo Sezione Footer
 $wp_customize->add_setting( 'scuola_social_footersectionTesto' , array(
 	'default'	=> 'Seguici su',
@@ -434,7 +484,7 @@ $wp_customize->add_control( 'scuola_social_footersectionTesto', array(
     'label' 	=> 'Titolo della sezione Footer:',
     'section' 	=> 'Scuola_Social_Settings',
     'settings' => 'scuola_social_footersectionTesto',
-    'priority'	=> 7));         
+    'priority'	=> 13));         
 /**
 *  Sotto Pannello Default
 */
