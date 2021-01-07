@@ -943,7 +943,7 @@ function scuola_customize_head() {
   <style type="text/css">
   <?php echo $Regole; ?>
   body,.bootstrap-select-wrapper button {color: <?php echo $ColoreTestoBody; ?>!important;}
-     .navbar .navbar-collapsable .navbar-nav li a.nav-link,#mainheader, .my-bg-primary, .it-header-navbar-wrapper, .it-header-wrapper { background-color: <?php echo $ColoreHeader ?>!important;}
+     .navbar .navbar-collapsable .navbar-nav li a.nav-link,#mainheader, .my-bg-primary, .it-header-navbar-wrapper, .it-header-wrapper, #ListePrenotazioni button  { background-color: <?php echo $ColoreHeader ?>!important;}
      #mainheader .cerca input{
 		color: <?php echo $ColoreLinkHeader ?>;
     	border-bottom: 1px solid <?php echo $ColoreLinkHeader ?>;
