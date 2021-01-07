@@ -5,7 +5,7 @@
  * @package Prenotazioni
  * @author Scimone Ignazio
  * @copyright 2014-2099
- * @version 1.6.6
+ * @version 1.7.1
  */
 
 class Prenotazioni{
@@ -239,11 +239,7 @@ class Prenotazioni{
                                                 "Note"=>"",
                                                 "OreCons"=>$this->GetNumOrePren($Riservato,$giornoS,$i,$Parametri['OraInizio'],$Parametri['OraFine']));
 		}
-/*		echo $IdSpazio." <br />";
-		print_r($Riservato[6]);
-		echo " <br />";
-		print_r($PrenotazioniGiorno);
-		echo " <br />";*/
+
 		$pezziData=explode("/",$data);
 		$newData=$pezziData[2]."-".$pezziData[1]."-".$pezziData[0];
 		$Sql="SELECT IdPrenotazione,IdSpazio,IdUtente,OraInizio,OraFine,Note,Data FROM $wpdb->table_prenotazioni WHERE DataPrenotazione=\"$newData\" and IdSpazio=$IdSpazio Order By OraInizio";
@@ -376,8 +372,8 @@ class Prenotazioni{
 	 	$MsgDate=implode(" - ",$MsgDate);
         $Utente="(".$UserID.") ".$user_info->last_name." ".$user_info->first_name;
 		$OrePren=" Dalle: ".$orai." Alle: ".($orai+$ore);
-		$this->sendMail(get_option("admin_email"),$Utente,$user_info->user_email,get_the_title($IdSpazio),$MsgDate,$OrePren,$note,"Amministratore");
-		$this->sendMail($user_info->user_email,$Utente,get_option("admin_email"),get_the_title($IdSpazio),$MsgDate,$OrePren,$note,"Utente");
+		$this->sendMail(get_option(admin_email),$Utente,$user_info->user_email,get_the_title($IdSpazio),$MsgDate,$OrePren,$note,"Amministratore");
+		$this->sendMail($user_info->user_email,$Utente,get_option(admin_email),get_the_title($IdSpazio),$MsgDate,$OrePren,$note,"Utente");
  	 	return $PrenCre;
 	}
 }

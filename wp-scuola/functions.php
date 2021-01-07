@@ -942,7 +942,7 @@ function scuola_customize_head() {
 <!-- Custom <head> content -->
   <style type="text/css">
   <?php echo $Regole; ?>
-  body {color: <?php echo $ColoreTestoBody; ?>;}
+  body,.bootstrap-select-wrapper button {color: <?php echo $ColoreTestoBody; ?>!important;}
      .navbar .navbar-collapsable .navbar-nav li a.nav-link,#mainheader, .my-bg-primary, .it-header-navbar-wrapper, .it-header-wrapper { background-color: <?php echo $ColoreHeader ?>!important;}
      #mainheader .cerca input{
 		color: <?php echo $ColoreLinkHeader ?>;
@@ -962,7 +962,7 @@ function scuola_customize_head() {
     
     #collapseDivFAQ button.faq  {color: <?php echo $ColoreLinkBody; ?>!important;}
    
-    button, input[type="submit"], .btn-primary, .btn-primary:hover, .btn-primary:not(:disabled):not(.disabled):active,.badge-primary, #ListaPagine a:hover { color: <?php echo $ColoreTestoBottone; ?>!Important;background-color: <?php echo $ColoreBottone; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1); }
+    button, input[type="submit"], .btn-primary, .btn-primary:hover, .btn-primary:not(:disabled):not(.disabled):active,.badge-primary, #ListaServizi a:hover, #ListaServizi a:visited,  #ListaServizi a:active  { color: <?php echo $ColoreTestoBottone; ?>!Important;background-color: <?php echo $ColoreBottone; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1); }
     a.badge-primary:active,a.badge-primary:hover{color: <?php echo $ColoreBottone; ?>;background-color: <?php echo $ColoreTestoBottone; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1);
 	}
     .btn-outline-primary { color: <?php echo $ColoreLinkBody; ?>; box-shadow: inset 0 0 0 1px <?php echo $ColoreLinkBody; ?>; }

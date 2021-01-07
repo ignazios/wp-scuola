@@ -41,7 +41,7 @@ get_header();
 				<div class="row p-2">
 					<h6 class="TitoloArchivio"><span class="far fa-newspaper"></span> <?php _e("Servizio", "wpscuola");?></h6>
 				</div> 
-				<ul class="link-list" id="ListaPagine">
+				<ul class="link-list" id="ListaServizi">
 		<?php
 			$servizio_link_servizio = get_post_meta( get_the_ID(), 'servizio_link_servizio', true );
 			$servizio_link2_servizio = get_post_meta( get_the_ID(), 'servizio_link2_servizio', true );

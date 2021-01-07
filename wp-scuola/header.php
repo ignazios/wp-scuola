@@ -56,6 +56,7 @@
                 	</div>
                 </div>
                 <div class="col">
+                <?php if(!get_theme_mod('Scuola_Login')):?>
                 	<div class="it-header-slim-wrapper-content float-right">
 					<?php
 					 
@@ -66,6 +67,7 @@
 						}
 						echo wp_loginout($_SERVER['REQUEST_URI'],FALSE );?>
 					</div>
+				<?php endif;?>
                  </div>
                </div>
              </div>

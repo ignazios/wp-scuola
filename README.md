@@ -44,6 +44,10 @@ facebook: https://www.facebook.com/wpscuola/
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
+- **1.1.3**
+  - ***Rivisto*** il modulo delle prenotazioni
+  - ***Aggiunta***  opzione **Nascondi Login** in Aspetto > Personalizza > Impostazione Scuola > Impostazione dell'Header, che permette di togliere il link ***Accesso*** nel pre Header
+  - ***Corretti*** alcuni bugs minori
 - **1.1.2**
   - ***Corretti*** alcuni bugs minori
   - ***Modificata*** la gestione dei servizi, aggiunta la possibilit di personalizzare il testo del terzo pulsante di default Descrizione

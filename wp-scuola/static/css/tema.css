@@ -2408,6 +2408,21 @@ body.search article {
     list-style: circle!important;
 	list-style-position: inside!important;
 }
+#content ol li,#content ol li ol {
+	padding-left: 1em!important;
+	list-style: decimal;
+	list-style-position: inside!important;
+}
+#content ol{
+	padding-left: 0em!important;
+	list-style: decimal;
+	list-style-position: inside!important;
+}
+#content ol li ol li {
+	padding-left: 1em!important;
+    list-style: lower-latin!important;
+	list-style-position: inside!important;
+}
 .labelNoFormat{
 	position: relative!important;
 	line-height: 1.5em!important;

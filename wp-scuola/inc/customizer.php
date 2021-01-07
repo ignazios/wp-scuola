@@ -249,6 +249,15 @@ $wp_customize->add_control(new WP_Customize_Cropped_Image_Control($wp_customize,
     'width' => 120,
     'height' => 40,
     'priority'	=> 3)));
+$wp_customize->add_setting( 'Scuola_Login' , array(
+	'capability' => 'edit_theme_options',
+	'sanitize_callback' => 'scuola_sanitize_checkbox') );
+$wp_customize->add_control( 'Scuola_Login', array(
+    'type' => 'checkbox',
+    'label' 	=> 'Nascondi Login ',
+    'section' 	=> 'Scuola_Header_Settings',
+    'settings' => 'Scuola_Login',
+    'priority'	=> 4));
 $wp_customize->add_setting('Scuola_Logo', array(
     'type' => 'theme_mod',
     'capability' => 'edit_theme_options',
@@ -258,7 +267,7 @@ $wp_customize->add_setting('Scuola_Logo', array(
     'label' => 'Logo Scuola dim. 100x100',
     'width' => 100,
     'height' => 100,
-    'priority'	=> 3)));
+    'priority'	=> 5)));
 /**
 *  Sotto Pannello Footer
 */

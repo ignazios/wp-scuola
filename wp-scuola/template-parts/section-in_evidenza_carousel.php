@@ -59,7 +59,7 @@
 	 <div class="it-carousel-wrapper it-carousel-landscape-abstract-three-cols">
 	  <div class="it-header-block">
 	    <div class="it-header-block-title">
-	      <h3 class="widget-title pl-3"><?php _e('In evidenza', 'wpscuola');?></h3>
+	      <h2 class="widget-title pl-3"><?php _e('In evidenza', 'wpscuola');?></h2>
 	    </div>
 	  </div>
 	   <div class="row">
@@ -79,7 +79,7 @@
 		              </div>
 		            </div>
 		            <div class="p-2">
-			          <h4 class="card-title card-title-fix"><?php echo $Title;?></h4>
+			          <h3 class="card-title card-title-fix h4"><?php echo $Title;?></h3>
 			          <div class="it-card-footer">
 			          	<a class="read-more" href="<?php echo $PermaLink;?>">
 			              <span class="text"><span class="fas fa-link p-1"></span> <?php _e('Leggi articolo', 'wpscuola');?></span>
@@ -88,7 +88,7 @@
 			        </div>
 <?php else:?>
  					<div class="p-2" style="min-height: 75px;">
- 						<h4 class="card-title"><?php echo $Title;?></h4>
+ 						<h3 class="card-title h4"><?php echo $Title;?></h3>
  					</div>
 		            <div class="p-2">
 			          <p class="card-text" style="min-height: 100px;"><?php echo $Except;?></p>
@@ -147,7 +147,7 @@
 					    </div>
 <?php else:?>
  					<div class="pt-2 pl-2" style="min-height: 100px;">
- 						<h4 class="card-title"><?php echo $Title;?></h4>
+ 						<h3 class="card-title h4"><?php echo $Title;?></h3>
  					</div>
 		            <div class="p-4">
 			          <p class="card-text" style="min-height: 100px;"><?php echo $Except;?></p>

@@ -71,7 +71,7 @@
 		<div class="row">
 			<div class="col-lg-6 col-12 pl-2">
 			 <div class="shadow">
-				<h3 class="my-bg-primary p-3 text-white"><?php echo $TitoloPB;?></h3>	  
+				<h2 class="my-bg-primary p-3 text-white"><?php echo $TitoloPB;?></h2>	  
 				<div class="it-list-wrapper">
 					<ul class="it-list">
 <?php	foreach($ArticoliPB as $Articolo){	?>
