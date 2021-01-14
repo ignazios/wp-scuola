@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it" xml:lang="it">
+<html lang="it" >
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -147,7 +147,7 @@
 		                </a>
 		            </div>
 		            <div class="logotxt">
-		                <h1>
+		                <h1 class="pt-4 pt-md-4 pt-lg-3 pt-xl-0">
 		                    <a href="<?php echo esc_url(home_url('/')); ?>" title="<?php echo bloginfo('name'); ?>">
 		                        <?php echo bloginfo('name'); ?>
 		                    </a>

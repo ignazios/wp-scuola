@@ -525,24 +525,24 @@ function createTablePrenotazioniSpazioSettimanaFE($Para,$IDSpazio=0,$settimana=0
     <input type="hidden" id="Spazio" value="'.$IDSpazio.'"/>
     <p>    Settimana: '.$Elenco.'</p>
 	<div id="loading"><br />LOADING!</div>
-    <table class="settimanale thead-dark table-hover table-bordered is-style-default">
+    <table class="settimanale">
     <thead>
           <tr>
-                <th>Ora</th>
-                <th>Lun '.date("d/m",$Giorni[0]).'</th>
-                <th>Mar '.date("d/m",$Giorni[1]).'</th>
-                <th>Mer '.date("d/m",$Giorni[2]).'</th>
-                <th>Gio '.date("d/m",$Giorni[3]).'</th>
-                <th>Ven '.date("d/m",$Giorni[4]).'</th>
-                <th>Sab '.date("d/m",$Giorni[5]).'</th>
-                <th>Dom '.date("d/m",$Giorni[6]).'</th>
+                <th style="background-color:#00FFCC">Ora</th>
+                <th style="background-color:#33CCFF;text-align:center;">Lun '.date("d/m",$Giorni[0]).'</th>
+                <th style="background-color:#00FFCC;text-align:center;">Mar '.date("d/m",$Giorni[1]).'</th>
+                <th style="background-color:#33CCFF;text-align:center;">Mer '.date("d/m",$Giorni[2]).'</th>
+                <th style="background-color:#00FFCC;text-align:center;">Gio '.date("d/m",$Giorni[3]).'</th>
+                <th style="background-color:#33CCFF;text-align:center;">Ven '.date("d/m",$Giorni[4]).'</th>
+                <th style="background-color:#00FFCC;text-align:center;">Sab '.date("d/m",$Giorni[5]).'</th>
+                <th style="background-color:#00FFCC;text-align:center;">Dom '.date("d/m",$Giorni[6]).'</th>
           </tr>
      </thead>
      <tbody>';
 //     echo "<pre>";print_r($Riservato);echo "</pre>";
      for($i=$Parametri['OraInizio'];$i<=$Parametri['OraFine'];$i++){
      	echo '          <tr>
-                <th style="text-align:center;">'.$i.'</th>';
+                <th style="background-color:#00FFCC;text-align:center;">'.$i.'</th>';
      	for($g=1;$g<=7;$g++){
             ${'bg'.$g}='style="background-color:#FFFFFF"';
             $Displ="";

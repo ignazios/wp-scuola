@@ -92,7 +92,7 @@ class Servizi extends WP_Widget {
 															                	'field' => 'slug',
 															                	'terms' => $Tipologia->slug)));
 							$Servizi=get_posts($argServizi);?>
-							<div class="tab-pane p-4 fade show <?php echo ($Primo?"active":'');$Primo=false;?> shadow" id="<?php echo $Tipologia->slug;?>" role="tabpanel" aria-labelledby="<?php echo $Tipologia->slug;?>-tab">
+							<div class="tab-pane p-4 fade show <?php echo ($Primo?"active":'');$Primo=false;?> shadow" id="<?php echo $Tipologia->slug;?>" role="tabpanel" aria-labelledby="nav-<?php echo $Tipologia->term_id;?>-tab">
 							  	<div class="">
 							  		<?php $this->Crea_blocchi($Servizi);?>
 							  	</div>

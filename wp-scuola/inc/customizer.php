@@ -986,7 +986,16 @@ $wp_customize->add_control('scuola_scuola_TerzaTabLeggiTutto', array(
 /**
 *  Pannello Colori
 */ 
-//Colori del Corpo  
+//Colori del Corpo 
+$wp_customize->add_setting( 'scuola_background_color' , array(
+    'default'     => "#ffffff",
+    'sanitize_callback' => 'sanitize_hex_color',
+  ) );
+  $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'scuola_background_color', array(
+    'label'       => __( 'Colore di sfondo', 'scuola' ),
+    'section'     => 'colors',
+    'settings'     => 'scuola_background_color'
+  ) ) ); 
 $wp_customize->add_setting( 'scuola_text_color' , array(
     'default'     => "#000000",
     'sanitize_callback' => 'sanitize_hex_color',

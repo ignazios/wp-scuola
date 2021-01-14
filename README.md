@@ -44,6 +44,13 @@ facebook: https://www.facebook.com/wpscuola/
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
+- **1.1.4**
+  - ***Impostato*** lo stile di default delle tabelle. Le tabelle verranno Bordate, avranno l'header ed il footer Dark e l'effetto hover
+  - ***Corretti*** alcuni errori di validazione
+  - ***Aggiunti*** filtri per ripulire il nome del file ed il titolo che viene caricato nei media.
+  - ***Aggiunto*** per le immagini caricate nei media la Didascalia e la Descrizione uguali al Titolo
+  - ***Aggiunto*** shortcode [canccookies] che permette di visualizzare un pulsante/link per la cancellazione dei Cookies. Parametri vis[bottone/link] e testo; il testo che verrà visualizzato sul bottone/link
+  - ***Aggiunto*** shortcode [viscookies] che permette di visualizzare i cookies che il sito ha memorizzato in locle.
 - **1.1.3**
   - ***Rivisto*** il modulo delle prenotazioni
   - ***Aggiunta***  opzione **Nascondi Login** in Aspetto > Personalizza > Impostazione Scuola > Impostazione dell'Header, che permette di togliere il link ***Accesso*** nel pre Header

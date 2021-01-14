@@ -137,7 +137,7 @@ echo "</pre>";
 <?php  
 	return ob_get_clean();          
 }
-function NuovaPrenotazione($Titoli,$NumSchede,$Parametri){
+function NuovaPrenotazione($Titoli,$NumSchede){
  global $Gest_Prenotazioni,$G_Spaces;
 	ob_start();
     $Stat="";
@@ -151,7 +151,7 @@ function NuovaPrenotazione($Titoli,$NumSchede,$Parametri){
     $PathImg=Prenotazioni_URL."/img/Info.png";
     $Spazio=$G_Spaces->get_ListaSpazi("SpazioP","SpazioP","");?>	    
 	<div id="loading" style="float:left;margin-left:15px;margin-top:15px;">LOADING!</div>
-    <form name="Memo_Prenotazioni"  action="<?php echo $_SERVER["REQUEST_URI"];?>" method="post" id="FormPrenotazione">
+    <form name="Memo_Prenotazioni"  action="<?php echo $_SERVER["REQUEST_URI"];?>" method="post">
 	    <fieldset id="CampiPrenotazioniSpazi" >
 		<div class="container-fluid mt-5">
 			<div class="row">
@@ -176,14 +176,14 @@ function NuovaPrenotazione($Titoli,$NumSchede,$Parametri){
 		        <div class="col-sm col-sm-6 col-md-6 col-lg-4">
 		        	<div class="form-group" style="margin-bottom: 1rem;">
 					    <label for="NumOrePren" class="active" style="width: auto;display: contents;"><?php _e('N&deg; ore', 'wpscuola');?>: </label>
-					    <select id="NumOrePren" name="NumOrePren" style="display:inline;" >
+					    <select id="NumOrePren" name="NumOrePren" style="display:inline;">
 		                	<option value="0">----</option>		
 		                </select>
 					</div>
 
 					<div class="form-group">
 					    <label for="NumSet" class="active" style="width: auto;display: contents;"><?php _e('N&deg; settimane', 'wpscuola');?>: </label>
-						<select id="NumSet" name="NumSet"  style="display:inline;" >
+						<select id="NumSet" name="NumSet"  style="display:inline;">
 	                        <option value="1">1</option>
 	                        <option value="2">2</option>
 	                        <option value="3">3</option>
@@ -197,7 +197,7 @@ function NuovaPrenotazione($Titoli,$NumSchede,$Parametri){
 		                </select>
 					</div>
 					<div class="form-group">
-					    <textarea id="motivoprenotazione" rows="5" style="box-shadow: 0 0 0 1px rgba(0, 0, 0, .2);" ></textarea>
+					    <textarea id="motivoprenotazione" rows="5" style="box-shadow: 0 0 0 1px rgba(0, 0, 0, .2);"></textarea>
 						<label for="motivoprenotazione"><?php _e('Descrivere il motivo della prenotazione', 'wpscuola');?></label>
 					</div>
 		        </div>	
@@ -212,12 +212,13 @@ function NuovaPrenotazione($Titoli,$NumSchede,$Parametri){
 	                <input type="hidden" id="NumMaxOre" value="<?php echo $Parametri['MaxOrePrenotabili'];?>" />
 	                <input type="hidden" id="MinOrePrima" value="<?php echo $Parametri['PrenEntro'];?>" />
 	                <input type="hidden" id="_wpnonce" value="<?php echo wp_create_nonce( 'secmemopren' );?>" name="_wpnonce" />
-	                <button id="PrenotaSpazio" type="submit" class="btn btn-primary" value="Prenota" name="navigazioneGiorni">Prenota</button>
+	                <button type="submit" class="btn btn-primary" value="Prenota" name="navigazioneGiorni">Prenota</button>
 	            </div>
             </div>
 	    </div>			
 	    </fieldset>
-	</form>             
+	</form>
+</div>                    
 <?php
 	return ob_get_clean();  
 }
@@ -274,14 +275,14 @@ if (!is_user_logged_in()){
 <?php		}
 	        if($Statistiche){?>
 	    <li class="nav-item">
-			<a class="nav-link" id="tab2-tab" data-toggle="tab" href="#CartellaP2" role="tab" aria-controls="CartellaP2" aria-selected="false">
+			<a class="nav-link" id="tab2-tab" data-toggle="tab" href="#CartellaP2" role="tab" aria-controls="CartellaP2">
 				<?php echo ((isset($Titoli[1]) And strlen($Titoli[1]))>0?$Titoli[1]:"Statistiche");?>
 			</a>
 		</li>
 <?php		}            
 			if($Spazi){?>
 	    <li class="nav-item">
-			<a class="nav-link" id="tab3-tab" data-toggle="tab" href="#CartellaP3" role="tab" aria-controls="CartellaP3" aria-selected="false">
+			<a class="nav-link" id="tab3-tab" data-toggle="tab" href="#CartellaP3" role="tab" aria-controls="CartellaP3">
 				<?php echo ((isset($Titoli[2]) And strlen($Titoli[2]))>0?$Titoli[2]:"Catalogo Spazi");?>
 			</a>
 		</li>
@@ -290,17 +291,17 @@ if (!is_user_logged_in()){
 <?php   }?>
 	<div class="tab-content" id="myTabContent">
 <?php   if($Nuovo){?>
-		<div class="tab-pane p-4 fade show active" id="CartellaP1" role="tabpanel" aria-labelledby="tab1-tab">
-        	<?php echo NuovaPrenotazione($Titoli,$NumSchede,$Parametri);//$FinPren;?>
+		<div class="tab-pane p-4 fade show active" id="CartellaP1" role="tabpanel" aria-labelledby="CartellaP1-tab">
+        	<?php echo NuovaPrenotazione($Titoli,$NumSchede);//$FinPren;?>
 		</div>
 <?php   }
 		if($Statistiche){?>
-		<div class="tab-pane p-4 fade" id="CartellaP2" role="tabpanel" aria-labelledby="tab2-tab">
+		<div class="tab-pane p-4 fade" id="CartellaP2" role="tabpanel" aria-labelledby="CartellaP2-tab">
         	<?php echo Statistiche($Titoli,$NumSchede);?>
 		</div>
 <?php   }     
 		if($Spazi){?>
-		<div class="tab-pane p-4 fade" id="CartellaP3" role="tabpanel" aria-labelledby="tab3-tab">
+		<div class="tab-pane p-4 fade" id="CartellaP3" role="tabpanel" aria-labelledby="CartellaP3-tab">
 <?php      	if(strlen($Titoli[2])>0 and $NumSchede==1){?>
         		<h3><?php echo $Titoli[2];?></h3>
 <?php 		}

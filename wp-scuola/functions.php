@@ -38,6 +38,7 @@ add_filter( 'the_password_form', 			'scuola_password_form' );
 add_filter( 'manage_posts_columns', 		'scuola_posts_column_views' );
 add_filter( 'render_block', 				'personaliza_file_render', 10, 3);
 add_filter( 'wp_get_attachment_image_attributes', 'scuola_attributi_img',10,2);
+add_filter( 'sanitize_file_name', 			'scuola_ripulisci_filenames', 10, 1 );
 
 /**
 * Riattiva la gestione dei link standard di Wordpress 
@@ -62,10 +63,55 @@ add_action( 'login_head', 					'scuola_custom_login_logo');
 add_action( 'admin_init', 					'mytheme_add_editor_styles' );
 add_action( 'template_redirect', 			'Gestione_DwnLink');
 add_action( 'wp_ajax_ResetCounter',			'scuola_reset_counter' );
+add_action( 'add_attachment', 				'scuola_ripulisci_titolofile' );
 
 add_shortcode('articoli', 					'GetArticoliCategoria');
 add_shortcode('gfolderdrive', 				'VisualizzaCartellaDrive');
+add_shortcode('canccookies', 				'CancellaCookies');
+add_shortcode('viscookies', 				'VisualizzaCookies');
 
+/**
+ * Filter current filename to replace or remove problematic characters.
+ * @param string $filename Current filename.
+ */
+function scuola_ripulisci_filenames( $filename ) {
+	$original_chars = array('/×/','/№/','/“/','/”/','/«/','/»/','/„/','/@/','/%/','/‘/','/’/','/`/','/´/','/^/','/[\s\+]/','/\.(?=.*\.)/',);
+	$sanitized_chars = array('x','','','','','','','','','','','','','','-','-',);
+	// Sostituzione dei caratteri accentati con caratteri senza accento.
+	$filename = remove_accents( $filename );
+	// Sostituzione dei caratteri speciali.
+	$filename = preg_replace( $original_chars, $sanitized_chars, $filename );
+	// Sostituzione dei caratteri diversi da lettere e numeri con _.
+	$filename = preg_replace( '/[^a-zA-Z0-9_\._]/', '_', $filename );
+	// Elimina eventuali caratteri multipli _
+	$filename =preg_replace('/_+/', '_', $filename); 
+	// Elimina eventuali _.
+	$filename =preg_replace('/_\./', '.', $filename); 
+	// Conversione di tutti i caratteri in minuscolo.
+	$filename = ucfirst($filename);
+	return $filename;
+}
+function scuola_ripulisci_titolofile( $post_ID ) {
+	$titolo = get_post( $post_ID )->post_title;
+	// Rimpiazzo il - ed il _ con uno spazio
+	$titolo = str_replace("-"," ",  $titolo );
+	$titolo = str_replace("_"," ",  $titolo );
+	// Imposto il primo carattere in Maiuscolo e tutti gli altri in minuscolo
+	$titolo = ucfirst($titolo);
+	if ( !wp_attachment_is_image( $post_ID ) ) {
+		$allegato_meta = array(
+			'ID'		=> $post_ID,
+			'post_title'	=> $titolo);
+		
+	}else{ 
+		$allegato_meta = array(
+			'ID'		=> $post_ID,
+			'post_title'	=> $titolo,
+			'post_excerpt'	=> $titolo,
+			'post_content'	=> $titolo);
+	}
+	wp_update_post( $allegato_meta );
+}
 function scuola_reset_counter(){
 	global $wpdb;
  	$Result=$wpdb->update($wpdb->postmeta,
@@ -78,6 +124,54 @@ function scuola_reset_counter(){
 	else
 		echo "Sono stati azzerati ".$Result." Oggetti";
 	die();
+}
+/****************************************************** 
+* Shortcode che visualizza tutti i cookies registrati dal sito
+* [viscookies]
+*******************************************************/
+function VisualizzaCookies($Parametri){
+	$cookies=filter_input_array(INPUT_COOKIE, FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY);
+	$UrlSprite=get_option('opt_AP_UrlSprite');
+	ob_start();?>
+<div id="ListaCookies" class="collapse-div" role="tablist">
+<?php
+	foreach($cookies as $Key=>$Dati){?>
+	<div class="collapse-header" id="headingA1">
+	    <button data-toggle="collapse" class="coloreTesto" data-target="#<?php echo $Key;?>" aria-expanded="false" aria-controls="<?php echo $Key;?>">
+	      <?php echo $Key;?>
+	    </button>
+	  </div>
+	  <div id="<?php echo $Key;?>" class="collapse" role="tabpanel" aria-labelledby="headingA1" data-parent="#ListaCookies">
+	    <div class="collapse-body">
+	      <?php echo $Dati;?>
+	    </div>
+	  </div>
+<?php	}?>
+</div>
+<?php
+	return ob_get_clean();
+}
+/****************************************************** 
+* Shortcode che visualizza un pulsante o link che permette di cancellare tutti i cookies
+* [canccookies vis="bottone/link"
+               testo= Testo da visualizzare, di default Cancella i cookies del nostro sito]
+*******************************************************/
+function CancellaCookies($Parametri) {
+	$ret="";
+	$Parametri=shortcode_atts(array(
+		'vis' 	=> "bottone",
+		'testo' => "Cancella i cookies del nostro sito",
+	), $Parametri,"canccookies");
+	ob_start();
+	if(strtolower($Parametri['vis'])==="bottone"):?>
+		<div><a href="#" id="cancella-cookie" class="badge badge-primary bottone bottoneBorded"> <?php echo $Parametri['testo'];?> </a>
+		</div>
+	<?php else:?>
+		<div><a href="#" id="cancella-cookie"><?php echo $Parametri['testo'];?></a>
+		</div>
+<?php
+	endif;
+	return ob_get_clean();
 }
 /****************************************************** 
 * Shortcode per incorporare le cartelle di Google
@@ -180,7 +274,7 @@ function GetArticoliCategoria($Parametri){
 function Gestione_DwnLink(){
 	if(isset($_REQUEST['action'])){
 		switch ($_REQUEST['action']){
-		case "dwnalle":
+		case "dwattachment":
 //			var_dump($_SERVER);
 			if(!isset($_SERVER["HTTP_REFERER"])){
 				wp_die(__('Oooooo!<br />
@@ -370,7 +464,7 @@ ob_start();?>
 		            <?php if(strpos($block_content,"wp-block-file__button")!==FALSE) :?>
 		            <div class="ml-3 wpdmdl-btn">
 		                <a class="btn btn-primary " rel="nofollow" href="<?php 
-		                $Link=get_home_url()."?action=dwnalle&id=".$IDFile;
+		                $Link=get_home_url()."?action=dwattachment&id=".$IDFile;
 		                echo $Link;?>"><?php _e("Scarica","wpscuola");?></a>
 		            </div>
 		            <?php endif;?>
@@ -404,7 +498,6 @@ function scuola_setup()	{
  	add_theme_support('title-tag');
 	add_theme_support('automatic-feed-links');
     add_theme_support('post-thumbnails' );
-    add_theme_support('custom-background', array('default-color' => 'ffffff','default-image' => get_template_directory_uri() . '/images/blank.png',));
     add_theme_support( 'align-wide' );
     add_theme_support('editor-color-palette', array(
 			array(
@@ -650,18 +743,18 @@ if (function_exists('register_sidebar')) {
   	'description'   => __( 'Widget area che compare nella sidebar delle pagine.', 'wpscuola' ),
   	'before_widget' => '<div id="%1$s" class="widget-container shadow p-2 %2$s">',
   	'after_widget' => "</div>",
-  	'before_title' => '<h6 class="widget-title">',
-  	'after_title' => '</h6>',
+  	'before_title' => '<h3 class="widget-title">',
+  	'after_title' => '</h3>',
   ));
 
 	register_sidebar( array(
 		'name' => __('Footer Widget Area', 'wpscuola') ,
 		'id' => 'footer-widget-area',
 		'description'   => __( 'Widget area che compare nel footer.', 'wpscuola' ),
-		'before_widget' => '<div id="%1$s" class="col-lg widget-container bg-white p-2 %2$s">',
+		'before_widget' => '<div id="%1$s" class="col-lg widget-container p-2 %2$s">',
 		'after_widget' => "</div>",
-		'before_title' => '<h4 class="text-primary">',
-		'after_title' => '</h4>',
+		'before_title' => '<h3 class="text-primary">',
+		'after_title' => '</h3>',
 	));
 
 	register_sidebar( array(
@@ -670,18 +763,18 @@ if (function_exists('register_sidebar')) {
 		'description'   => __( 'Widget area che compare sotto la footer widget area.', 'wpscuola' ),
 		'before_widget' => '<div id="%1$s" class="col-lg widget-container text-white p-2 %2$s">',
 		'after_widget' => "</div>",
-		'before_title' => '<h4 class="widget-title">',
-		'after_title' => '</h4>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
 	));
 
 	register_sidebar( array(
 		'name' => __('Post Footer Widget Area', 'wpscuola') ,
 		'id' => 'single-footer-widget-area',
 		'description'   => __( 'Widget area che compare sotto il contenuto del singolo post.', 'wpscuola' ),
-		'before_widget' => '<div id="%1$s" class="col-lg widget-container shadow p-2 mb-4 %2$s">',
+		'before_widget' => '<div id="%1$s" class="col-lg widget-container shadow p-2 mb-4 mt-4 %2$s">',
 		'after_widget' => "</div>",
-		'before_title' => '<h4 class="widget-title">',
-		'after_title' => '</h4>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
 	));
 
 	register_sidebar( array(
@@ -690,8 +783,8 @@ if (function_exists('register_sidebar')) {
 		'description'   => __( 'Widget area che compare sotto il contenuto della singola pagina.', 'wpscuola' ),
 		'before_widget' => '<div id="%1$s" class="col-lg widget-container shadow p-2 mb-4 %2$s">',
 		'after_widget' => "</div>",
-		'before_title' => '<h4 class="widget-title">',
-		'after_title' => '</h4>',
+		'before_title' => '<h3 class="widget-title">',
+		'after_title' => '</h3>',
 	));
 
 	if(class_exists("EM_Event")){
@@ -928,7 +1021,7 @@ function scuola_customize_head() {
 	$ColoreTestoHeader=get_theme_mod( 'scuola_head_text_color', "#fff" );
 	$ColoreLinkHeader=get_theme_mod( 'scuola_head_link_color', "#65dcdf" );
 	
-	$ColoreBody=get_theme_mod( 'background_color', "#fff" );
+	$ColoreBody=get_theme_mod( 'scuola_background_color', "#fff" );
 	$ColoreTestoBody=get_theme_mod( 'scuola_text_color', "#000" );
 	$ColoreLinkBody=get_theme_mod( 'scuola_link_color', "#0066cc" );
 	
@@ -942,29 +1035,30 @@ function scuola_customize_head() {
 <!-- Custom <head> content -->
   <style type="text/css">
   <?php echo $Regole; ?>
-  body,.bootstrap-select-wrapper button {color: <?php echo $ColoreTestoBody; ?>!important;}
-     .navbar .navbar-collapsable .navbar-nav li a.nav-link,#mainheader, .my-bg-primary, .it-header-navbar-wrapper, .it-header-wrapper, #ListePrenotazioni button  { background-color: <?php echo $ColoreHeader ?>!important;}
-     #mainheader .cerca input{
-		color: <?php echo $ColoreLinkHeader ?>;
-    	border-bottom: 1px solid <?php echo $ColoreLinkHeader ?>;
+    body,.bootstrap-select-wrapper button, .coloreTesto {color: <?php echo $ColoreTestoBody; ?>;}
+    .navbar .navbar-collapsable .navbar-nav li a.nav-link,#mainheader, .my-bg-primary, .it-header-navbar-wrapper, .it-header-wrapper { background-color: <?php echo $ColoreHeader; ?>!important;}
+    body, .affix-top {background-color:<?php echo $ColoreBody; ?>;}
+    #mainheader .cerca input{
+		color: <?php echo $ColoreTestoBottone; ?>;
+    	border-bottom: 1px solid <?php echo $ColoreLinkHeader; ?>;
 	}
-
- 	#mainheader, #mainheader.soclial, .navbar .navbar-collapsable .navbar-nav li a.nav-link {color: <?php echo $ColoreTestoHeader ; ?>!important }
+	table th, .thead-dark th {
+		color: <?php echo $ColoreLinkHeader; ?>;
+	    background-color: <?php echo $ColoreBottone; ?>;
+	}
+ 	#mainheader, #mainheader.soclial, .navbar .navbar-collapsable .navbar-nav li a.nav-link {color: <?php echo $ColoreTestoHeader; ?>!important }
     .mysearchform input[type="text"], .it-header-wrapper .mysearchform input[type="text"]{box-shadow: 0 1px 0px <?php echo $ColoreTestoHeader; ?>!important;} 
   
    #menu-principale a.dropdown-toggle, #mainheader .social a,#mainheader .social a:hover, #mainheader .amministrazione .logotxt h1 a, #mainheader .amministrazione .logotxt h1 a:hover,#mainheader #sub_nav {color: <?php echo $ColoreLinkHeader; ?>!important }
    .wp-block-file .wp-block-file__button{background-color: <?php echo $ColoreLinkBody; ?>!important }
    
     .it-footer-main{color: <?php echo get_theme_mod( 'scuola_footer_text_color', "#fff" ); ?>;}
-  	#content {background-color:<?php echo $ColoreBody; ?>;}
     a, a:hover, a.read-more,.ui-widget-content a{ color: <?php echo $ColoreLinkBody; ?>; }
 	#collapseDivFAQ button.faq[aria-expanded="true"]{color: <?php echo $ColoreTestoBottone; ?>!important;}
-    
     #collapseDivFAQ button.faq  {color: <?php echo $ColoreLinkBody; ?>!important;}
-   
     button, input[type="submit"], .btn-primary, .btn-primary:hover, .btn-primary:not(:disabled):not(.disabled):active,.badge-primary, #ListaServizi a:hover, #ListaServizi a:visited,  #ListaServizi a:active  { color: <?php echo $ColoreTestoBottone; ?>!Important;background-color: <?php echo $ColoreBottone; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1); }
-    a.badge-primary:active,a.badge-primary:hover{color: <?php echo $ColoreBottone; ?>;background-color: <?php echo $ColoreTestoBottone; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1);
-	}
+    .bottone, a.bottone :hover, a.bottone :active  { color: <?php echo $ColoreTestoBottone; ?>!Important;background-color: <?php echo $ColoreBottone; ?>!Important;}
+    a.badge-primary:active,a.badge-primary:hover{color: <?php echo $ColoreBottone; ?>;background-color: <?php echo $ColoreTestoBottone; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1);}
     .btn-outline-primary { color: <?php echo $ColoreLinkBody; ?>; box-shadow: inset 0 0 0 1px <?php echo $ColoreLinkBody; ?>; }
     .btn-outline-primary:hover, .btn-outline-primary:not(:disabled):not(.disabled):active { color: <?php echo $ColoreLinkBody; ?>; box-shadow: inset 0 0 0 2px <?php echo $ColoreLinkBody; ?>; }
     #footer, .it-footer-main { background-color: <?php echo $ColoreFooter; ?>; }

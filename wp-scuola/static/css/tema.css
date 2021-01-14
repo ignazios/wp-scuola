@@ -36,7 +36,7 @@ Tags: 				right-sidebar, custom-header, custom-footer, custom-colors, custom-log
     padding-left: .5rem;
 }
 
-.thead-dark th {
+table th, table tfoot td, .thead-dark th {
     color: #fff;
     background-color: #323333;
     border-color: #464646;
@@ -47,13 +47,16 @@ Tags: 				right-sidebar, custom-header, custom-footer, custom-colors, custom-log
     vertical-align: top;
     border-top: 1px solid #d6dce3;
 }
-.thead-dark thead th {
+table  thead th, .thead-dark thead th {
     vertical-align: bottom;
     border-bottom: 2px solid #d6dce3;
 }
-.table-hover tbody tr:hover {
+table tbody tr:hover, .table-hover tbody tr:hover {
     color: #19191a;
     background-color: #e5f1fa;
+}
+table, table td, table th {
+    border: 1px solid #d6dce3;
 }
 /* WordPress WYSIWYG Editor Styles */
 .wp-block-file span{
@@ -239,9 +242,9 @@ blockquote {
 @media (min-width: 2300px) {.container {max-width: calc(80% - 50px)!important; padding:0;}}
 
 body {
-    color: #555;
+/*    color: #555;
     background-color: #fff;
-/*    -webkit-transition: all .3s ease 0s;
+    -webkit-transition: all .3s ease 0s;
     -o-transition: all .3s ease 0s;
     transition: all .3s ease 0s;*/
     position: relative;
@@ -455,7 +458,7 @@ h4:focus, h4 a:focus {outline: 1px solid #FF8C00 !important;}
 
 #mainheader .amministrazione .logotxt {
     vertical-align: middle;
-    height: 48px;
+    height: 80px;
     text-align: left;
     margin-left: 15px;
     display: inline-block;
@@ -1812,10 +1815,10 @@ img.size-thumbnail {
 #footer hr {
 	border-color: rgba(255, 255, 255, .8);
 }
-#footer .widget-title {
+/*#footer .widget-title {
 	font-size: 16px;
 	text-transform: uppercase;
-}
+}*/
 #footer .nav li {
   padding: 15px 30px 15px 0px;
 }
@@ -2868,4 +2871,21 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
 }
 .tag-cloud-link{
 	padding:0.5em;
+}
+#mainheader .amministrazione .logoimg img{
+    max-height: 65px!important;
+    max-width: 65px!important;
+}
+.it-footer-main .it-brand-wrapper a .icon {
+    width: 65px;
+    height: 65px; 
+}
+#mainheader.ridotto .amministrazione .logotxt h1 {
+    padding-top: 0!important;
+}
+.bottoneBorded{
+	height: 3em;
+    padding: 1em;
+    font-size: 1.2em;
+    margin: 1em 0 1em;
 }

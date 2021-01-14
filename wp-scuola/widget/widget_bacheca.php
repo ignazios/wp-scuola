@@ -77,7 +77,7 @@ class Bacheca extends WP_Widget {
 		    	<div class="col">
 	<?php if($Link1!=""):?>
 		    		<div class="d-flex justify-content-center">
-		    			<a href="<?php echo $Link1;?>" class="<?php echo $Bottoni[$Colore1];?>"><?php echo $Icona1;?></a>
+		    			<a href="<?php echo $Link1;?>" class="<?php echo $Bottoni[$Colore1];?>" title="<?php echo $Testo1;?>"><?php echo $Icona1;?></a>
 		    		</div>
 		    		<div class="text-center <?php echo $Testo[$Colore1];?>">
 		    			<?php echo $Testo1;?>
@@ -87,7 +87,7 @@ class Bacheca extends WP_Widget {
 		    	<div class="col">
 	<?php if($Link2!=""):?>
 		    		<div class="d-flex justify-content-center">
-		    			<a href="<?php echo $Link2;?>" class="<?php echo $Bottoni[$Colore2];?>"><?php echo $Icona2;?></a>
+		    			<a href="<?php echo $Link2;?>" class="<?php echo $Bottoni[$Colore2];?>" title="<?php echo $Testo2;?>"><?php echo $Icona2;?></a>
 		    		</div>
 		    		<div class="text-center <?php echo $Testo[$Colore2];?>">
 		    			<?php echo $Testo2;?>
@@ -97,7 +97,7 @@ class Bacheca extends WP_Widget {
 		    	<div class="col">
 	<?php if($Link3!=""):?>
 		    		<div class="d-flex justify-content-center">
-		    			<a href="<?php echo $Link3;?>" class="<?php echo $Bottoni[$Colore3];?>"><?php echo $Icona3;?></a>
+		    			<a href="<?php echo $Link3;?>" class="<?php echo $Bottoni[$Colore3];?>" title="<?php echo $Testo3;?>"><?php echo $Icona3;?></a>
 		    		</div>
 		    		<div class="text-center <?php echo $Testo[$Colore3];?>">
 		    			<?php echo $Testo3;?>
@@ -107,7 +107,7 @@ class Bacheca extends WP_Widget {
 		    	<div class="col">
 	<?php if($Link4!=""):?>
 		    		<div class="d-flex justify-content-center">
-		    			<a href="<?php echo $Link4;?>" class="<?php echo $Bottoni[$Colore4];?>"><?php echo $Icona4;?></a>
+		    			<a href="<?php echo $Link4;?>" class="<?php echo $Bottoni[$Colore4];?>" title="<?php echo $Testo4;?>"><?php echo $Icona4;?></a>
 		    		</div>
 		    		<div class="text-center <?php echo $Testo[$Colore4];?>">
 		    			<?php echo $Testo4;?>

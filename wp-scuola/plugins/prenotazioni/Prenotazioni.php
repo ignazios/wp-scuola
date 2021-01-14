@@ -125,16 +125,16 @@ class Plugin_Prenotazioni {
 	}
 	function enqueue_scripts( $hook_suffix ) {
             wp_enqueue_script('jquery');
-            wp_enqueue_script( 'jquery-ui-core');
-            wp_enqueue_script( 'jquery-ui-datepicker', '', array('jquery'));
-            wp_enqueue_script( 'jquery-ui-widget');
-            wp_enqueue_script( 'jquery-ui-tabs');
-            wp_enqueue_script( 'jquery-ui-dialog');
-            wp_enqueue_script( 'jquery-ui-slider');
+            wp_enqueue_script( 'jquery-ui-core',		false, array('jquery'), false, false);
+            wp_enqueue_script( 'jquery-ui-datepicker', 	false, array('jquery'), false, false);
+            wp_enqueue_script( 'jquery-ui-widget', 		false, array('jquery'), false, false);
+            wp_enqueue_script( 'jquery-ui-tabs', 		false, array('jquery'), false, false);
+            wp_enqueue_script( 'jquery-ui-dialog', 		false, array('jquery'), false, false);
+            wp_enqueue_script( 'jquery-ui-slider', 		false, array('jquery'), false, false);
             wp_enqueue_script( 'wp-color-picker');         
             wp_enqueue_style( 'wp-color-picker' );
             wp_enqueue_style( 'wp-jquery-ui-dialog' );
-            wp_enqueue_style( 'jquery.ui.theme', Prenotazioni_URL. 'css/jquery-ui-custom.css');
+//            wp_enqueue_style( 'jquery.ui.theme', Prenotazioni_URL. 'css/jquery-ui-custom.css');
             wp_register_style($this->plugin_name,  Prenotazioni_URL. 'css/style.css');
             wp_enqueue_style( $this->plugin_name);
            if($hook_suffix == 'toplevel_page_Prenotazioni' And isset($_GET["PreviewPrint"])) {
@@ -146,12 +146,8 @@ class Plugin_Prenotazioni {
 	}
 	function head_Front_End() {
 		global $post;
-		if( is_a( $post, 'WP_Post' ) && (has_shortcode( $post->post_content, 'Prenotazioni')|| has_shortcode( $post->post_content, 'OccupazioneSpazio')) ) {
-            wp_enqueue_script('jquery');
-            wp_enqueue_script( 'jquery-ui-core');
-            wp_enqueue_script( 'jquery-ui-datepicker', '', array('jquery'));
-            wp_enqueue_script( 'jquery-ui-widget');
-     		wp_enqueue_script('Prenotazioni-FrontEnd', Prenotazioni_URL. 'js/Prenotazioni_FrontEnd.js');
+		if( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'Prenotazioni') ) {
+      		wp_enqueue_script('Prenotazioni-FrontEnd', Prenotazioni_URL. 'js/Prenotazioni_FrontEnd.js');
       		wp_enqueue_style( 'prenotazioni-style', Prenotazioni_URL . "css/style.css");
       		wp_enqueue_script('Prenotazioni-FrontEnd_tooltip', Prenotazioni_URL. 'js/Prenotazioni_tooltip.js',array(),null,true);
 		}
