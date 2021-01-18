@@ -1090,7 +1090,7 @@ function get_MenuSocial(){?>
                         <a  target="_blank" class="social-icon"
                         aria-label="<?php echo __('Link ad un sito esterno','wpscuola'); ?> - Facebook"
                         href="<?php echo get_theme_mod('scuola_social_facebook');?>"
-                        title="<?php echo __('Seguici su Twitter','wpscuola'); ?>">
+                        title="<?php echo __('Seguici su Facebook','wpscuola'); ?>">
                             <span class="fab fa-facebook-f"></span> 
                             <span class="sr-only"> <?php echo __('Seguici su Facebook','wpscuola'); ?></span>
                         </a>

@@ -453,7 +453,7 @@ function Lista_Atti($Parametri,$Categoria=0,$Numero=0,$Anno=0,$Oggetto='',$Dadat
 				  	</div>
 					<div id="Categorie" class="collapse" role="tabpanel" aria-labelledby="headingC" data-parent="#FiltriCategorie">
 						<div class="collapse-body border border-primary rounded-bottom">
-							<?php echo get_FiltriCategorie();?>
+								<?php echo get_FiltriCategorie($Parametri['stato']); ?>
 					    </div>
 					</div>
 				</div>
@@ -488,7 +488,7 @@ if ($TotAtti>$N_A_pp){
 		}
 		$Nav.= '<div> 
     		<strong>'.__("N. Atti", 'wpscuola').' '.$TotAtti.'</strong>
-    		<nav class="pagination-wrapper" aria-label="Navigazione Pagine Albo">
+    		<nav class="pagination-wrapper" aria-label="Navigazione Pagine Albo" id="NavAlbo">
   				<ul class="pagination">';
      	if (isset($_REQUEST['Pag']) And $_REQUEST['Pag']>1 ){
  			$Pagcur=$_REQUEST['Pag'];

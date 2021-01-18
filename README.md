@@ -44,6 +44,8 @@ facebook: https://www.facebook.com/wpscuola/
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
+- **1.1.5**
+  - ***Corretti*** alcuni errori sul plugin dell'Albo
 - **1.1.4**
   - ***Impostato*** lo stile di default delle tabelle. Le tabelle verranno Bordate, avranno l'header ed il footer Dark e l'effetto hover
   - ***Corretti*** alcuni errori di validazione
