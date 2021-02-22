@@ -214,6 +214,15 @@ $wp_customize->add_section('Scuola_Amministrazione_Settings',array(
         'section' 	=> 'Scuola_Amministrazione_Settings',
         'settings' => 'Scuola_Amministrazione_CodUni',
         'priority'	=> 18));
+// Campo IBAN
+    $wp_customize->add_setting( 'Scuola_Amministrazione_IBAN' , array(
+		'capability' => 'edit_theme_options') );
+	$wp_customize->add_control( 'Scuola_Amministrazione_IBAN', array(
+        'type' 		=> 'text',
+        'label' 	=> 'IBAN:',
+        'section' 	=> 'Scuola_Amministrazione_Settings',
+        'settings' => 'Scuola_Amministrazione_IBAN',
+        'priority'	=> 19));
 /**
 *  Sotto Pannello Impostazione Header
 */

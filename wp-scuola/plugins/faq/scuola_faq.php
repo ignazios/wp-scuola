@@ -178,19 +178,6 @@ class ScuolaFAQ {
  		add_action( 'admin_menu', 								array( $this, 'add_faq_metabox' ) );
         add_shortcode( 'FAQ',                       			array( $this, 'visualizza_faq' ) );
      }
-/*    private function return_to_top( $link ) {
-        $html = '';
-
-        // Grab our metadata
-        $rtt = get_post_meta( get_the_id(), '_acf_rtt', true );
-
-        // If Return to Top checkbox is true
-        if ( $rtt && $link ) {
-             $html .= '<div class="faq-to-top"><a href="#' . $link . '">Torna all\'inizio</a></div>';
-        }
-        return $html;
-    }
- */
  // Add Shortcode
 	function visualizza_faq( $atts ) {
 
@@ -206,8 +193,16 @@ class ScuolaFAQ {
 
 	    $html = '<div id="collapseDivFAQ" class="collapse-div collapse-background-active" role="tablist">';
 	    $terms = get_terms( 'faq_gruppi' );
-	    $gruppi = $atts['gruppi'];
-	    $gruppi=explode(",",str_replace(' ', '', $gruppi));
+	    if($gruppi==''){
+	    	$gruppi=array();
+	    	$terms = get_terms( array('taxonomy' => 'faq_gruppi','hide_empty' => false,) );
+	    	foreach($terms as $term){
+	    		$gruppi[]=$term->slug;
+			}
+		}else{
+	    	$gruppi = $atts['gruppi'];
+	    	$gruppi=explode(",",str_replace(' ', '', $gruppi));
+		}
 	    if ( ! empty( $terms ) ) {
 	        foreach ( $terms as $term ) {
 	            if (in_array($term->slug, $gruppi) ){

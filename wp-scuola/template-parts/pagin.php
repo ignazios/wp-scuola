@@ -1,6 +1,6 @@
 <?php
-	$prev_arrow = is_rtl() ? '<span class="it-chevron-right"></span>' : '<span class="it-chevron-left"></span>';
-	$next_arrow = is_rtl() ? '<span class="it-chevron-left"></span>' : '<span class="it-chevron-right"></span>';
+	$prev_arrow = is_rtl() ? '<svg class="icon"><use xlink:href="'.get_bloginfo('template_url').'/static/svg/sprite.svg#it-chevron-right"></use></svg>':'<svg class="icon"><use xlink:href="'.get_bloginfo('template_url').'/static/svg/sprite.svg#it-chevron-left"></use></svg>';
+	$next_arrow = is_rtl() ? '<svg class="icon"><use xlink:href="'.get_bloginfo('template_url').'/static/svg/sprite.svg#it-chevron-left"></use></svg>':'<svg class="icon"><use xlink:href="'.get_bloginfo('template_url').'/static/svg/sprite.svg#it-chevron-right"></use></svg>';
 	
 	global $wp_query;
 	$total = $wp_query->max_num_pages;

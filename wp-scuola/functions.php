@@ -690,7 +690,7 @@ function enqueue_scuola_admin() {
 
 function enqueue_scuola_public() {
     wp_enqueue_style('wpscuola_bootstrap-italia.min_css', get_template_directory_uri() . '/static/css/bootstrap-italia.min.css');
-    wp_enqueue_style( 'bootstrap-italia-map', get_template_directory_uri() . "/static/css/bootstrap-italia.min.css.map");
+//    wp_enqueue_style( 'bootstrap-italia-map', get_template_directory_uri() . "/static/css/bootstrap-italia.min.css.map");
     wp_enqueue_style('wpscuola_owl.carousel.min_css', get_template_directory_uri() . '/static/css/owl.carousel.min.css');
     wp_enqueue_style('wpscuola_owl.theme.default.min_css', get_template_directory_uri() . '/static/css/owl.theme.default.min.css');
 	wp_enqueue_script("jquery");
@@ -848,6 +848,7 @@ function scuola_register_Widget(){
 	register_widget( 'Link' );
 	register_widget( 'Bacheca' );
 	if(class_exists("EM_Event")) 					register_widget( 'my_EM_Widget_Calendar' );
+	if(class_exists("EM_Event")) 					register_widget( 'Eventi' );
 	if(get_theme_mod('scuola_servizi_attiva'))		register_widget( 'Servizi' );
 	if(function_exists("at_sezioni_shtc"))			register_widget( 'my_ATWidget' );	
 	if(get_theme_mod("scuola_circolari_attiva"))	register_widget( 'CircolariScuola' );
@@ -963,7 +964,7 @@ global $post;
 					<div class="form-group col-md-6">
 						<input name="post_password" type="password" class="form-control input-password" id="exampleInputPassword" aria-labelledby="infoPassword" >
 				    	<span class="password-icon" aria-hidden="true"></span><span class="far fa-eye"></span>
-				        <label for="exampleInputPassword">Inserire la password per visualizzare '.(get_post_type( $PostID) =="circolari_scuola"?"la Circolare":"l'Articolo").'</label>
+				        <label for="exampleInputPassword">Inserire la password per visualizzare '.(get_post_type( $post->ID) =="circolari_scuola"?"la Circolare":"l'Articolo").'</label>
 			    	</div>
 		    	<div class="form-group col-md-3">
 	      		<button name="Submit" type="submit" class="btn btn-primary" value="' . __( "Submit" ) . '">Invia</button>
@@ -1035,7 +1036,7 @@ function scuola_customize_head() {
 <!-- Custom <head> content -->
   <style type="text/css">
   <?php echo $Regole; ?>
-    body,.bootstrap-select-wrapper button, .coloreTesto {color: <?php echo $ColoreTestoBody; ?>;}
+    body,.bootstrap-select-wrapper button, .coloreTesto {color: <?php echo $ColoreTestoBody; ?>!important;}
     .navbar .navbar-collapsable .navbar-nav li a.nav-link,#mainheader, .my-bg-primary, .it-header-navbar-wrapper, .it-header-wrapper { background-color: <?php echo $ColoreHeader; ?>!important;}
     body, .affix-top {background-color:<?php echo $ColoreBody; ?>;}
     #mainheader .cerca input{
@@ -1056,7 +1057,7 @@ function scuola_customize_head() {
     a, a:hover, a.read-more,.ui-widget-content a{ color: <?php echo $ColoreLinkBody; ?>; }
 	#collapseDivFAQ button.faq[aria-expanded="true"]{color: <?php echo $ColoreTestoBottone; ?>!important;}
     #collapseDivFAQ button.faq  {color: <?php echo $ColoreLinkBody; ?>!important;}
-    button, input[type="submit"], .btn-primary, .btn-primary:hover, .btn-primary:not(:disabled):not(.disabled):active,.badge-primary, #ListaServizi a:hover, #ListaServizi a:visited,  #ListaServizi a:active  { color: <?php echo $ColoreTestoBottone; ?>!Important;background-color: <?php echo $ColoreBottone; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1); }
+    button, input[type="submit"], .btn-primary, .btn-primary:hover, .btn-primary:not(:disabled):not(.disabled):active,.badge-primary, #ListaServizi a:hover, #ListaServizi a:visited,  #ListaServizi a:active, #collapseDivFAQ button.faq  { color: <?php echo $ColoreTestoBottone; ?>!Important;background-color: <?php echo $ColoreBottone; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1); }
     .bottone, a.bottone :hover, a.bottone :active  { color: <?php echo $ColoreTestoBottone; ?>!Important;background-color: <?php echo $ColoreBottone; ?>!Important;}
     a.badge-primary:active,a.badge-primary:hover{color: <?php echo $ColoreBottone; ?>;background-color: <?php echo $ColoreTestoBottone; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1);}
     .btn-outline-primary { color: <?php echo $ColoreLinkBody; ?>; box-shadow: inset 0 0 0 1px <?php echo $ColoreLinkBody; ?>; }

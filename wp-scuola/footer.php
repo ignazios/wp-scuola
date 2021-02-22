@@ -57,11 +57,11 @@
 	                <li><?php echo get_theme_mod('Scuola_Amministrazione_CAP'); 
 	                	if (get_theme_mod('Scuola_Amministrazione_CAP') And get_theme_mod('Scuola_Amministrazione_Citta')) echo ',';
 	                	echo get_theme_mod('Scuola_Amministrazione_Citta'); ?></li>
-	                <?php echo (get_theme_mod('Scuola_Amministrazione_CM')!=""?"<li>C.M. ".get_theme_mod('Scuola_Amministrazione_CM')."</li>":""); ?>
-	                <?php echo (get_theme_mod('Scuola_Amministrazione_CFPA')!=""?"<li>C.F. ".get_theme_mod('Scuola_Amministrazione_CFPA')."</li>":""); ?>
-	                <?php echo (get_theme_mod('Scuola_Amministrazione_PIVA')!=""?"<li>P.Iva ".get_theme_mod('Scuola_Amministrazione_PIVA')."</li>":""); ?>
-	                <?php echo (get_theme_mod('Scuola_Amministrazione_CodUni')!=""?"<li>Cod. Univoco ".get_theme_mod('Scuola_Amministrazione_CodUni')."</li>":""); ?>
-	                <?php
+	                <?php echo (get_theme_mod('Scuola_Amministrazione_CM')!=""?"<li>C.M. ".get_theme_mod('Scuola_Amministrazione_CM')."</li>":""); 
+	                echo (get_theme_mod('Scuola_Amministrazione_CFPA')!=""?"<li>C.F. ".get_theme_mod('Scuola_Amministrazione_CFPA')."</li>":""); 
+	                echo (get_theme_mod('Scuola_Amministrazione_PIVA')!=""?"<li>P.Iva ".get_theme_mod('Scuola_Amministrazione_PIVA')."</li>":""); 
+	            	echo (get_theme_mod('Scuola_Amministrazione_CodUni')!=""?"<li>Cod. Univoco ".get_theme_mod('Scuola_Amministrazione_CodUni')."</li>":""); 
+	                echo (get_theme_mod('Scuola_Amministrazione_IBAN')!=""?"<li>IBAN ".get_theme_mod('Scuola_Amministrazione_IBAN')."</li>":"");
 					if(get_theme_mod('scuola_mappa_attiva')){?>
 					<li> 
 					<?php if(!get_theme_mod('scuola_mappa_frame') And get_theme_mod('scuola_mappa_attiva')){?> 
@@ -204,13 +204,13 @@
 	  <div class="it-footer-small-prints clearfix">
 	    <div class="container">
 			<div class="row">
-				<div class="col-md">
+				<div class="col-md-8">
 			      <h3 class="sr-only"><?php _e( 'Sezione Legale', 'wpscuola' );?></h3>
 			      <?php if ( has_nav_menu( 'menu-footer-legale' ) ) {
 			      	 wp_nav_menu( array( 'theme_location' => 'menu-footer-legale', 'container' => 'ul', 'menu_class' => 'nav it-footer-small-prints-list list-inline mb-0 d-flex flex-column flex-md-row', 'menu_id' =>"menu_legal")); 
 					}?>
 			    </div>
-				<div class="col-md text-right copyright">
+				<div class="col-md-4 text-right copyright">
 					<small><?php echo sprintf( __( 'Copyright %1$s %2$s %3$s', 'wppa' ), '<span class="far fa-copyright"></span>', date( 'Y' ), esc_html( get_bloginfo( 'name' ) ) ); ?></small>
 				</div>
 	 		</div>	

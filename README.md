@@ -42,8 +42,18 @@ facebook: https://www.facebook.com/wpscuola/
 				height=altezza del frame in px              
 				scrolling=yes/no/auto]
 				
+	[faq order=Ordine degli elementi. Se omesso 'ASC'
+         orderby=Campo su cui eseguire l'ordinamento. Se omesso 'title'
+		 posts_per_page=Numero di elemnti da visuazlizzare. Se omesso -1(Tutti)
+         gruppi=Elenco separato da , dei gruppi da visualizzare. Se omesso vengono estratti tutti i gruppi]
+				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
+- **1.1.6**
+  - ***Modificato*** lo shortcode [faq] adesso se si omette il parametro gruppi, vengono visualizzati tutti i gruppi di FAQ
+  - ***Aggiunto*** Widget Scuola Eventi che visualizza un elenco di eventi del plugin Events Manager
+  - ***Aggiunto*** l'IBAN dei dati della scuola, si imposta in Aspetto > Personalizza > Impostazioni Scuola > Dati Amministrazione e viene visualizzato nel footer
+  - ***Corretti*** alcuni bug minori
 - **1.1.5**
   - ***Corretti*** alcuni errori sul plugin dell'Albo
 - **1.1.4**
