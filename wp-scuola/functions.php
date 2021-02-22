@@ -847,8 +847,10 @@ function scuola_register_Widget(){
 	register_widget( 'Feed_RSS' );
 	register_widget( 'Link' );
 	register_widget( 'Bacheca' );
-	if(class_exists("EM_Event")) 					register_widget( 'my_EM_Widget_Calendar' );
-//	if(class_exists("EM_Event")) 					register_widget( 'Eventi' );
+	if(class_exists("EM_Event")){
+		register_widget( 'my_EM_Widget_Calendar' );
+		register_widget( 'Eventi' );
+	}
 	if(get_theme_mod('scuola_servizi_attiva'))		register_widget( 'Servizi' );
 	if(function_exists("at_sezioni_shtc"))			register_widget( 'my_ATWidget' );	
 	if(get_theme_mod("scuola_circolari_attiva"))	register_widget( 'CircolariScuola' );
@@ -856,6 +858,10 @@ function scuola_register_Widget(){
 /**
 * Inclusione librerie dei Widget
 */
+if(class_exists("EM_Event")){
+	require get_template_directory() . '/widget/widget_calendario.php';
+	require get_template_directory() . '/widget/widget_eventi.php';
+}
 require get_template_directory() . '/widget/widget_calendario.php';
 require get_template_directory() . '/widget/widget_feedRSS.php';
 require get_template_directory() . '/widget/widget_trasparenza.php';
