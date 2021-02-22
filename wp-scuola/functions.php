@@ -862,7 +862,6 @@ if(class_exists("EM_Event")){
 	require get_template_directory() . '/widget/widget_calendario.php';
 	require get_template_directory() . '/widget/widget_eventi.php';
 }
-require get_template_directory() . '/widget/widget_calendario.php';
 require get_template_directory() . '/widget/widget_feedRSS.php';
 require get_template_directory() . '/widget/widget_trasparenza.php';
 require get_template_directory() . '/widget/widget_articoli.php';
