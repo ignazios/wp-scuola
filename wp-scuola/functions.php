@@ -848,7 +848,7 @@ function scuola_register_Widget(){
 	register_widget( 'Link' );
 	register_widget( 'Bacheca' );
 	if(class_exists("EM_Event")) 					register_widget( 'my_EM_Widget_Calendar' );
-	if(class_exists("EM_Event")) 					register_widget( 'Eventi' );
+//	if(class_exists("EM_Event")) 					register_widget( 'Eventi' );
 	if(get_theme_mod('scuola_servizi_attiva'))		register_widget( 'Servizi' );
 	if(function_exists("at_sezioni_shtc"))			register_widget( 'my_ATWidget' );	
 	if(get_theme_mod("scuola_circolari_attiva"))	register_widget( 'CircolariScuola' );
