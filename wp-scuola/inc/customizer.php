@@ -469,7 +469,7 @@ $wp_customize->add_control( 'scuola_social_Indirizzofree1', array(
     'settings' => 'scuola_social_Indirizzofree1',
     'priority'	=> 9));  
 // Campo Social Free 2
-$wp_customize->add_setting( 'scuola_social_Nomefre2' , array(
+$wp_customize->add_setting( 'scuola_social_Nomefree2' , array(
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_social_Nomefree2', array(
     'type' 		=> 'text',

@@ -204,7 +204,7 @@ function wps_Get_DataOra_Firma($IDCircolare){
 //	echo "SELECT * FROM $wpdb->table_circolari_firme WHERE post_ID=$IDCircolare AND user_ID=$current_user->ID;";
 //  echo count($ris);
 	if (count($ris)==1)
-		return wps_FormatDataItaliano(substr($ris[0]->datafirma,0,10))." ".substr($ris[0]->datafirma,11,595);
+		return wps_FormatDataItalianoBreve(substr($ris[0]->datafirma,0,10))." ".substr($ris[0]->datafirma,11,595);
 	else
 		return "";	
 }

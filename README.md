@@ -49,6 +49,10 @@ facebook: https://www.facebook.com/wpscuola/
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
+- **1.1.7**
+ - ***Aggiunto*** shortcode [feedrss] che permette di visualizzare i link ai Feed RSS per Categorie e/o Tags all'interno di una pagina
+  - ***Corretti*** alcuni bug del modulo circolari
+  - ***Corretti*** alcuni bug minori
 - **1.1.6**
   - ***Modificato*** lo shortcode [faq] adesso se si omette il parametro gruppi, vengono visualizzati tutti i gruppi di FAQ
   - ***Aggiunto*** Widget Scuola Eventi che visualizza un elenco di eventi del plugin Events Manager

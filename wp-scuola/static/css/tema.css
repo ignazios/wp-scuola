@@ -2883,3 +2883,13 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
 #mainheader.ridotto .amministrazione .logotxt h1 {
     padding-top: 0!important;
 }
+.citazione {
+	font-family: Lora,Georgia,serif!important;
+    background: none;
+    border-left: 5px solid #f1f1f1;
+    color: #6f7178;
+    font-size: 0.9rem;
+    line-height: 1.5rem;
+    padding-left: 15px;
+    padding: 10px;
+}

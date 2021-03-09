@@ -69,6 +69,7 @@ add_shortcode('articoli', 					'GetArticoliCategoria');
 add_shortcode('gfolderdrive', 				'VisualizzaCartellaDrive');
 add_shortcode('canccookies', 				'CancellaCookies');
 add_shortcode('viscookies', 				'VisualizzaCookies');
+add_shortcode('feedrss', 					'VisualizzaFeedRSS');
 
 /**
  * Filter current filename to replace or remove problematic characters.
@@ -124,6 +125,59 @@ function scuola_reset_counter(){
 	else
 		echo "Sono stati azzerati ".$Result." Oggetti";
 	die();
+}
+/****************************************************** 
+* Shortcode che visualizza link dei feed RSS per le Categorie e/o dei Tags
+* [feedrss]
+*******************************************************/
+function VisualizzaFeedRSS($Parametri){
+	$ret="";
+	$Parametri=shortcode_atts(array(
+		'sorgente' 	=> "Categorie",
+		'vuote' 	=> "si",
+		'id'		=> "",
+	), $Parametri,"feedrss");
+	$args=array('orderby'	=>'name',
+				'fields'	=>'all');
+	if(strtolower($Parametri['vuote'])=="si"){
+		$args['hide_empty']=false;
+	}
+	if($Parametri['id']!=""){
+		$args['include']=$Parametri['id'];
+	}
+	$Categorie=get_categories($args);
+	$Tags=get_tags($args);
+	ob_start();?>
+		<div class="link-list-wrapper">
+  <ul class="link-list">
+<?php if ($Parametri['sorgente']=="Categorie" Or strtolower($Parametri['sorgente'])=="all"):?>
+    <li><a class="list-item large medium right-icon" href="#collapseOne" data-toggle="collapse" aria-expanded="false" aria-controls="collapseOne">
+      <span class="fas fa-rss"></span> <span>Categorie</span>
+      <svg class="icon icon-primary right"><use xlink:href="<?php echo get_bloginfo('template_url');?>/static/svg/sprite.svg#it-expand"></use></svg></a>
+      <ul class="link-sublist collapse" id="collapseOne">
+<?php foreach( $Categorie as $category ) {?>
+        <li><?php echo $category->name;?> (<?php echo $category->count;?>) <span><a class="list-item d-inline" href="<?php echo esc_url( get_category_link( $category->term_id ) );?>feed"><?php echo esc_url( get_category_link( $category->term_id ) );?>feed</span></a>
+        </li>
+<?php } ?>
+      </ul>
+    </li>
+<?php endif;
+	if ($Parametri['sorgente']=="Tag" Or strtolower($Parametri['sorgente'])=="all"):?>
+    <li><a class="list-item large medium right-icon" href="#collapseTwo" data-toggle="collapse" aria-expanded="false" aria-controls="collapseTwo">
+      <span class="fas fa-rss"></span> <span>Tags</span>
+      <svg class="icon icon-primary right"><use xlink:href="<?php echo get_bloginfo('template_url');?>/static/svg/sprite.svg#it-expand"></use></svg></a>
+      <ul class="link-sublist collapse" id="collapseTwo">
+ <?php foreach( $Tags as $tag ) {?>
+        <li><?php echo $tag->name;?> (<?php echo $tag->count;?>) <span><a class="list-item d-inline" href="<?php echo esc_url( get_tag_link( $tag->term_id ) );?>feed"><?php echo esc_url( get_tag_link( $tag->term_id ) );?>feed</span></a>
+        </li>
+<?php } ?>
+      </ul>
+    </li>
+<?php endif;?>
+  </ul>
+</div>
+<?php
+	return ob_get_clean();	
 }
 /****************************************************** 
 * Shortcode che visualizza tutti i cookies registrati dal sito
@@ -376,12 +430,6 @@ function scuola_posts_custom_column_views( $column ) {
     }
 }
 
-/* UPDATER THEME VERSION */
-require 'inc/theme-update-checker.php';
-$update_checker = new ThemeUpdateChecker(
-    'wp-scuola',
-    'https://raw.githubusercontent.com/ignazios/wp-scuola/master/wp-scuola.json'
-);
 /**
 * 
 * Personalizzazione blocco file dell'editor Gutenberg
