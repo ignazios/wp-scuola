@@ -49,6 +49,13 @@ facebook: https://www.facebook.com/wpscuola/
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
+- **1.1.8**
+  - ***Aggiunta*** area in Tema > Impostazioni Scuola > Metadati comunicazioni in cui si possono impostare:
+                           Attiva Visualizzazione Data
+						   Attiva link archivio Data
+						   Attiva Visualizzazione Autore
+						   Attiva link archivio Autore
+						   Attiva il conteggio delle visite di pagine/articoli/CPT
 - **1.1.7**
  - ***Aggiunto*** shortcode [feedrss] che permette di visualizzare i link ai Feed RSS per Categorie e/o Tags all'interno di una pagina
   - ***Corretti*** alcuni bug del modulo circolari

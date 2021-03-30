@@ -76,7 +76,7 @@ class Articoli_Griglia extends WP_Widget {
             ];
         }
         if($cat_id==-1 And $cats_notin!=""){
-			$query_args['category__not_in'] = array( $cats_notin);
+			$query_args['category__not_in'] = explode(",", $cats_notin);
 			$query_args['ignore_sticky_posts'] = 1;
 		}
 		if($cat_id==-1)

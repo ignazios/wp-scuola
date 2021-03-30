@@ -71,7 +71,7 @@
 		<div class="row">
 			<div class="col-lg-6 col-12 pl-2">
 			 <div class="shadow">
-				<h2 class="my-bg-primary p-3 text-white"><?php echo $TitoloPB;?></h2>	  
+				<h3 class="my-bg-primary p-3 text-white"><?php echo $TitoloPB;?></h3>	  
 				<div class="it-list-wrapper">
 					<ul class="it-list">
 <?php	foreach($ArticoliPB as $Articolo){	?>
@@ -85,8 +85,12 @@
 				        	<div class="it-right-zone  border-0">
 				        		<span class="text"><?php echo $Articolo->post_title;?></span>
 				        		<span class="it-multiple">
+<?php 	if(get_theme_mod('scuola_MTdata_attiva')):?>				        		
 				        			<span class="metadata metadatasmall"><span class="far fa-calendar-alt"></span> <?php echo date_i18n( get_option( 'date_format' ), strtotime($Articolo->post_date) );?></span>
+<?php 	endif;	  
+	  	if(get_theme_mod('scuola_MTautore_attiva')):?>	
 									<span class="metadata metadatasmall"><span class="fas fa-user-edit"></span> <?php echo get_the_author_meta('display_name', $Articolo->post_author);?></span>
+<?php 	endif;?>
 								</span>
 							</div>
 					      </a>
@@ -120,8 +124,12 @@
 				        	<div class="it-right-zone  border-0">
 				        		<span class="text"><?php echo $Articolo->post_title;?></span>
 				        		<span class="it-multiple">
+<?php 	if(get_theme_mod('scuola_MTdata_attiva')):?>				        		
 				        			<span class="metadata metadatasmall"><span class="far fa-calendar-alt"></span> <?php echo date_i18n( get_option( 'date_format' ), strtotime($Articolo->post_date) );?></span>
+<?php 	endif;	  
+	  	if(get_theme_mod('scuola_MTautore_attiva')):?>	
 									<span class="metadata metadatasmall"><span class="fas fa-user-edit"></span> <?php echo get_the_author_meta('display_name', $Articolo->post_author);?></span>
+<?php 	endif;?>
 								</span>
 							</div>
 					      </a>

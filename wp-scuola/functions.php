@@ -64,6 +64,7 @@ add_action( 'admin_init', 					'mytheme_add_editor_styles' );
 add_action( 'template_redirect', 			'Gestione_DwnLink');
 add_action( 'wp_ajax_ResetCounter',			'scuola_reset_counter' );
 add_action( 'add_attachment', 				'scuola_ripulisci_titolofile' );
+add_action( 'after_setup_theme', 			'scuola_tema_imposta_valori_default' );
 
 add_shortcode('articoli', 					'GetArticoliCategoria');
 add_shortcode('gfolderdrive', 				'VisualizzaCartellaDrive');
@@ -71,6 +72,21 @@ add_shortcode('canccookies', 				'CancellaCookies');
 add_shortcode('viscookies', 				'VisualizzaCookies');
 add_shortcode('feedrss', 					'VisualizzaFeedRSS');
 
+/**
+*Funzione che imposta i valori di default del tema
+*/
+function scuola_tema_imposta_valori_default(){
+// impostazione dei valori di default in caso di assenza
+	$Impostazioni=get_theme_mods();
+	if(!isset($Impostazioni["scuola_MTdata_attiva"]))
+		set_theme_mod( 'scuola_MTdata_attiva', true);
+	if(!isset($Impostazioni["scuola_MTdataLink_attiva"]))
+		set_theme_mod( 'scuola_MTdataLink_attiva', true);
+	if(!isset($Impostazioni["scuola_MTautore_attiva"]))
+		set_theme_mod( 'scuola_MTautore_attiva', true);
+	if(!isset($Impostazioni["scuola_docconteggio_attiva"]))
+		set_theme_mod( 'scuola_docconteggio_attiva', true);
+}
 /**
  * Filter current filename to replace or remove problematic characters.
  * @param string $filename Current filename.

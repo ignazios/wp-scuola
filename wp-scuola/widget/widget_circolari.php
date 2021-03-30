@@ -91,8 +91,10 @@
 				          	</h4>
 				          <p class="card-text"><?php echo $Circolare->post_excerpt; ?></p>
 				          <div class="it-card-footer">
+<?php 	if(get_theme_mod('scuola_MTautore_attiva')):?>	
 				            <span class="card-autore"><span class="fas fa-user-edit"></span> <?php echo get_the_author_meta('display_name', $Circolare->post_author);?></span>
-				            <?php	if (wps_Is_Circolare_Da_Firmare($Circolare->ID)){?>
+<?php	endif;
+								if (wps_Is_Circolare_Da_Firmare($Circolare->ID)){?>
 				            	  <span class="card-firma">
 							<?php		if (!wps_Is_Circolare_Firmata($Circolare->ID)) {
 											$ngiorni=wps_Get_scadenzaCircolare($Circolare->ID,"",True);					

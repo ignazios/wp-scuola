@@ -596,27 +596,85 @@ $wp_customize->add_control('scuola_modorarioArgo_attiva', array(
     'type' => 'checkbox', 
     'section' => 'Scuola_Moduli_Settings', 
     'settings' => 'scuola_modorarioArgo_attiva'));
+/**
+*  Sotto Pannello MetaDati
+*/
+$wp_customize->add_section('Scuola_Metadati_Settings',array(
+    'title'			 =>'Metadati comunicazioni',
+    'priority'		 =>6,
+    'description'	 => '<strong>Impostazione dei Metadati che vengono visualizzati per i Post, le Pagine e Comunicazioni</strong>',
+    'panel'			 =>'scuola_settings'));  
+    
+     
+$wp_customize->add_setting('scuola_MTdata_attiva', array(
+    'default' => TRUE, 
+    'capability' => 'edit_theme_options', 
+    'sanitize_callback' => 'scuola_sanitize_checkbox'));
+$wp_customize->add_control('scuola_MTdata_attiva', array(
+    'label' => 'Attiva Visualizzazione Data',
+    'description'	=>'<strong><em>Questa opzione attiva la visualizzazione della data.</strong></em>' ,
+    'type' => 'checkbox', 
+    'section' => 'Scuola_Metadati_Settings', 
+    'settings' => 'scuola_MTdata_attiva',
+    'priority'	=> 1,
+));
+$wp_customize->add_setting('scuola_MTdataLink_attiva', array(
+    'default' => TRUE, 
+    'capability' => 'edit_theme_options', 
+    'sanitize_callback' => 'scuola_sanitize_checkbox'));
+$wp_customize->add_control('scuola_MTdataLink_attiva', array(
+    'label' => 'Attiva link archivio Data',
+    'description'	=>'<strong><em>Questa opzione permette di attivare il link all\'archivio della data.<br />Funzionalità solo se è attiva la visualizzazione della Data</strong></em>' ,
+    'type' => 'checkbox', 
+    'section' => 'Scuola_Metadati_Settings', 
+    'settings' => 'scuola_MTdataLink_attiva',
+    'priority'	=> 2,
+));
+
+$wp_customize->add_setting('scuola_MTautore_attiva', array(
+    'default' => TRUE, 
+    'capability' => 'edit_theme_options', 
+    'sanitize_callback' => 'scuola_sanitize_checkbox'));
+$wp_customize->add_control('scuola_MTautore_attiva', array(
+    'label' => 'Attiva Visualizzazione Autore',
+    'description'	=>'<strong><em>Questa opzione attiva la visualizzazione dell\'autore.</strong></em>' ,
+    'type' => 'checkbox', 
+    'section' => 'Scuola_Metadati_Settings', 
+    'settings' => 'scuola_MTautore_attiva',
+    'priority'	=> 3,
+));
+$wp_customize->add_setting('scuola_MTautoreLink_attiva', array(
+    'default' => TRUE, 
+    'capability' => 'edit_theme_options', 
+    'sanitize_callback' => 'scuola_sanitize_checkbox'));
+$wp_customize->add_control('scuola_MTautoreLink_attiva', array(
+    'label' => 'Attiva link archivio Autore',
+    'description'	=>'<strong><em>Questa opzione permette di attivare il link all\'archivio dell\'autore.<br />Funzionalità solo se è attiva la visualizzazione dell\'autore</strong></em>' ,
+    'type' => 'checkbox', 
+    'section' => 'Scuola_Metadati_Settings', 
+    'settings' => 'scuola_MTautoreLink_attiva',
+    'priority'	=> 4,
+));
 $wp_customize->add_setting('scuola_docconteggio_attiva', array(
-    'default' => false, 
+    'default' => TRUE, 
     'capability' => 'edit_theme_options', 
     'sanitize_callback' => 'scuola_sanitize_checkbox'));
 $wp_customize->add_control('scuola_docconteggio_attiva', array(
-    'label' => 'Attiva il conteggio delle pagine/articoli/CPT',
-    'description'	=>' Questa opzioni permette di visualizzare il numero di visualizzazioni di ogni Pagina/Articolo/Custom Post Type' ,
-    'priority'	=>6,
+    'label' => 'Attiva il conteggio delle visite di pagine/articoli/CPT',
+    'description'	=>'<strong><em>Questa opzioni permette di visualizzare il numero di visualizzazioni di ogni Pagina/Articolo/Custom Post Type</strong></em>' ,
+    'priority'	=>5,
     'type' => 'checkbox', 
-    'section' => 'Scuola_Moduli_Settings', 
+    'section' => 'Scuola_Metadati_Settings', 
     'settings' => 'scuola_docconteggio_attiva'));
 $wp_customize->add_control( 'scuola_docconteggio_reset', array(
     'type' => 'button',
     'settings' => array(),
-    'priority' => 7,
-    'section' => 'Scuola_Moduli_Settings',
+    'priority' => 6,
+    'section' => 'Scuola_Metadati_Settings',
     'input_attrs' => array(
         'value' => __( 'Azzera Conteggio', 'textdomain' ), 
         'class' => 'button button-primary', 
-    ),
-) );
+    ),) );
 /**
 *  Crea pannello per impostazione Home Page
 */

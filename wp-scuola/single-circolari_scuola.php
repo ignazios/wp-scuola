@@ -49,9 +49,16 @@
 					<div class="metarticoli">
 						<p>
 							<span class="fas fa-calendar-alt pr-1"></span> <strong><a href="<?php echo esc_url(home_url('/'))."circolari-scuola/".get_the_time('Y')."/".get_the_time('m');?>"><?php the_time('j M y'); ?></a> 
-							<span class="fas fa-ticket-alt pl-2 pr-1"></span> <?php echo $numero."_".$anno;?>
-							<span class="fas fa-user-edit pl-2 pr-1"></span> <a href="<?php echo esc_url(home_url('/'))."author/".get_the_author_meta('user_nicename');?>"><?php the_author_meta('display_name'); ?></a>
-						</p>
+							<span class="fas fa-ticket-alt pl-2 pr-1"></span> <?php echo $numero."_".$anno;
+				if(get_theme_mod('scuola_MTautore_attiva')):?>
+							<span class="fas fa-user-edit pl-2 pr-1"></span> 
+<?php 				if(get_theme_mod('scuola_MTautoreLink_attiva')){?>
+				<a href="<?php echo esc_url(home_url('/'))."author/".get_the_author_meta('user_nicename');?>"><?php the_author_meta('display_name'); ?></a>
+			<?php 	}else{
+						the_author_meta('display_name');
+				  	} 							
+				endif;?>
+				  		</p>
 						<p>
 							<span class="fa fa-users pr-1" aria-hidden="true"></span> <?php echo $Elenco;?>
 				            <?php	if (wps_Is_Circolare_Da_Firmare($ID_post)){?>
@@ -88,6 +95,7 @@
 								</span>
 						<?php }?>
 						</p>
+						</strong>
 					</div>
 <?php		endif;?>				
 				</header>

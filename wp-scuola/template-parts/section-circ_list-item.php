@@ -10,9 +10,23 @@
 			<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 		</h3>
 		<p class="text-muted">
+<?php if(get_theme_mod('scuola_MTdata_attiva')):?>		
 			<span class="far fa-calendar-alt"></span>
-			<strong><a href="<?php echo esc_url(home_url('/'))."circolari-scuola/".get_the_time('Y')."/".get_the_time('m');?>"><?php the_time('j M y'); ?></a> <span class="fas fa-user-edit"></span> <a href="<?php echo esc_url(home_url('/'))."author/".get_the_author_meta('user_nicename');?>"><?php the_author_meta('display_name');?></a><br />
-			<span class="fas fa-ticket-alt"></span> <?php echo $numero."_".$anno;?></strong> <span class="users"><span class="fa fa-users" aria-hidden="true"></span> <?php echo $Elenco;?>
+<?php 	if(get_theme_mod('scuola_MTdataLink_attiva')){?>
+			<a href="<?php echo esc_url(home_url('/'))."circolari-scuola/".get_the_time('Y')."/".get_the_time('m');?>"><?php the_time('j M y'); ?></a>
+<?php 	}else{
+			the_time('j M y');
+	  	}
+	  	endif;	  
+	  	if(get_theme_mod('scuola_MTautore_attiva')):?>	
+	  		<span class="fas fa-user-edit"></span> 
+<?php 	if(get_theme_mod('scuola_MTautoreLink_attiva')){?>	
+			<a href="<?php echo esc_url(home_url('/'))."author/".get_the_author_meta('user_nicename');?>"><?php the_author_meta('display_name');?></a>
+<?php 	}else{
+			the_author_meta('display_name');
+	  	} ?>
+	  	<br />
+			<span class="fas fa-ticket-alt"></span><strong> <?php echo $numero."_".$anno;?></strong> <span class="users"><span class="fa fa-users" aria-hidden="true"></span> <?php echo $Elenco;?>
 <?php	
 	if (wps_Is_Circolare_Da_Firmare($IDCircolare)){?>
 <?php		if (!wps_Is_Circolare_Firmata($IDCircolare)) {

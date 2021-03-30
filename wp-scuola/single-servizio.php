@@ -22,12 +22,26 @@ get_header();
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header>
 					<h3 class="entry-title"><?php the_title(); ?></h3><?php edit_post_link(); ?>
-<?php 				if ( ! post_password_required() ):?>
+<?php 	if ( ! post_password_required() ):?>
 					<div class="row metarticoli">
-								<span class="fas fa-calendar-alt pr-1"></span> <a href="<?php echo esc_url(home_url('/')).get_the_time('Y')."/".get_the_time('m');?>"><?php the_time('j M y'); ?></a>
-								<span class="fas fa-user-edit pr-1 pl-1"></span> <a href="<?php echo esc_url(home_url('/'))."author/".get_the_author_meta('user_nicename');?>"><?php the_author_meta('display_name'); ?></a>
+<?php 		if(get_theme_mod('scuola_MTdata_attiva')):?>
+								<span class="fas fa-calendar-alt pr-1"></span> 
+<?php 			if(get_theme_mod('scuola_MTdataLink_attiva')){?>
+								<a href="<?php echo esc_url(home_url('/')).get_the_time('Y')."/".get_the_time('m');?>"><?php the_time('j M y'); ?></a>
+<?php 			}else{
+					the_time('j M y');
+	  			}
+	  		endif;	  
+	  		if(get_theme_mod('scuola_MTautore_attiva')):?>	
+								   <span class="fas fa-user-edit pr-1 pl-1"></span> 
+<?php 			if(get_theme_mod('scuola_MTautoreLink_attiva')){?>
+	  							   <a href="<?php echo esc_url(home_url('/'))."author/".get_the_author_meta('user_nicename');?>"><?php the_author_meta('display_name'); ?></a>
+<?php 			}else{
+					the_author_meta('display_name');
+	  			} 	
+	  		endif;?>
 					</div>	
-<?php		endif;?>				
+<?php	endif;?>				
 				</header>
 				<section class="entry-content pt-2">
 <?php			get_template_part( 'template-parts/entry','content' ) ; ?>
