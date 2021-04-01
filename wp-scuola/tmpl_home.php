@@ -55,30 +55,26 @@ if(get_theme_mod('Scuola_Hero_Active')){
 <?php 	if ( has_post_thumbnail() ) {
 		$large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'large');
 	?>	
-	<section ID="ContenutoPagina">
-			<div class="container">
-<?php 	}
-		if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-	      <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	         <section class="entry-content">
-	            <?php edit_post_link(); ?>
-	            <?php the_content(); ?>
-	            <div class="entry-links"><?php wp_link_pages(); ?></div>
-	         </section>
-	      </article>
-	      <?php endwhile; endif; ?>
+		<section ID="ContenutoPagina">
+				<div class="container">
+	<?php 	}
+			if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+		      <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+		         <section class="entry-content">
+		            <?php edit_post_link(); ?>
+		            <?php the_content(); ?>
+		            <div class="entry-links"><?php wp_link_pages(); ?></div>
+		         </section>
+		      </article>
+		      <?php endwhile; endif; ?>
 
-	   </div>
-	</section> 
+		   </div>
+		</section> 
 <?php 
 	if(get_theme_mod('scuola_comeevidenza_attiva')){
 		get_template_part( 'template-parts/section', 'in_evidenza_carousel' );
 	}
- ?>
-	</div>
-
-<?php
-	if(get_theme_mod('active_slide_inevidenza')){
+ 	if(get_theme_mod('active_slide_inevidenza')){
 		get_template_part( 'template-parts/section', 'slider' );
 	}
 	if(get_theme_mod('scuola_scuola_attiva')){
@@ -91,13 +87,14 @@ if(get_theme_mod('Scuola_Hero_Active')){
 	$Servizi=get_posts($args);
 //	var_dump($Servizi);
 ?>
-	<section>
-	      <?php if ( is_active_sidebar( 'home-widget-area' ) ) : ?>
-         <div class="row xoxo">
-	            <?php dynamic_sidebar( 'home-widget-area' ); ?>
-	      </div>
-	      <?php endif; ?>
-	</section>
-
+		<section>
+		      <?php if ( is_active_sidebar( 'home-widget-area' ) ) : ?>
+	         <div class="row xoxo">
+		            <?php dynamic_sidebar( 'home-widget-area' ); ?>
+		      </div>
+		      <?php endif; ?>
+		</section>
+	</div>
+</section>
 <?php	
 get_footer();

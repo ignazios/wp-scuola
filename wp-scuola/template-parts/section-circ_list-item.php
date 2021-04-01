@@ -20,11 +20,12 @@
 	  	endif;	  
 	  	if(get_theme_mod('scuola_MTautore_attiva')):?>	
 	  		<span class="fas fa-user-edit"></span> 
-<?php 	if(get_theme_mod('scuola_MTautoreLink_attiva')){?>	
+<?php 		if(get_theme_mod('scuola_MTautoreLink_attiva')){?>	
 			<a href="<?php echo esc_url(home_url('/'))."author/".get_the_author_meta('user_nicename');?>"><?php the_author_meta('display_name');?></a>
-<?php 	}else{
+<?php 		}else{
 			the_author_meta('display_name');
-	  	} ?>
+	  		}
+	  	endif;?>
 	  	<br />
 			<span class="fas fa-ticket-alt"></span><strong> <?php echo $numero."_".$anno;?></strong> <span class="users"><span class="fa fa-users" aria-hidden="true"></span> <?php echo $Elenco;?>
 <?php	

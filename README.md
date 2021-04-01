@@ -49,6 +49,8 @@ facebook: https://www.facebook.com/wpscuola/
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
+- **1.1.9**
+  - ***Corretto*** un bug del modulo circolari
 - **1.1.8**
   - ***Aggiunta*** area in Tema > Impostazioni Scuola > Metadati comunicazioni in cui si possono impostare:
                            Attiva Visualizzazione Data
