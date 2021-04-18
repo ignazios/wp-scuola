@@ -1,5 +1,5 @@
 <?php
-function get_terms_dropdown($taxonomies, $args){
+function my_get_terms_dropdown($taxonomies, $args){
     $myterms = get_terms($taxonomies, $args);
     $optionname = "tipologie";
     $output ="<select style='width: 100px;' name='".$optionname."'><option value=''>Filtra</option>'";
@@ -28,7 +28,7 @@ $args = array('order'=>'ASC','hide_empty'=>true);
     		<button class="btn btn-primary text-center" type="submit" id="searchsubmit" value="Cerca"><span class="fas fa-search"></span></button>
     	</div>
 	  	<div class="col-md-2">
-			<?php echo get_terms_dropdown($taxonomies, $args);?>
+			<?php echo my_get_terms_dropdown($taxonomies, $args);?>
 		</div>
 	</div>
 	</form>

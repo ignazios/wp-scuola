@@ -41,14 +41,22 @@ facebook: https://www.facebook.com/wpscuola/
 				width=larghezza del frame in %              
 				height=altezza del frame in px              
 				scrolling=yes/no/auto]
-				
+	Visualizza una cartella di Googlo Drive Condivisa
+	
 	[faq order=Ordine degli elementi. Se omesso 'ASC'
          orderby=Campo su cui eseguire l'ordinamento. Se omesso 'title'
 		 posts_per_page=Numero di elemnti da visuazlizzare. Se omesso -1(Tutti)
          gruppi=Elenco separato da , dei gruppi da visualizzare. Se omesso vengono estratti tutti i gruppi]
+	Visualizza le FAQ
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
+- **1.2**
+  - ***Corretto*** un bug delo shortcode [at-search] di Amministrazione Trasparente
+  - ***Aggiunti*** gli stili circle - disc - square da utilizzare con l'editor Gutenberg Avanzate > Classe/i CSS aggiuntiva/e per modificare l'elemento grafico dell'enco puntato
+  - ***Aggiunto*** un parametro al widget Servizi che permette di escludere deelle categorie di servizi nella visualizzazione del servizio quando si sceglie la Tipologia di Visualizzazione: Per tipologia di servizio
+#content ul.tratto li:before {content: "-";padding-right: 1em;font-weight: bold;}
+#content ul.tratto l
 - **1.1.9**
   - ***Corretto*** un bug del modulo circolari
 - **1.1.8**

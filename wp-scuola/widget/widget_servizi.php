@@ -41,7 +41,8 @@ class Servizi extends WP_Widget {
         	/** This filter is documented in twp-includes/default-widgets.php */
         	 $title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
              $tipovis = ! empty( $instance['tipovis'] ) ? $instance['tipovis'] :0;
-             $tipologias = ! empty( $instance['tipologias'] ) ? $instance['tipologias'] :0;?>
+             $tipologias = ! empty( $instance['tipologias'] ) ? $instance['tipologias'] :0;
+             $tipologiasDaEscludere=isset($instance['tipologiasDaEscludere'])?$instance['tipologiasDaEscludere']:"";?>
  <section id="art_<?php echo $args['widget_id'];?>"  class="home-widget container">
 		<div class="it-header-block">
 	    	<div class="it-header-block-title">
@@ -65,6 +66,7 @@ class Servizi extends WP_Widget {
 				case 1:
 					$Tipologie=get_categories(array('taxonomy'  	=>"tiposervizio",
 													'hide_empty' 	=> true,
+													'exclude'		=> $tipologiasDaEscludere,
 													'order' 		=> 'ASC',
            											'meta_key'		=> 'ordine',
   													'orderby' 		=> 'meta_value_num'));
@@ -114,7 +116,7 @@ class Servizi extends WP_Widget {
 																        	'field' 	=> 'id',
 																        	'terms' 	=> $tipologias)));
 						$Servizi=get_posts($argServizi);
-						$this->Crea_blocchi($Servizi);
+						$this->Crea_blocchi($Servizi," shadow pl-3 pt-4 pb-4");
 						break;
             } ?>   
 	    	</div>
@@ -136,9 +138,9 @@ class Servizi extends WP_Widget {
 * Funzione che stampa il codice per visualizzare i blocchi dei servizi
 * @return
 */
-	function Crea_blocchi($Servizi){?>
+	function Crea_blocchi($Servizi,$ClassRow=""){?>
 		<div class="container">
-	<div class="row">
+	<div class="row<?php echo $ClassRow;?>">
 <?php 
 		foreach($Servizi as $Servizio){
 			$Servizio_Image=get_the_post_thumbnail_url($Servizio->ID);
@@ -170,6 +172,7 @@ class Servizi extends WP_Widget {
         $instance['title'] = strip_tags($new_instance['title']);
         $instance['tipovis'] = $new_instance['tipovis'];
         $instance['tipologias'] = $instance['tipovis']==2?$new_instance['tipologias']:0;
+        $instance['tipologiasDaEscludere']=strip_tags($new_instance['tipologiasDaEscludere']);
 		return $instance;
 	}
 
@@ -178,7 +181,8 @@ class Servizi extends WP_Widget {
 		$instance = wp_parse_args( (array) $instance, array( ) ); 
 		$titolo = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Servizi', 'wpscuola' );
 		$tipovis = ! empty( $instance['tipovis'] ) ? $instance['tipovis'] :0;
-		$tipologias = ! empty( $instance['tipologias'] ) ? $instance['tipologias'] :0;
+		$tipologias = ! empty( $instance['tipologias'] ) ? $instance['tipologias'] :0;	
+		$tipologiasDaEscludere=isset($instance['tipologiasDaEscludere'])?$instance['tipologiasDaEscludere']:"";
 		?>
            <p>
                 <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Titolo Sezione', 'wpscuola' );?>:</label>
@@ -213,6 +217,12 @@ class Servizi extends WP_Widget {
         	<br />
         	<em><?php _e( 'Questo valore viene utilizzato solo per</em> <strong>Tipologia di visualizzazione</strong>=<em>Singola tipologia di Servizio', 'wpscuola' );?></em>
         	</p>
+      	<p>
+			<label for="<?php echo $this->get_field_id( 'tipologiasDaEscludere' ); ?>"><?php _e( 'Tipologia di servizio da escludere', 'wpscuola' );?>:</label>
+			<input type="text"  id="<?php echo $this->get_field_id( 'tipologiasDaEscludere' ); ?>" name="<?php echo $this->get_field_name( 'tipologiasDaEscludere' ); ?>" value="<?php echo $tipologiasDaEscludere; ?>">
+        	<br />
+        	<em><?php _e( 'Indicare gli <strong>ID</strong> (separati da ,) della Tipologia di visualizzazione da escludere. Valido solo per Tipologia di Visualizzazione</strong>=Tutti i servizi', 'wpscuola' );?></em>
+        </p>
 <?php
 	}
 }

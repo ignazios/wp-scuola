@@ -2893,3 +2893,9 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
     padding-left: 15px;
     padding: 10px;
 }
+
+#content ul.circle li {list-style-type: circle!important;}
+#content ul.disc li {list-style-type: disc!important;}
+#content ul.square li {list-style-type: square!important;}
+#content ul.tratto li:before {content: "-";padding-right: 1em;font-weight: bold;}
+#content ul.tratto li {list-style-type: none!important;}

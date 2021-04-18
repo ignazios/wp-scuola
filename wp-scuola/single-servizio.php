@@ -17,7 +17,7 @@ get_header();
    <div class="container-fluid">
       <div class="row">
 
-      <div class="col-12 col-lg-9">
+      <div class="col-12 col-lg-9 pr-5 pl-5">
 		   <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); scuola_set_post_view();?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header>

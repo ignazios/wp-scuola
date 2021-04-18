@@ -706,7 +706,7 @@ if (function_exists("at_sezioni_shtc")){
 	    return $atshortcode;
 	} add_shortcode('at-sezioni', 'my_at_sezioni_shtc');
 }
-if (function_exists("at_sezioni_shtc")){
+if (function_exists("at_search_shtc")){
 	remove_shortcode('at-search');
 	function my_at_search_shtc($atts)  {
 	    ob_start();
