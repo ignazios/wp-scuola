@@ -272,7 +272,7 @@ class Articoli_Griglia extends WP_Widget {
 
    		<p>
    			<?php $checked = ( $leggitutto ) ? ' checked=\"checked\" ' : ''; ?>
-    		<input type="checkbox" id="<?php echo $this->get_field_id('leggitutto'); ?>" name="<?php echo $this->get_field_name('leggitutto'); ?>" value="true" <?php echo $leggitutto; ?>/>
+    		<input type="checkbox" id="<?php echo $this->get_field_id('leggitutto'); ?>" name="<?php echo $this->get_field_name('leggitutto'); ?>" value="true" <?php echo $checked; ?>/>
     		<label for="<?php echo $this->get_field_id('leggitutto'); ?>"><?php _e( 'Visualizza il link Leggi tutto.','wpscuola' ); ?></label>
     	</p>
     <?php

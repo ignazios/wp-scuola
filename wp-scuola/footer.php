@@ -112,15 +112,15 @@
 	            <div class="link-list-wrapper">
 	              <ul class="footer-list link-list clearfix">
 	       <?php	if (get_theme_mod('Scuola_Amministrazione_Email')!=""){
-	          			echo "<li><a href=\"".get_theme_mod('Scuola_Amministrazione_Email')."\">".get_theme_mod('Scuola_Amministrazione_Email')."</a>
+	          			echo "<li><a href=\"mailto:".get_theme_mod('Scuola_Amministrazione_Email')."\">".get_theme_mod('Scuola_Amministrazione_Email')."</a>
 	          				  </li>";
 	         		}
 	 				if (get_theme_mod('Scuola_Amministrazione_Email2')!=""){
-	          			echo "<li><a href=\"".get_theme_mod('Scuola_Amministrazione_Email2')."\">".get_theme_mod('Scuola_Amministrazione_Email2')."</a>
+	          			echo "<li><a href=\"mailto:".get_theme_mod('Scuola_Amministrazione_Email2')."\">".get_theme_mod('Scuola_Amministrazione_Email2')."</a>
 	          				  </li>";            
 	         		}
 	 				if (get_theme_mod('Scuola_Amministrazione_PEC')!=""){
-	          			echo "<li><a href=\"".get_theme_mod('Scuola_Amministrazione_PEC')."\">".get_theme_mod('Scuola_Amministrazione_PEC')."</a>
+	          			echo "<li><a href=\"mailto:".get_theme_mod('Scuola_Amministrazione_PEC')."\">".get_theme_mod('Scuola_Amministrazione_PEC')."</a>
 	          				  </li>";          
 	         		}?>
 	          	 </ul>
@@ -234,5 +234,7 @@
     	var wpscuolajaxsec = "<?php echo wp_create_nonce('WPScuolaSecret');?>";
     	var ajaxurl = '/wp-admin/admin-ajax.php';
 	</script>
+<?php	echo get_theme_mod('scuola_footer_script');?>
+
 </body>
 </html>

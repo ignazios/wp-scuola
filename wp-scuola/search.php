@@ -53,39 +53,40 @@ function my_get_archives()
 					</li>';
 				}
 				$Result.='
-				<li>
-						<div class="row">
-							<div class="col-9 p-0 mb-0">
-								<a class="list-item large" href="'.esc_url(home_url('/')).$Anno.'/?s='.$TestoSearch.'">
-									<span class="m-0">'.$Anno.'</span>
-								</a>						
-							</div>
-							<div class="col-1 m-0">
-								<span class="badge badge-pill badge-primary text-white">'.sum_ArtAnno($ArchivioDate,$Anno).'</span>
-							</div>
-							<div class="col-2 p-0">
-							<a class="list-item" href="'."#S".$Anno.'M'.$Mese.'" data-toggle="collapse" aria-expanded="false" aria-controls="S'.$Anno.'M'.$Mese.'">
-							<span class="fas fa-angle-down fa-2x"></span>
-								</a>
-							</div>
-						</div>
+			<li>
+				<div class="row pt-2">
+					<div class="col-1">
+						<a class="list-item" href="#M'.$Anno.$Mese.'" data-toggle="collapse" aria-expanded="false" aria-controls="'.'M'.$Anno.$Mese.'"><span class="fas fa-angle-down  espandi align-middle"></span>
+						</a>					
+					</div>				
+					<div class="col-9 mb-0">
+						<a class="list-item large" href="'.esc_url(home_url('/')).$Anno.'/?s='.$TestoSearch.'">
+							<span class="m-0 pl-1"><strong>'.$Anno.'</strong></span>
+						</a>						
+					</div>
 
-						<ul class="link-sublist collapse" id="S'.$Anno.'M'.$Mese.'">';
+					<div class="col-2 m-0 p-0">
+						<span class="badge badge-pill badge-primary text-white">'.sum_ArtAnno($ArchivioDate,$Anno).'</span>
+					</div>
+				</div>
+
+				<ul class="link-sublist collapse" id="M'.$Anno.$Mese.'">';						
 				$CAnno=$Anno;
 			}
 			$Result.='
-					<li>
-						<a class="list-item subele pl-0" href="'.esc_url(home_url('/')).$Anno."/".$Mese.'/?s='.$TestoSearch.'">
-							<div class="row">
-								<div class="col-10">	
-									<span class="m-0">'.$mesi[$Mese].'</span>
-								</div>
-								<div class="col-2 m-0">
-									<span class="badge badge-pill badge-primary text-white">'.$CountArt.'</span>
-								</div>
-							</div>
-						</a>
-					</li>';	
+				<li>
+					<div class="row">
+						<div class="col-10">	
+							<a class="list-item medium pl-0 pt-2 pb-2" href="'.esc_url(home_url('/')).$Anno."/".$Mese.'/?s='.$TestoSearch.'">
+								<span class="m-0">'.$mesi[$Mese].'</span>
+							</a>
+						</div>
+						<div class="col-2 m-0">
+							<span class="badge badge-pill badge-primary text-white">'.$CountArt.'</span>
+						</div>
+					</div>
+					</a>
+				</li>';			  	
 		}		  			
 	}
 	return $Result;
@@ -96,6 +97,8 @@ if ( have_posts() And (strlen( trim(get_search_query()))) >= 1){
 }else{
 	$SearchOk=FALSE;
 }
+wp_parse_str( $query_string, $search_query );
+$TestoSearch=$search_query["s"];
 ?>
 <section id="content" role="main" class="container">
    <div class="container affix-parent">
@@ -106,7 +109,7 @@ if ( have_posts() And (strlen( trim(get_search_query()))) >= 1){
 	                <div class="cerca">
 						<form class="Form" method="get" role="search" action="<?php echo esc_url(home_url('/')); ?>">
 							<label class="sr-only" for="search_text_page"><?php _e("Ricerca all'interno del sito","wpscuola");?></label>
-							<input type="text" value="" name="s" required id="search_text_page">
+							<input type="text" name="s" required id="search_text_page" value="<?php echo (isset($TestoSearch)?$TestoSearch:"");?>">
 							<button class="btn btn-default btn-cerca pull-right" name="submit" title="<?php echo __('Avvia la ricerca','wpscuola'); ?>" aria-label="<?php echo __('Avvia la ricerca','wpscuola'); ?>">
 								<svg class="icon">
 								<use xlink:href="<?php bloginfo('template_url'); ?>/static/img/ponmetroca.svg#ca-search"></use>
@@ -141,12 +144,14 @@ if ( have_posts() And (strlen( trim(get_search_query()))) >= 1){
 <?php get_template_part( 'template-parts/pagin' ); ?>
 		  </div>
 		  <div class="col-12 col-lg-3">
-			  <div class="link-list-wrapper p-1">
-					<div class="link-list-wrapper shadow p-1 mt-5">
-						<h4 class="TitoloArchivio"><?php _e( 'Data di Pubblicazione', 'wpscuola' ); ?></h4>
-						<ul class="link-list" id="ListaCategorieData">				
-							<?php echo my_get_archives(); ?>
-						</ul>
+			  <div id="archcat" class="container">
+				  <div class="link-list-wrapper p-1">
+						<div class="link-list-wrapper shadow p-1 mt-5">
+							<h4 class="TitoloArchivio"><?php _e( 'Data di Pubblicazione', 'wpscuola' ); ?></h4>
+							<ul class="link-list collapse show" id="ListaCategorieData">			
+								<?php echo my_get_archives(); ?>
+							</ul>
+						</div>
 					</div>
 				</div>
 		  </div>

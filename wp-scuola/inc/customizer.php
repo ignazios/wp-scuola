@@ -323,6 +323,16 @@ $wp_customize->add_control('scuola_mappa_frame', array(
     'section' => 'Scuola_Footer_Settings', 
     'settings' => 'scuola_mappa_frame',
     'priority'	=> 4));  
+$wp_customize->add_setting('scuola_footer_script', array(
+    'default' => "", 
+    'capability' => 'edit_theme_options'));
+$wp_customize->add_control('scuola_footer_script', array(
+    'type' => 'textarea', 
+    'label' => 'Codice da inserire nel footer',
+    'description' => 'Il codice inserito in questa textarea verrà riportata nel footer di ogni pagina<br />FARE ATTENZIONE AL CODICE CHE SI INSERISCE, VALIDARLO PRIMA DELL\'INSERIMENTO',
+    'section' => 'Scuola_Footer_Settings', 
+    'settings' => 'scuola_footer_script',
+    'priority'	=> 5));  
 /**
 *  Sotto Pannello Cookies
 */
@@ -1124,7 +1134,7 @@ $wp_customize->add_setting( 'scuola_text_color' , array(
     'sanitize_callback' => 'sanitize_hex_color',
   ) );
   $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'scuola_button_text_color', array(
-    'label'       => __( 'Footer Colore del testo', 'scuola' ),
+    'label'       => __( 'Colore del testo dei Bottoni', 'scuola' ),
     'section'     => 'colors',
     'settings'     => 'scuola_button_text_color'
   ) ) );

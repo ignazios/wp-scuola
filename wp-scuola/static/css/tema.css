@@ -110,7 +110,10 @@ table, table td, table th {
 	#content .wp-block-advgb-summary li.toc-level-3{
 		padding-left: 15px!important;
 	}
-	
+	.link-list-wrapper ul li.page_item a:hover {
+		border-left: 4px solid #1e73be;
+		margin-left: -4px;
+	}
 /* =WordPress Core */
 @media screen and (max-width: 600px){
 	#wpadminbar {
@@ -1576,6 +1579,9 @@ ul.navmenu {
 }
 
 @media (max-width: 576px) {
+	.media {
+    	display: block!important;
+	} 
     #mainheader .preheader .entesup {
         margin: 0;
     }
@@ -2899,3 +2905,144 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
 #content ul.square li {list-style-type: square!important;}
 #content ul.tratto li:before {content: "-";padding-right: 1em;font-weight: bold;}
 #content ul.tratto li {list-style-type: none!important;}
+
+.mycard {
+  background: #fefefe;
+  padding: 16px 26px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+  line-height: 1.5em;
+  border-radius: 30px 30px 30px 30px;
+  -moz-border-radius: 30px;
+  -webkit-border-radius:30px;
+  -webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.35), 0px 0px 8px 0px rgba(79, 79, 79, 0.1);
+  -moz-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.35), 0px 0px 8px 0px rgba(79, 79, 79, 0.1);
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.35), 0px 0px 8px 0px rgba(79, 79, 79, 0.1);
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  height: 250px;
+}
+
+.mycard a {
+  font-weight: 600;
+  color: #0066cc;
+}
+.mycard h3 {
+  font-size: 1.2em;
+  text-align: center;
+  color: #004d99;
+  font-weight: 600;
+}
+.mycard h3 a {
+  color: #0066cc;
+}
+.mycard h3 + p {
+  color: #404040;
+  line-height: 26px;
+  margin-bottom: 25px;
+}
+.mycard-domande {
+  border-top: 10px solid #4fe267
+}
+.mycard-domande-Rosso {
+  border-top: 10px solid #d9364f;
+}
+.mycard-domande-Verde {
+  border-top: 10px solid #008758;
+}
+.mycard-domande-Blue {
+  border-top: 10px solid #06c;
+}
+.mycard-domande-Marrone {
+   border-top: 10px solid #a66300;
+}
+.mycard-domande-Grigio {
+  border-top: 10px solid #5c6f82;
+}
+.mycard-rotate {
+  /* transform: rotate(5deg); */
+  display: block;
+  position: relative;
+  /* top:-30px; */
+}
+a.mycard-rotate:hover{
+	text-decoration: none !important;
+}
+a:hover .mycard {
+  text-decoration: none !important;
+  -webkit-box-shadow: 0px 20px 15px 0px rgba(0, 0, 0, 0.20), 0px 0px 0px 0px rgba(79, 79, 79, 0.1);
+  -moz-box-shadow: 0px 20px 15px 0px rgba(0, 0, 0, 0.20), 0px 0px 0px 0px rgba(79, 79, 79, 0.1);
+  box-shadow: 0px 20px 15px 0px rgba(0, 0, 0, 0.20), 0px 0px 0px 0px rgba(79, 79, 79, 0.1);
+}
+.mycard p {
+  color: #404040;
+  font-weight: 400;
+}
+
+.mycard-direction {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  padding: 6px 0px;
+  text-align: center;
+  font-size: 0.6em;
+  text-transform: uppercase;
+  color: #727272;
+  font-weight: bold;
+  border-top: 1px solid #e1e1e1;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  border-radius: 0px 0px 30px 30px;
+}
+
+a:hover .mycard-direction-Rosso {
+  color: #ffffff;
+  background: #d9364f;
+}
+a:hover .mycard-direction-Verde {
+  color: #ffffff;
+  background: #008758;
+}
+a:hover .mycard-direction-Blue {
+  color: #ffffff;
+  background: #06c;
+}
+a:hover .mycard-direction-Marrone {
+  color: #ffffff;
+  background: #a66300;
+}
+a:hover .mycard-direction-Grigio {
+  color: #ffffff;
+  background: #5c6f82;
+}
+.mycard-rotate p.myicona-Rosso{
+	font-size: 4em;
+	text-align: center;
+	color: #d9364f;
+}
+.mycard-rotate p.myicona-Verde{
+	font-size: 4em;
+	text-align: center;
+	color: #008758;
+}
+.mycard-rotate p.myicona-Blue{
+	font-size: 4em;
+	text-align: center;
+	color: #06c;
+}
+.mycard-rotate p.myicona-Marrone{
+	font-size: 4em;
+	text-align: center;
+	color: #a66300;
+}
+.mycard-rotate p.myicona-Grigio{
+	font-size: 4em;
+	text-align: center;
+	color: #5c6f82;
+}

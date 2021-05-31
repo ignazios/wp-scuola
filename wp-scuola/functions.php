@@ -65,6 +65,7 @@ add_action( 'template_redirect', 			'Gestione_DwnLink');
 add_action( 'wp_ajax_ResetCounter',			'scuola_reset_counter' );
 add_action( 'add_attachment', 				'scuola_ripulisci_titolofile' );
 add_action( 'after_setup_theme', 			'scuola_tema_imposta_valori_default' );
+add_action( 'pre_get_posts', 				'scuola_custom_post_archive_changes' );
 
 add_shortcode('articoli', 					'GetArticoliCategoria');
 add_shortcode('gfolderdrive', 				'VisualizzaCartellaDrive');
@@ -72,6 +73,16 @@ add_shortcode('canccookies', 				'CancellaCookies');
 add_shortcode('viscookies', 				'VisualizzaCookies');
 add_shortcode('feedrss', 					'VisualizzaFeedRSS');
 
+/**
+* Funzione che permette di ignorare gli articoli in evidenza nell'archivio.
+* Con questa funzione gli articoli sticky_posts vengono riportati nell'elenco dei posts nella posizione naturale
+**/
+function scuola_custom_post_archive_changes( $query ) {
+    if ( !is_post_type_archive() && $query->is_main_query() ) {
+        $query->set( 'ignore_sticky_posts' , 1 );
+
+    }
+}
 /**
 *Funzione che imposta i valori di default del tema
 */
@@ -1109,7 +1120,7 @@ function scuola_customize_head() {
     .navbar .navbar-collapsable .navbar-nav li a.nav-link,#mainheader, .my-bg-primary, .it-header-navbar-wrapper, .it-header-wrapper { background-color: <?php echo $ColoreHeader; ?>!important;}
     body, .affix-top {background-color:<?php echo $ColoreBody; ?>;}
     #mainheader .cerca input{
-		color: <?php echo $ColoreTestoBottone; ?>;
+		color: <?php echo $ColoreTestoHeader; ?>;
     	border-bottom: 1px solid <?php echo $ColoreLinkHeader; ?>;
 	}
 	table th, .thead-dark th {

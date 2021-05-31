@@ -51,6 +51,17 @@ facebook: https://www.facebook.com/wpscuola/
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
+- **1.2.1**
+  - ***Corretti*** alcuni bug minori:
+  Footer; gestione indirizzi email
+  Colore Testo Bottoni
+  Plugin Circolari; corretto errore gestione testi 
+  Widget Articoli Griglia; nelle impostazioni non veniva visualizzato correttamente il flag Leggi Tutto
+  Widget Link; corretto il testo alternativo dell'immagine
+  - ***Aggiunto*** in Aspetto > Personalizza > Impostazioni Scuola > Impostazioni del Footer inserita la sezione **Codice da inserire nel footer** che permette di inserire script nel footer delle pagine es. scpript per l'inserimento di UserWay
+  - ***Corretto*** il comportamento dell'archivio degli articoli che mostrava in testa all'elenco gli articoli in evidenza, adesso vengono riportati tutti in ordine cronologico
+  - ***Modificata*** la gestione grafica dell'archivio degli articoli risultato della ricerca
+  - ***Aggiunta*** nuova modalità di visualizzazione dei blocchi **Piatti**(quello attuale),**Card**. Aggiunto anche il campo ***Vai a*** per la visualizzazione Card 
 - **1.2**
   - ***Corretto*** un bug delo shortcode [at-search] di Amministrazione Trasparente
   - ***Aggiunti*** gli stili circle - disc - square da utilizzare con l'editor Gutenberg Avanzate > Classe/i CSS aggiuntiva/e per modificare l'elemento grafico dell'enco puntato
