@@ -26,7 +26,7 @@ https://github.com/ignazios/wp-scuola
 ## Supporto
 facebook: https://www.facebook.com/wpscuola/
 ## Tema verificato per le seguenti versioni
- - **Wordpress** 	*5.0* - *5.6*
+ - **Wordpress** 	*5.0* - *5.7.2*
  - **PHP** 		*7.0*
 ## Shortcode
 	[articoli id_categoria=ID della categoria da cui estrarre gli articoli (=0 oppure omesso se si vogliono elencare gli articoli per tag)           
@@ -51,6 +51,12 @@ facebook: https://www.facebook.com/wpscuola/
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
+- **1.2.2**
+  - ***Corretti*** alcuni bug minori
+  - ***Aggiunta*** la gestione degli **Eventi Scolastici**. Per attivare il Modulo andare in Aspetto > Personalizza > Impostazioni Scuola > Moduli funzionalità > Attiva il modulo Eventi
+				   Si attiverà la voce di menu Eventi Scolastici che permette la gestione degli eventi che sono un CustomPostType con i seguenti campi specifici:
+				   URL dell'Evento, Titolo del pulsante dell'Evento, Destinazione link Evento, Data di scadenza dell'Evento e Banner Evento (750x1200)
+				   Gli eventi vengono visualizzati in Home Page ad inizio pagina, dopo l'eventuale Hero, vengono implementati tramite schede Flip sul fronte c'è il Banner e sul retro il Riassunto dell'evento con il link alla pagina dell'evento e l'eventuale pulsante per andare al link dell'evento
 - **1.2.1**
   - ***Corretti*** alcuni bug minori:
   Footer; gestione indirizzi email
