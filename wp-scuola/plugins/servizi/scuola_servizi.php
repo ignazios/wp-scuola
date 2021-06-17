@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: SiSviluppo_FAQ
+ * Plugin Name: Servizi
  * Plugin URI:
- * Description: Plugin per la gestione di FAQs
+ * Description: Plugin per la gestione dei Servizi
  *
  * Version: 0.1
  *

@@ -71,6 +71,9 @@ if(get_theme_mod('Scuola_Hero_Active')){
 		   </div>
 		</section> 
 <?php 
+	if(get_theme_mod('scuola_eventi_attiva')){
+		get_template_part( 'template-parts/section', 'eventi' );
+	}
 	if(get_theme_mod('scuola_comeevidenza_attiva')){
 		get_template_part( 'template-parts/section', 'in_evidenza_carousel' );
 	}

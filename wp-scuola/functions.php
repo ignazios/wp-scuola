@@ -39,7 +39,6 @@ add_filter( 'manage_posts_columns', 		'scuola_posts_column_views' );
 add_filter( 'render_block', 				'personaliza_file_render', 10, 3);
 add_filter( 'wp_get_attachment_image_attributes', 'scuola_attributi_img',10,2);
 add_filter( 'sanitize_file_name', 			'scuola_ripulisci_filenames', 10, 1 );
-
 /**
 * Riattiva la gestione dei link standard di Wordpress 
 * I link vengono utilizzati in home page nel widget GalleraLinks
@@ -690,6 +689,10 @@ if(get_theme_mod('scuola_faq_attiva')){
 	require get_template_directory() . '/plugins/faq/scuola_faq.php';
 	$my_faq=new ScuolaFAQ();
 }
+if(get_theme_mod('scuola_eventi_attiva')){
+	require get_template_directory() . '/plugins/eventi/scuola_eventi.php';
+	$my_eventi=new ScuolaEventi();
+}	 
 if(get_theme_mod('scuola_servizi_attiva')){
 	require get_template_directory() . '/plugins/servizi/scuola_servizi.php';
 	$my_servizi=new ScuolaServizi();

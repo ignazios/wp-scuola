@@ -562,6 +562,20 @@ $wp_customize->add_control('scuola_faq_attiva', array(
     'type' => 'checkbox', 
     'section' => 'Scuola_Moduli_Settings', 
     'settings' => 'scuola_faq_attiva'));
+
+$wp_customize->add_setting('scuola_eventi_attiva', array(
+    'default' => false, 
+    'capability' => 'edit_theme_options', 
+    'sanitize_callback' => 'scuola_sanitize_checkbox'));
+$wp_customize->add_control('scuola_eventi_attiva', array(
+    'label' => 'Attiva il modulo Eventi',
+    'description'	=>' Il modulo prevede un Custom Post Type <em><strong>scuola_eventi</strong></em> ed un blocco che viene visualizzato in Home Page come primo elemento',
+    'priority'	=> 2,
+    'type' => 'checkbox', 
+    'section' => 'Scuola_Moduli_Settings', 
+    'settings' => 'scuola_eventi_attiva'));
+
+
 $wp_customize->add_setting('scuola_servizi_attiva', array(
     'default' => false, 
     'capability' => 'edit_theme_options', 
@@ -569,7 +583,7 @@ $wp_customize->add_setting('scuola_servizi_attiva', array(
 $wp_customize->add_control('scuola_servizi_attiva', array(
     'label' => 'Attiva il modulo Servizi',
     'description'	=>' Il modulo prevede un Custom Post Type <em><strong>servizio</strong></em> ed un widget che permette di interfacciare i servizi',
-    'priority'	=> 2,
+    'priority'	=> 3,
     'type' => 'checkbox', 
     'section' => 'Scuola_Moduli_Settings', 
     'settings' => 'scuola_servizi_attiva'));
@@ -580,7 +594,7 @@ $wp_customize->add_setting('scuola_circolari_attiva', array(
 $wp_customize->add_control('scuola_circolari_attiva', array(
     'label' => 'Attiva il modulo Circolari',
     'description'	=>' Il modulo permette di integrare la gestione delle Circolari Scolastiche' ,
-    'priority'	=> 3,
+    'priority'	=> 4,
     'type' => 'checkbox', 
     'section' => 'Scuola_Moduli_Settings', 
     'settings' => 'scuola_circolari_attiva'));
@@ -591,7 +605,7 @@ $wp_customize->add_setting('scuola_modpren_attiva', array(
 $wp_customize->add_control('scuola_modpren_attiva', array(
     'label' => 'Attiva il modulo Prenotazioni',
     'description'	=>' Il modulo permette di integrare la gestione delle Prenotazione degli spazi scolastici' ,
-    'priority'	=> 4,
+    'priority'	=> 5,
     'type' => 'checkbox', 
     'section' => 'Scuola_Moduli_Settings', 
     'settings' => 'scuola_modpren_attiva'));
@@ -602,7 +616,7 @@ $wp_customize->add_setting('scuola_modorarioArgo_attiva', array(
 $wp_customize->add_control('scuola_modorarioArgo_attiva', array(
     'label' => 'Attiva il modulo Orario Argo',
     'description'	=>' Il modulo permette di visualizzare l\'orario scolastico attraverso l\'importazione dei dati dal programma ARGO Darwin' ,
-    'priority'	=> 5,
+    'priority'	=> 6,
     'type' => 'checkbox', 
     'section' => 'Scuola_Moduli_Settings', 
     'settings' => 'scuola_modorarioArgo_attiva'));
