@@ -7,7 +7,6 @@
  * @copyright 2011-2014
  * @ver 2.7.3
  */
-
 function wps_circolari_VisualizzaArchivio()
 {
 global $msg,$wps_TestiRisposte,$wps_Testi;
@@ -47,7 +46,7 @@ global $msg,$wps_TestiRisposte,$wps_Testi;
 			</tfoot>
 			<tboby>';
 	foreach($Posts as $post){
-	//print_r($post);
+//	print_r($post);
 		if (!(wps_Is_Circolare_Pubblica($post->ID) Or wps_Is_Circolare_per_User($post->ID)))
 			continue;
 		$sign=get_post_meta($post->ID, "_sign",TRUE);
@@ -84,33 +83,40 @@ global $msg,$wps_TestiRisposte,$wps_Testi;
 						$Campo_Firma="Non Firmata";
 					}
 				}else{
-					$Campo_Firma=$wps_TestiRisposte[wps_get_Circolare_Adesione($post->ID)]->get_Risposta();
+					$Campo_Firma=(is_null($wps_TestiRisposte[wps_get_Circolare_Adesione($post->ID)])?"Errore rosposta":$wps_TestiRisposte[wps_get_Circolare_Adesione($post->ID)]->get_Risposta());
 				}
-			}
-		}
+//				if(is_null($wps_TestiRisposte[wps_get_Circolare_Adesione($post->ID)]))
+//					echo $post->ID;
+				$Campo_Firma=(is_null($wps_TestiRisposte[wps_get_Circolare_Adesione($post->ID)])?"Errore rosposta":$wps_TestiRisposte[wps_get_Circolare_Adesione($post->ID)]->get_Risposta());
+				}
+        }
 //		setup_postdata($post);
 //		$dati_firma=wps_get_Firma_Circolare($post->ID);
+		if(is_null(Circolari_Tipo::get_TipoCircolare($sign)))
+			$TC='<span style="color:red;font-weight: bold;">ERRORE: tipo circolare errato</span>';
+		else
+			$TC=Circolari_Tipo::get_TipoCircolare($sign)->get_DescrizioneTipo();
 		echo "
 				<tr>
 					<td> ".wps_GetNumeroCircolare($post->ID)."</td>
 					<td>
-					<a href='".get_permalink( $post->ID )."'>
-					$post->post_title
-					</a>
+						<a href='".get_permalink( $post->ID )."'>
+						$post->post_title
+						</a>
+					</td> 
 					</td> 
 					<td>".wps_FormatDataItalianoBreve(substr($post->post_date,0,10),TRUE)."</td>
-					<td>".Circolari_Tipo::get_TipoCircolare($sign)->get_DescrizioneTipo()."</td>
+					<td>".$TC."</td>
 					<td><spam style='$BGC'>".wps_FormatDataItalianoBreve(wps_Get_scadenzaCircolare( $post->ID,"" ),TRUE)." $GGDiff</spam></td>
 					<td>$RimuoviFirma $Campo_Firma</td>
 					<td>".wps_FormatDataItalianoBreve(wps_Get_Data_Firma($post->ID),TRUE)."</td>
 				</tr>";
-	}	
+	}
 	echo '
 				</tbody>
 			</table>
 		</div>';	
 }
-
 function wps_circolari_GestioneFirme()
 {
 global $msg;
@@ -156,7 +162,6 @@ function wps_VisualizzaTabellaCircolari(){
 		else{
 			$seconds_diff = strtotime($Scadenza) - strtotime(date("Y-m-d"));
 			$GGDiff=floor($seconds_diff/3600/24);
-
 		}
 		switch ($GGDiff){
 			case ($GGDiff <3):
@@ -208,5 +213,4 @@ function wps_VisualizzaTabellaCircolari(){
 				</tbody>
 			</table>
 		</div>';
-
 }

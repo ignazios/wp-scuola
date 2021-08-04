@@ -1001,6 +1001,40 @@ $lista="";
 $azione= filter_input(INPUT_GET, "action");
 if($azione){
 	switch ($azione){
+		
+		
+		case "vertipo":
+			$MeLink=$_SERVER['REQUEST_URI'];
+			echo "<p style='text-align:center;font-size:1.5em;font-weight: bold;'>".__( 'Stato Operazioni', 'wpscuola' ).":</p>";
+				$Posts = get_posts('post_type=circolari_scuola&numberposts=-1');
+				foreach($Posts as $post){
+					$sign=get_post_meta($post->ID, "_sign",TRUE);
+					if(is_null(Circolari_Tipo::get_TipoCircolare($sign))){
+						$permalink="/wp-admin/post.php?post=".$post->ID."&action=edit";
+						$lista.="			<li><a href='$permalink'  target='_blank'>$post->ID $post->post_title</a>";
+						$lista.=' &nbsp;<span style="color:red;font-weight: bold;">ERRORE: tipo circolare errato</span>';
+						$lista.= "</li>";					
+					}
+				}
+				if (!empty($lista)){
+					echo "<a href='$MeLink'>".__( 'Aggiorna Lista', 'wpscuola' )."</a> <h4>".__( 'Circolari con Tipo Circolare ERRATO', 'wpscuola' )."</h4>
+			<ul>
+					$lista
+			</ul>";
+			}else{
+				echo "<h4 style='color:green;font-weight: bold;'>".__( 'Nessun errore sul Tipo di Circolare riscontrato', 'wpscuola' )."</h4>";
+			}
+				
+			break;		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		case "versca":			
 			echo "<p style='text-align:center;font-size:1.5em;font-weight: bold;'>'.__( 'Stato Operazioni', 'wpscuola' ).':</p>";
 				$GGscadenza=get_option("Circolari_GGScadenza");
@@ -1219,6 +1253,16 @@ if($azione){
 	echo '		</div> 
 			<p></p>
 			<div class="widefat" style="padding:10px;">
+			
+				<p style="text-align:center;font-size:1.5em;font-weight: bold;">'.__("Verifica Tipo circolare", 'wpscuola' ).'</p>
+				<ul>
+					<li> '.__("Questa procedura esegue una verifica sulle circoalri per identificare le circolari che hanno un 'Tipo Circoalre' errato o non definito", 'wpscuola' ).'</spam><br /><spam style="font-size:1em;font-style: italic;margin-left:10px;font-weight: bold;">
+		'.__("Verifica Tipo Circolare", 'wpscuola' ).' <spam style="text-align:center;font-size:1.5em;font-weight: bold;"> <a href="edit.php?post_type=circolari_scuola&page=Utility&action=vertipo">'.__("Verifica", 'wpscuola' ).'</a></spam>
+					</li>
+				</ul>			
+			
+			
+			
 				<p style="text-align:center;font-size:1.5em;font-weight: bold;">'.__("Verifica procedura", 'wpscuola' ).'</p>
 				<ul>
 					<li> '.__("Questa procedura esegue un test generale della procedura e riporta eventuali anomalie nei dati e nelle impostazioni.", 'wpscuola' ).'</spam><br /><spam style="font-size:1em;font-style: italic;margin-left:10px;font-weight: bold;">

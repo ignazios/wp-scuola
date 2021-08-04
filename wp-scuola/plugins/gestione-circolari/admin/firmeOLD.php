@@ -84,17 +84,12 @@ global $msg,$wps_TestiRisposte,$wps_Testi;
 						$Campo_Firma="Non Firmata";
 					}
 				}else{
-					if(is_null($wps_TestiRisposte[wps_get_Circolare_Adesione($post->ID)]))
-						echo $post->ID;
-					$Campo_Firma=$wps_TestiRisposte[wps_get_Circolare_Adesione($post->ID)]->get_Risposta();				}
+					$Campo_Firma=$wps_TestiRisposte[wps_get_Circolare_Adesione($post->ID)]->get_Risposta();
+				}
 			}
 		}
 //		setup_postdata($post);
 //		$dati_firma=wps_get_Firma_Circolare($post->ID);
-		if(is_null(Circolari_Tipo::get_TipoCircolare($sign)))
-			$TC='<span style="color:red;font-weight: bold;">ERRORE: tipo circolare errato</span>';
-		else
-			$TC=Circolari_Tipo::get_TipoCircolare($sign)->get_DescrizioneTipo();
 		echo "
 				<tr>
 					<td> ".wps_GetNumeroCircolare($post->ID)."</td>
@@ -104,7 +99,7 @@ global $msg,$wps_TestiRisposte,$wps_Testi;
 					</a>
 					</td> 
 					<td>".wps_FormatDataItalianoBreve(substr($post->post_date,0,10),TRUE)."</td>
-					<td>".$TC."</td>
+					<td>".Circolari_Tipo::get_TipoCircolare($sign)->get_DescrizioneTipo()."</td>
 					<td><spam style='$BGC'>".wps_FormatDataItalianoBreve(wps_Get_scadenzaCircolare( $post->ID,"" ),TRUE)." $GGDiff</spam></td>
 					<td>$RimuoviFirma $Campo_Firma</td>
 					<td>".wps_FormatDataItalianoBreve(wps_Get_Data_Firma($post->ID),TRUE)."</td>

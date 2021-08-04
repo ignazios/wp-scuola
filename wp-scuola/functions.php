@@ -39,6 +39,11 @@ add_filter( 'manage_posts_columns', 		'scuola_posts_column_views' );
 add_filter( 'render_block', 				'personaliza_file_render', 10, 3);
 add_filter( 'wp_get_attachment_image_attributes', 'scuola_attributi_img',10,2);
 add_filter( 'sanitize_file_name', 			'scuola_ripulisci_filenames', 10, 1 );
+add_filter( 'upload_mimes', 				'my_myme_types', 1, 1 );
+/**
+* Disattiva il gestore a Blocchi dei Widget 
+*/
+add_filter( 'use_widgets_block_editor', '__return_false' );
 /**
 * Riattiva la gestione dei link standard di Wordpress 
 * I link vengono utilizzati in home page nel widget GalleraLinks
@@ -71,6 +76,13 @@ add_shortcode('gfolderdrive', 				'VisualizzaCartellaDrive');
 add_shortcode('canccookies', 				'CancellaCookies');
 add_shortcode('viscookies', 				'VisualizzaCookies');
 add_shortcode('feedrss', 					'VisualizzaFeedRSS');
+
+
+function my_myme_types( $mime_types ) {
+  $mime_types['zip'] = 'application/zip';     // Adding .zip extension
+    
+  return $mime_types;
+}
 
 /**
 * Funzione che permette di ignorare gli articoli in evidenza nell'archivio.
@@ -277,7 +289,11 @@ function VisualizzaCartellaDrive($Parametri) {
 <?php return ob_get_clean();
 }
 /****************************************************** 
-* Funzione per la gestione del download dei files
+* Shortcode per visualizzare gli articoli filtrati
+* [articoli id_categoria=Id della categoria da filtrare 
+            id_tag=ID del tag da filtrare
+            numero=numero di articoli da filtrare
+            imgevidenza=immagine in evidenza<center></center>]
 *******************************************************/
 function GetArticoliCategoria($Parametri){
 	$ret="";
@@ -355,14 +371,14 @@ function Gestione_DwnLink(){
 	if(isset($_REQUEST['action'])){
 		switch ($_REQUEST['action']){
 		case "dwattachment":
-//			var_dump($_SERVER);
+/*			var_dump($_SERVER);
 			if(!isset($_SERVER["HTTP_REFERER"])){
 				wp_die(__('Oooooo!<br />
 				        Stai tentando di fare il furbo!<br />
 				        Non puoi accedere a questo file direttamente.','albo-online'));
 				break;
 			}
-			$file_path	= get_attached_file($_REQUEST['id']);
+*/			$file_path	= get_attached_file($_REQUEST['id']);
 //			$file_path	=$file_path[0]->Allegato;
 //				echo "<pre>".$file_path."</pre>";
 			global $is_IE;
@@ -462,13 +478,13 @@ function scuola_posts_custom_column_views( $column ) {
 *
 */
 function personaliza_file_render( $block_content, $block ) {
-	
 	if( "core/file" !== $block['blockName'] ) {
     	return $block_content;
   	}
   	if(!isset($block["attrs"]['id'])){
 		return $block_content;
 	}
+//	echo "<pre>";var_dump($block);echo "</pre>";
   $IDFile=$block["attrs"]['id'];
   $Allegato=get_post($IDFile);
   if(is_null($Allegato)) return;
@@ -491,9 +507,19 @@ function personaliza_file_render( $block_content, $block ) {
 	if($PosT!==FALSE){
 		$Target=substr($block_content,$PosT,strpos($block_content," ",$PosT)-$PosT);	
 	}
+	ob_start();
 	$Div=substr($block_content,0,strpos($block_content,">")+1);
-	$PosST=strpos($block_content,">",strlen($Div)+1)+1;
+//	echo "Div ";var_dump($block_content);echo "<br>";
+	
+	if(($PosObj=strpos($block_content,"</object>"))>0){
+		$PosST=strpos($block_content,">",strlen($Div)+$PosObj)+1;
+	}else{
+		$PosST=strpos($block_content,">",strlen($Div)+1)+1;
+	}
+//	echo "PosObj ";var_dump($PosObj);echo "<br>";
+//	echo "PosST ";var_dump($PosST);echo "<br>";
 	$Titolo=substr($block_content,$PosST,strpos($block_content,"<",$PosST+1)-$PosST);
+//	echo "Titolo ";var_dump($Titolo);echo "<br>";
 	if($Title!=$Titolo) $Title=$Titolo;
   switch ($filetype['ext']){
   	case "txt": 
@@ -517,7 +543,15 @@ function personaliza_file_render( $block_content, $block ) {
   	case "bmp":
   	case "ico":$IconaFile='<span class="far fa-file-image fa-2x"></span>'; $TipoFile="Immagine";break;
   }
-ob_start();?>  
+//ob_start();
+	if($block["attrs"]["displayPreview"]==true){?>  
+		<object class="wp-block-file__embed" 
+			data="<?php echo $Link;?>" 
+			type="application/pdf" 
+			style="width:100%;height:<?php echo $block["attrs"]["previewHeight"];?>px" 
+			aria-label="Embed of file.">
+		</object>
+<?php }?>
 		<div class="card-wrapper border rounded">
 		    <div class="card-body p-2">
 		        <div class="media stack-xs">

@@ -89,7 +89,7 @@ function wps_visualizza_gruppo_utenti( $user ) {
 		}else
 			foreach($gruppi as $K=>$gruppo){
 				if (in_array($K, $GruppiUtente)) 
-					echo $gruppo."\n";
+					echo $gruppo->name."\n";
 			}
 ?>
 			</td>

@@ -26,7 +26,7 @@ https://github.com/ignazios/wp-scuola
 ## Supporto
 facebook: https://www.facebook.com/wpscuola/
 ## Tema verificato per le seguenti versioni
- - **Wordpress** 	*5.0* - *5.7.2*
+ - **Wordpress** 	*5.0* - *5.8*
  - **PHP** 		*7.0*
 ## Shortcode
 	[articoli id_categoria=ID della categoria da cui estrarre gli articoli (=0 oppure omesso se si vogliono elencare gli articoli per tag)           
@@ -51,6 +51,11 @@ facebook: https://www.facebook.com/wpscuola/
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
+**1.2.3**
+  - ***Corretti*** alcuni bug minori
+  - ***Verificata*** compatibilità con la versione 5.8 di Wordpress
+  - ***Modificato*** il blocco file di Gutenberg per adeguarlo alla visualizzazione dei file Pdf
+  - ***Corretti*** alcuni errori del modulo Circolari
 - **1.2.2**
   - ***Corretti*** alcuni bug minori
   - ***Aggiunta*** la gestione degli **Eventi Scolastici**. Per attivare il Modulo andare in Aspetto > Personalizza > Impostazioni Scuola > Moduli funzionalità > Attiva il modulo Eventi
