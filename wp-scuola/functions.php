@@ -548,7 +548,7 @@ function personaliza_file_render( $block_content, $block ) {
 		<object class="wp-block-file__embed" 
 			data="<?php echo $Link;?>" 
 			type="application/pdf" 
-			style="width:100%;height:<?php echo $block["attrs"]["previewHeight"];?>px" 
+			style="width:100%;height:<?php echo isset($block["attrs"]["previewHeight"])?$block["attrs"]["previewHeight"]:"600";?>px" 
 			aria-label="Embed of file.">
 		</object>
 <?php }?>

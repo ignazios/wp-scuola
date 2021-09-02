@@ -51,6 +51,8 @@ facebook: https://www.facebook.com/wpscuola/
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
+**1.2.4**
+  - ***Corretto*** un errore nella gestione del blocco File che visualizzava il blocco anteprima di dimensione ridotta se si lasciava il vaolre di default
 **1.2.3**
   - ***Corretti*** alcuni bug minori
   - ***Verificata*** compatibilità con la versione 5.8 di Wordpress
