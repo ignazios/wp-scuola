@@ -19,18 +19,16 @@
     <link rel="stylesheet" href="<?php bloginfo('stylesheet_url'); ?>">
     <link rel="icon" type="image/png" href="<?php echo esc_url($ImgLogo); ?>">  
     <?php wp_head(); ?>
-
-
  </head>
 
-<body class="t-Pac">
+<body class="t-Pac" id="main">
     
 <?php	if(get_theme_mod('scuola_cookies_attiva')){ ?>
 		<div class="cookiebar">
 		    <p><?php echo (get_theme_mod('scuola_cookies_testoMSG')!=""?get_theme_mod('scuola_cookies_testoMSG'):__( 'Questo sito utilizza cookie tecnici, analytics e di terze parti. <br>Proseguendo nella navigazione accetti l’utilizzo dei cookie.', 'wpscuola' ));?></p>
 		    <div class="cookiebar-buttons">
 		        <a href="<?php echo get_permalink(get_theme_mod('scuola_cookies_pulsSXlink'));?>" class="cookiebar-btn"><?php echo get_theme_mod('scuola_cookies_pulsSXText');?></a>
-		        <button data-accept="cookiebar" class="cookiebar-btn cookiebar-confirm"><?php echo get_theme_mod('scuola_cookies_accettaText');?><span class="sr-only"> i cookies</span></button>
+		        <button data-accept="cookiebar" title="Pulsante accettazione cookies" class="cookiebar-btn cookiebar-confirm"><?php echo get_theme_mod('scuola_cookies_accettaText');?><span class="sr-only"> i cookies</span></button>
 		    </div>
 		</div>
  <?php }?>
@@ -76,7 +74,7 @@
 		<!-- Fine Fascia piccola Amministrazione Afferente -->
 
 		<!-- Button Menu -->
-		<button class="navbar-toggle menu-btn pull-left menu-left push-body jPushMenuBtn">
+		<button class="navbar-toggle menu-btn pull-left menu-left push-body jPushMenuBtn" title="navigazione mobile">
 		    <span class="sr-only"><?php echo __('Attiva disattiva la navigazione','wpscuola'); ?></span>
 		    <span class="icon-bar icon-bar1"></span>
 		    <span class="icon-bar icon-bar2"></span>
@@ -93,7 +91,7 @@
 		            </div>
 		        </div>
 
-		        <h2 class="sr-only"><?php echo __('Menu principale','wpscuola'); ?></h2>
+		        <p style="h2" class="sr-only"><?php echo __('Menu principale','wpscuola'); ?></p>
 
 		            <?php   if(has_nav_menu('menu-principale')) {
 		                        $menu = array(
@@ -110,7 +108,7 @@
 			        <div class="cerca">
 						<form class="Form" method="get" role="search" action="<?php echo esc_url(home_url('/')); ?>">
 						    <label class="sr-only" for="search_text_mobile"><?php _e("Ricerca all'interno del sito","wpscuola");?></label>
-						    <input type="text" value="" name="s" required id="search_text_mobile">
+						    <input type="text" value="" name="s" required id="search_text_mobile" autocomplete="off">
 						    <button class="btn btn-default btn-cerca pull-right" name="submit" title="<?php echo __('Avvia la ricerca','wpscuola'); ?>" aria-label="<?php echo __('Avvia la ricerca','wpscuola'); ?>">
 						        <svg class="icon">
 						        <use xlink:href="<?php bloginfo('template_url'); ?>/static/img/ponmetroca.svg#ca-search"></use>
@@ -143,7 +141,7 @@
 		            </div>
 		            <div class="logoimg">
 		                <a href="<?php echo esc_url(home_url('/')); ?>" title="<?php echo bloginfo('name'); ?>">
-							<img class="custom-logo" id="LogoPiccolo" src="<?php echo $ImgLogo;?>" alt="<?php echo esc_html( get_bloginfo( 'name' ) );?>">
+							<img class="custom-logo" src="<?php echo $ImgLogo;?>" alt="<?php echo esc_html( get_bloginfo( 'name' ) );?>">
 		                </a>
 		            </div>
 		            <div class="logotxt">
@@ -173,7 +171,7 @@
 		            <div class="cerca">
 						<form class="Form" method="get" role="search" action="<?php echo esc_url(home_url('/')); ?>">
 						    <label class="sr-only" for="search_text"><?php _e("Ricerca all'interno del sito","wpscuola");?></label>
-						    <input type="text" value="" name="s" required id="search_text">
+						    <input type="text" value="" name="s" required id="search_text" autocomplete="off">
 						    <button class="btn btn-default btn-cerca pull-right" name="submit" title="<?php echo __('Avvia la ricerca','wpscuola'); ?>" aria-label="<?php echo __('Avvia la ricerca','wpscuola'); ?>">
 						        <svg class="icon">
 						        <use xlink:href="<?php bloginfo('template_url'); ?>/static/img/ponmetroca.svg#ca-search"></use>

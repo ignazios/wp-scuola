@@ -66,7 +66,7 @@
 	  			<div class="col-lg-12 col-6 col-sm-6">
 	  				<a href="<?php echo $Blocco1Link;?>">
 						<figure class="figure bg-primary rounded pb-2 text-white">
-						  <img src="<?php echo wp_get_attachment_url($Blocco1Immagine);?>" alt="" class="figure-img img-fluid rounded">
+						  <img src="<?php echo wp_get_attachment_url($Blocco1Immagine);?>" alt="Logo <?php echo $Blocco1Titolo;?>" class="figure-img img-fluid rounded">
 						  <figcaption class="figure-caption text-center font-weight-bold text-white"><?php echo $Blocco1Titolo;?></figcaption>
 						</figure>	
 					</a>			        
@@ -74,7 +74,7 @@
 	  			<div class="col-lg-12 col-6 col-sm-6">
 	  				<a href="<?php echo $Blocco2Link;?>">
 						<figure class="figure bg-primary rounded pb-2 text-white">
-						  <img src="<?php echo wp_get_attachment_url($Blocco2Immagine);?>" alt="" class="figure-img img-fluid rounded">
+						  <img src="<?php echo wp_get_attachment_url($Blocco2Immagine);?>" alt="Logo <?php echo $Blocco2Titolo;?>" class="figure-img img-fluid rounded">
 						  <figcaption class="figure-caption text-center font-weight-bold text-white"><?php echo $Blocco2Titolo;?></figcaption>
 						</figure>
 					</a>				        
@@ -82,7 +82,7 @@
 	  			<div class="col-lg-12 col-6 col-sm-6">
 	  				<a href="<?php echo $Blocco3Link;?>">
 						<figure class="figure bg-primary rounded pb-2 text-white">
-						  <img src="<?php echo wp_get_attachment_url($Blocco3Immagine);?>" alt="" class="figure-img img-fluid rounded">
+						  <img src="<?php echo wp_get_attachment_url($Blocco3Immagine);?>" alt="Logo <?php echo $Blocco3Titolo;?>" class="figure-img img-fluid rounded">
 						  <figcaption class="figure-caption text-center font-weight-bold text-white"><?php echo $Blocco3Titolo;?></figcaption>
 						</figure>
 					</a>				        
@@ -90,7 +90,7 @@
 	  			<div class="col-lg-12 col-6 col-sm-6">
 	  				<a href="<?php echo $Blocco4Link;?>">
 						<figure class="figure bg-primary rounded pb-2 text-white">
-						  <img src="<?php echo wp_get_attachment_url($Blocco4Immagine);?>" alt="" class="figure-img img-fluid rounded">
+						  <img src="<?php echo wp_get_attachment_url($Blocco4Immagine);?>" alt="Logo <?php echo $Blocco4Titolo;?>" class="figure-img img-fluid rounded">
 						  <figcaption class="figure-caption text-center font-weight-bold text-white"><?php echo $Blocco4Titolo;?></figcaption>
 						</figure>
 					</a>				        
@@ -117,7 +117,7 @@
 					<?php if($LinkPT!=""){?>
 					<div>
 					<?php if($ImgLinkPT!=""){?>
-						<img src="<?php echo wp_get_attachment_url($ImgLinkPT);?>" alt="" class="figure-img img-fluid rounded">
+						<img src="<?php echo wp_get_attachment_url($ImgLinkPT);?>" alt="Logo <?php echo $TestoLinkPT;?>" class="figure-img img-fluid rounded">
 					<?php }?>
 						<a href="<?php echo $LinkPT;?>" target="_blank"><?php echo $TestoLinkPT;?></a>
 					</div>
@@ -130,7 +130,7 @@
             		<span class="text"><?php echo $TestoLink_Prima;?></span>
           		</a>
 	        </div>
-			  <div class="tab-pane p-4 fade shadow" id="nav-tab2" role="tabpanel" aria-labelledby="nav-tab2-tab ">
+			  <div class="tab-pane p-4 fade shadow" id="nav-tab2" role="tabpanel" aria-labelledby="nav-tab2-tab">
 			  	<div class="BloccoScuola">
 			  		<?php echo $Testo_Seconda;?>
 			  	</div>

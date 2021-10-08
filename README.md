@@ -52,6 +52,10 @@ facebook: https://www.facebook.com/wpscuola/
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
 **1.2.4**
+  - ***Corretti*** alcuni Bug di cui uno di sicurezza
+  - ***Sistemato*** la renderizzazione del blocco file PDF in anteprima. Nel caso in cui si attivava con i valori di defalt veniva visualizzato a dimensione ridotta
+  - ***Corretti*** alcuni errori di accessibilità
+**1.2.4**
   - ***Corretto*** un errore nella gestione del blocco File che visualizzava il blocco anteprima di dimensione ridotta se si lasciava il vaolre di default
 **1.2.3**
   - ***Corretti*** alcuni bug minori

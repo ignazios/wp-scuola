@@ -183,7 +183,7 @@ a img.aligncenter {
   width: auto;
 }
 .wp-caption p.wp-caption-text {
-  font-size: 11px;
+  font-size: 0.8em;
   line-height: 17px;
   margin: 0;
   padding: 0 4px 5px;
@@ -207,7 +207,7 @@ a img.aligncenter {
 }
 .post-edit-link:before {
 	content: '\270E';
-	font-size: 18px;
+	font-size: 1.2em;
 	margin-right: 7px;
 }
 
@@ -323,7 +323,7 @@ h4:focus, h4 a:focus {outline: 1px solid #FF8C00 !important;}
 }
 
 #mainheader .preheader .entesup {
-    font-size: 16px;
+    font-size: 1.2em;
     color: #fff;
 }
 
@@ -498,7 +498,7 @@ h4:focus, h4 a:focus {outline: 1px solid #FF8C00 !important;}
 }
 
 #mainheader .social .small {
-    font-size: 14px;
+    font-size: 1.111em;
     font-weight: 300;
 }
 
@@ -561,7 +561,7 @@ h4:focus, h4 a:focus {outline: 1px solid #FF8C00 !important;}
 
 #mainheader .cerca span {
     color: #fff;
-    font-size: 14px;
+    font-size: 1.111em;
 }
 #mainheader .cerca input,
 #mainheader .p_cercaMobile .cerca input {
@@ -569,7 +569,7 @@ h4:focus, h4 a:focus {outline: 1px solid #FF8C00 !important;}
     float: left;
     background: transparent;
     color: #fff;
-    font-size: 16px;
+    font-size: 1.2em;
 }
 
 /*#mainheader .cerca input {
@@ -1165,7 +1165,7 @@ ul.navmenu {
 
 .navmenu li>a>span:after {
     display: inline-block;
-    font-size: 24px;
+    font-size: 2em;
     margin-left: 0;
     vertical-align: 0;
     content: "";
@@ -1250,7 +1250,7 @@ ul.navmenu {
 
 .socialmobile .small {
     padding-right: 8px;
-    font-size: 14px;
+    font-size: 1.111em;
     color: #003882;
 }
 
@@ -1400,8 +1400,8 @@ ul.navmenu {
     }
 
     body {
-        font-size: 16px;
-        line-height: 1.2;
+        font-size: 1.2em;
+        line-height: 1.2em;
     }
 
     body.home #mainheader {
@@ -2173,7 +2173,7 @@ body.search article {
 }
 .ow-button-base a {
 	padding: 12px 24px;
-	font-size: 16px;
+	font-size: 1em;
 	font-weight: 600;
 	line-height: 1.5;
 }
@@ -2234,7 +2234,7 @@ body.search article {
 }
 .it-footer-small-prints li a, 
 .it-footer-small-prints li a:hover:not(.disabled) {
-	font-size: 15px;
+	font-size: .9em;
 }
 
 .titolo-sezione h2 {
@@ -2251,7 +2251,7 @@ body.search article {
 	margin: 0px 24px 8px 0px;
 	text-align: center;
 	vertical-align: middle;
-	font-size: 32px;
+	font-size: 2em;
 	line-height: 48px;
 }
 
@@ -2985,8 +2985,8 @@ a:hover .mycard {
 .mycard-direction {
   position: absolute;
   bottom: 0px;
-  left: 0px;
-  width: 100%;
+  left: 8px;
+  width: 95%;
   padding: 6px 0px;
   text-align: center;
   font-size: 0.6em;

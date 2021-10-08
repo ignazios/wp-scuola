@@ -178,7 +178,7 @@ class Bacheca extends WP_Widget {
 		<div class="container">
 		  	<div class="row">
 	<?php if($Link1!=""):?>
-		    	<div class="col pb-3">
+		    	<div class="col-lg-3 col-sm-6 col-12 pb-3">
 		    		<div class="d-flex justify-content-center">
 		    			<a href="<?php echo $Link1;?>" class="<?php echo $Bottoni[$Colore1];?>" title="<?php echo $Testo1;?>"><?php echo $Icona1;?></a>
 		    		</div>
@@ -188,7 +188,7 @@ class Bacheca extends WP_Widget {
 		    	</div>
 	<?php endif;
 		  if($Link2!=""):?>
-		    	<div class="col pb-3">
+		    	<div class="col-lg-3 col-sm-6 col-12 pb-3">
 		    		<div class="d-flex justify-content-center">
 		    			<a href="<?php echo $Link2;?>" class="<?php echo $Bottoni[$Colore2];?>" title="<?php echo $Testo2;?>"><?php echo $Icona2;?></a>
 		    		</div>
@@ -198,7 +198,7 @@ class Bacheca extends WP_Widget {
 		    	</div>
 	<?php endif;
 	      if($Link3!=""):?>
-		    	<div class="col pb-3">
+		    	<div class="col-lg-3 col-sm-6 col-12 pb-3">
 		    		<div class="d-flex justify-content-center">
 		    			<a href="<?php echo $Link3;?>" class="<?php echo $Bottoni[$Colore3];?>" title="<?php echo $Testo3;?>"><?php echo $Icona3;?></a>
 		    		</div>
@@ -208,7 +208,7 @@ class Bacheca extends WP_Widget {
 		    	</div>
 	<?php endif;
 	      if($Link4!=""):?>
-		    	<div class="col pb-3">
+		    	<div class="col-lg-3 col-sm-6 col-12 pb-3">
 		    		<div class="d-flex justify-content-center">
 		    			<a href="<?php echo $Link4;?>" class="<?php echo $Bottoni[$Colore4];?>" title="<?php echo $Testo4;?>"><?php echo $Icona4;?></a>
 		    		</div>

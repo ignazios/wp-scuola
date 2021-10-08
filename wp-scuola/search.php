@@ -99,6 +99,8 @@ if ( have_posts() And (strlen( trim(get_search_query()))) >= 1){
 }
 wp_parse_str( $query_string, $search_query );
 $TestoSearch=$search_query["s"];
+if($TestoSearch!=wp_strip_all_tags($TestoSearch))
+	$TestoSearch="Testo di ricerca non valido";
 ?>
 <section id="content" role="main" class="container">
    <div class="container affix-parent">

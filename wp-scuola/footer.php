@@ -17,7 +17,7 @@
 */
 ?>
 			<div class="mx-auto text-center pb-3 pt-3" style="width: 200px;">
-			  <a href="#" aria-hidden="true" data-attribute="back-to-top" title="<?php _e('Torna ad inizio pagina','wpscuola');?>">
+			  <a href="#" data-attribute="back-to-top" title="<?php _e('Torna ad inizio pagina','wpscuola');?>">
 			    <span class="fas fa-arrow-circle-up fa-3x"></span>
 			  </a>
 			</div>

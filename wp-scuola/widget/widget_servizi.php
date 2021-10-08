@@ -147,7 +147,7 @@ class Servizi extends WP_Widget {
 			$Servizio_Link=get_permalink($Servizio->ID);?>
 		<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12 pb-2">
 		    <div class="hovereffect">
-		        <img class="img-responsive" src="<?php echo $Servizio_Image;?>" alt="logo servizo <?php $Servizio->post_title;?>" width="100%" height="200">
+		        <img class="img-responsive" src="<?php echo $Servizio_Image;?>" alt="logo servizo <?php echo $Servizio->post_title;?>" width="100%" height="200">
 		            <div class="overlay">
 		                <h2><?php echo $Servizio->post_title;?></h2>
 						<p>
