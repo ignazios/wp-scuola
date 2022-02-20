@@ -16,7 +16,7 @@ get_header();
    <div class="container">
       <div class="row">
 
-      <div class="col-12 col-lg-9 pl-5 pr-5 pt-3">
+      <div class="col-12 col-lg-9 pl-lg-5 pr-lg-5 pt-3">
 <?php 	if ( have_posts() ) : 
 			while ( have_posts() ) : the_post();
 				scuola_set_post_view();?> 

@@ -26,8 +26,8 @@ https://github.com/ignazios/wp-scuola
 ## Supporto
 facebook: https://www.facebook.com/wpscuola/
 ## Tema verificato per le seguenti versioni
- - **Wordpress** 	*5.0* - *5.8*
- - **PHP** 		*7.0*
+ - **Wordpress** 	*5.0* - *5.9*
+ - **PHP** 		*7.4*
 ## Shortcode
 	[articoli id_categoria=ID della categoria da cui estrarre gli articoli (=0 oppure omesso se si vogliono elencare gli articoli per tag)           
 			  id_tag=ID del tag da cui estrarre gli articoli (=0 oppure omesso se si vogliono elencare gli articoli per categoria) 		  
@@ -51,7 +51,10 @@ facebook: https://www.facebook.com/wpscuola/
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
-**1.2.4**
+**1.2.6**
+  - ***Corretti*** alcunialcuni elementi per compatibilità con la versione 5.9 di Wordpress
+  - ***Corretto*** link leggi tutto nel widget Scuola Articoli
+**1.2.5**
   - ***Corretti*** alcuni Bug di cui uno di sicurezza
   - ***Sistemato*** la renderizzazione del blocco file PDF in anteprima. Nel caso in cui si attivava con i valori di defalt veniva visualizzato a dimensione ridotta
   - ***Corretti*** alcuni errori di accessibilità

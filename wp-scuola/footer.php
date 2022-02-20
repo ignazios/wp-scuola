@@ -39,7 +39,7 @@
 						} else {
 							$ImgLogo=get_template_directory_uri() . '/images/logoStato.png';
 				        } ?>
-						<img class="icon" src="<?php echo $ImgLogo;?>" alt="<?php echo esc_html( get_bloginfo( 'name' ) );?>">
+						<img class="icona" src="<?php echo $ImgLogo;?>" alt="<?php echo esc_html( get_bloginfo( 'name' ) );?>">
 		                <div class="it-brand-text">
 		                  <p class="h4"><?php echo esc_html( get_bloginfo( 'name' ) ); ?></p>
 		                  <p class="h5"><?php bloginfo( 'description' ); ?></p>

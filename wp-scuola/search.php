@@ -113,7 +113,7 @@ if($TestoSearch!=wp_strip_all_tags($TestoSearch))
 							<label class="sr-only" for="search_text_page"><?php _e("Ricerca all'interno del sito","wpscuola");?></label>
 							<input type="text" name="s" required id="search_text_page" value="<?php echo (isset($TestoSearch)?$TestoSearch:"");?>">
 							<button class="btn btn-default btn-cerca pull-right" name="submit" title="<?php echo __('Avvia la ricerca','wpscuola'); ?>" aria-label="<?php echo __('Avvia la ricerca','wpscuola'); ?>">
-								<svg class="icon">
+								<svg class="icona">
 								<use xlink:href="<?php bloginfo('template_url'); ?>/static/img/ponmetroca.svg#ca-search"></use>
 								</svg>
 							</button>

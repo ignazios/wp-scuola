@@ -5,7 +5,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="<?php echo get_bloginfo('description'); ?>">
-    <script>
+     <script>
         window.__PUBLIC_PATH__ = "<?php bloginfo('template_url'); ?>/static/fonts";
         theme_directory = "<?php echo get_template_directory_uri() ?>";
     </script>
@@ -110,7 +110,7 @@
 						    <label class="sr-only" for="search_text_mobile"><?php _e("Ricerca all'interno del sito","wpscuola");?></label>
 						    <input type="text" value="" name="s" required id="search_text_mobile" autocomplete="off">
 						    <button class="btn btn-default btn-cerca pull-right" name="submit" title="<?php echo __('Avvia la ricerca','wpscuola'); ?>" aria-label="<?php echo __('Avvia la ricerca','wpscuola'); ?>">
-						        <svg class="icon">
+						        <svg class="icona">
 						        <use xlink:href="<?php bloginfo('template_url'); ?>/static/img/ponmetroca.svg#ca-search"></use>
 						        </svg>
 						    </button>
@@ -173,7 +173,7 @@
 						    <label class="sr-only" for="search_text"><?php _e("Ricerca all'interno del sito","wpscuola");?></label>
 						    <input type="text" value="" name="s" required id="search_text" autocomplete="off">
 						    <button class="btn btn-default btn-cerca pull-right" name="submit" title="<?php echo __('Avvia la ricerca','wpscuola'); ?>" aria-label="<?php echo __('Avvia la ricerca','wpscuola'); ?>">
-						        <svg class="icon">
+						        <svg class="icona">
 						        <use xlink:href="<?php bloginfo('template_url'); ?>/static/img/ponmetroca.svg#ca-search"></use>
 						        </svg>
 						    </button>

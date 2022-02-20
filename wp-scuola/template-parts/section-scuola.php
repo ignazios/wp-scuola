@@ -17,6 +17,7 @@
 	 $Blocco4Immagine=get_theme_mod('scuola_scuola_Imgblocco4');
 	 $Blocco4Titolo=get_theme_mod('scuola_scuola_Titoloblocco4');
 	 $Blocco4Link=get_theme_mod('scuola_scuola_Linkblocco4');
+	 $ImmagineVideo=get_theme_mod('scuola_scuola_PrimaTabLinkVideoImg');
 	 $Video=get_theme_mod('scuola_scuola_PrimaTabVideo');
 	 $Didascalia=get_theme_mod('scuola_scuola_PrimaTabVideoDidascalia');
 	 $ImgLinkPT=get_theme_mod('scuola_scuola_PrimaTabLinkImg');
@@ -108,21 +109,35 @@
 			<div class="tab-content" id="nav-tabContent">
 			  <div class="tab-pane p-4 fade show active shadow" id="nav-tab1" role="tabpanel" aria-labelledby="nav-tab1-tab">
 			  	<div class="BloccoScuola">
-			  		<?php 	if($Video!=""){?>
- 					
+			  		<?php 	if($Video!=""){
+			  			if ($ImmagineVideo!=""){?>
+			  				<figure class="aligncenter size-full">
+			  					<a href="https://www.youtube.com/watch?v=<?php echo $Video;?>" target="_blank" rel="noopener">
+			  						<img loading="lazy" width="429" height="200" src="<?php echo wp_get_attachment_url($ImmagineVideo);?>" alt="" sizes="(max-width: 386px) 100vw, 429px" style="display: block;margin-left: auto!important;margin-right: auto!important;">
+			  					</a>
+			  				</figure>
+			  		<?php }else{?>
 			  		<div class="embed-responsive embed-responsive-16by9">
   						<iframe class="embed-responsive-item" title="Video YouTube" src="https://www.youtube.com/embed/<?php echo $Video;?>" allowfullscreen></iframe>
  					</div>
-  					<p class="text-center font-italic font-weight-semibold border rounded border-top-0"><?php echo $Didascalia;?></p>
+ 					<?php }?>
+  					<p class="text-center font-italic font-weight-semibold"><?php echo $Didascalia;?></p>
 					<?php if($LinkPT!=""){?>
 					<div>
 					<?php if($ImgLinkPT!=""){?>
-						<img src="<?php echo wp_get_attachment_url($ImgLinkPT);?>" alt="Logo <?php echo $TestoLinkPT;?>" class="figure-img img-fluid rounded">
-					<?php }?>
+					
+					<figure class="aligncenter size-full">
+			  			<a href="<?php echo $LinkPT;?>" target="_blank" rel="noopener">
+			  				<img loading="lazy" width="429" height="200" src="<?php echo wp_get_attachment_url($ImgLinkPT);?>" alt="" sizes="(max-width: 600px) 100vw, 429px" alt="Logo <?php echo $TestoLinkPT;?>" style="display: block;margin-left: auto!important;margin-right: auto!important;">
+			  			</a>
+			  		</figure>
+					<p class="text-center font-italic font-weight-semibold"><?php echo $TestoLinkPT;?></p>
+					<?php }else{?>
 						<a href="<?php echo $LinkPT;?>" target="_blank"><?php echo $TestoLinkPT;?></a>
-					</div>
-					<?php	}?>
-					<?php	}else 
+					<?php	}?>					
+						</div>
+					<?php	}
+						}else 
 								echo $Testo_Prima;?>
 			  	</div>
 			  	<a class="read-more" href="<?php echo $Link_Prima;?>">

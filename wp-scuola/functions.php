@@ -77,6 +77,13 @@ add_shortcode('canccookies', 				'CancellaCookies');
 add_shortcode('viscookies', 				'VisualizzaCookies');
 add_shortcode('feedrss', 					'VisualizzaFeedRSS');
 
+function crunchify_embed_defaults($embed_size){
+	$embed_size['width'] = 10240;
+	$embed_size['height'] = 500;
+	return $embed_size;
+}
+add_filter('embed_defaults', 'crunchify_embed_defaults');
+
 
 function my_myme_types( $mime_types ) {
   $mime_types['zip'] = 'application/zip';     // Adding .zip extension
@@ -350,8 +357,17 @@ function GetArticoliCategoria($Parametri){
 		        	<div class="it-right-zone  border-0">
 		        		<span class="text"><?php echo $Articolo->post_title;?></span>
 		        		<span class="it-multiple">
-		        			<span class="metadata metadatasmall"><span class="far fa-calendar-alt"></span> <?php echo date_i18n( get_option( 'date_format' ), strtotime($Articolo->post_date) );?></span>
-							<span class="metadata metadatasmall"><span class="fas fa-user-edit"></span> <?php echo get_the_author_meta('display_name', $Articolo->post_author);?></span>
+<?php 	if(get_theme_mod('scuola_MTdataLink_attiva')):?>
+		        			<span class="metadata metadatasmall">
+		        				<span class="far fa-calendar-alt"></span> 
+<?php echo date_i18n( get_option( 'date_format' ), strtotime($Articolo->post_date) );?></span>
+<?php	endif;
+  	  	if(get_theme_mod('scuola_MTautore_attiva')):?>
+							<span class="metadata metadatasmall">
+								<span class="fas fa-user-edit"></span> 
+<?php echo get_the_author_meta('display_name', $Articolo->post_author);?>
+							</span>
+<?php 		endif;?>
 						</span>
 					</div>
 			    </a>
@@ -544,7 +560,7 @@ function personaliza_file_render( $block_content, $block ) {
   	case "ico":$IconaFile='<span class="far fa-file-image fa-2x"></span>'; $TipoFile="Immagine";break;
   }
 //ob_start();
-	if($block["attrs"]["displayPreview"]==true){?>  
+	if(isset($block["attrs"]["displayPreview"]) And $block["attrs"]["displayPreview"]==true){?>  
 		<object class="wp-block-file__embed" 
 			data="<?php echo $Link;?>" 
 			type="application/pdf" 
@@ -571,9 +587,8 @@ function personaliza_file_render( $block_content, $block ) {
 		            </div>
 		            <?php if(strpos($block_content,"wp-block-file__button")!==FALSE) :?>
 		            <div class="ml-3 wpdmdl-btn">
-		                <a class="btn btn-primary " rel="nofollow" href="<?php 
-		                $Link=get_home_url()."?action=dwattachment&id=".$IDFile;
-		                echo $Link;?>"><?php _e("Scarica","wpscuola");?></a>
+		                <a class="btn btn-primary " href="<?php echo $Link;?>" title="<?php echo $Title;?>" download><?php _e("Scarica","wpscuola");?>
+		                </a>
 		            </div>
 		            <?php endif;?>
 		        </div>
@@ -602,6 +617,7 @@ function scuola_setup()	{
 *	Theme Support 
 */  
    if ( function_exists( 'add_theme_support' ) ) { 
+   	add_theme_support( 'responsive-embeds' );
    	add_theme_support ('editor-styles');
  	add_theme_support('title-tag');
 	add_theme_support('automatic-feed-links');
@@ -814,6 +830,10 @@ function enqueue_scuola_public() {
 		wp_enqueue_script( 'scuola-image_hover_effects_JS', get_template_directory_uri() . '/static/js/production.min.js' );
 		wp_enqueue_style( 'scuola-image_hover_effects_CSS', get_template_directory_uri() . '/static/css/image_hover_effects.css');	
 	}
+	if (is_page_template("tmpl_page-servizi.php") Or is_page_template("tmpl_page-siti.php")){
+			wp_enqueue_script( 'scuola-image_hover_effects_JS', get_template_directory_uri() . '/static/js/production.min.js' );
+			wp_enqueue_style( 'scuola-image_hover_effects_CSS', get_template_directory_uri() . '/static/css/image_hover_effects.css');	
+		}
 //	wp_enqueue_style('wpscuola_adjustments_css', get_template_directory_uri() . '/inc/adjustments.css');
 
 }
@@ -959,6 +979,7 @@ function scuola_register_Widget(){
 	register_widget( 'Feed_RSS' );
 	register_widget( 'Link' );
 	register_widget( 'Bacheca' );
+	register_widget( 'Pulsanti' );
 	if(class_exists("EM_Event")){
 		register_widget( 'my_EM_Widget_Calendar' );
 		register_widget( 'Eventi' );
@@ -980,6 +1001,7 @@ require get_template_directory() . '/widget/widget_articoli.php';
 require get_template_directory() . '/widget/widget_articoli_griglia.php';
 require get_template_directory() . '/widget/widget_link.php';
 require get_template_directory() . '/widget/widget_bacheca.php';
+require get_template_directory() . '/widget/widget_pulsanti.php';
 if(get_theme_mod('scuola_servizi_attiva'))		require get_template_directory() . '/widget/widget_servizi.php';
 if(function_exists("at_sezioni_shtc"))			require get_template_directory() . '/widget/widget_AT.php';
 if(get_theme_mod("scuola_circolari_attiva"))	require get_template_directory() . '/widget/widget_circolari.php';
@@ -1194,7 +1216,7 @@ function scuola_customize_head() {
 function HasSocial(){
 	if (   get_theme_mod('scuola_social_facebook') == "" && 
 		   get_theme_mod('scuola_social_twitter') == "" && 
-	       get_theme_mod('scuola_social_twitter') == "" && 
+	       get_theme_mod('scuola_social_youtube') == "" && 
 	       get_theme_mod('scuola_social_instagram') == "" && 
 	       get_theme_mod('scuola_social_telegram') == "" && 
 	       get_theme_mod('scuola_social_linkedin') == "" )

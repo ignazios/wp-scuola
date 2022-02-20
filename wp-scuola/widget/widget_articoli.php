@@ -138,7 +138,7 @@
 				if($linkLT){?>
 						<li>
 							<div class="it-card-footer">
-		          				<a class="read-more" href="<?php echo get_category_link($catprimoblocco);?>">
+		          				<a class="read-more" href="<?php echo get_category_link($catsecondoblocco);?>">
 		              				<span class="text"><span class="fas fa-link p-1"></span> Leggi tutto</span>
 		            			</a>
 		          			</div>

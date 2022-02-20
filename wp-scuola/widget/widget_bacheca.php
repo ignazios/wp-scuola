@@ -97,7 +97,7 @@ class Bacheca extends WP_Widget {
 	              <div class="clearfix"> 
 	              	<?php 
 	              		if(filter_var($Icona1, FILTER_VALIDATE_URL)){?>
-	              			<img src="<?php echo $Icona1;?>" alt="" aria-hidden="true">
+	              			<img src="<?php echo $Icona1;?>" alt="" aria-hidden="true" class="img-fluid">
 	              <?php	}else{?>
 	              			<p class="myicona-<?php echo $Colori[$Colore1];?>"><?php echo $Icona1;?></p>
 				  <?php	}?>
@@ -117,7 +117,7 @@ class Bacheca extends WP_Widget {
 	              <div class="clearfix"> 
 	              	<?php 
 	              		if(filter_var($Icona2, FILTER_VALIDATE_URL)){?>
-	              			<img src="<?php echo $Icona2;?>" alt="" aria-hidden="true">
+	              			<img src="<?php echo $Icona2;?>" alt="" aria-hidden="true" class="img-fluid">
 	              <?php	}else{?>
 	              			<p class="myicona-<?php echo $Colori[$Colore2];?>"><?php echo $Icona2;?></p>
 				  <?php	}?>
@@ -137,7 +137,7 @@ class Bacheca extends WP_Widget {
 	              <div class="clearfix"> 
 	              	<?php 
 	              		if(filter_var($Icona3, FILTER_VALIDATE_URL)){?>
-	              			<img src="<?php echo $Icona3;?>" alt="" aria-hidden="true">
+	              			<img src="<?php echo $Icona3;?>" alt="" aria-hidden="true" class="img-fluid">
 	              <?php	}else{?>
 	              			<p class="myicona-<?php echo $Colori[$Colore3];?>"><?php echo $Icona3;?></p>
 				  <?php	}?>
@@ -157,7 +157,7 @@ class Bacheca extends WP_Widget {
 	              <div class="clearfix"> 
 	              	<?php 
 	              		if(filter_var($Icona4, FILTER_VALIDATE_URL)){?>
-	              			<img src="<?php echo $Icona4;?>" alt="" aria-hidden="true">
+	              			<img src="<?php echo $Icona4;?>" alt="" aria-hidden="true" class="img-fluid">
 	              <?php	}else{?>
 	              			<p class="myicona-<?php echo $Colori[$Colore4];?>"><?php echo $Icona4;?></p>
 				  <?php	}?>

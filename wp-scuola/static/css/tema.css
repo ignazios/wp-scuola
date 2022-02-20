@@ -575,6 +575,11 @@ h4:focus, h4 a:focus {outline: 1px solid #FF8C00 !important;}
 /*#mainheader .cerca input {
     border-color: #fff !important;
 }*/
+.icona {
+	width: 32px;
+	height: 32px;
+	vertical-align: middle;
+}
 #mainheader .cerca {
     float: right;
 }
@@ -779,7 +784,7 @@ h4:focus, h4 a:focus {outline: 1px solid #FF8C00 !important;}
     font-weight: 700 !important;
 }
 .dropdown{
-	padding-right:1em;
+/*	padding-right:1em;*/
 }
 
 .sub_nav li.megamenu a {
@@ -899,7 +904,7 @@ h4:focus, h4 a:focus {outline: 1px solid #FF8C00 !important;}
 }
 
 .push-body {
-    overflow-x: hidden;
+    overflow-x: auto;
     position: relative;
     left: 0;
     padding: 0 !important;
@@ -2882,7 +2887,7 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
     max-height: 65px!important;
     max-width: 65px!important;
 }
-.it-footer-main .it-brand-wrapper a .icon {
+.it-footer-main .it-brand-wrapper a .icona {
     width: 65px;
     height: 65px; 
 }
@@ -2908,11 +2913,11 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
 
 .mycard {
   background: #fefefe;
-  padding: 16px 26px;
+  padding: 16px;
   margin-top: 10px;
   margin-bottom: 10px;
   font-size: 1.2em;
-  line-height: 1.5em;
+  line-height: 1em;
   border-radius: 30px 30px 30px 30px;
   -moz-border-radius: 30px;
   -webkit-border-radius:30px;
@@ -2924,6 +2929,12 @@ table.advgb-table-frontend td, table.advgb-table-frontend tr {
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   height: 250px;
+}
+.mycard img{
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
 }
 
 .mycard a {
@@ -2983,10 +2994,10 @@ a:hover .mycard {
 }
 
 .mycard-direction {
-  position: absolute;
+ position: absolute;
   bottom: 0px;
-  left: 8px;
-  width: 95%;
+  left: 0;
+  width: 100%;
   padding: 6px 0px;
   text-align: center;
   font-size: 0.6em;
