@@ -99,7 +99,7 @@ $Mese=$mesi[(int)$search_query["monthnum"]];
 		  <div class="col-12 col-lg-9">
 
 		  	<header class="header">
-				<h3 class="entry-title"><?php _e( 'Articoli con Tag', 'wpscuola' ); ?> <?php echo single_cat_title(). ($Mese!=""?" del mese di ".$Mese:"").($Anno!=""?" dell'anno ".$Anno:""); ?></h3>		  	
+				<h3 class="entry-title"><?php _e( 'Articoli con Tag', 'wpscuola' ); ?> <?php echo single_cat_title(). ($Mese!=0?" del mese di ".$Mese:"").($Anno!=0?" dell'anno ".$Anno:""); ?></h3>		  	
 			</header>
 		  	<div class="container">
 		  		<?php

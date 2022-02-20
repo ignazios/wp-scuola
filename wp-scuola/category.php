@@ -145,7 +145,7 @@ $Mese=isset($search_query["monthnum"])?$mesi[(int)$search_query["monthnum"]]:0;
       <div class="row">
 		  <div class="col-12 col-lg-9">
 		  	<header class="header">
-		  		<h2 class="entry-title"><?php _e( 'Articoli della Categoria', 'wpscuola' ); ?> <?php echo single_cat_title()." ". ($Mese!=""?__( 'del mese di', 'wpscuola' )." ".$Mese:"").($Anno!=""?" ".__( 'dell\'anno', 'wpscuola' )." ".$Anno:""); ?></h2>
+		  		<h2 class="entry-title"><?php _e( 'Articoli della Categoria', 'wpscuola' ); ?> <?php echo single_cat_title()." ". ($Mese!=0?__( 'del mese di', 'wpscuola' )." ".$Mese:"").($Anno!=0?" ".__( 'dell\'anno', 'wpscuola' )." ".$Anno:""); ?></h2>
 		  	</header>
 		  	<div class="container">
 <?php
