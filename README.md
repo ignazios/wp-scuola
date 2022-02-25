@@ -2,7 +2,9 @@
 è un tema per [**WordPress 5**](https://it.wordpress.org/) (CMS open-source) specifico per le scuole italiane. 
 
 Il tema è basata sul tema originale [**ItaliaWP2 Versione: 1.1.6**](https://github.com/italia/design-wordpress-theme-italiaWP2) autore [**Boris Amico**](http://italiawp.borisamico.it/). 
-Del tema originale è stato mantenuto il frmework e l'header compreso il menu principale. I template di pagine, articoli, archivi e l'impostazione della home page sono stati personalizzati in funzione delle esigenze del mondo della scuola.
+Del tema originale è stato mantenuto il framework e l'header compreso il menu principale. I template di pagine, articoli, archivi e l'impostazione della home page sono stati personalizzati in funzione delle esigenze del mondo della scuola.
+
+Un grazie particolare a Andrea Smith (https://www.facebook.com/profile.php?id=100001279909352) per l'aiuto prezioso e paziente nel testing continuo dle tema.
 
 WPScuola utilizza:
 - la libreria [**Bootstrap Italia**](https://italia.github.io/bootstrap-italia/) basata su [**Bootstrap 4.3.1**](https://getbootstrap.com/),di cui eredita tutte le funzionalità, componenti, griglie e classi di utilità, personalizzandole secondo le Linee Guida di Design per i siti web della Pubblica Amministrazione. 
