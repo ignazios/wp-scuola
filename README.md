@@ -53,8 +53,11 @@ facebook: https://www.facebook.com/wpscuola/
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
+**1.2.7**
+  - ***Corretti*** i widget Scuola  Servizi e Scuola Link che con la versione di Wordpress 5.9 non si ridimensionano le immagini
+  - ***Corretto*** il widget Scuola Articoli Griglia
 **1.2.6**
-  - ***Corretti*** alcunialcuni elementi per compatibilità con la versione 5.9 di Wordpress
+  - ***Corretti*** alcuni elementi per compatibilità con la versione 5.9 di Wordpress
   - ***Corretto*** link leggi tutto nel widget Scuola Articoli
 **1.2.5**
   - ***Corretti*** alcuni Bug di cui uno di sicurezza

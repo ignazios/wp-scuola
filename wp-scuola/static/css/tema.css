@@ -3149,3 +3149,7 @@ a:hover .mycard-direction-Grigio {
 #newflip .btn {
     padding: 12px 12px;
 }
+.hovereffect_Link .img-responsive, .hovereffect .img-responsive{
+	width: 100%;
+	height: 200px;
+}

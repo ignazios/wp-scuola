@@ -48,7 +48,7 @@ class Articoli_Griglia extends WP_Widget {
             $number = 5;
         }
         $cat_id         = $instance['cat_id'];
-        $cats_notin     = strip_tags( $instance['cats_notin'] );
+		$cats_notin     = isset($instance['cats_notin'])?strip_tags( $instance['cats_notin'] ):"";
         $random         = $instance['rand'] ? true : false; 
         $excerpt        = $instance['excerpt'] ? true : false; 
         $thumbnail      = $instance['thumbnail'] ? true : false; 
