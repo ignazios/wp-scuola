@@ -5,6 +5,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="<?php echo get_bloginfo('description'); ?>">
+    <?php	echo get_theme_mod('scuola_header_script'). PHP_EOL;?>
      <script>
         window.__PUBLIC_PATH__ = "<?php bloginfo('template_url'); ?>/static/fonts";
         theme_directory = "<?php echo get_template_directory_uri() ?>";

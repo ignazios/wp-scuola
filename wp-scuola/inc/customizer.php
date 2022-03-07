@@ -323,16 +323,6 @@ $wp_customize->add_control('scuola_mappa_frame', array(
     'section' => 'Scuola_Footer_Settings', 
     'settings' => 'scuola_mappa_frame',
     'priority'	=> 4));  
-$wp_customize->add_setting('scuola_footer_script', array(
-    'default' => "", 
-    'capability' => 'edit_theme_options'));
-$wp_customize->add_control('scuola_footer_script', array(
-    'type' => 'textarea', 
-    'label' => 'Codice da inserire nel footer',
-    'description' => 'Il codice inserito in questa textarea verrà riportata nel footer di ogni pagina<br />FARE ATTENZIONE AL CODICE CHE SI INSERISCE, VALIDARLO PRIMA DELL\'INSERIMENTO',
-    'section' => 'Scuola_Footer_Settings', 
-    'settings' => 'scuola_footer_script',
-    'priority'	=> 5));  
 /**
 *  Sotto Pannello Cookies
 */
@@ -1192,6 +1182,46 @@ $wp_customize->add_setting( 'scuola_text_color' , array(
     'section'     => 'colors',
     'settings'     => 'scuola_footer_link_color'
   ) ) );
+  /**
+*  Crea pannello per impostazione Script
+*/
+	$wp_customize->add_panel('scuola_script',array(
+	    'title'=>'Script',
+	    'description'=> 'Impostazione script nell\'Header e nel Footer',
+	    'priority'=> 3));
+	$wp_customize->add_section('Scuola_script_header',array(
+	    'title'			 =>'Script Header',
+	    'priority'		 =>1,
+	    'description'	 => '<h2>Script da inserire nell\'Header</h2>',
+	    'panel'			 =>'scuola_script',
+	));
+// Campo Script
+    $wp_customize->add_setting( 'scuola_header_script' , array(
+		'capability' => 'edit_theme_options') );
+	$wp_customize->add_control( 'scuola_header_script', array(
+        'type' 		=> 'textarea',
+        'label' 	=> 'Codice da inserire nell\'header',
+ 		'description' => 'Il codice inserito in questa textarea verrà riportata nell\'header di ogni pagina<br />FARE ATTENZIONE AL CODICE CHE SI INSERISCE, VALIDARLO PRIMA DELL\'INSERIMENTO',       
+ 		'section' 	=> 'Scuola_script_header',
+        'settings' => 'scuola_header_script',
+        'priority'	=> 1));	
+
+	$wp_customize->add_section('Scuola_script_footer',array(
+	    'title'			 =>'Script Footer',
+	    'priority'		 =>1,
+	    'description'	 => '<h2>Script da inserire nel Footer</h2>',
+	    'panel'			 =>'scuola_script',
+	));
+	$wp_customize->add_setting('scuola_footer_script', array(
+	    'default' => "", 
+	    'capability' => 'edit_theme_options'));
+	$wp_customize->add_control('scuola_footer_script', array(
+	    'type' => 'textarea', 
+	    'label' => 'Codice da inserire nel footer',
+	    'description' => 'Il codice inserito in questa textarea verrà riportata nel footer di ogni pagina<br />FARE ATTENZIONE AL CODICE CHE SI INSERISCE, VALIDARLO PRIMA DELL\'INSERIMENTO',
+	    'section' => 'Scuola_script_footer', 
+	    'settings' => 'scuola_footer_script',
+	    'priority'	=> 5));  
 }
 function scuola_sanitize_number( $input ) {
     if (is_numeric($input)) { 

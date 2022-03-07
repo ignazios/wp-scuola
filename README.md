@@ -53,6 +53,8 @@ facebook: https://www.facebook.com/wpscuola/
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
+**1.2.8**
+  - ***Aggiunta*** sezione Script in Personalizzazione. Adesso è possibile inserire degli script nell'Header come avveniva nel Footer.
 **1.2.7**
   - ***Corretti*** i widget Scuola  Servizi e Scuola Link che con la versione di Wordpress 5.9 non si ridimensionano le immagini
   - ***Corretto*** il widget Scuola Articoli Griglia
