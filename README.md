@@ -1,20 +1,20 @@
 # WPScuola
-è un tema per [**WordPress 5**](https://it.wordpress.org/) (CMS open-source) specifico per le scuole italiane. 
+è un tema per [**WordPress**](https://it.wordpress.org/) (CMS open-source) specifico per le scuole italiane. 
 
 Il tema è basata sul tema originale [**ItaliaWP2 Versione: 1.1.6**](https://github.com/italia/design-wordpress-theme-italiaWP2) autore [**Boris Amico**](http://italiawp.borisamico.it/). 
-Del tema originale è stato mantenuto il framework e l'header compreso il menu principale. I template di pagine, articoli, archivi e l'impostazione della home page sono stati personalizzati in funzione delle esigenze del mondo della scuola.
+Del tema originale è stato mantenuto l'header compreso il menu principale. I template di pagine, articoli, archivi e l'impostazione della home page sono stati personalizzati in funzione delle esigenze del mondo della scuola.
 
-Un grazie particolare a [**Andrea Smith**](https://www.facebook.com/profile.php?id=100001279909352) per l'aiuto prezioso e paziente nel testing continuo dle tema.
+Un grazie particolare a [**Andrea Smith**](https://www.facebook.com/profile.php?id=100001279909352) per l'aiuto prezioso e paziente nel testing continuo del tema.
 
 WPScuola utilizza:
-- la libreria [**Bootstrap Italia**](https://italia.github.io/bootstrap-italia/) basata su [**Bootstrap 4.3.1**](https://getbootstrap.com/),di cui eredita tutte le funzionalità, componenti, griglie e classi di utilità, personalizzandole secondo le Linee Guida di Design per i siti web della Pubblica Amministrazione. 
+- la libreria [**Bootstrap Italia**](https://italia.github.io/bootstrap-italia/) basata su [**Bootstrap 4.6.1**](https://getbootstrap.com/),di cui eredita tutte le funzionalità, componenti, griglie e classi di utilità, personalizzandole secondo le Linee Guida di Design per i siti web della Pubblica Amministrazione. 
 - la libreria [**jQuery (licenza)**](https://jquery.org/license/)
 - la libreria di icone [**Font Awesome (licenza)**](https://github.com/FortAwesome/Font-Awesome#license)
 
 ***Si ricorda che il tema è ancora in fase di sviluppo e potrebbero essere apportate in futuro modifiche significative.***
 ![Logo](https://github.com/ignazios/wp-scuola/blob/master/screenshot.png)
 #Licenza
-WPScuola è rilasciato con licenza [**AGPL-3.0**](https://opensource.org/licenses/AGPL-3.0) (https://www.gnu.org/graphics/agplv3-155x51.png) che permette il libero utilizzo anche per uso commerciale.
+WPScuola è rilasciato con licenza [**AGPL-3.0**](https://opensource.org/licenses/AGPL-3.0) (https://www.gnu.org/graphics/agplv3-155x51.png) che permette il libero utilizzo anche per uso commerciale. 
 ## Manuale
 ## Tema WPScuola
 https://github.com/ignazios/wp-scuola
@@ -28,8 +28,8 @@ https://github.com/ignazios/wp-scuola
 ## Supporto
 facebook: https://www.facebook.com/wpscuola/
 ## Tema verificato per le seguenti versioni
- - **Wordpress** 	*5.0* - *5.9*
- - **PHP** 		*7.4*
+ - **Wordpress** 	*5.0* - *5.9* - *6.0* - *6.1* - *6.2* 
+ - **PHP** 		*7.4* - *8.0* - *8.1*
 ## Shortcode
 	[articoli id_categoria=ID della categoria da cui estrarre gli articoli (=0 oppure omesso se si vogliono elencare gli articoli per tag)           
 			  id_tag=ID del tag da cui estrarre gli articoli (=0 oppure omesso se si vogliono elencare gli articoli per categoria) 		  
@@ -53,6 +53,13 @@ facebook: https://www.facebook.com/wpscuola/
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
+**1.3**
+  - ***Aggiornamento*** della libreria Bootstrap Italia alla versione 1.6.4 
+  - ***Revisionato*** il codice del modulo Gestione Circolari
+  - ***Revisionato*** il codice del modulo Prenotazioni
+  - ***Revisionato*** il codice del modulo Orario Argo
+  - ***Revisionato*** il codice generale del tema
+  - ***Eliminato*** il widget Calendario Event-manager
 **1.2.8**
   - ***Aggiunta*** sezione Script in Personalizzazione. Adesso è possibile inserire degli script nell'Header come avveniva nel Footer.
 **1.2.7**

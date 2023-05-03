@@ -58,6 +58,19 @@
 	                	if (get_theme_mod('Scuola_Amministrazione_CAP') And get_theme_mod('Scuola_Amministrazione_Citta')) echo ',';
 	                	echo get_theme_mod('Scuola_Amministrazione_Citta'); ?></li>
 	                <?php echo (get_theme_mod('Scuola_Amministrazione_CM')!=""?"<li>C.M. ".get_theme_mod('Scuola_Amministrazione_CM')."</li>":""); 
+	                if (get_theme_mod('Scuola_Amministrazione_IPA')){
+						$IPA="<li>Cod. IPA ";
+						$linkIPA=get_theme_mod('Scuola_Amministrazione_LinkIndicePaByIPA');
+						if($linkIPA){
+							$IPA.='<a href="'.$linkIPA.'" style="display: inline;text-decoration-line: underline;" target="_blank" title="link al sito indicepa.gov.it con i dati dell\'ente">';
+						}
+						$IPA.=get_theme_mod('Scuola_Amministrazione_IPA'); 
+						if($linkIPA){
+							$IPA.='</a>';
+						}
+						$IPA.="</li>";
+						echo $IPA;
+					}
 	                echo (get_theme_mod('Scuola_Amministrazione_CFPA')!=""?"<li>C.F. ".get_theme_mod('Scuola_Amministrazione_CFPA')."</li>":""); 
 	                echo (get_theme_mod('Scuola_Amministrazione_PIVA')!=""?"<li>P.Iva ".get_theme_mod('Scuola_Amministrazione_PIVA')."</li>":""); 
 	            	echo (get_theme_mod('Scuola_Amministrazione_CodUni')!=""?"<li>Cod. Univoco ".get_theme_mod('Scuola_Amministrazione_CodUni')."</li>":""); 

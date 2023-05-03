@@ -3027,7 +3027,7 @@ class SimplePie
 	 */
 	public static function sort_items($a, $b)
 	{
-		return $a->get_date('U') <= $b->get_date('U');
+		return ($a->get_date('U') <= $b->get_date('U')) ? 1 : -1;
 	}
 
 	/**

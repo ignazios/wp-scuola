@@ -137,8 +137,23 @@ echo "</pre>";
 <?php  
 	return ob_get_clean();          
 }
+
 function NuovaPrenotazione($Titoli,$NumSchede){
- global $Gest_Prenotazioni,$G_Spaces;
+	global $Gest_Prenotazioni,$G_Spaces;
+	$Parametri=array("OraInizio" =>7,
+	"OraFine"            => 20,
+	"Giorni"             => array(1,1,1,1,1,0,0),
+	"ColNonPrenotabile"  =>"#EBEBEB",
+	"ColNonDisponibile"  =>"#b6b5b5",
+	"ColRiservato"       =>"#FF0000",
+	"ColPrenotato"       =>"#0000FF",
+	"MaxOrePrenotabili"  => 6,
+	"PrenEntro"          => 12,
+	"PrenSetPre"         => 0,
+	"VisPubDatiPren"	 => 0);
+	$P  =  get_option('opt_PrenotazioniParametri');
+	if($P!==false)
+		$Parametri=unserialize($P);
 	ob_start();
     $Stat="";
 //    var_dump($Titoli);var_dump($NumSchede);
@@ -151,88 +166,91 @@ function NuovaPrenotazione($Titoli,$NumSchede){
     $PathImg=Prenotazioni_URL."/img/Info.png";
     $Spazio=$G_Spaces->get_ListaSpazi("SpazioP","SpazioP","");?>	    
 	<div id="loading" style="float:left;margin-left:15px;margin-top:15px;">LOADING!</div>
-    <form name="Memo_Prenotazioni"  action="<?php echo $_SERVER["REQUEST_URI"];?>" method="post">
-	    <fieldset id="CampiPrenotazioniSpazi" >
-		<div class="container-fluid mt-5">
-			<div class="row">
-				<div class="col-sm col-sm-6 col-md-6 col-lg-4">
-					<div class="bootstrap-select-wrapper">
-			        	<label><?php _e('Spazio', 'wpscuola');?>:</label> <?php echo $Spazio;?>
-			        </div>	
-			            <img src="<?php echo $G_Spaces->get_Foto();?>" id="imgSpazio" />
-			    </div>
-		        <div class="col-sm col-sm-6 col-md-6 col-lg-4">
-		        	<div class="it-datepicker-wrapper">
-					  <div class="form-group">
-					    <input class="form-control it-date-datepicker" id="DataPrenotazione" name="DataPrenotazione" type="text" autocomplete="off" placeholder="data in formato gg/mm/aaaa">
-					    <label for="DataPrenotazione"><?php _e('Data prenotazione', 'wpscuola');?>:</label>
-					  </div>
+		<form name="Memo_Prenotazioni" action="<?php echo $_SERVER["REQUEST_URI"];?>" method="post">
+			<fieldset id="CampiPrenotazioniSpazi" >
+			<div class="container-fluid mt-5">
+				<div class="row">
+					<div class="col-sm col-sm-6 col-md-6 col-lg-4">
+						<div class="bootstrap-select-wrapper">
+							<label><?php _e('Spazio', 'wpscuola');?>:</label> <?php echo $Spazio;?>
+						</div>	
+							<img src="<?php echo $G_Spaces->get_Foto();?>" id="imgSpazio" />
 					</div>
-		            <label><?php _e('Ora Inizio', 'wpscuola');?>: <span id="VisOraInizio"></span></label>
-		            <div id="InizioPre">
-		                    <?php echo createTablePrenotazioniSpazio($G_Spaces->get_FirstID());?>
-		            </div>
-		        </div>
-		        <div class="col-sm col-sm-6 col-md-6 col-lg-4">
-		        	<div class="form-group" style="margin-bottom: 1rem;">
-					    <label for="NumOrePren" class="active" style="width: auto;display: contents;"><?php _e('N&deg; ore', 'wpscuola');?>: </label>
-					    <select id="NumOrePren" name="NumOrePren" style="display:inline;">
-		                	<option value="0">----</option>		
-		                </select>
+					<div class="col-sm col-sm-6 col-md-6 col-lg-4">
+						<div class="it-datepicker-wrapper">
+							<div class="form-group">
+								<input class="form-control w-50" id="DataPrenotazione" name="DataPrenotazione" type="date" placeholder="data in formato gg/mm/aaaa" value="<?php echo date("Y-m-d");?>">
+								<label for="DataPrenotazione"><?php _e('Data prenotazione', 'wpscuola');?>:</label>
+							</div>
+						</div>
+						<label><?php _e('Ora Inizio', 'wpscuola');?>: <span id="VisOraInizio"></span></label>
+						<div id="InizioPre">
+								<?php echo createTablePrenotazioniSpazio($G_Spaces->get_FirstID());?>
+						</div>
 					</div>
-
-					<div class="form-group">
-					    <label for="NumSet" class="active" style="width: auto;display: contents;"><?php _e('N&deg; settimane', 'wpscuola');?>: </label>
-						<select id="NumSet" name="NumSet"  style="display:inline;">
-	                        <option value="1">1</option>
-	                        <option value="2">2</option>
-	                        <option value="3">3</option>
-	                        <option value="4">4</option>
-	                        <option value="5">5</option>
-	                        <option value="6">6</option>
-	                        <option value="7">7</option>
-	                        <option value="8">8</option>
-	                        <option value="9">9</option>
-	                        <option value="10">10</option>		
-		                </select>
+					<div class="col-sm col-sm-6 col-md-6 col-lg-4">
+						<div class="form-group" style="margin-bottom: 1rem;">
+							<label for="NumOrePren" class="active" style="width: auto;display: contents;"><?php _e('N&deg; ore', 'wpscuola');?>: </label>
+							<select id="NumOrePren" name="NumOrePren" style="display:inline;">
+								<option value="0">----</option>		
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="NumSet" class="active" style="width: auto;display: contents;"><?php _e('N&deg; settimane', 'wpscuola');?>: </label>
+							<select id="NumSet" name="NumSet"  style="display:inline;">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>		
+							</select>
+						</div>
+						<div class="form-group">
+							<textarea name="motivoprenotazione" id="motivoprenotazione" rows="5" style="box-shadow: 0 0 0 1px rgba(0, 0, 0, .2);"></textarea>
+							<label for="motivoprenotazione"><?php _e('Descrivere il motivo della prenotazione', 'wpscuola');?></label>
+						</div>
+					</div>	
+				</div>
+				<div class="row">
+					<div class="mx-auto text-center mt-3" style="width: 200px;">
+						<input type="hidden" id="OraInizioPrenotazione" value="" name="OraInizioPrenotazione"/>
+						<input type="hidden" id="NumMaxOre" value="<?php echo $Parametri["MaxOrePrenotabili"];?>" name="NumMaxOre"/>
+						<input type="hidden" id="_wpnonce" value="<?php echo wp_create_nonce( 'secmemopren' );?>" name="_wpnonce" />
+						<button type="submit" class="btn btn-primary" value="Prenota" name="navigazioneGiorni">Prenota</button>
 					</div>
-					<div class="form-group">
-					    <textarea id="motivoprenotazione" rows="5" style="box-shadow: 0 0 0 1px rgba(0, 0, 0, .2);"></textarea>
-						<label for="motivoprenotazione"><?php _e('Descrivere il motivo della prenotazione', 'wpscuola');?></label>
-					</div>
-		        </div>	
-		    </div>
-		    <div class="row">
-		    	<div class="mx-auto text-center mt-3" style="width: 200px;">
-	                <input type="hidden" id="OraInizioPrenotazione" value="" name="OraInizioPrenotazione"/>
-	                <input type="hidden" id="UrlAjax" value="<?php echo home_url();?>/wp-admin/admin-ajax.php" name="UrlAjax"/>
-	                <input type="hidden" id="ColPrenotato" value="<?php echo $Parametri['ColPrenotato'];?>" />
-	                <input type="hidden" id="OraInizio" value="<?php echo $Parametri['OraInizio'];?>" />
-	                <input type="hidden" id="OraFine" value="<?php echo $Parametri['OraFine'];?>" />
-	                <input type="hidden" id="NumMaxOre" value="<?php echo $Parametri['MaxOrePrenotabili'];?>" />
-	                <input type="hidden" id="MinOrePrima" value="<?php echo $Parametri['PrenEntro'];?>" />
-	                <input type="hidden" id="_wpnonce" value="<?php echo wp_create_nonce( 'secmemopren' );?>" name="_wpnonce" />
-	                <button type="submit" class="btn btn-primary" value="Prenota" name="navigazioneGiorni">Prenota</button>
-	            </div>
-            </div>
-	    </div>			
-	    </fieldset>
-	</form>
-</div>                    
+				</div>
+			</div>			
+			</fieldset>
+		</form>
 <?php
 	return ob_get_clean();  
 }
 
 if (!is_user_logged_in()){
-    
 	echo $G_Spaces->get_ListaSpaziDiv();
 }else{
+	echo '<div id="dialog-confirm" title="Cancellazione Prenotazione" style="display:none;"></div>';
 	if (isset($_POST['navigazioneGiorni']) and $_POST['navigazioneGiorni']=="Prenota"){
 //		var_dump($_POST);die();
-		$ris=$Gest_Prenotazioni->newPrenotazione($_POST['DataPrenotazione'],$_POST['OraInizioPrenotazione'],$_POST['NumOrePren'],$_POST['SpazioP'],$_POST['NumSet'],$_POST['notePrenotazione'],$_POST['_wpnonce']);
-		echo '<div id="message" style="border: thin inset;background-color: #FFFACD;">
-			<p>Risultato prenotazione:<br />'.$ris.'</p></div>
-      		<meta http-equiv="refresh" content="5;url='.get_permalink().'"/>';	
+		if ( !(isset($_POST['_wpnonce']) And wp_verify_nonce( $_POST['_wpnonce'], 'secmemopren' )) ) {
+			die( 'Errore di Sicurezza' ); 
+		}
+		$DataPrenotazione=filter_input(INPUT_POST,"DataPrenotazione");
+		$DataPrenotazione=cvtDate($DataPrenotazione);
+		$OraInizioPrenotazione=filter_input(INPUT_POST,"OraInizioPrenotazione");
+		$NumOrePren=filter_input(INPUT_POST,"NumOrePren");
+		$SpazioP=filter_input(INPUT_POST,"SpazioP");
+		$NumSet=filter_input(INPUT_POST,"NumSet");
+		$Motivoprenotazione=filter_input(INPUT_POST,"motivoprenotazione");
+		$ris=$Gest_Prenotazioni->newPrenotazione($DataPrenotazione,$OraInizioPrenotazione,$NumOrePren,$SpazioP,$NumSet,$Motivoprenotazione);
+			echo '<div id="message" style="border: thin inset;background-color: #FFFACD;">
+				<p>Risultato prenotazione:<br />'.$ris.'</p></div>
+				<meta http-equiv="refresh" content="5;url='.get_permalink().'"/>';	
 	}else{
         $Nuovo=FALSE;
         $Statistiche=FALSE;
@@ -268,21 +286,21 @@ if (!is_user_logged_in()){
 	<ul class="nav nav-tabs" role="tablist" id="CartellePrenotazioni">
 <?php   	if($Nuovo){?>
 		<li class="nav-item">
-			<a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#CartellaP1" role="tab" aria-controls="CartellaP1" aria-selected="true">
+			<a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#CartellaP1" data-bs-toggle="tab" role="tab" aria-controls="CartellaP1" aria-selected="true">
 				<?php echo ((isset($Titoli[0]) And strlen($Titoli[0]))>0?$Titoli[0]:"Nuova");?>
 			</a>
 		</li>
 <?php		}
 	        if($Statistiche){?>
 	    <li class="nav-item">
-			<a class="nav-link" id="tab2-tab" data-toggle="tab" href="#CartellaP2" role="tab" aria-controls="CartellaP2">
+			<a class="nav-link" id="tab2-tab" data-toggle="tab" href="#CartellaP2" data-bs-toggle="tab" role="tab" aria-controls="CartellaP2" aria-selected="false">
 				<?php echo ((isset($Titoli[1]) And strlen($Titoli[1]))>0?$Titoli[1]:"Statistiche");?>
 			</a>
 		</li>
 <?php		}            
 			if($Spazi){?>
 	    <li class="nav-item">
-			<a class="nav-link" id="tab3-tab" data-toggle="tab" href="#CartellaP3" role="tab" aria-controls="CartellaP3">
+			<a class="nav-link" id="tab3-tab" data-toggle="tab" href="#CartellaP3" data-bs-toggle="tab" role="tab" aria-controls="CartellaP3" aria-selected="false">
 				<?php echo ((isset($Titoli[2]) And strlen($Titoli[2]))>0?$Titoli[2]:"Catalogo Spazi");?>
 			</a>
 		</li>

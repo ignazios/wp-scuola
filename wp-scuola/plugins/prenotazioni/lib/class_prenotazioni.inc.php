@@ -215,30 +215,37 @@ class Prenotazioni{
 	}
 	
 	function getPreGioSpa($data,$IdSpazio){
+//		echo "<pre>";var_dump($data);
+//		var_dump($IdSpazio);
 		global $wpdb,$table_prefix;
 		$giornoS=giornoSettimana($data);
 		$Riservato=get_post_meta( $IdSpazio, "_riservato",true);
 		$Riservato=unserialize($Riservato);
 		$Parametri=get_Pre_Parametri();
-		if($Parametri['Giorni'][$giornoS-1]==0){
-                    for($i=$Parametri['OraInizio'];$i<=$Parametri['OraFine'];$i++){
-                            if ($i==$Parametri['OraInizio'])
-                                $NumO=$Parametri['OraFine']-$Parametri['OraInizio']+1;
-                            else
-                                $NumO=0;
-                            $PrenotazioniGiorno[$i]=array("Impegno"=>1,
-                                                        "Motivo"=>"",
-                                                        "Note"=>"",
-                                                        "OreCons"=>$NumO);
-                    }
-                    return $PrenotazioniGiorno;
+//		var_dump($giornoS);
+//echo "<pre>";var_dump($Riservato);
+//		var_dump($Parametri);
+//		echo "</pre>";
+		if(isset($Parametri['Giorni'][$giornoS-1]) And $Parametri['Giorni'][$giornoS-1]==0){
+			for($i=$Parametri['OraInizio'];$i<=$Parametri['OraFine'];$i++){
+				if ($i==$Parametri['OraInizio'])
+					$NumO=$Parametri['OraFine']-$Parametri['OraInizio']+1;
+				else
+					$NumO=0;
+				$PrenotazioniGiorno[$i]=array("Impegno"=>1,
+											"Motivo"=>"",
+											"Note"=>"",
+											"OreCons"=>$NumO);
+			}
+			return $PrenotazioniGiorno;
 		}
 		for($i=$Parametri['OraInizio'];$i<=$Parametri['OraFine'];$i++){
-                    $PrenotazioniGiorno[$i]=array("Impegno"=>$Riservato[$giornoS][$i],
-                                                "Motivo"=>"",
-                                                "Note"=>"",
-                                                "OreCons"=>$this->GetNumOrePren($Riservato,$giornoS,$i,$Parametri['OraInizio'],$Parametri['OraFine']));
+			$PrenotazioniGiorno[$i]=array("Impegno"=>$Riservato[$giornoS][$i],
+										"Motivo"=>"",
+										"Note"=>"",
+										"OreCons"=>$this->GetNumOrePren($Riservato,$giornoS,$i,$Parametri['OraInizio'],$Parametri['OraFine']));
 		}
+//		echo "<pre>";var_dump($PrenotazioniGiorno);echo "</pre>";
 /*		echo $IdSpazio." <br />";
 		print_r($Riservato[6]);
 		echo " <br />";
@@ -279,9 +286,13 @@ class Prenotazioni{
 	}
 	function IsPossibilePrenotare($IDSpazio,$Data,$DaOre,$nOre){
 		global $wpdb;
+		if(strpos($Data,"/")!==FALSE){
+			$Data=explode("/",$Data);
+			$Data=$Data[2]."-".$Data[1]."-".$Data[0];
+		}
 		$Sql="SELECT OraInizio,OraFine FROM $wpdb->table_prenotazioni WHERE DataPrenotazione='$Data' And IdSpazio=$IDSpazio Order By OraInizio";
 /*		echo $Sql."<br />";
-		echo $IDSpazio."  ".$Data." ".$DaOre."  ".$nOre."<br />";*/
+		echo $IDSpazio."  ".$Data." ".$DaOre."  ".$nOre."<br />";die();*/
 		$re=$wpdb->get_results($Sql);
 		$orep=array();
 		foreach($re as $prenotazione){
@@ -342,26 +353,27 @@ class Prenotazioni{
 			return FALSE;
 		}
 	}
-	function newPrenotazione($data,$orai,$ore,$IdSpazio,$Nset=1,$note="",$Secur){
+	function newPrenotazione($Data,$orai,$ore,$IdSpazio,$Nset=1,$note=""){
 		global $wpdb;
-		if ( ! wp_verify_nonce( $Secur, 'secmemopren' ) ) {
-		    die( ' Security check' ); 
+		if(strpos($Data,"/")!==FALSE){
+			$dataS=explode("/",$Data);
+			$dataS=$dataS[2]."-".$dataS[1]."-".$dataS[0];
+		}else{
+			$dataS=$Data;
 		}
-    	$dataS=explode("/",$data);
-    	$Data=$dataS[2]."-".$dataS[1]."-".$dataS[0];
     	$PrenCre="";
     	$UserID=get_current_user_id();
     	$user_info = get_userdata($UserID);
      	$MsgDate=array();
  //   	echo "ci passo data ".$data." orai ".$orai." n_ore ".$ore." spazio".$IdSpazio." num set".$Nset." note".$note;
 		for($i=0;$i<$Nset;$i++){
-			$MsgDate[]=Pren_FormatDataItaliano($Data);
+			$MsgDate[]=$Data;
 			if($this->IsPossibilePrenotare($IdSpazio,$Data,$orai,$ore))
 			 	if ( false === $wpdb->insert($wpdb->table_prenotazioni,
 			 				array('IPAddress' => $_SERVER['REMOTE_ADDR'],
 			                      'IdUtente' => $UserID,
 			                      'IdSpazio' => $IdSpazio,
-			                      'DataPrenotazione' => $Data,
+			                      'DataPrenotazione' => $dataS,
 								  'OraInizio' => $orai,
 								  'OraFine' => $orai+$ore,
 								  'Note' => $note)))
@@ -370,8 +382,8 @@ class Prenotazioni{
 		 			$PrenCre.="Prenotazione del ".$Data." è stata creata<br />";
 		 	else
 		 		$PrenCre.="Prenotazione del ".$Data." non è stata creata perch&egrave; gi&agrave; occupata<br />";
-			$Data=explode("-",$Data);
-			$Data = date('Y-m-d', strtotime("+1 week",mktime(0, 0, 0, $Data[1], $Data[2], $Data[0])));
+			$dataS=explode("-",$dataS);
+			$dataS = date('Y-m-d', strtotime("+1 week",mktime(0, 0, 0, $dataS[1], $dataS[2], $dataS[0])));
 	 	}
 	 	$MsgDate=implode(" - ",$MsgDate);
         $Utente="(".$UserID.") ".$user_info->last_name." ".$user_info->first_name;
@@ -379,6 +391,20 @@ class Prenotazioni{
 		$this->sendMail(get_option("admin_email"),$Utente,$user_info->user_email,get_the_title($IdSpazio),$MsgDate,$OrePren,$note,"Amministratore");
 		$this->sendMail($user_info->user_email,$Utente,get_option("admin_email"),get_the_title($IdSpazio),$MsgDate,$OrePren,$note,"Utente");
  	 	return $PrenCre;
+	}
+	function isMyPrenotazione($IDPrenotazione){
+		global $wpdb;
+		$Sql="Select $wpdb->table_prenotazioni.IdUtente From $wpdb->table_prenotazioni Where $wpdb->table_prenotazioni.IdPrenotazione=%d;";
+		$Prenotazioni=$wpdb->get_results($wpdb->prepare($Sql,$IDPrenotazione));
+		if(isset($Prenotazioni)){
+			if($Prenotazioni[0]->IdUtente==get_current_user_id()){
+				return TRUE;
+			}else{
+				return FALSE;
+			}
+		}else{
+			return FALSE;
+		}
 	}
 }
 ?>

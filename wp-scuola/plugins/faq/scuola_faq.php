@@ -193,7 +193,7 @@ class ScuolaFAQ {
 
 	    $html = '<div id="collapseDivFAQ" class="collapse-div collapse-background-active" role="tablist">';
 	    $terms = get_terms( 'faq_gruppi' );
-	    if($gruppi==''){
+	    if(isset($atts['gruppi'])){
 	    	$gruppi=array();
 	    	$terms = get_terms( array('taxonomy' => 'faq_gruppi','hide_empty' => false,) );
 	    	foreach($terms as $term){

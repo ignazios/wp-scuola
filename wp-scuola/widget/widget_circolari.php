@@ -174,6 +174,7 @@
             $instance = wp_parse_args( (array) $instance, array( ) ); 
             $titolo = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Circolari', 'wpscuola' );
             $numelementi=isset($instance['numelementi'])?$instance['numelementi']:5;
+			$linkLT=(isset($instance['numelementi']) And $instance['leggitutto'] == '1') ? 'checked="checked"':'';
 ?>           
 
            <p>
@@ -187,7 +188,7 @@
      <div class="Servizi">
     	<h3><?php _e('Link Leggi Tutto','wpscuola');?></h3>
     	<label for="<?php echo $this->get_field_id( 'leggitutto' ); ?>"><?php _e('Attiva','wpscuola');?>:</label>
-    	<input type="checkbox" id="<?php echo $this->get_field_id('leggitutto'); ?>" name="<?php echo $this->get_field_name('leggitutto'); ?>" value="1" <?php echo ($instance['leggitutto'] == '1') ? 'checked="checked"':''; ?>/>
+    	<input type="checkbox" id="<?php echo $this->get_field_id('leggitutto'); ?>" name="<?php echo $this->get_field_name('leggitutto'); ?>" value="1" <?php echo $linkLT; ?>/>
     </div>
       <?php
 		}

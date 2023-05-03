@@ -115,7 +115,7 @@ function OAD_impostazioni(){
 <div class="welcome-panel" >
 	<div class="welcome-panel-content">
 		<h2><img src="<?php echo get_template_directory_uri();?>/plugins/orario_argo_darwin/img/logoDarwin.png" style="float:left;padding-right: 2em;"/><?php _e( 'Pannello di amministrazione del Modulo di gestione dell\'Orario Scolastico <br />importato dal programma Argo Darwin','wpscuola' ); ?></h2>
-	    <div class="welcome-panel-column-container" style="margin-top: 2em;">
+	    <div class="" style="margin-top: 2em;">
 	    	<div style="padding-bottom: 2em;">
 	    		<h3><?php _e("File XML dell'Orario","wpscuola");?></h3>
 	    		<div style="padding: 1em;font-size: 1.2em;">
@@ -175,51 +175,53 @@ function OAD_getOrarioDocente($IdDocente){
 	$Orario[10]=array("LUN"=>"","MAR"=>"","MER"=>"","GIO"=>"","VEN"=>"","SAB"=>"");
 	$Orario[11]=array("LUN"=>"","MAR"=>"","MER"=>"","GIO"=>"","VEN"=>"","SAB"=>"");
 	$Orario[12]=array("LUN"=>"","MAR"=>"","MER"=>"","GIO"=>"","VEN"=>"","SAB"=>"");
-	foreach($arrOrario["ATTIVITA"]["CORSO"] as $Corso){
+	if(!is_null($arrOrario)){
+		foreach($arrOrario["ATTIVITA"]["CORSO"] as $Corso){
 //		echo "<pre>";print_r($Corso);echo "</pre>";
-		if(is_array($Corso["DOCENTE"])){
-			foreach($Corso["DOCENTE"] as $Docente){
-				if($Docente==$IdDocente){
-//					echo "<pre>";print_r($Docente);echo "</pre>";
-					$Strutture="Struttura ND";
-					if(is_array($Corso["STRUTTURA"])){
-						$DesStrut=array();
-						foreach($Corso["STRUTTURA"] as $Struttura)
-							$DesStrut[]=OAD_getStruttura($Struttura);
-							$Strutture=implode(", ",$DesStrut);
-					}else{
-						$Strutture=OAD_getStruttura($Corso["STRUTTURA"]);
-					}
-					foreach($Corso["LEZIONI"] as $Lezione){
-//						echo "<pre>";print_r($Lezione);echo "</pre>";
-						if(isset($Lezione["DURATA"])){
-//							echo "<pre>";print_r($Lezione);echo "</pre>";
-							for($i=0;$i<$Lezione["DURATA"];$i++)
-								$Orario[$Lezione["ORA"]+$i][$Lezione["GIORNO"]]="<strong>".OAD_getClasse($Corso["CLASSE"])."</strong> (".$Strutture.") "."<br /><em>".OAD_getMateria($Corso["MATERIA"])."</em>";
+			if(is_array($Corso["DOCENTE"])){
+				foreach($Corso["DOCENTE"] as $Docente){
+					if($Docente==$IdDocente){
+	//					echo "<pre>";print_r($Docente);echo "</pre>";
+						$Strutture="Struttura ND";
+						if(is_array($Corso["STRUTTURA"])){
+							$DesStrut=array();
+							foreach($Corso["STRUTTURA"] as $Struttura)
+								$DesStrut[]=OAD_getStruttura($Struttura);
+								$Strutture=implode(", ",$DesStrut);
+						}else{
+							$Strutture=OAD_getStruttura($Corso["STRUTTURA"]);
+						}
+						foreach($Corso["LEZIONI"] as $Lezione){
+	//						echo "<pre>";print_r($Lezione);echo "</pre>";
+							if(isset($Lezione["DURATA"])){
+	//							echo "<pre>";print_r($Lezione);echo "</pre>";
+								for($i=0;$i<$Lezione["DURATA"];$i++)
+									$Orario[$Lezione["ORA"]+$i][$Lezione["GIORNO"]]="<strong>".OAD_getClasse($Corso["CLASSE"])."</strong> (".$Strutture.") "."<br /><em>".OAD_getMateria($Corso["MATERIA"])."</em>";
+							}
 						}
 					}
 				}
+			}else{
+				if($Corso["DOCENTE"]==$IdDocente){
+						$Strutture="Struttura ND";
+						if(is_array($Corso["STRUTTURA"])){
+							$DesStrut=array();
+							foreach($Corso["STRUTTURA"] as $Struttura)
+								$DesStrut[]=OAD_getStruttura($Struttura);
+								$Strutture=implode(", ",$DesStrut);
+						}else{
+							$Strutture=OAD_getStruttura($Corso["STRUTTURA"]);
+						}
+					foreach($Corso["LEZIONI"] as $Lezione){
+	//					echo "<pre>";print_r($Lezione);echo "</pre>";
+						if(isset($Lezione["DURATA"])){
+		//				echo "<pre>";print_r($Lezione);echo "</pre>";
+							for($i=0;$i<$Lezione["DURATA"];$i++)
+								$Orario[$Lezione["ORA"]+$i][$Lezione["GIORNO"]]="<strong>".OAD_getClasse($Corso["CLASSE"])."</strong><br />(".$Strutture.") "."<br /><em>".OAD_getMateria($Corso["MATERIA"])."</em>";
+						}
+					}
+				}		
 			}
-		}else{
-			if($Corso["DOCENTE"]==$IdDocente){
-					$Strutture="Struttura ND";
-					if(is_array($Corso["STRUTTURA"])){
-						$DesStrut=array();
-						foreach($Corso["STRUTTURA"] as $Struttura)
-							$DesStrut[]=OAD_getStruttura($Struttura);
-							$Strutture=implode(", ",$DesStrut);
-					}else{
-						$Strutture=OAD_getStruttura($Corso["STRUTTURA"]);
-					}
-				foreach($Corso["LEZIONI"] as $Lezione){
-//					echo "<pre>";print_r($Lezione);echo "</pre>";
-					if(isset($Lezione["DURATA"])){
-	//				echo "<pre>";print_r($Lezione);echo "</pre>";
-						for($i=0;$i<$Lezione["DURATA"];$i++)
-							$Orario[$Lezione["ORA"]+$i][$Lezione["GIORNO"]]="<strong>".OAD_getClasse($Corso["CLASSE"])."</strong><br />(".$Strutture.") "."<br /><em>".OAD_getMateria($Corso["MATERIA"])."</em>";
-					}
-				}
-			}		
 		}
 	}
 	if(($Ricevimento=OAD_getDocenteRicevimento($IdDocente))!==FALSE){
@@ -248,39 +250,41 @@ function OAD_getOrarioClasse($IdClasse){
 	$Orario[10]=array("LUN"=>"","MAR"=>"","MER"=>"","GIO"=>"","VEN"=>"","SAB"=>"");
 	$Orario[11]=array("LUN"=>"","MAR"=>"","MER"=>"","GIO"=>"","VEN"=>"","SAB"=>"");
 	$Orario[12]=array("LUN"=>"","MAR"=>"","MER"=>"","GIO"=>"","VEN"=>"","SAB"=>"");
-	foreach($arrOrario["ATTIVITA"]["CORSO"] as $Corso){
-//		echo "<pre>";print_r($Corso);echo "</pre>";
-		if($Corso["CLASSE"]==$IdClasse){
-//					echo "<pre>";print_r($Corso);echo "</pre>";
-			$Strutture="Struttura ND";
-			if(is_array($Corso["STRUTTURA"])){
-				$DesStrut=array();
-				foreach($Corso["STRUTTURA"] as $Struttura)
-					$DesStrut[]=OAD_getStruttura($Struttura);
-					$Strutture=implode(", ",$DesStrut);
-			}else{
-				$Strutture=OAD_getStruttura($Corso["STRUTTURA"]);
-			}
-			$Docenti="Docente ND";
-			if(is_array($Corso["DOCENTE"])){
-				$DesDocent=array();
-				foreach($Corso["DOCENTE"] as $Docente)
-					$DesDocent[]=OAD_getDocenteDispNome($Docente);
-					$Docenti=implode(", ",$DesDocent);
-			}else{
-				$Docenti=OAD_getDocenteDispNome($Corso["DOCENTE"]);
-			}
-			foreach($Corso["LEZIONI"] as $Lezione){
-//			if($Corso["MATERIA"]==48){
-//				echo "<pre>";print_r($Lezione);echo "</pre>".$Docenti;}
-				if(isset($Lezione[0])){
-					foreach($Lezione as $LezioneSingola){
-						for($i=0;$i<$LezioneSingola["DURATA"];$i++)
-							$Orario[$LezioneSingola["ORA"]+$i][$LezioneSingola["GIORNO"]]="<strong>".OAD_getMateria($Corso["MATERIA"])."</strong><br /><em>".$Docenti."</em><br />(".$Strutture.")";					
-					}
+	if(!is_null($arrOrario)){
+		foreach($arrOrario["ATTIVITA"]["CORSO"] as $Corso){
+	//		echo "<pre>";print_r($Corso);echo "</pre>";
+			if($Corso["CLASSE"]==$IdClasse){
+	//					echo "<pre>";print_r($Corso);echo "</pre>";
+				$Strutture="Struttura ND";
+				if(is_array($Corso["STRUTTURA"])){
+					$DesStrut=array();
+					foreach($Corso["STRUTTURA"] as $Struttura)
+						$DesStrut[]=OAD_getStruttura($Struttura);
+						$Strutture=implode(", ",$DesStrut);
 				}else{
-					for($i=0;$i<$Lezione["DURATA"];$i++)
-						$Orario[$Lezione["ORA"]+$i][$Lezione["GIORNO"]]="<strong>".OAD_getMateria($Corso["MATERIA"])."</strong><br /><em>".$Docenti."</em><br />(".$Strutture.")";
+					$Strutture=OAD_getStruttura($Corso["STRUTTURA"]);
+				}
+				$Docenti="Docente ND";
+				if(is_array($Corso["DOCENTE"])){
+					$DesDocent=array();
+					foreach($Corso["DOCENTE"] as $Docente)
+						$DesDocent[]=OAD_getDocenteDispNome($Docente);
+						$Docenti=implode(", ",$DesDocent);
+				}else{
+					$Docenti=OAD_getDocenteDispNome($Corso["DOCENTE"]);
+				}
+				foreach($Corso["LEZIONI"] as $Lezione){
+	//			if($Corso["MATERIA"]==48){
+	//				echo "<pre>";print_r($Lezione);echo "</pre>".$Docenti;}
+					if(isset($Lezione[0])){
+						foreach($Lezione as $LezioneSingola){
+							for($i=0;$i<$LezioneSingola["DURATA"];$i++)
+								$Orario[$LezioneSingola["ORA"]+$i][$LezioneSingola["GIORNO"]]="<strong>".OAD_getMateria($Corso["MATERIA"])."</strong><br /><em>".$Docenti."</em><br />(".$Strutture.")";					
+						}
+					}else{
+						for($i=0;$i<$Lezione["DURATA"];$i++)
+							$Orario[$Lezione["ORA"]+$i][$Lezione["GIORNO"]]="<strong>".OAD_getMateria($Corso["MATERIA"])."</strong><br /><em>".$Docenti."</em><br />(".$Strutture.")";
+					}
 				}
 			}
 		}
@@ -303,21 +307,23 @@ function OAD_getOrarioRicevimentoClasse($IdClasse){
 	$Orario[11]=array("LUN"=>"","MAR"=>"","MER"=>"","GIO"=>"","VEN"=>"","SAB"=>"");
 	$Orario[12]=array("LUN"=>"","MAR"=>"","MER"=>"","GIO"=>"","VEN"=>"","SAB"=>"");
 	$Docenti=array();
-	foreach($arrOrario["ATTIVITA"]["CORSO"] as $Corso){
-//		echo "<pre>";print_r($Corso);echo "</pre>";
-		if($Corso["CLASSE"]==$IdClasse){
-//					echo "<pre>";print_r($Corso);echo "</pre>";
-			if(is_array($Corso["DOCENTE"])){
-				foreach($Corso["DOCENTE"] as $Docente)
-					$Docenti[]=$Docente;
-			}else{
-				$Docenti[]=$Corso["DOCENTE"];
+	if(!is_null($arrOrario)){
+		foreach($arrOrario["ATTIVITA"]["CORSO"] as $Corso){
+	//		echo "<pre>";print_r($Corso);echo "</pre>";
+			if($Corso["CLASSE"]==$IdClasse){
+	//					echo "<pre>";print_r($Corso);echo "</pre>";
+				if(is_array($Corso["DOCENTE"])){
+					foreach($Corso["DOCENTE"] as $Docente)
+						$Docenti[]=$Docente;
+				}else{
+					$Docenti[]=$Corso["DOCENTE"];
+				}
 			}
 		}
-	}
-	foreach($Docenti as $Docente){
-		if(($Ricevimento=OAD_getDocenteRicevimento($Docente))!==FALSE){
-			$Orario[$Ricevimento["ORA"]][$Ricevimento["GIORNO"]]=OAD_getDocenteDispNome($Docente);
+		foreach($Docenti as $Docente){
+			if(($Ricevimento=OAD_getDocenteRicevimento($Docente))!==FALSE){
+				$Orario[$Ricevimento["ORA"]][$Ricevimento["GIORNO"]]=OAD_getDocenteDispNome($Docente);
+			}
 		}
 	}
 	return $Orario;
@@ -337,39 +343,41 @@ function OAD_getOrarioStruttura($IdStruttura){
 	$Orario[10]=array("LUN"=>"","MAR"=>"","MER"=>"","GIO"=>"","VEN"=>"","SAB"=>"");
 	$Orario[11]=array("LUN"=>"","MAR"=>"","MER"=>"","GIO"=>"","VEN"=>"","SAB"=>"");
 	$Orario[12]=array("LUN"=>"","MAR"=>"","MER"=>"","GIO"=>"","VEN"=>"","SAB"=>"");
-	foreach($arrOrario["ATTIVITA"]["CORSO"] as $Corso){
-//		echo "<pre>";print_r($Corso);echo "</pre>";
-		if($Corso["STRUTTURA"]==$IdStruttura){
-//					echo "<pre>";print_r($Corso);echo "</pre>";
-			$Classe="Classe ND";
-			if(is_array($Corso["CLASSE"])){
-				$DesClasse=array();
-				foreach($Corso["CLASSE"] as $Classe)
-					$DesClasse[]=OAD_getClasse($Classe);
-					$Classe=implode(", ",$DesClasse);
-			}else{
-				$Classe=OAD_getClasse($Corso["CLASSE"]);
-			}
-			$Docenti="Docente ND";
-			if(is_array($Corso["DOCENTE"])){
-				$DesDocent=array();
-				foreach($Corso["DOCENTE"] as $Docente)
-					$DesDocent[]=OAD_getDocenteDispNome($Docente);
-					$Docenti=implode(", ",$DesDocent);
-			}else{
-				$Docenti=OAD_getDocenteDispNome($Corso["DOCENTE"]);
-			}
-			foreach($Corso["LEZIONI"] as $Lezione){
-//			if($Corso["MATERIA"]==48){
-//				echo "<pre>";print_r($Lezione);echo "</pre>".$Docenti;}
-				if(isset($Lezione[0])){
-					foreach($Lezione as $LezioneSingola){
-						for($i=0;$i<$LezioneSingola["DURATA"];$i++)
-							$Orario[$LezioneSingola["ORA"]+$i][$LezioneSingola["GIORNO"]]="<strong>".$Classe."<br />".OAD_getMateria($Corso["MATERIA"])."</strong><br /><em>".$Docenti."</em>";
-					}
+	if(!is_null($arrOrario)){
+		foreach($arrOrario["ATTIVITA"]["CORSO"] as $Corso){
+	//		echo "<pre>";print_r($Corso);echo "</pre>";
+			if($Corso["STRUTTURA"]==$IdStruttura){
+	//					echo "<pre>";print_r($Corso);echo "</pre>";
+				$Classe="Classe ND";
+				if(is_array($Corso["CLASSE"])){
+					$DesClasse=array();
+					foreach($Corso["CLASSE"] as $Classe)
+						$DesClasse[]=OAD_getClasse($Classe);
+						$Classe=implode(", ",$DesClasse);
 				}else{
-					for($i=0;$i<$Lezione["DURATA"];$i++)
-						$Orario[$Lezione["ORA"]+$i][$Lezione["GIORNO"]]="<strong>".$Classe."<br />".OAD_getMateria($Corso["MATERIA"])."</strong><br /><em>".$Docenti."</em>";
+					$Classe=OAD_getClasse($Corso["CLASSE"]);
+				}
+				$Docenti="Docente ND";
+				if(is_array($Corso["DOCENTE"])){
+					$DesDocent=array();
+					foreach($Corso["DOCENTE"] as $Docente)
+						$DesDocent[]=OAD_getDocenteDispNome($Docente);
+						$Docenti=implode(", ",$DesDocent);
+				}else{
+					$Docenti=OAD_getDocenteDispNome($Corso["DOCENTE"]);
+				}
+				foreach($Corso["LEZIONI"] as $Lezione){
+	//			if($Corso["MATERIA"]==48){
+	//				echo "<pre>";print_r($Lezione);echo "</pre>".$Docenti;}
+					if(isset($Lezione[0])){
+						foreach($Lezione as $LezioneSingola){
+							for($i=0;$i<$LezioneSingola["DURATA"];$i++)
+								$Orario[$LezioneSingola["ORA"]+$i][$LezioneSingola["GIORNO"]]="<strong>".$Classe."<br />".OAD_getMateria($Corso["MATERIA"])."</strong><br /><em>".$Docenti."</em>";
+						}
+					}else{
+						for($i=0;$i<$Lezione["DURATA"];$i++)
+							$Orario[$Lezione["ORA"]+$i][$Lezione["GIORNO"]]="<strong>".$Classe."<br />".OAD_getMateria($Corso["MATERIA"])."</strong><br /><em>".$Docenti."</em>";
+					}
 				}
 			}
 		}
@@ -426,7 +434,7 @@ function OAD_getMateria($IdMateria){
 	else
 		return "Materia ND";
 }
-function OAD_getElencoStrutture($Visualizzazione="Array",$Pulsanti){
+function OAD_getElencoStrutture($Visualizzazione="Array",$Pulsanti=""){
 	global	$arrOrario;
 	$Strutture=array();
 	foreach($arrOrario["STRUTTURE"]["STRUTTURA"] as $id => $Struttura){
@@ -463,12 +471,14 @@ function OAD_getStruttura($IdStruttura){
 function OAD_crea_tabella_materie(){
 	global	$arrOrario;
 	$Materie=array();
-	foreach($arrOrario["MATERIE"]["MATERIA"] as $id => $Materia){
-		if(OAD_materiaInOrario($id)){
-			$Materie[$Materia]=$id;
+	if(! is_null($arrOrario)){
+		foreach($arrOrario["MATERIE"]["MATERIA"] as $id => $Materia){
+			if(OAD_materiaInOrario($id)){
+				$Materie[$Materia]=$id;
+			}
 		}
+		ksort($Materie);
 	}
-	ksort($Materie);
 	?>
 	<table>
 		<thead>
@@ -541,39 +551,41 @@ function OAD_getElencoDocenti($Visualizza="",$Visualizzazione="Array",$Pulsanti=
 	global	$arrOrario;
 	$Visualizza=explode(",",$Visualizza);
 	$Docenti=array();
-	foreach($arrOrario["DOCENTI"]["DOCENTE"] as $id => $Docente){
-		if(isset($Docente["COGNOME"]) And !is_array($Docente["NOME"]))
-			$Cognome=$Docente["COGNOME"]." ";
-		else
-			$Cognome="";
-		if(isset($Docente["NOME"]) And !is_array($Docente["NOME"])) 
-			$Nome=$Docente["NOME"];
-		else
-			$Nome="";	
-		$CognomeNome=$Cognome.$Nome;
-		if($CognomeNome=="") 
-			$CognomeNome=$Docente["ID"];
-		$Riga=array("Id"=>$id,"CognomeNome"=>$CognomeNome);
-		if(in_array("Ricevimento",$Visualizza)){
-			if(isset($Docente["RICEVIMENTO"]))
-				$Ricevimento=$Docente["RICEVIMENTO"];
+	if(!is_null($arrOrario))	{
+		foreach($arrOrario["DOCENTI"]["DOCENTE"] as $id => $Docente){
+			if(isset($Docente["COGNOME"]) And !is_array($Docente["NOME"]))
+				$Cognome=$Docente["COGNOME"]." ";
 			else
-				$Ricevimento=array("GIORNO" => "ND","ORA"=>"ND");
-			$Riga["Ricevimento"]=$Ricevimento;
-		}
-		if(in_array("Disposizione",$Visualizza)){	
-			if(isset($Docente["DISPOSIZIONE"]))
-				$Disposizione=DaArrayAStringa($Docente["DISPOSIZIONE"],"%s (%s)",", ");
+				$Cognome="";
+			if(isset($Docente["NOME"]) And !is_array($Docente["NOME"])) 
+				$Nome=$Docente["NOME"];
 			else
-				$Disposizione="Nessuna";
-			$Riga["Disposizione"]=$Disposizione;
+				$Nome="";	
+			$CognomeNome=$Cognome.$Nome;
+			if($CognomeNome=="") 
+				$CognomeNome=$Docente["ID"];
+			$Riga=array("Id"=>$id,"CognomeNome"=>$CognomeNome);
+			if(in_array("Ricevimento",$Visualizza)){
+				if(isset($Docente["RICEVIMENTO"]))
+					$Ricevimento=$Docente["RICEVIMENTO"];
+				else
+					$Ricevimento=array("GIORNO" => "ND","ORA"=>"ND");
+				$Riga["Ricevimento"]=$Ricevimento;
+			}
+			if(in_array("Disposizione",$Visualizza)){	
+				if(isset($Docente["DISPOSIZIONE"]))
+					$Disposizione=DaArrayAStringa($Docente["DISPOSIZIONE"],"%s (%s)",", ");
+				else
+					$Disposizione="Nessuna";
+				$Riga["Disposizione"]=$Disposizione;
+			}
+			$Riga=array("Id"=>$id,"CognomeNome"=>$CognomeNome);
+			$Docenti[$Docente["ID"]]=$Riga;		
+	//		}
 		}
-		$Riga=array("Id"=>$id,"CognomeNome"=>$CognomeNome);
-		$Docenti[$Docente["ID"]]=$Riga;		
-//		}
+	//	var_dump($Docenti);
+		ksort($Docenti);			
 	}
-//	var_dump($Docenti);
-	ksort($Docenti);	
 	switch($Visualizzazione){
 		case "Select":
 			$Html='<div class="bootstrap-select-wrapper pt-5">
@@ -593,33 +605,35 @@ function OAD_getElencoDocenti($Visualizza="",$Visualizzazione="Array",$Pulsanti=
 function OAD_crea_tabella_docenti(){
 	global	$arrOrario;
 	$Docenti=array();
-	foreach($arrOrario["DOCENTI"]["DOCENTE"] as $id => $Docente){
-//		if(OAD_materiaInOrario($id)){
-//	echo "<pre>";var_dump($Docente);echo "</pre>";
-		if(isset($Docente["COGNOME"]) And !is_array($Docente["NOME"]))
-			$Cognome=$Docente["COGNOME"]." ";
-		else
-			$Cognome="";
-		if(isset($Docente["NOME"]) And !is_array($Docente["NOME"])) 
-			$Nome=$Docente["NOME"];
-		else
-			$Nome="";	
-		$CognomeNome=$Cognome.$Nome;
-		if($CognomeNome=="") 
-			$CognomeNome=$Docente["ID"];
-		if(isset($Docente["RICEVIMENTO"]))
-			$Ricevimento=$Docente["RICEVIMENTO"];
-		else
-			$Ricevimento=array("GIORNO" => "ND","ORA"=>"ND");
-		if(isset($Docente["DISPOSIZIONE"]))
-			$Disposizione=DaArrayAStringa($Docente["DISPOSIZIONE"],"%s (%s)",", ");
-		else
-			$Disposizione="Nessuna";
-		$Docenti[$Docente["ID"]]=array("Id"=>$id,"CognomeNome"=>$CognomeNome,"Ricevimento"=>$Ricevimento,"Disposizione"=>$Disposizione);		
-//		}
+	if(!is_null($arrOrario)){
+		foreach($arrOrario["DOCENTI"]["DOCENTE"] as $id => $Docente){
+	//		if(OAD_materiaInOrario($id)){
+	//	echo "<pre>";var_dump($Docente);echo "</pre>";
+			if(isset($Docente["COGNOME"]) And !is_array($Docente["NOME"]))
+				$Cognome=$Docente["COGNOME"]." ";
+			else
+				$Cognome="";
+			if(isset($Docente["NOME"]) And !is_array($Docente["NOME"])) 
+				$Nome=$Docente["NOME"];
+			else
+				$Nome="";	
+			$CognomeNome=$Cognome.$Nome;
+			if($CognomeNome=="") 
+				$CognomeNome=$Docente["ID"];
+			if(isset($Docente["RICEVIMENTO"]))
+				$Ricevimento=$Docente["RICEVIMENTO"];
+			else
+				$Ricevimento=array("GIORNO" => "ND","ORA"=>"ND");
+			if(isset($Docente["DISPOSIZIONE"]))
+				$Disposizione=DaArrayAStringa($Docente["DISPOSIZIONE"],"%s (%s)",", ");
+			else
+				$Disposizione="Nessuna";
+			$Docenti[$Docente["ID"]]=array("Id"=>$id,"CognomeNome"=>$CognomeNome,"Ricevimento"=>$Ricevimento,"Disposizione"=>$Disposizione);		
+	//		}
+		}
+	//	var_dump($Docenti);
+		ksort($Docenti);		
 	}
-//	var_dump($Docenti);
-	ksort($Docenti);
 	?>
 	<table>
 		<thead>
@@ -658,12 +672,14 @@ function OAD_crea_tabella_sedi(){
 			</tr>
 		</thead>
 		<tbody>
-<?php	foreach($arrOrario["SEDI"]["SEDE"] as $id =>$Sede){?>
+<?php	if(!is_null($arrOrario)){
+			foreach($arrOrario["SEDI"]["SEDE"] as $id =>$Sede){?>
 			<tr>
 				<td style="border: 1px solid #ddd;"><?php echo $id;?></td>
 				<td style="border: 1px solid #ddd;"><?php echo $Sede;?></td>
 			</tr>
-<?php	}?>
+<?php		}
+		}?>
 		</tbody>
 	</table>
 <?php
@@ -671,10 +687,12 @@ function OAD_crea_tabella_sedi(){
 function OAD_crea_tabella_indirizzi(){
 	global	$arrOrario;
 	$Indirizzi=array();
-	foreach($arrOrario["SPECS"]["SPEC"] as $id => $Indirizzo){
-		$Indirizzi[$Indirizzo]=$id;
+	if(!is_null($arrOrario)){
+		foreach($arrOrario["SPECS"]["SPEC"] as $id => $Indirizzo){
+			$Indirizzi[$Indirizzo]=$id;
+		}
+		ksort($Indirizzi);
 	}
-	ksort($Indirizzi);
 	?>
 	<table>
 		<thead>
@@ -697,7 +715,8 @@ function OAD_crea_tabella_indirizzi(){
 function OAD_getElencoClassi($Visualizzazione="Array",$Pulsanti=""){
 	global	$arrOrario;
 	$Classi=array();
-	foreach($arrOrario["CLASSI"]["CLASSE"] as $id => $Classe){
+	if(!is_null($arrOrario)){
+		foreach($arrOrario["CLASSI"]["CLASSE"] as $id => $Classe){
 		$Classi[$Classe["ID"]]=array("Id"		=>$id,
 								     "Classe"	=>$id,
 								     "Sede"		=>$arrOrario["SEDI"]["SEDE"][$Classe["@attributes"]["ID-SEDE"]],
@@ -705,7 +724,8 @@ function OAD_getElencoClassi($Visualizzazione="Array",$Pulsanti=""){
 //		}
 	}
 //	var_dump($Docenti);
-	ksort($Classi);	
+		ksort($Classi);
+	}
 	switch($Visualizzazione){
 		case "Select":
 			$Html='<div class="bootstrap-select-wrapper pt-5">
@@ -733,10 +753,12 @@ function OAD_getClasse($IdClasse){
 function OAD_crea_tabella_classi(){
 	global	$arrOrario;
 	$Classi=array();
-	foreach($arrOrario["CLASSI"]["CLASSE"] as $id => $Classe){
-		$Classi[$Classe["ID"]]=array("Sede"=>$arrOrario["SEDI"]["SEDE"][$Classe["@attributes"]["ID-SEDE"]],"Indirizzo"=>$arrOrario["SPECS"]["SPEC"][$Classe["@attributes"]["ID-SPEC"]]);
+	if(!is_null($arrOrario)){
+		foreach($arrOrario["CLASSI"]["CLASSE"] as $id => $Classe){
+			$Classi[$Classe["ID"]]=array("Sede"=>$arrOrario["SEDI"]["SEDE"][$Classe["@attributes"]["ID-SEDE"]],"Indirizzo"=>$arrOrario["SPECS"]["SPEC"][$Classe["@attributes"]["ID-SPEC"]]);
+		}
+		ksort($Classi);
 	}
-	ksort($Classi);
 	?>
 	<table>
 		<thead>
@@ -761,10 +783,12 @@ function OAD_crea_tabella_classi(){
 function OAD_crea_tabella_strutture(){
 	global	$arrOrario;
 	$Strutture=array();
-	foreach($arrOrario["STRUTTURE"]["STRUTTURA"] as $id => $Struttura){
-		$Strutture[$Struttura]=$id;
+	if(!is_null($arrOrario)){
+		foreach($arrOrario["STRUTTURE"]["STRUTTURA"] as $id => $Struttura){
+			$Strutture[$Struttura]=$id;
+		}
+		ksort($Strutture);
 	}
-	ksort($Strutture);
 	?>
 	<table>
 		<thead>

@@ -164,7 +164,7 @@ add_filter( 'post_row_actions',				'wps_circolari_remove_quick_edit',10,2);
 add_filter( 'wp_get_attachment_url', 		'wps_circolari_getFileUrl', 10, 2);
 add_filter( 'the_content', 					'wps_circolari_FiltroVisualizzaCircolare');
 add_filter( 'get_the_excerpt', 				'wps_circolari_FiltroVisualizzaRiassuntoCircolare' );
-add_filter('posts_where', 					'wps_circolari_posts_where', 10, 2);
+add_filter( 'posts_where', 					'wps_circolari_posts_where', 10, 2);
 
 add_action( 'init', 						'wps_circolari_scuola_rewrite_rules' );
 add_action( 'save_post', 					'wps_circolari_salva_dettagli');
@@ -266,10 +266,18 @@ function wps_circolari_Admin_Enqueue_Scripts($hook) {
 		if($hook == 'edit.php' And (isset($_GET['post_type']) And $_GET['post_type']=="circolari_scuola")) {
 //			wp_enqueue_script( 'jquery-ui-tooltip', '', array('jquery'),false,true);
 		}
-		wp_enqueue_script( 'Circolari-DataTable', wps_Circolari_URL.'/js/jquery.dataTables.js');
-		wp_enqueue_script( 'Circolari-DataTable-Tools', wps_Circolari_URL.'/js/dataTables.tableTools.js');
-		wp_enqueue_style( 'Circolari-DataTable-theme', wps_Circolari_URL.'/css/jquery.dataTables.css' );
-		wp_enqueue_style( 'Circolari-DataTable-theme-Tools', wps_Circolari_URL.'/css/dataTables.tableTools.css' );
+// DataTable JS
+		wp_enqueue_script( 'Circolari-DataTable', wps_Circolari_URL.'/js/jquery.dataTables.min.js');
+		wp_enqueue_script( 'Circolari-DataTable-Tools_button', wps_Circolari_URL.'/js/dataTables.buttons.min.js');
+		wp_enqueue_script( 'Circolari-DataTable-Tools_jszip', wps_Circolari_URL.'/js/jszip.min.js');
+		wp_enqueue_script( 'Circolari-DataTable-Tools_button_html5', wps_Circolari_URL.'/js/buttons.html5.min.js');
+		wp_enqueue_script( 'Circolari-DataTable-Tools_button_print', wps_Circolari_URL.'/js/buttons.print.min.js');
+		wp_enqueue_script( 'Circolari-DataTable-Tools_pdfmake', wps_Circolari_URL.'/js/pdfmake.min.js');
+		wp_enqueue_script( 'Circolari-DataTable-Tools_vfs', wps_Circolari_URL.'/js/vfs_fonts.js');
+//DataTable CSS		
+		wp_enqueue_style( 'Circolari-DataTable-theme', wps_Circolari_URL.'/css/jquery.dataTables.min.css' );
+		wp_enqueue_style( 'Circolari-DataTable-theme-buttons', wps_Circolari_URL.'/css/buttons.dataTables.min.css' );
+//Stile Circolari
 		wp_enqueue_style( 'Circolari-style', wps_Circolari_URL.'/css/style.css' );
 }
 
@@ -1483,11 +1491,6 @@ function wps_circolari_Parametri(){
 		$GPE=" checked='checked'";
 	else
 		$GPP=" checked='checked'";
-	if($CircolatiGutenberg){
-		$CKGutenberg="checked";
-	}else{
-		$CKGutenberg="";
-	}
 	echo'
 <div class="wrap">
 	  <span class="fa fa-magic fa-3x" aria-hidden="true"></span><h2 style="display:inline;margin-left:10px;vertical-align:super;">'.__("Configurazione Circolari", 'wpscuola' ).'</h2>
@@ -1743,9 +1746,9 @@ function wps_circolari_salva_dettagli( $post_id ){
 			//wp_set_post_categories( $post_id, array($Circolari) );
 			if ($_POST["Sign"]!="NoFirma"){
 				if ($_POST["scadenza"])
-					update_post_meta( $post_id, '_scadenza', wps_FormatDataDB($_POST["scadenza"]));
+					update_post_meta( $post_id, '_scadenza', $_POST["scadenza"]);
 				else
-					update_post_meta( $post_id, '_scadenza', wps_FormatDataDB($_POST["scadenza"],get_option('Circolari_GGScadenza')));
+					update_post_meta( $post_id, '_scadenza', wps_FormatDataDB(date("d/m/Y"),get_option('Circolari_GGScadenza')));
 			}else{
 				update_post_meta( $post_id, '_scadenza', "");
 			}
@@ -1769,23 +1772,27 @@ function wps_circolari_crea_box(){
 }
 
 function wps_circolari_crea_box_parametri( $post ){
-echo "<h4>".__("Firmare entro", 'wpscuola' )."</h4>";	
-wps_circolari_crea_box_data_scadenza($post);
-echo "<h4>".__("Progessivo", 'wpscuola' )."</h4>";
-wps_circolari_crea_box_progressivo($post);
-echo "<h4>".__("Firme", 'wpscuola' )."</h4>";
-wps_circolari_crea_box_firma($post);
-//circolari_crea_box_firma_sciopero($post);
-echo "<h4>".__("Visibilità", 'wpscuola' )."</h4>";
-wps_circolari_crea_box_visibilita($post);
+	echo "<h4>".__("Firmare entro", 'wpscuola' )."</h4>";	
+	wps_circolari_crea_box_data_scadenza($post);
+	echo "<h4>".__("Progessivo", 'wpscuola' )."</h4>";
+	wps_circolari_crea_box_progressivo($post);
+	echo "<h4>".__("Firme", 'wpscuola' )."</h4>";
+	wps_circolari_crea_box_firma($post);
+	//circolari_crea_box_firma_sciopero($post);
+	echo "<h4>".__("Visibilità", 'wpscuola' )."</h4>";
+	wps_circolari_crea_box_visibilita($post);
 }
 
 function wps_circolari_NewNumCircolare($numero){
 	$args = array( 'numberposts' => '1','post_type'=> 'circolari_scuola','post_status' => 'publish','meta_key' => '_anno','meta_value' => $numero);
 	$ultimo=wp_get_recent_posts($args);
-	$ID=$ultimo[0]['ID'];
-	$numero=get_post_meta($ID, "_numero");
-	return $numero[0]+1;
+	if(count($ultimo)==0){
+		return 1;
+	}else{
+		$ID=$ultimo[0]['ID'];
+		$numero=get_post_meta($ID, "_numero");
+		return $numero[0]+1;
+	}
 }
 function wps_circolari_crea_box_progressivo( $post ){
 $numero=get_post_meta($post->ID, "_numero",TRUE);
@@ -1821,13 +1828,13 @@ echo __("Pubblica", 'wpscuola' ).' <input type="radio" name="visibilita" value="
 }
 function wps_circolari_crea_box_firma( $post ){
 	global $wps_Testi;
-$sign=get_post_meta($post->ID, "_sign",TRUE);
-echo Circolari_Tipo::get_Tipi($sign);
+	$sign=get_post_meta($post->ID, "_sign",TRUE);
+	echo Circolari_Tipo::get_Tipi($sign);
 }
 
 function wps_circolari_crea_box_data_scadenza( $post ){
-$scadenza=wps_FormatDataItalianoBreve(get_post_meta($post->ID, "_scadenza",TRUE));
-echo "<label>".__("Data", 'wpscuola' )."</label> <input type='text' name='scadenza' value='".$scadenza."' size='8' style='text-align:left' id='DataScadenza'/>
+	$scadenza=get_post_meta($post->ID, "_scadenza",TRUE);
+	echo "<label>".__("Data", 'wpscuola' )."</label> <input type='date' name='scadenza' value='".$scadenza."' style='text-align:left'/>
 	<br />" ;
 }
 

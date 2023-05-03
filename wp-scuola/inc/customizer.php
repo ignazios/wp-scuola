@@ -48,12 +48,14 @@ $wp_customize->add_section('Scuola_Amministrazione_Settings',array(
                          	<li>N° di telefono</li>
                          	<li>Indirizzi email</li>
                          	<li>Codici amministrazione</li>
+                         	<li>Codice IPA</li>
                          	<li>Codici IBAN</li>
                          </ul>',
     'panel'			 =>'scuola_settings',
 ));
 // Campo Indirizzo
     $wp_customize->add_setting( 'Scuola_Amministrazione_Indirizzo' , array(
+        'sanitize_callback' => 'scuola_sanitize_string',
 		'capability' => 'edit_theme_options') );
 	$wp_customize->add_control( 'Scuola_Amministrazione_Indirizzo', array(
         'type' 		=> 'text',
@@ -63,6 +65,7 @@ $wp_customize->add_section('Scuola_Amministrazione_Settings',array(
         'priority'	=> 1));	
 // Campo CAP
     $wp_customize->add_setting( 'Scuola_Amministrazione_CAP' , array(
+        'sanitize_callback' => 'scuola_sanitize_string',
 		'capability' => 'edit_theme_options') );
 	$wp_customize->add_control( 'Scuola_Amministrazione_CAP', array(
         'type' 		=> 'text',
@@ -72,6 +75,7 @@ $wp_customize->add_section('Scuola_Amministrazione_Settings',array(
         'priority'	=> 2));	
 // Campo Città
     $wp_customize->add_setting( 'Scuola_Amministrazione_Citta' , array(
+        'sanitize_callback' => 'scuola_sanitize_string',
 		'capability' => 'edit_theme_options') );
 	$wp_customize->add_control( 'Scuola_Amministrazione_Citta', array(
         'type' 		=> 'text',
@@ -81,6 +85,7 @@ $wp_customize->add_section('Scuola_Amministrazione_Settings',array(
         'priority'	=> 3));
 // Campo Des Telefono
     $wp_customize->add_setting( 'Scuola_Amministrazione_DesTelefono' , array(
+        'sanitize_callback' => 'scuola_sanitize_string',
 		'capability' => 'edit_theme_options') );
 	$wp_customize->add_control( 'Scuola_Amministrazione_DesTelefono', array(
         'type' 		=> 'text',
@@ -90,6 +95,7 @@ $wp_customize->add_section('Scuola_Amministrazione_Settings',array(
         'priority'	=> 4));        
 // Campo Telefono
     $wp_customize->add_setting( 'Scuola_Amministrazione_Telefono' , array(
+        'sanitize_callback' => 'scuola_sanitize_string',
 		'capability' => 'edit_theme_options') );
 	$wp_customize->add_control( 'Scuola_Amministrazione_Telefono', array(
         'type' 		=> 'text',
@@ -99,6 +105,7 @@ $wp_customize->add_section('Scuola_Amministrazione_Settings',array(
         'priority'	=> 5));        
 // Campo Des Telefono2
     $wp_customize->add_setting( 'Scuola_Amministrazione_DesTelefono2' , array(
+        'sanitize_callback' => 'scuola_sanitize_string',
 		'capability' => 'edit_theme_options') );
 	$wp_customize->add_control( 'Scuola_Amministrazione_DesTelefono2', array(
         'type' 		=> 'text',
@@ -108,6 +115,7 @@ $wp_customize->add_section('Scuola_Amministrazione_Settings',array(
         'priority'	=> 6));        
 // Campo Telefono2
     $wp_customize->add_setting( 'Scuola_Amministrazione_Telefono2' , array(
+        'sanitize_callback' => 'scuola_sanitize_string',
 		'capability' => 'edit_theme_options') );
 	$wp_customize->add_control( 'Scuola_Amministrazione_Telefono2', array(
         'type' 		=> 'text',
@@ -117,6 +125,7 @@ $wp_customize->add_section('Scuola_Amministrazione_Settings',array(
         'priority'	=> 7));        
 // Campo Des Telefono3
     $wp_customize->add_setting( 'Scuola_Amministrazione_DesTelefono3' , array(
+        'sanitize_callback' => 'scuola_sanitize_string',
 		'capability' => 'edit_theme_options') );
 	$wp_customize->add_control( 'Scuola_Amministrazione_DesTelefono3', array(
         'type' 		=> 'text',
@@ -126,6 +135,7 @@ $wp_customize->add_section('Scuola_Amministrazione_Settings',array(
         'priority'	=> 8));        
 // Campo Telefono3
     $wp_customize->add_setting( 'Scuola_Amministrazione_Telefono3' , array(
+        'sanitize_callback' => 'scuola_sanitize_string',
 		'capability' => 'edit_theme_options') );
 	$wp_customize->add_control( 'Scuola_Amministrazione_Telefono3', array(
         'type' 		=> 'text',
@@ -135,6 +145,7 @@ $wp_customize->add_section('Scuola_Amministrazione_Settings',array(
         'priority'	=> 9));        
 // Campo Des Telefono4
     $wp_customize->add_setting( 'Scuola_Amministrazione_DesTelefono4' , array(
+        'sanitize_callback' => 'scuola_sanitize_string',
 		'capability' => 'edit_theme_options') );
 	$wp_customize->add_control( 'Scuola_Amministrazione_DesTelefono4', array(
         'type' 		=> 'text',
@@ -144,6 +155,7 @@ $wp_customize->add_section('Scuola_Amministrazione_Settings',array(
         'priority'	=> 10));        
 // Campo Telefono4
     $wp_customize->add_setting( 'Scuola_Amministrazione_Telefono4' , array(
+        'sanitize_callback' => 'scuola_sanitize_string',
 		'capability' => 'edit_theme_options') );
 	$wp_customize->add_control( 'Scuola_Amministrazione_Telefono4', array(
         'type' 		=> 'text',
@@ -153,6 +165,7 @@ $wp_customize->add_section('Scuola_Amministrazione_Settings',array(
         'priority'	=> 11));
 // Campo Email
     $wp_customize->add_setting( 'Scuola_Amministrazione_Email' , array(
+        'sanitize_callback' => 'scuola_sanitize_email',
 		'capability' => 'edit_theme_options') );
 	$wp_customize->add_control( 'Scuola_Amministrazione_Email', array(
         'type' 		=> 'text',
@@ -162,6 +175,7 @@ $wp_customize->add_section('Scuola_Amministrazione_Settings',array(
         'priority'	=> 12));
 // Campo Seconda Email
     $wp_customize->add_setting( 'Scuola_Amministrazione_Email2' , array(
+        'sanitize_callback' => 'scuola_sanitize_email',
 		'capability' => 'edit_theme_options') );
 	$wp_customize->add_control( 'Scuola_Amministrazione_Email2', array(
         'type' 		=> 'text',
@@ -171,6 +185,7 @@ $wp_customize->add_section('Scuola_Amministrazione_Settings',array(
         'priority'	=> 13));
 // Campo PEC
     $wp_customize->add_setting( 'Scuola_Amministrazione_PEC' , array(
+        'sanitize_callback' => 'scuola_sanitize_email',
 		'capability' => 'edit_theme_options') );
 	$wp_customize->add_control( 'Scuola_Amministrazione_PEC', array(
         'type' 		=> 'text',
@@ -180,6 +195,7 @@ $wp_customize->add_section('Scuola_Amministrazione_Settings',array(
         'priority'	=> 14));
 // Campo C.F.
     $wp_customize->add_setting( 'Scuola_Amministrazione_CFPA' , array(
+        'sanitize_callback' => 'scuola_sanitize_number',
 		'capability' => 'edit_theme_options') );
 	$wp_customize->add_control( 'Scuola_Amministrazione_CFPA', array(
         'type' 		=> 'text',
@@ -189,6 +205,7 @@ $wp_customize->add_section('Scuola_Amministrazione_Settings',array(
         'priority'	=> 15));
 // Campo Partita IVA
     $wp_customize->add_setting( 'Scuola_Amministrazione_PIVA' , array(
+        'sanitize_callback' => 'scuola_sanitize_string',
 		'capability' => 'edit_theme_options') );
 	$wp_customize->add_control( 'Scuola_Amministrazione_PIVA', array(
         'type' 		=> 'text',
@@ -198,6 +215,7 @@ $wp_customize->add_section('Scuola_Amministrazione_Settings',array(
         'priority'	=> 16));
 // Campo Codice Meccanografico
     $wp_customize->add_setting( 'Scuola_Amministrazione_CM' , array(
+        'sanitize_callback' => 'scuola_sanitize_string',
 		'capability' => 'edit_theme_options') );
 	$wp_customize->add_control( 'Scuola_Amministrazione_CM', array(
         'type' 		=> 'text',
@@ -205,24 +223,46 @@ $wp_customize->add_section('Scuola_Amministrazione_Settings',array(
         'section' 	=> 'Scuola_Amministrazione_Settings',
         'settings' => 'Scuola_Amministrazione_CM',
         'priority'	=> 17));
+// Campo Codice IPA
+    $wp_customize->add_setting( 'Scuola_Amministrazione_IPA' , array(
+        'sanitize_callback' => 'scuola_sanitize_string',
+		'capability' => 'edit_theme_options') );
+	$wp_customize->add_control( 'Scuola_Amministrazione_IPA', array(
+        'type' 		=> 'text',
+        'label' 	=> 'Cod. IPA:',
+        'section' 	=> 'Scuola_Amministrazione_Settings',
+        'settings' => 'Scuola_Amministrazione_IPA',
+        'priority'	=> 18));
+// Campo Link Amministrazione By IPA
+    $wp_customize->add_setting( 'Scuola_Amministrazione_LinkIndicePaByIPA' , array(
+        'sanitize_callback' => 'scuola_sanitize_url',
+		'capability' => 'edit_theme_options') );
+	$wp_customize->add_control( 'Scuola_Amministrazione_LinkIndicePaByIPA', array(
+        'type' 		=> 'text',
+        'label' 	=> 'Link Amministrazione by IPA:',
+        'section' 	=> 'Scuola_Amministrazione_Settings',
+        'settings' => 'Scuola_Amministrazione_LinkIndicePaByIPA',
+        'priority'	=> 19));
 // Campo Cod. Univoco
     $wp_customize->add_setting( 'Scuola_Amministrazione_CodUni' , array(
+        'sanitize_callback' => 'scuola_sanitize_string',
 		'capability' => 'edit_theme_options') );
 	$wp_customize->add_control( 'Scuola_Amministrazione_CodUni', array(
         'type' 		=> 'text',
         'label' 	=> 'Cod. Univoco:',
         'section' 	=> 'Scuola_Amministrazione_Settings',
         'settings' => 'Scuola_Amministrazione_CodUni',
-        'priority'	=> 18));
+        'priority'	=> 20));
 // Campo IBAN
     $wp_customize->add_setting( 'Scuola_Amministrazione_IBAN' , array(
+        'sanitize_callback' => 'scuola_sanitize_string',
 		'capability' => 'edit_theme_options') );
 	$wp_customize->add_control( 'Scuola_Amministrazione_IBAN', array(
         'type' 		=> 'text',
         'label' 	=> 'IBAN:',
         'section' 	=> 'Scuola_Amministrazione_Settings',
         'settings' => 'Scuola_Amministrazione_IBAN',
-        'priority'	=> 19));
+        'priority'	=> 21));
 /**
 *  Sotto Pannello Impostazione Header
 */
@@ -232,6 +272,7 @@ $wp_customize->add_section('Scuola_Header_Settings',array(
     'description'	 => '<h2>Personalizzazione dell\'Header</h2>',
     'panel'			 =>'scuola_settings'));
 $wp_customize->add_setting( 'Scuola_AmmAfferente_Nome' , array(
+    'sanitize_callback' => 'scuola_sanitize_string',
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'Scuola_AmmAfferente_Nome', array(
     'type' 		=> 'text',
@@ -240,6 +281,7 @@ $wp_customize->add_control( 'Scuola_AmmAfferente_Nome', array(
     'settings' => 'Scuola_AmmAfferente_Nome',
     'priority'	=> 1));
 $wp_customize->add_setting( 'Scuola_AmmAfferente_URL' , array(
+    'sanitize_callback' => 'scuola_sanitize_url',
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'Scuola_AmmAfferente_URL', array(
     'type' 		=> 'text',
@@ -297,6 +339,7 @@ $wp_customize->add_control('scuola_mappa_attiva', array(
     'settings' => 'scuola_mappa_attiva'));
 $wp_customize->add_setting('scuola_mappa_titolo', array(
     'default' => "", 
+    'sanitize_callback' => 'scuola_sanitize_string',
     'capability' => 'edit_theme_options'));
 $wp_customize->add_control('scuola_mappa_titolo', array(
     'type' => 'text', 
@@ -306,6 +349,7 @@ $wp_customize->add_control('scuola_mappa_titolo', array(
     'priority'	=> 2));
 $wp_customize->add_setting('scuola_mappa_link', array(
     'default' => "", 
+    'sanitize_callback' => 'scuola_sanitize_url',
     'capability' => 'edit_theme_options'));
 $wp_customize->add_control('scuola_mappa_link', array(
     'type' => 'textarea', 
@@ -315,7 +359,7 @@ $wp_customize->add_control('scuola_mappa_link', array(
     'priority'	=> 3));  
 $wp_customize->add_setting('scuola_mappa_frame', array(
     'default' => "", 
-    'capability' => 'edit_theme_options'));
+   'capability' => 'edit_theme_options'));
 $wp_customize->add_control('scuola_mappa_frame', array(
     'type' => 'textarea', 
     'label' => 'Frame della miniatura della Mappa',
@@ -343,6 +387,7 @@ $wp_customize->add_control('scuola_cookies_attiva', array(
     'settings' => 'scuola_cookies_attiva'));
 $wp_customize->add_setting('scuola_cookies_testoMSG', array(
     'default' => "", 
+    'sanitize_callback' => 'scuola_sanitize_string',    
     'capability' => 'edit_theme_options'));
 $wp_customize->add_control('scuola_cookies_testoMSG', array(
     'type' => 'textarea', 
@@ -355,6 +400,7 @@ Proseguendo nella navigazione accetti l’utilizzo dei cookie.</strong><br />Si 
 // Pulsante di sinistra
 $wp_customize->add_setting( 'scuola_cookies_pulsSXText' , array(
     'default'	 => 'Privacy Policy',
+    'sanitize_callback' => 'scuola_sanitize_string',    
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_cookies_pulsSXText', array(
     'type' 		=> 'text',
@@ -363,6 +409,7 @@ $wp_customize->add_control( 'scuola_cookies_pulsSXText', array(
     'settings' => 'scuola_cookies_pulsSXText',
     'priority'	=> 3));
 $wp_customize->add_setting( 'scuola_cookies_pulsSXlink' , array(
+    'sanitize_callback' => 'scuola_sanitize_url',    
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_cookies_pulsSXlink', array(
     'type' 		=> 'select',
@@ -374,6 +421,7 @@ $wp_customize->add_control( 'scuola_cookies_pulsSXlink', array(
 // Pulsante di Accetta
     $wp_customize->add_setting( 'scuola_cookies_accettaText' , array(
         'default'	=> 'Accetto',
+        'sanitize_callback' => 'scuola_sanitize_string',    
 		'capability' => 'edit_theme_options') );
 	$wp_customize->add_control( 'scuola_cookies_accettaText', array(
         'type' 		=> 'text',
@@ -391,6 +439,7 @@ $wp_customize->add_section('Scuola_Social_Settings',array(
     'panel'			 =>'scuola_settings'));   
 // Campo Facebook
 $wp_customize->add_setting( 'scuola_social_facebook' , array(
+    'sanitize_callback' => 'scuola_sanitize_url',    
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_social_facebook', array(
     'type' 		=> 'text',
@@ -400,6 +449,7 @@ $wp_customize->add_control( 'scuola_social_facebook', array(
     'priority'	=> 1));
 // Campo Twitter
 $wp_customize->add_setting( 'scuola_social_twitter' , array(
+    'sanitize_callback' => 'scuola_sanitize_url',    
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_social_twitter', array(
     'type' 		=> 'text',
@@ -409,6 +459,7 @@ $wp_customize->add_control( 'scuola_social_twitter', array(
     'priority'	=> 2));
 // Campo YouTube
 $wp_customize->add_setting( 'scuola_social_youtube' , array(
+    'sanitize_callback' => 'scuola_sanitize_url',    
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_social_youtube', array(
     'type' 		=> 'text',
@@ -418,6 +469,7 @@ $wp_customize->add_control( 'scuola_social_youtube', array(
     'priority'	=> 3));
 // Campo Instagram
 $wp_customize->add_setting( 'scuola_social_instagram' , array(
+    'sanitize_callback' => 'scuola_sanitize_url',    
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_social_instagram', array(
     'type' 		=> 'text',
@@ -427,6 +479,7 @@ $wp_customize->add_control( 'scuola_social_instagram', array(
     'priority'	=> 4));        
 // Campo Telegram
 $wp_customize->add_setting( 'scuola_social_telegram' , array(
+    'sanitize_callback' => 'scuola_sanitize_url',    
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_social_telegram', array(
     'type' 		=> 'text',
@@ -436,6 +489,7 @@ $wp_customize->add_control( 'scuola_social_telegram', array(
     'priority'	=> 5));                
 // Campo LinkedIn
 $wp_customize->add_setting( 'scuola_social_linkedin' , array(
+    'sanitize_callback' => 'scuola_sanitize_url',    
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_social_linkedin', array(
     'type' 		=> 'text',
@@ -445,6 +499,7 @@ $wp_customize->add_control( 'scuola_social_linkedin', array(
     'priority'	=> 6));     
 // Campo Social Free 1
 $wp_customize->add_setting( 'scuola_social_Nomefree1' , array(
+    'sanitize_callback' => 'scuola_sanitize_string',    
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_social_Nomefree1', array(
     'type' 		=> 'text',
@@ -453,6 +508,7 @@ $wp_customize->add_control( 'scuola_social_Nomefree1', array(
     'settings' => 'scuola_social_Nomefree1',
     'priority'	=> 7));  
 $wp_customize->add_setting( 'scuola_social_Iconafree1' , array(
+    'sanitize_callback' => 'scuola_sanitize_string',    
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_social_Iconafree1', array(
     'type' 		=> 'text',
@@ -461,6 +517,7 @@ $wp_customize->add_control( 'scuola_social_Iconafree1', array(
     'settings' => 'scuola_social_Iconafree1',
     'priority'	=> 8));  
 $wp_customize->add_setting( 'scuola_social_Indirizzofree1' , array(
+    'sanitize_callback' => 'scuola_sanitize_url',    
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_social_Indirizzofree1', array(
     'type' 		=> 'text',
@@ -470,6 +527,7 @@ $wp_customize->add_control( 'scuola_social_Indirizzofree1', array(
     'priority'	=> 9));  
 // Campo Social Free 2
 $wp_customize->add_setting( 'scuola_social_Nomefree2' , array(
+    'sanitize_callback' => 'scuola_sanitize_string',    
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_social_Nomefree2', array(
     'type' 		=> 'text',
@@ -478,6 +536,7 @@ $wp_customize->add_control( 'scuola_social_Nomefree2', array(
     'settings' => 'scuola_social_Nomefree2',
     'priority'	=> 10));  
 $wp_customize->add_setting( 'scuola_social_Iconafree2' , array(
+    'sanitize_callback' => 'scuola_sanitize_string',    
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_social_Iconafree2', array(
     'type' 		=> 'text',
@@ -486,6 +545,7 @@ $wp_customize->add_control( 'scuola_social_Iconafree2', array(
     'settings' => 'scuola_social_Iconafree2',
     'priority'	=> 11));  
 $wp_customize->add_setting( 'scuola_social_Indirizzofree2' , array(
+    'sanitize_callback' => 'scuola_sanitize_url',    
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_social_Indirizzofree2', array(
     'type' 		=> 'text',
@@ -496,6 +556,7 @@ $wp_customize->add_control( 'scuola_social_Indirizzofree2', array(
 // Campo Titolo Sezione Footer
 $wp_customize->add_setting( 'scuola_social_footersectionTesto' , array(
 	'default'	=> 'Seguici su',
+    'sanitize_callback' => 'scuola_sanitize_string',    
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_social_footersectionTesto', array(
     'type' 		=> 'text',
@@ -518,7 +579,8 @@ $wp_customize->add_setting('scuola_DefautlImg', array(
 $wp_customize->add_control(new WP_Customize_Cropped_Image_Control($wp_customize, 'scuola_DefautlImg', array(
     'section' => 'Scuola_Default_Settings',
     'label' => 'Immagine che verrà visualizzata se l\'articolo non possiede l\'immagine in Evidenza',
-    'height' => 150,
+    'height' => 200,
+    'width' => 200,
     'priority'	=> 5)));
 
 /**
@@ -552,7 +614,6 @@ $wp_customize->add_control('scuola_faq_attiva', array(
     'type' => 'checkbox', 
     'section' => 'Scuola_Moduli_Settings', 
     'settings' => 'scuola_faq_attiva'));
-
 $wp_customize->add_setting('scuola_eventi_attiva', array(
     'default' => false, 
     'capability' => 'edit_theme_options', 
@@ -564,8 +625,6 @@ $wp_customize->add_control('scuola_eventi_attiva', array(
     'type' => 'checkbox', 
     'section' => 'Scuola_Moduli_Settings', 
     'settings' => 'scuola_eventi_attiva'));
-
-
 $wp_customize->add_setting('scuola_servizi_attiva', array(
     'default' => false, 
     'capability' => 'edit_theme_options', 
@@ -618,8 +677,6 @@ $wp_customize->add_section('Scuola_Metadati_Settings',array(
     'priority'		 =>6,
     'description'	 => '<strong>Impostazione dei Metadati che vengono visualizzati per i Post, le Pagine e Comunicazioni</strong>',
     'panel'			 =>'scuola_settings'));  
-    
-     
 $wp_customize->add_setting('scuola_MTdata_attiva', array(
     'default' => TRUE, 
     'capability' => 'edit_theme_options', 
@@ -644,7 +701,6 @@ $wp_customize->add_control('scuola_MTdataLink_attiva', array(
     'settings' => 'scuola_MTdataLink_attiva',
     'priority'	=> 2,
 ));
-
 $wp_customize->add_setting('scuola_MTautore_attiva', array(
     'default' => TRUE, 
     'capability' => 'edit_theme_options', 
@@ -713,7 +769,9 @@ $wp_customize->add_section('scuola_hero_settings',array(
     'panel'			 =>'scuola_settings_home',
 ));
 $wp_customize->add_setting('Scuola_Hero_Active', array(
-    'default' => false, 'capability' => 'edit_theme_options', 'sanitize_callback' => 'scuola_sanitize_checkbox'
+    'default' => false, 
+    'capability' => 'edit_theme_options', 
+    'sanitize_callback' => 'scuola_sanitize_checkbox'
 ));
 $wp_customize->add_control('Scuola_Hero_Active', array(
     'label' => 'Attiva Blocco',
@@ -732,6 +790,7 @@ $wp_customize->add_control( 'Scuola_Hero_Page', array(
     'priority'	=> 2,
     'choices'   => $pagine));			
 $wp_customize->add_setting( 'Scuola_Hero_LeggiTutto' , array(
+    'sanitize_callback' => 'scuola_sanitize_string',    
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'Scuola_Hero_LeggiTutto', array(
     'type' 		=> 'text',
@@ -740,7 +799,9 @@ $wp_customize->add_control( 'Scuola_Hero_LeggiTutto', array(
     'settings' => 'Scuola_Hero_LeggiTutto',
     'priority'	=> 3));
 $wp_customize->add_setting('Scuola_Hero_Overlay', array(
-    'default' => false, 'capability' => 'edit_theme_options'));
+    'default' => false, 
+    'sanitize_callback' => 'scuola_sanitize_string',    
+    'capability' => 'edit_theme_options'));
 $wp_customize->add_control('Scuola_Hero_Overlay', array(
     'label' => 'Effetto Overlay',
     'type' => 'select', 
@@ -762,6 +823,7 @@ $wp_customize->add_section('scuola_comeevidenza_settings',array(
 ));
 $wp_customize->add_setting('scuola_comeevidenza_attiva', array(
     'default' => false, 
+    'sanitize_callback' => 'scuola_sanitize_checkbox',
     'capability' => 'edit_theme_options'));
 $wp_customize->add_control('scuola_comeevidenza_attiva', array(
     'type' => 'checkbox', 
@@ -770,6 +832,7 @@ $wp_customize->add_control('scuola_comeevidenza_attiva', array(
     'settings' => 'scuola_comeevidenza_attiva',
     'priority'	=> 1));
 $wp_customize->add_setting( 'scuola_comeevidenza_categoria' , array(
+    'sanitize_callback' => 'scuola_sanitize_checkbox',
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_comeevidenza_categoria', array(
     'type' 		=> 'select',
@@ -791,6 +854,7 @@ $wp_customize->add_control( 'scuola_comeevidenza_numart', array(
     'choices'   => 4));	
 $wp_customize->add_setting( 'scuola_comeevidenza_visimevidenza' , array(
 	'default' => true,
+    'sanitize_callback' => 'scuola_sanitize_checkbox',
 	'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_comeevidenza_visimevidenza', array(
     'type' 		=> 'checkbox',
@@ -811,6 +875,7 @@ $wp_customize->add_section('scuola_scuola_settings_home',array(
 ));
 $wp_customize->add_setting('scuola_scuola_attiva', array(
     'default' => false, 
+    'sanitize_callback' => 'scuola_sanitize_checkbox',
     'capability' => 'edit_theme_options'));
 $wp_customize->add_control('scuola_scuola_attiva', array(
     'type' => 'checkbox', 
@@ -820,6 +885,7 @@ $wp_customize->add_control('scuola_scuola_attiva', array(
     'priority'	=> 1));
 $wp_customize->add_setting('scuola_scuola_titolosezione', array(
     'default' => "", 
+    'sanitize_callback' => 'scuola_sanitize_string',
     'capability' => 'edit_theme_options'));
 $wp_customize->add_control('scuola_scuola_titolosezione', array(
     'type' => 'text', 
@@ -839,6 +905,7 @@ $wp_customize->add_control(new WP_Customize_Cropped_Image_Control($wp_customize,
     'priority'	=> 3)));
 $wp_customize->add_setting('scuola_scuola_Titoloblocco1', array(
     'default' => "", 
+    'sanitize_callback' => 'scuola_sanitize_string',
     'capability' => 'edit_theme_options'));
 $wp_customize->add_control('scuola_scuola_Titoloblocco1', array(
     'type' => 'text', 
@@ -848,6 +915,7 @@ $wp_customize->add_control('scuola_scuola_Titoloblocco1', array(
     'priority'	=> 4));
 $wp_customize->add_setting('scuola_scuola_Linkblocco1', array(
     'default' => "", 
+    'sanitize_callback' => 'scuola_sanitize_url',
     'capability' => 'edit_theme_options'));
 $wp_customize->add_control('scuola_scuola_Linkblocco1', array(
     'type' => 'text', 
@@ -867,6 +935,7 @@ $wp_customize->add_control(new WP_Customize_Cropped_Image_Control($wp_customize,
     'priority'	=> 6)));
 $wp_customize->add_setting('scuola_scuola_Titoloblocco2', array(
     'default' => "", 
+    'sanitize_callback' => 'scuola_sanitize_string',
     'capability' => 'edit_theme_options'));
 $wp_customize->add_control('scuola_scuola_Titoloblocco2', array(
     'type' => 'text', 
@@ -876,6 +945,7 @@ $wp_customize->add_control('scuola_scuola_Titoloblocco2', array(
     'priority'	=> 7));
 $wp_customize->add_setting('scuola_scuola_Linkblocco2', array(
     'default' => "", 
+    'sanitize_callback' => 'scuola_sanitize_url',
     'capability' => 'edit_theme_options'));
 $wp_customize->add_control('scuola_scuola_Linkblocco2', array(
     'type' => 'text', 
@@ -895,6 +965,7 @@ $wp_customize->add_control(new WP_Customize_Cropped_Image_Control($wp_customize,
     'priority'	=> 9)));
 $wp_customize->add_setting('scuola_scuola_Titoloblocco3', array(
     'default' => "", 
+    'sanitize_callback' => 'scuola_sanitize_string',
     'capability' => 'edit_theme_options'));
 $wp_customize->add_control('scuola_scuola_Titoloblocco3', array(
     'type' => 'text', 
@@ -904,6 +975,7 @@ $wp_customize->add_control('scuola_scuola_Titoloblocco3', array(
     'priority'	=> 10));
 $wp_customize->add_setting('scuola_scuola_Linkblocco3', array(
     'default' => "", 
+    'sanitize_callback' => 'scuola_sanitize_url',
     'capability' => 'edit_theme_options'));
 $wp_customize->add_control('scuola_scuola_Linkblocco3', array(
     'type' => 'text', 
@@ -924,6 +996,7 @@ $wp_customize->add_control(new WP_Customize_Cropped_Image_Control($wp_customize,
     'priority'	=> 12)));
 $wp_customize->add_setting('scuola_scuola_Titoloblocco4', array(
     'default' => "", 
+    'sanitize_callback' => 'scuola_sanitize_string',
     'capability' => 'edit_theme_options'));
 $wp_customize->add_control('scuola_scuola_Titoloblocco4', array(
     'type' => 'text', 
@@ -933,6 +1006,7 @@ $wp_customize->add_control('scuola_scuola_Titoloblocco4', array(
     'priority'	=> 13));
 $wp_customize->add_setting('scuola_scuola_Linkblocco4', array(
     'default' => "", 
+    'sanitize_callback' => 'scuola_sanitize_url',
     'capability' => 'edit_theme_options'));
 $wp_customize->add_control('scuola_scuola_Linkblocco4', array(
     'type' => 'text', 
@@ -942,6 +1016,7 @@ $wp_customize->add_control('scuola_scuola_Linkblocco4', array(
     'priority'	=> 14));
 $wp_customize->add_setting('scuola_scuola_PrimaTabTesto', array(
     'default' => "", 
+    'sanitize_callback' => 'scuola_sanitize_string',
     'capability' => 'edit_theme_options'));
 $wp_customize->add_control('scuola_scuola_PrimaTabTesto', array(
     'type' => 'text', 
@@ -950,7 +1025,8 @@ $wp_customize->add_control('scuola_scuola_PrimaTabTesto', array(
     'settings' => 'scuola_scuola_PrimaTabTesto',
     'priority'	=> 15));
 $wp_customize->add_setting( 'scuola_scuola_PrimaTabPagina' , array(
-		'capability' => 'edit_theme_options') );
+    'sanitize_callback' => 'scuola_sanitize_string',
+    'capability' => 'edit_theme_options') );
 $wp_customize->add_control( 'scuola_scuola_PrimaTabPagina', array(
     'type' 		=> 'select',
     'label' 	=> 'Seleziona la pagina Prima Cartella',
@@ -970,7 +1046,8 @@ $wp_customize->add_control(new WP_Customize_Cropped_Image_Control($wp_customize,
     'height' => 280,
     'priority'	=> 18)));
 $wp_customize->add_setting( 'scuola_scuola_PrimaTabVideo' , array(
-		'capability' => 'edit_theme_options') );
+    'sanitize_callback' => 'scuola_sanitize_string',
+    'capability' => 'edit_theme_options') );
 $wp_customize->add_control('scuola_scuola_PrimaTabVideo', array(
     'type' => 'text', 
     'label' => 'Codice del video',
@@ -978,7 +1055,8 @@ $wp_customize->add_control('scuola_scuola_PrimaTabVideo', array(
     'settings' => 'scuola_scuola_PrimaTabVideo',
     'priority'	=> 19));
 $wp_customize->add_setting( 'scuola_scuola_PrimaTabVideoDidascalia' , array(
-		'capability' => 'edit_theme_options') );
+    'sanitize_callback' => 'scuola_sanitize_string',
+    'capability' => 'edit_theme_options') );
 $wp_customize->add_control('scuola_scuola_PrimaTabVideoDidascalia', array(
     'type' => 'text', 
     'label' => 'Didascalia del video',
@@ -997,7 +1075,8 @@ $wp_customize->add_control(new WP_Customize_Cropped_Image_Control($wp_customize,
     'height' => 280,
     'priority'	=> 21)));
 $wp_customize->add_setting( 'scuola_scuola_PrimaTabLinkTesto' , array(
-		'capability' => 'edit_theme_options') );
+    'sanitize_callback' => 'scuola_sanitize_string',
+    'capability' => 'edit_theme_options') );
 $wp_customize->add_control('scuola_scuola_PrimaTabLinkTesto', array(
     'type' => 'text', 
     'label' => 'Testo Link',
@@ -1005,7 +1084,8 @@ $wp_customize->add_control('scuola_scuola_PrimaTabLinkTesto', array(
     'settings' => 'scuola_scuola_PrimaTabLinkTesto',
     'priority'	=> 22));    
 $wp_customize->add_setting( 'scuola_scuola_PrimaTabLink' , array(
-		'capability' => 'edit_theme_options') );
+    'sanitize_callback' => 'scuola_sanitize_string',
+    'capability' => 'edit_theme_options') );
 $wp_customize->add_control('scuola_scuola_PrimaTabLink', array(
     'type' => 'text', 
     'label' => 'Link',
@@ -1014,7 +1094,8 @@ $wp_customize->add_control('scuola_scuola_PrimaTabLink', array(
     'priority'	=> 23));  
 $wp_customize->add_setting('scuola_scuola_PrimaTabLeggiTutto', array(
     'default' => "", 
-    'capability' => 'edit_theme_options'));
+    'sanitize_callback' => 'scuola_sanitize_string',
+   'capability' => 'edit_theme_options'));
 $wp_customize->add_control('scuola_scuola_PrimaTabLeggiTutto', array(
     'type' => 'text', 
     'label' => 'Testo del link leggi tutto',
@@ -1023,6 +1104,7 @@ $wp_customize->add_control('scuola_scuola_PrimaTabLeggiTutto', array(
     'priority'	=> 24));
 $wp_customize->add_setting('scuola_scuola_SecondaTabTesto', array(
     'default' => "", 
+    'sanitize_callback' => 'scuola_sanitize_string',
     'capability' => 'edit_theme_options'));
 $wp_customize->add_control('scuola_scuola_SecondaTabTesto', array(
     'type' => 'text', 
@@ -1041,6 +1123,7 @@ $wp_customize->add_control( 'scuola_scuola_SecondaTabPagina', array(
     'choices'   => $pagine));
 $wp_customize->add_setting('scuola_scuola_SecondaTabLeggiTutto', array(
     'default' => "", 
+    'sanitize_callback' => 'scuola_sanitize_string',
     'capability' => 'edit_theme_options'));
 $wp_customize->add_control('scuola_scuola_SecondaTabLeggiTutto', array(
     'type' => 'text', 
@@ -1050,6 +1133,7 @@ $wp_customize->add_control('scuola_scuola_SecondaTabLeggiTutto', array(
     'priority'	=> 27));
 $wp_customize->add_setting('scuola_scuola_TerzaTabTesto', array(
     'default' => "", 
+    'sanitize_callback' => 'scuola_sanitize_string',
     'capability' => 'edit_theme_options'));
 $wp_customize->add_control('scuola_scuola_TerzaTabTesto', array(
     'type' => 'text', 
@@ -1068,6 +1152,7 @@ $wp_customize->add_control( 'scuola_scuola_TerzaTabPagina', array(
     'choices'   => $pagine));
 $wp_customize->add_setting('scuola_scuola_TerzaTabLeggiTutto', array(
     'default' => "", 
+    'sanitize_callback' => 'scuola_sanitize_string',
     'capability' => 'edit_theme_options'));
 $wp_customize->add_control('scuola_scuola_TerzaTabLeggiTutto', array(
     'type' => 'text', 
@@ -1209,12 +1294,12 @@ $wp_customize->add_setting( 'scuola_text_color' , array(
 	$wp_customize->add_section('Scuola_script_footer',array(
 	    'title'			 =>'Script Footer',
 	    'priority'		 =>1,
-	    'description'	 => '<h2>Script da inserire nel Footer</h2>',
+	    'description'	 =>'<h2>Script da inserire nel Footer</h2>',
 	    'panel'			 =>'scuola_script',
 	));
 	$wp_customize->add_setting('scuola_footer_script', array(
 	    'default' => "", 
-	    'capability' => 'edit_theme_options'));
+ 	    'capability' => 'edit_theme_options'));
 	$wp_customize->add_control('scuola_footer_script', array(
 	    'type' => 'textarea', 
 	    'label' => 'Codice da inserire nel footer',
@@ -1228,6 +1313,18 @@ function scuola_sanitize_number( $input ) {
     	return $input; 
   } 
   return 0; 
+}
+function scuola_sanitize_string( $input ) {
+  return sanitize_text_field( $input ); 
+}
+function scuola_sanitize_email( $input ) {
+    return sanitize_email( $input ); 
+}
+function scuola_sanitize_text( $input ) {
+    return sanitize_textarea_field( $input ); 
+}
+function scuola_sanitize_url( $input ) {
+    return sanitize_url( $input ); 
 }
 function scuola_sanitize_checkbox( $checked ) {
     return ( ( isset( $checked ) && true == $checked ) ? true : false );

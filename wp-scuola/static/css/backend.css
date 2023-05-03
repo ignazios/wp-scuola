@@ -1,0 +1,15 @@
+/*
+Theme Name: 		WPScuola
+Theme URI: 			https://github.com/ignazios/wp-scuola
+Author: 			Ignazio Scimone
+Author URI: 		https://eduva.org/
+License: 			AGPL-3.0
+License URI: 		https://opensource.org/licenses/AGPL-3.0
+Tags: 				right-sidebar, custom-header, custom-footer, custom-colors, custom-logo, custom-menu, mega-menu, footer-widgets, footer-menu, editor-style, featured-images, post-formats, theme-options, blocco-scuola, blocco-in-evidenza, modulo-FAQ, modulo-Circolari, tempate-albo-online, template-amministrazione-trasparente.
+*/
+.welcome-panel {
+    background-color:#f0f0f1!important;
+}
+.welcome-panel h2 {
+    font-size: 1.2em;
+}

@@ -12,10 +12,10 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 function Visualizza_Atto($Parametri){
 	ob_start();
 	if(isset($_GET["titolo"])){
-		$Titolo=$_GET["titolo"];
+		$Titolo=sanitize_text_field($_GET["titolo"]);
 	}else{
 		if (isset($Parametri['titolo'])){
-			$Titolo=$Parametri['titolo'];	
+			$Titolo=sanitize_text_field($Parametri['titolo']);	
 		}
 	}
 	if (isset($Parametri['numero']) And is_numeric($Parametri['numero'])){
@@ -71,7 +71,7 @@ function Visualizza_Atto($Parametri){
 				    <tbody id="dati-atto">
 					<tr>
 						<th class="w-25 text-right"><?php _e("Ente titolare dell'Atto","albo-online");?></th>
-						<td class="align-middle"><?php echo stripslashes(ap_get_ente($risultato->Ente)->Nome);?></td>
+						<td class="align-middle"><?php echo sanitize_text_field(ap_get_ente($risultato->Ente)->Nome);?></td>
 					</tr>
 					<tr>
 						<th class="w-25 text-right"><?php _e("Numero Albo","albo-online");?></th>
@@ -79,11 +79,11 @@ function Visualizza_Atto($Parametri){
 					</tr>
 					<tr>
 						<th class="w-25 text-right"><?php _e("Codice di Riferimento","albo-online");?></th>
-						<td class="align-middle"><?php echo stripslashes($risultato->Riferimento);?></td>
+						<td class="align-middle"><?php echo sanitize_text_field($risultato->Riferimento);?></td>
 					</tr>
 					<tr>
 						<th class="w-25 text-right"><?php _e("Oggetto","albo-online");?></th>
-						<td class="align-middle"><?php echo stripslashes($risultato->Oggetto);?></td>
+						<td class="align-middle"><?php echo sanitize_text_field($risultato->Oggetto);?></td>
 					</tr>
 					<tr>
 						<th class="w-25 text-right"><?php _e("Data di registrazione","albo-online");?></th>
@@ -103,11 +103,11 @@ function Visualizza_Atto($Parametri){
 					</tr>
 					<tr>
 						<th class="w-25 text-right"><?php _e("Richiedente","albo-online");?></th>
-						<td class="align-middle"><?php echo stripslashes($risultato->Richiedente);?></td>
+						<td class="align-middle"><?php echo sanitize_text_field($risultato->Richiedente);?></td>
 					</tr>
 					<tr>
 						<th class="w-25 text-right"><?php _e("Unità Organizzativa Responsabile","albo-online");?></th>
-						<td class="align-middle"><?php echo (isset($Unitao->Nome)?stripslashes($Unitao->Nome):"");?></td>
+						<td class="align-middle"><?php echo (isset($Unitao->Nome)?sanitize_text_field($Unitao->Nome):"");?></td>
 					</tr>
 					<tr>
 						<th class="w-25 text-right"><?php _e("Responsabile del procedimento amministrativo","albo-online");?></th>
@@ -115,7 +115,7 @@ function Visualizza_Atto($Parametri){
 					</tr>
 					<tr>
 						<th class="w-25 text-right"><?php _e("Categoria","albo-online");?></th>
-						<td class="align-middle"><?php echo stripslashes($risultatocategoria->Nome)?></td>
+						<td class="align-middle"><?php echo sanitize_text_field($risultatocategoria->Nome)?></td>
 					</tr>
 <?php
 $MetaDati=ap_get_meta_atto($id);
@@ -127,12 +127,12 @@ if($MetaDati!==FALSE){
 	$Meta=substr($Meta,0,-3);?>
 					<tr>
 						<th class="w-25 text-right"><?php _e("Meta Dati","albo-online");?></th>
-						<td style="vertical-align: middle;"><?php echo $Meta;?></td>
+						<td style="vertical-align: middle;"><?php echo sanitize_text_field($Meta);?></td>
 					</tr>
 <?php }?>
 					<tr>
 						<th class="w-25 text-right"><?php _e("Note","albo-online");?></th>
-						<td class="align-middle"><?php echo stripslashes($risultato->Informazioni);?></td>
+						<td class="align-middle"><?php echo sanitize_text_field($risultato->Informazioni);?></td>
 					</tr>
 		 	    </tbody>
 			</table>

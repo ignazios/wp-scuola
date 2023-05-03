@@ -8,110 +8,167 @@
  */
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
-
 ob_start();
-
-if(isset($_REQUEST['id']) And !is_numeric($_REQUEST['id'])){
-	$_REQUEST['id']=0;
-	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">ID</span>');
-}
-if(isset($_REQUEST['action']) And $_REQUEST['action']!=wp_strip_all_tags($_REQUEST['action'])){
-	unset($_REQUEST['action']);
+if(isset($_GET['action']) And $_GET['action']!=sanitize_text_field($_REQUEST['action'])){
 	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Action</span>');
 	return;
 }
-if(isset($_REQUEST['categoria']) And !is_numeric($_REQUEST['categoria'])){
-	$_REQUEST['categoria']=0;
-	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Categoria</span>');
-}
-if(isset($_REQUEST['numero']) And $_REQUEST['numero']!="" AND !is_numeric($_REQUEST['numero'])){
-	$_REQUEST['numero']="";
-	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Numero</span>');
-}
-if(isset($_REQUEST['anno']) And !is_numeric($_REQUEST['anno'])){
-	$_REQUEST['anno']=0;
-	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Anno</span>');
-}
-if(isset($_REQUEST['ente']) And !is_numeric($_REQUEST['ente'])){
-	$_REQUEST['ente']="-1";
-	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Ente</span>');
-}
-if(isset($_REQUEST['Pag']) And !is_numeric($_REQUEST['Pag'])){
-	$_REQUEST['Pag']=1;
-	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Pag</span>');
-}
-if(isset($_REQUEST['oggetto']) And $_REQUEST['oggetto']!=wp_strip_all_tags($_REQUEST['oggetto'])){
-	$_REQUEST['oggetto']="";
-	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Oggetto</span>');
-}
-if(isset($_REQUEST['riferimento']) And $_REQUEST['riferimento']!=wp_strip_all_tags($_REQUEST['riferimento'])){
-	$_REQUEST['riferimento']="";
-	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Riferimento</span>');
-}
-if(isset($_REQUEST['DataInizio']) And $_REQUEST['DataInizio']!=wp_strip_all_tags($_REQUEST['DataInizio'])){
-	$_REQUEST['DataInizio']="";
-	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Da Data</span>');
-}
-if(isset($_REQUEST['DataFine']) And $_REQUEST['DataFine']!=wp_strip_all_tags($_REQUEST['DataFine'])){
-	$_REQUEST['DataFine']="";
-	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">A Data</span>');
-}
-if(isset($_REQUEST['filtra']) And ($_REQUEST['filtra']!=__("Filtra","albo-online") And $_REQUEST['filtra']!=__("Annulla Filtro","albo-online"))){
-	$_REQUEST['filtra']="Filtra";
-	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">filtra</span>');
-}
-if(isset($_REQUEST['vf']) And ($_REQUEST['vf']!="s" And $_REQUEST['vf']!="h" And $_REQUEST['vf']!="undefined")){
-	$_REQUEST['vf']="undefined";
-	echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">vf</span>');
-}
+if(isset($_GET['id']))
+	if(!is_numeric($_GET['id'])){
+		$id=0;
+		echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">ID</span>');
+	}else{
+		$id=$_GET['id'];
+	}
+else
+	$id=0;	
+if(isset($_GET['categoria']))
+	if(!is_numeric($_GET['categoria'])){
+		$categoria=0;
+		echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Categoria</span>');
+	}else{
+		$categoria=$_GET['categoria'];
+	}
+else
+	$categoria=0;	
+if(isset($_GET['numero']))
+	if($_GET['numero']!="" AND !is_numeric($_GET['numero'])){
+		$numero=0;
+		echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Numero</span>');
+	}else{
+		$numero=$_GET['numero'];
+	}
+else
+	$numero=0;
+if(isset($_GET['anno']))
+	if(!is_numeric($_GET['anno'])){
+		$anno=0;
+		echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Anno</span>');
+	}else{
+		$anno=$_GET['anno'];
+	}
+else
+	$anno=0;
+if(isset($_GET['ente']))
+	if(!is_numeric($_GET['ente'])){
+		$ente="-1";
+		echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Ente</span>');
+	}else{
+		$ente=$_GET['ente'];
+	}
+else
+	$ente="-1";
+if(isset($_GET['Pag']))
+	if(!is_numeric($_GET['Pag'])){
+		$Pag=1;
+		echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Pag</span>');
+	}else{
+		$Pag=$_GET['Pag'];
+	}
+else
+	$Pag=1;
+if(isset($_GET['oggetto']))
+	if($_GET['oggetto']!=sanitize_text_field($_GET['oggetto'])){
+		$oggetto="";
+		echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Oggetto</span>');
+	}else{
+		$oggetto=$_GET['oggetto'];
+	}
+else
+	$oggetto="";
+if(isset($_GET['riferimento']))
+	if($_GET['riferimento']!=sanitize_text_field($_GET['riferimento'])){
+		$riferimento="";
+		echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Riferimento</span>');
+	}else{
+		$riferimento=$_GET['riferimento'];
+	}
+else
+	$riferimento="";
+if(isset($_GET['DataInizio']))
+	if($_GET['DataInizio']!=wp_strip_all_tags($_GET['DataInizio'])){
+		$DataInizio=0;
+		echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">Da Data</span>');
+	}else{
+		$DataInizio=$_GET['DataInizio'];
+	}
+else
+	$DataInizio=0;
+if(isset($_GET['DataFine']))
+	if($_GET['DataFine']!=wp_strip_all_tags($_GET['DataFine'])){
+		$DataFine=0;
+		echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">A Data</span>');
+	}else{
+		$DataFine=$_GET['DataFine'];
+	}
+else
+	$DataFine=0;
+if(isset($_GET['filtra']))
+	if(($_GET['filtra']!=__("Filtra","albo-online") And $_GET['filtra']!=__("Annulla Filtro","albo-online"))){
+		$filtra="Filtra";
+		echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">filtra</span>');
+	}else{
+		$filtra=$_GET['filtra'];
+	}
+else
+	$filtra="";
+if(isset($_GET['vf']))
+	if(($_GET['vf']!="s" And $_GET['vf']!="h" And $_GET['vf']!="undefined")){
+		$vf="undefined";
+		echo "<br />".sprintf(__("%sATTENZIONE.%s E' stato indicato un VALORE non valido per il parametro %s","albo-online"),'<span style="color:red;">',"</span>",'<span style="color:red;">vf</span>');
+	}else{
+		$vf=$_GET['vf'];
+	}
+else
+	$vf="";
 foreach($_REQUEST as $Key => $Val){
 	$_REQUEST[$Key]=htmlspecialchars(wp_strip_all_tags($_REQUEST[$Key]));
 }
 
 include_once(dirname (__FILE__) .'/frontend_filtro.php');
 
-if(isset($_REQUEST['action'])){
-	switch ($_REQUEST['action']){
+if(isset($_GET['action'])){
+	switch (sanitize_text_field($_GET['action'])){
         case 'printatto':
-            if (is_numeric($_REQUEST['id'])) {
-                if ($_REQUEST['pdf'] == 'c') {
-                    StampaAtto($_REQUEST['id'], 'c');
-                } elseif ($_REQUEST['pdf'] == 'a') {
-                    StampaAtto($_REQUEST['id'], 'a');
+            if (isset($_GET['id']) And is_numeric($_GET['id'])) {
+                if (isset($_GET['pdf']) And $_GET['pdf'] == 'c') {
+                    StampaAtto($_GET['id'], 'c');
+                } elseif (isset($_GET['pdf']) And $_GET['pdf'] == 'a') {
+                    StampaAtto($_GET['id'], 'a');
                 }
             }else{
 				echo sprintf(__("ATTENZIONE:%sE' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO","albo-online"),"<br />");
 			}
             break;
 		case 'visatto':
-			if(is_numeric($_REQUEST['id']))
-				$ret=VisualizzaAtto($_REQUEST['id']);
+			if(isset($_GET['id']) And is_numeric($_GET['id']))
+				$ret=VisualizzaAtto($_GET['id']);
 			else{
 				echo sprintf(__("ATTENZIONE:%sE' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO","albo-online"),"<br />");
 			}
 			break;
 		case 'addstatall':
-			if(is_numeric($_GET['id']) and is_numeric($_GET['idAtto']))
-				ap_insert_log(5,5,(int)$_GET['id'],"Visualizzazione",(int)$_GET['idAtto']);
+			if(isset($_GET['id']) And isset($_GET['idAtto']) And is_numeric($_GET['id']) And is_numeric($_GET['idAtto']))
+				ap_insert_log(5,5,intval($_GET['id']),"Visualizzazione",intval($_GET['idAtto']));
 			break;
 		default: 
-			if (isset($_REQUEST['filtra'])){
-				if(!is_numeric($_REQUEST['categoria']) OR
-				   !is_numeric($_REQUEST['numero']) OR
-				   !is_numeric($_REQUEST['anno']) OR
-				   !is_numeric($_REQUEST['ente'])){
+			if (isset($_GET['filtra']) And isset($_GET['filtra'])){
+				if(isset($_GET['categoria']) And !is_numeric($_GET['categoria']) OR
+					isset($_GET['numero']) And !is_numeric($_GET['numero']) OR
+					isset($_GET['anno']) And !is_numeric($_GET['anno']) OR
+					isset($_GET['ente']) And !is_numeric($_GET['ente'])){
 						echo sprintf(__("ATTENZIONE:%sE' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO","albo-online"),"<br />");
 						break;
 				}
-			if($_REQUEST['oggetto']!=wp_strip_all_tags($_REQUEST['oggetto'])){
-				echo sprintf(__("ATTENZIONE:%sE' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO","albo-online"),"<br />");
-				break;
-			}
-			if($_REQUEST['riferimento']!=wp_strip_all_tags($_REQUEST['riferimento'])){
-				echo sprintf(__("ATTENZIONE:%sE' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO","albo-online"),"<br />");
-				break;
-			}
-	 		$ret=Lista_Atti($Parametri,$_REQUEST['categoria'],(int)$_REQUEST['numero'],(int)$_REQUEST['anno'], htmlentities($_REQUEST['oggetto']),htmlentities($_REQUEST['DataInizio']),htmlentities($_REQUEST['DataFine']), htmlentities($_REQUEST['riferimento']),$_REQUEST['ente']);
+				if(isset($_GET['oggetto']) And $_GET['oggetto']!=sanitize_text_field($_GET['oggetto'])){
+					echo sprintf(__("ATTENZIONE:%sE' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO","albo-online"),"<br />");
+					break;
+				}
+				if(isset($_GET['riferimento']) And  $_GET['riferimento']!=wp_strip_all_tags($_GET['riferimento'])){
+					echo sprintf(__("ATTENZIONE:%sE' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO","albo-online"),"<br />");
+					break;
+				}
+				$ret=Lista_Atti($Parametri,$categoria,$numero,$anno, $oggetto,$DataInizio,$DataFine, $riferimento,$ente);
 			}else if(isset($_REQUEST['annullafiltro'])){
 					 unset($_REQUEST['categoria']);
 					 unset($_REQUEST['numero']);
@@ -127,32 +184,32 @@ if(isset($_REQUEST['action'])){
 				}
 		}	
 	}else{
-		if (isset($_REQUEST['filtra'])){
-			if((isset($_REQUEST['categoria']) And !is_numeric($_REQUEST['categoria'])) OR
-			   (isset($_REQUEST['numero']) And $_REQUEST['numero']!="" AND !is_numeric($_REQUEST['numero'])) OR
-			   (isset($_REQUEST['anno']) And !is_numeric($_REQUEST['anno'])) OR
-			   (isset($_REQUEST['ente']) And !is_numeric($_REQUEST['ente']))){
+		if (isset($_GET['filtra'])){
+			if((isset($_GET['categoria']) And !is_numeric($_GET['categoria'])) OR
+			   (isset($_GET['numero']) And $_GET['numero']!="" AND !is_numeric($_GET['numero'])) OR
+			   (isset($_GET['anno']) And !is_numeric($_GET['anno'])) OR
+			   (isset($_GET['ente']) And !is_numeric($_GET['ente']))){
 					echo sprintf(__("ATTENZIONE:%sE' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO","albo-online"),"<br />");
 					return;
 			}
-			if($_REQUEST['oggetto']!=wp_strip_all_tags($_REQUEST['oggetto'])){
+			if(isset($_GET['oggetto']) And $_GET['oggetto']!=wp_strip_all_tags($_GET['oggetto'])){
 				echo sprintf(__("ATTENZIONE:%sE' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO","albo-online"),"<br />");
 				return;
 			}
-			if($_REQUEST['riferimento']!=wp_strip_all_tags($_REQUEST['riferimento'])){
+			if(isset($_GET['riferimento']) And $_GET['riferimento']!=wp_strip_all_tags($_GET['riferimento'])){
 				echo sprintf(__("ATTENZIONE:%sE' stato indicato un parametro non valido che può rappresentare un ATTACCO INFORMATICO AL SITO","albo-online"),"<br />");
 				return;
 			}
-			$ret=Lista_Atti($Parametri,(int)$_REQUEST['categoria'],(int)$_REQUEST['numero'],(int)$_REQUEST['anno'], htmlentities($_REQUEST['oggetto']),htmlentities($_REQUEST['DataInizio']),htmlentities($_REQUEST['DataFine']), htmlentities($_REQUEST['riferimento']),(int)$_REQUEST['ente']);			
+			$ret=Lista_Atti($Parametri,$categoria,$numero,$anno, $oggetto,$DataInizio,$DataFine, $riferimento,$ente);			
 		}else 
-			if(isset($_REQUEST['annullafiltro'])){
-				 unset($_REQUEST['categoria']);
-				 unset($_REQUEST['numero']);
-				 unset($_REQUEST['anno']);
-				 unset($_REQUEST['oggetto']);
-				 unset($_REQUEST['riferimento']);
-				 unset($_REQUEST['DataInizio']);
-				 unset($_REQUEST['ente']);
+			if(isset($_GET['annullafiltro'])){
+				 unset($_GET['categoria']);
+				 unset($_GET['numero']);
+				 unset($_GET['anno']);
+				 unset($_GET['oggetto']);
+				 unset($_GET['riferimento']);
+				 unset($_GET['DataInizio']);
+				 unset($_GET['ente']);
 				 $ret=Lista_Atti($Parametri);
 			}else{
 				$ret=Lista_Atti($Parametri);
@@ -441,7 +498,7 @@ function Lista_Atti($Parametri,$Categoria=0,$Numero=0,$Anno=0,$Oggetto='',$Dadat
 				  	</div>
 					<div id="Parametri" class="collapse" role="tabpanel" aria-labelledby="headingFP" data-parent="#FiltriParametri">
 						<div class="collapse-body border border-primary rounded-bottom pt-5">
-							<?php echo get_FiltriParametri();?>
+							<?php echo get_FiltriParametri($Parametri['stato'],);?>
 					    </div>
 					</div>
 				</div>
@@ -453,7 +510,7 @@ function Lista_Atti($Parametri,$Categoria=0,$Numero=0,$Anno=0,$Oggetto='',$Dadat
 				  	</div>
 					<div id="Categorie" class="collapse" role="tabpanel" aria-labelledby="headingC" data-parent="#FiltriCategorie">
 						<div class="collapse-body border border-primary rounded-bottom">
-								<?php echo get_FiltriCategorie($Parametri['stato']); ?>
+								<?php echo get_FiltriCategorie($Parametri['stato'],$Categoria,); ?>
 					    </div>
 					</div>
 				</div>
@@ -518,8 +575,8 @@ if ($TotAtti>$N_A_pp){
 				$Nav.= '<li class="page-item"><a class="page-link" href="'.$Para.$i.'">'.$i.'</a></li>';
 			}
 		}
-   		if ((isset($_REQUEST['Pag']) And $_REQUEST['Pag']<$Npag) Or ($Npag>1 And $_REQUEST['Pag']<$Npag)){
-   			$PagSuc=($Pagcur==$Npag?$Npag:$Pagcur+1);
+		if (isset($_REQUEST['Pag']) And ($_REQUEST['Pag']<$Npag Or ($Npag>1 And $_REQUEST['Pag']<$Npag))){
+			$PagSuc=($Pagcur==$Npag?$Npag:$Pagcur+1);
  			$Nav.= '    <li class="page-item">
       <a class="page-link" href="'.$Para.$PagSuc.'">
         <span class="sr-only">Pagina successiva</span>

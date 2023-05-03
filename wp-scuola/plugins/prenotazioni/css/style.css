@@ -199,3 +199,59 @@ table.report td {
 	-webkit-transform-origin: 50% 50% 0;
 	transform-origin: 50% 50% 0;
 }
+.ui-dialog-buttonset .PulsFE_Canc{
+	font-size: 0.6em!Important;
+	margin: 0.5em 0.4em 0.5em 0!important;
+	padding:0.5em!important;
+    cursor: pointer;
+	font-family: Verdana,Arial,sans-serif;
+	border-bottom-right-radius: 4px;
+	text-decoration: none;
+	display: inline-block;
+    position: relative;
+    padding: 0;
+    line-height: normal;
+    margin-right: 0.1em;
+    cursor: pointer;
+    vertical-align: middle;
+    text-align: center;
+    overflow: visible;
+	height: 28px;
+	border-width: 1px;
+    border-style: solid;
+    -webkit-appearance: none;
+    white-space: nowrap;
+    box-sizing: border-box;
+    color: #f10707!important;
+    border-color: #c3c4c7;
+    background: #f6f7f7!important;
+    box-shadow: 0 1px 0 #c3c4c7;
+}
+.ui-dialog-buttonset .PulsFE_Undo{
+	font-size: 0.6em!Important;
+	margin: 0.5em 0.4em 0.5em 0!important;
+	padding:0.5em!important;
+    cursor: pointer;
+	font-family: Verdana,Arial,sans-serif;
+	border-bottom-right-radius: 4px;
+	text-decoration: none;
+	display: inline-block;
+    position: relative;
+    padding: 0;
+    line-height: normal;
+    margin-right: 0.1em;
+    cursor: pointer;
+    vertical-align: middle;
+    text-align: center;
+    overflow: visible;
+	height: 28px;
+	border-width: 1px;
+    border-style: solid;
+    -webkit-appearance: none;
+    white-space: nowrap;
+    box-sizing: border-box;
+    color: #000000!important;
+    border-color: #c3c4c7;
+    background: #f6f7f7!important;
+    box-shadow: 0 1px 0 #c3c4c7;
+}

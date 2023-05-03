@@ -55,11 +55,18 @@ jQuery.noConflict();
                     var data=new Date();		
                     data.setFullYear(eleData[2],eleData[1]-1,eleData[0]);
                     $("#giornodataCal").text(giorni[data.getDay()]);
-                    $.ajax({type: "post",url: "admin-ajax.php",data: { action: 'prenSpazi', data: $("#dataCal").text()},
-                        beforeSend: function() {$("#loading").fadeIn('fast');}, 
-                        success: function(html){$("#loading").fadeOut('fast');
-                                  $("#tabPrenotazioniSpazi").html(html);
-                                }
+					$.ajax({type: "post",
+							url: ajaxurl,
+							data: { action: 'prenSpazi',
+									security: prenajaxsec,
+									data: $("#dataCal").text()},
+                        beforeSend: function() {
+										$("#loading").fadeIn('fast');
+									}, 
+                        success: 	function(html){
+										$("#loading").fadeOut('fast');
+                                  		$("#tabPrenotazioniSpazi").html(html);
+									}
                     }); 
                 }
          }
@@ -123,27 +130,42 @@ jQuery.noConflict();
 	});
 
 	$(document).on("click",".DelPren",function() {
-    	var NumeroPrenotazione=$( this ).attr('id');
-		var TestoDialogo='<p style="font-size: 12px;">Questa operazione cancellerà la prenotazione<br /> n° '+NumeroPrenotazione+'<br /> Sei sicuro di voler continuare?</p>';
+		var NumeroPrenotazione=$( this ).attr('id');
+		var DatiPren=$("#InfoPren"+NumeroPrenotazione).attr('abr');
+		var TestoDialogo='<p style="font-size: 12px;">Questa operazione cancellerà la prenotazione<br /> n° '+DatiPren+'<br /> Sei sicuro di voler continuare?</p>';
 		$('#dialog-confirm').html(TestoDialogo);	
 		$("#dialog-confirm").dialog( {
 			resizable: false,
-			height:200,
+			height:300,
 			modal: true,
 			width: 350,
 			title: "Conferma Cancellazione",
 			buttons: [ { text: "Cancella la prenotazione", 
                         click:function() {
-                            $.ajax({type: "post",url: "admin-ajax.php",data: { action: 'delPren', id: NumeroPrenotazione},
-	                            beforeSend: function() {$("#loading").fadeIn('fast');}, 
-	            				success: function(html){
-	                                $("#loading").fadeOut('fast');
-	                            	$.ajax({type: "post",url: "admin-ajax.php",data: { action: 'prenSpazi', data: $("#dataCal").text()},
-	                                     success: function(html){                                          
-	                                            $("#tabPrenotazioniSpazi").html(html);
-	                                     },
-	                                    complete:function(html){$("#loading").fadeOut('fast');}
-	                                }); 
+                            $.ajax({type: "post",
+									url: ajaxurl,
+									data: { action: 'delPren', 
+											security: prenajaxsec,
+											id: NumeroPrenotazione},
+	                            beforeSend: 
+									function() {$("#loading").fadeIn('fast');}, 
+	            				success: 
+									function(html){
+										$("#loading").fadeOut('fast');
+										$.ajax({type: "post",
+												url: ajaxurl,
+												data: { action: 'prenSpazi', 
+														security: prenajaxsec,
+														data: $("#dataCal").text()},
+											success: 
+												function(html){                                          
+													$("#tabPrenotazioniSpazi").html(html);
+												},
+											complete:
+												function(html){
+													$("#loading").fadeOut('fast');
+												}
+										}); 
                             	},
                             	error:function(html){alert(html);},
                             });   	
@@ -191,82 +213,103 @@ jQuery.noConflict();
                         modal: true,
                         width: 440,
                         title: "Dati prenotazione",
-                    buttons: {"Memorizza": function() {
-                                $.ajax({type: "post",url: "admin-ajax.php",data: { action: 'newPren', 
+                    buttons: {
+							"Memorizza": function() {
+                               $.ajax({type: "post",
+										url: ajaxurl,
+										data: { action: 'newPren', 
                                                 data: dataPren, 
                                                 OraI: OraI, 
                                                  Ore: NOP.val(),
                                                 NSet: NSet.val(), 
                                                  IdS: Spazio,
                                                 Note: Note.val(),
-                                            _wpnonce: Sec.val()},
-                                beforeSend: function() {$("#loading").fadeIn('fast');}, 
-                                success: function(html){
-                                        $.ajax({type: "post",url: "admin-ajax.php",data: { action: 'prenSpazi', data: dataPren},
-                                         success: function(html){$("#loading").fadeOut('fast');
-                                                    $("#tabPrenotazioniSpazi").html(html);
-                                                  }
-                                        });
-
-                var Testo=html.substr(html.indexOf("<p id='TestoRisMemo'>"),(html.length));
-                $('#dialog-infonew').html(Testo);	
-                $("#dialog-infonew").dialog( {
-                        resizable: false,
-                        height:600,
-                        modal: true,
-                        width: 600,
-                        title: "Riepilogo Prenotazioni Effettuate",
-                        buttons: [ { text: "Ok", 
-                                                  click: function() { $( this ).dialog( "close" ); } 
-                                            } 
-                                         ]
-                        });										
-                                                       }
-                                                });   	
-                                        $( this ).dialog( "close" );},
-                             Cancel: function() {$( this ).dialog( "close" );}
-                                 },
-                   close: function() {
-                                allFields.val( "" );
-                                $( this ).dialog( "close" );}
-                });
+												security: prenajaxsec
+											},
+                                beforeSend: function() {
+												$("#loading").fadeIn('fast');
+											}, 
+                                success: 	function(html){
+                                        		$.ajax({type: "post",
+														url: ajaxurl,
+														data: { action: 'prenSpazi', 
+																data: dataPren,
+																security: prenajaxsec
+														},
+												success:function(html){
+															$("#loading").fadeOut('fast');
+															$("#tabPrenotazioniSpazi").html(html);
+														}
+                                        		});
+												var Testo=html.substr(html.indexOf("<p id='TestoRisMemo'>"),(html.length));
+												$('#dialog-infonew').html(Testo);	
+												$("#dialog-infonew").dialog( {
+														resizable: false,
+														height:600,
+														modal: true,
+														width: 600,
+														title: "Riepilogo Prenotazioni Effettuate",
+														buttons:[ { text: "Ok", 
+																		click: 
+																		function() { $( this ).dialog( "close" ); } 
+																	} 
+																]
+														});										
+											}
+									});  
+								$( this ).dialog( "close" );
+							},
+							Cancel: function() {
+										$( this ).dialog( "close" );
+									}
+					},
+					close: 	function() {
+								allFields.val( "" );
+								$( this ).dialog( "close" );
+							}
+				});
         }	
 		if(e.target.className=="CancMiaPren"){
 			var NumeroPrenotazione=e.target.attributes['id'].value;
-			var TestoDialogo='<p style="font-size: 12px;">Questa operazione cancellerà la prenotazione<br /> n° '+NumeroPrenotazione+'<br /> Sei sicuro di voler continuare?</p>';
+			var DatiPren=$("#InfoPren"+NumeroPrenotazione).attr('abr');
+			var TestoDialogo='<p style="font-size: 12px;">Questa operazione cancellerà la prenotazione<br /> n° '+DatiPren+'<br /> Sei sicuro di voler continuare?</p>';
 			$('#dialog-confirm').html(TestoDialogo);	
 			$("#dialog-confirm").dialog( {
 				resizable: false,
-				height:200,
+				height:350,
 				modal: true,
 				width: 350,
 				title: "Conferma Cancellazione",
-				buttons: [ { text: "Cancella la prenotazione", 
+				buttons: [ { 
+							text: "Cancella la prenotazione", 
 							  click:function() {
 							  	//alert("ci passo");
-							  		$.ajax({type: "post",url: "admin-ajax.php",data: { action: 'delPren', id: NumeroPrenotazione},
-										beforeSend: function() {$("#loading").fadeIn('fast');}, 
-										success: function(html){location.reload();}
+							  		$.ajax({type: "post",
+											url: ajaxurl,
+											data: 	{ 
+														action: 'delPren', 
+														id: NumeroPrenotazione,
+														security: prenajaxsec
+													},
+										beforeSend: function() {
+														$("#loading").fadeIn('fast');
+													}, 
+										success: 	function(html){
+														location.reload();
+													}
 									});   	
 							  		$( this ).dialog( "close" ); }
 							 } ,
-						     { text: "Annulla", 
-							  click: function() { $( this ).dialog( "close" ); } 
+						     { 
+								text: "Annulla", 
+							  	click: 	function() { 
+											$( this ).dialog( "close" ); 
+										} 
 						     } 
 						 ]
 			});
 		}
-
-/*		if(e.target.className=="HelpPrenotazioni"){
-			$( "#dialog-help" ).dialog( {
-				resizable: false,
-				height:420,
-				modal: true,
-				width: 480,
-				buttons: {Ok: function() {$( this ).dialog( "close" );}}
-			});
-		}
-*/	});
+	});
 	$( "#dispo-range" ).slider({
 		range: true,
 		min: 1,
@@ -323,11 +366,17 @@ jQuery.noConflict();
 		$("#giornodataCal").text(giorni[newData.getDay()]);
 		$("#dataCal").text(NuovaData);
 		$("#dataCalVal").attr('value',NuovaData);
-		$.ajax({type: "post",url: "admin-ajax.php",data: { action: 'prenSpazi', data: $("#dataCalVal").attr('value')},
-			beforeSend: function() {$("#loading").fadeIn('fast');}, 
-			success: function(html){$("#loading").fadeOut('fast');
-									$("#tabPrenotazioniSpazi").html(html);
-							  	   }
+		$.ajax({type: "post",
+				url: ajaxurl,
+				data: { action: 'prenSpazi', 
+						security: prenajaxsec,
+						data: $("#dataCalVal").attr('value')},
+			beforeSend: 
+				function() {$("#loading").fadeIn('fast');}, 
+			success: 
+				function(html){	$("#loading").fadeOut('fast');
+								$("#tabPrenotazioniSpazi").html(html);
+				}
 		}); 
 		return true;
 		});

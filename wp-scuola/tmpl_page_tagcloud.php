@@ -26,14 +26,16 @@ get_header(); ?>
    
    
    <?php wp_tag_cloud( array(
-   'smallest' => 12, // size of least used tag
-   'largest'  => 28, // size of most used tag
-   'unit'     => 'px', // unit for sizing the tags
+   'smallest' => 1, // size of least used tag
+   'largest'  => 1, // size of most used tag
+   'unit'     => 'em', // unit for sizing the tags
    'number'   => 0, // displays at most 45 tags
    'orderby'  => 'count', // order tags alphabetically
    'order'    => 'DESC', // order tags by ascending order
    'taxonomy' => 'post_tag', // you can even make tags for custom taxonomies
-   'show_count' => 1
+   'show_count' => 1,
+   'format'     => 'flat',
+//	'separator'  => "<br />",
    ) ); ?>
    </div>
 </section>
