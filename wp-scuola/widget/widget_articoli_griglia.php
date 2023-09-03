@@ -49,12 +49,14 @@ class Articoli_Griglia extends WP_Widget {
         }
         $cat_id         = $instance['cat_id'];
 		$cats_notin     = isset($instance['cats_notin'])?strip_tags( $instance['cats_notin'] ):"";
-        $random         = $instance['rand'] ? true : false; 
-        $excerpt        = $instance['excerpt'] ? true : false; 
-        $thumbnail      = $instance['thumbnail'] ? true : false; 
-        $categories     = $instance['categories'] ? true : false; 
-        $date           = $instance['date'] ? true : false; 
-        $shadow         = $instance['shadow'] ? true : false; 
+        $tags_notin     = isset($instance['tags_notin'])?strip_tags( $instance['tags_notin'] ):"";
+        $random         = isset($instance['rand']) And $instance['rand'] ? true : false; 
+        $excerpt        = isset($instance['excerpt']) And $instance['excerpt'] ? true : false; 
+        $thumbnail      = isset($instance['thumbnail']) And  $instance['thumbnail'] ? true : false; 
+        $categories     = isset($instance['categories']) And $instance['categories'] ? true : false; 
+        $tags           = isset($instance['tags']) And $instance['tags'] ? true : false; 
+        $date           = isset($instance['date']) And $instance['date'] ? true : false; 
+        $shadow         = isset($instance['shadow']) And $instance['shadow'] ? true : false; 
         $leggitutto 	= isset( $instance['leggitutto'] ) ? $instance['leggitutto'] :"";
 
         /**
@@ -79,6 +81,11 @@ class Articoli_Griglia extends WP_Widget {
 			$query_args['category__not_in'] = explode(",", $cats_notin);
 			$query_args['ignore_sticky_posts'] = 1;
 		}
+        if($cat_id==-1 And $tags_notin!=""){
+			$query_args['tag__not_in'] = explode(",", $tags_notin);
+			$query_args['ignore_sticky_posts'] = 1;
+		}
+        
 		if($cat_id==-1)
 			$LinkLeggiTutto=get_permalink( get_option( 'page_for_posts' ) );
 		else 
@@ -168,6 +175,7 @@ class Articoli_Griglia extends WP_Widget {
         $instance['number']         = (int) $new_instance['number'];
         $instance['cat_id']         = (int) $new_instance['cat_id'];
         $instance['cats_notin']     = strip_tags( $new_instance['cats_notin'] );
+        $instance['tags_notin']     = strip_tags( $new_instance['tags_notin'] );
         $instance['rand']           = $new_instance['rand'];
         $instance['excerpt']        = $new_instance['excerpt'];
         $instance['thumbnail']      = $new_instance['thumbnail'];
@@ -191,6 +199,7 @@ class Articoli_Griglia extends WP_Widget {
         $number     = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
         $cat_id     = isset( $instance['cat_id'] ) ? intval( $instance['cat_id'] ) : -1;
         $catnotin	= isset( $instance['cats_notin'] ) ? esc_attr( $instance['cats_notin'] ) : '';
+        $tagnotin	= isset( $instance['tags_notin'] ) ? esc_attr( $instance['tags_notin'] ) : '';
         $random     = isset( $instance['rand'] ) ? $instance['rand'] : false; 
         $excerpt    = isset( $instance['excerpt'] ) ? $instance['excerpt'] : false; 
         $thumbnail  = isset( $instance['thumbnail'] ) ? $instance['thumbnail'] : false; 
@@ -234,7 +243,13 @@ class Articoli_Griglia extends WP_Widget {
             <?php _e( 'Impostazione valida solo se selezionato "Tutti gli articoli"','wpscuola' ); ?>
         </p>
 
-       <p>
+        <p>
+            <label for="<?php echo $this->get_field_id( 'tags_notin' ); ?>"><?php _e( 'ID dei Tags da escludere (separati da ,):' ); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id( 'tags_notin' ); ?>" name="<?php echo $this->get_field_name( 'tags_notin' ); ?>" type="text" value="<?php echo $tagnotin; ?>" />
+            <?php _e( 'Impostazione valida solo se selezionato "Tutti gli articoli"','wpscuola' ); ?>
+        </p>
+
+        <p>
             <?php $checked = ( $random ) ? ' checked=\"checked\" ' : ''; ?>
             <input type="checkbox" id="<?php echo $this->get_field_id( 'rand' ); ?>" name="<?php echo $this->get_field_name( 'rand' ); ?>" value="true" <?php echo $checked; ?> />    
             <label for="<?php echo $this->get_field_id('rand'); ?>"><?php _e( 'Visualizza articoli casualmente. Se deselezionato, verranno visualizzati prima i pi&ugrave; recenti.','wpscuola' ); ?></label>

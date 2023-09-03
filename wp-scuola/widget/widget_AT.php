@@ -15,6 +15,9 @@ class my_ATWidget extends WP_Widget {
     function widget( $args, $instance ) {
         extract($args);
 
+        $title          = ( ! empty( $instance['title'] ) ) ? $instance['title'] : __( 'Doumenti Trasparenza' );
+        $title          = apply_filters( 'widget_title', $title, $instance, $this->id_base );
+
 		if ( $instance['logic'] && !( is_tax( 'tipologie' ) || is_singular( 'amm-trasparente' ) || is_page( at_option('page_id') )) ) {
 			return;
 		}

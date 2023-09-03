@@ -18,7 +18,7 @@ get_header();
       <div class="row">
 		  <div class="col-12 col-lg-9 pl-3">
 		  	<header class="header">
-		  		<h3 class="entry-title"><?php _e( 'Documenti Trasparenza:', 'wpscuola' ); ?> <?php echo $Mese." ".$Anno; ?></h3>
+		  		<h3 class="entry-title"><?php _e( 'Documenti Trasparenza:', 'wpscuola' ); ?></h3>
 		  	</header>
 		  	<div class="container">
 <?php

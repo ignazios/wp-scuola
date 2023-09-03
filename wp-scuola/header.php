@@ -3,8 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="<?php echo get_bloginfo('description'); ?>">
+    <meta name="referrer" content="same-origin">
 	<?php $Script=get_theme_mod('scuola_header_script');if($Script!="") echo $Script.PHP_EOL;?>
     <script>
         window.__PUBLIC_PATH__ = "<?php bloginfo('template_url'); ?>/static/fonts";

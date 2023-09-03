@@ -462,6 +462,7 @@ function wps_FirmaCircolare($IDCircolare,$Pv=-1){
 		$wps_TestiRisposte=array();
 	}
 	$current_user =wp_get_current_user();
+	$wpdb->hide_errors();
 	if ( false === $wpdb->insert(
 		$wpdb->table_circolari_firme ,array(
 				'post_ID' => $IDCircolare,
@@ -470,6 +471,7 @@ function wps_FirmaCircolare($IDCircolare,$Pv=-1){
 				'adesione' => $Pv))){
  //echo "Sql==".$wpdb->last_query ."    Ultimo errore==".$wpdb->last_error;
 		$err=$wpdb->last_error;
+		$wpdb->show_errors();
         return "La Circolare Num. ".wps_GetNumeroCircolare($IDCircolare)." &egrave; gi&agrave; stata Firmata (msg: ".$err.")";
 	}else{
 		$MittenteNotifica= get_option('Circolari_From_NotificaFirma');
@@ -493,6 +495,7 @@ function wps_FirmaCircolare($IDCircolare,$Pv=-1){
 			}
 		}
 		wps_ScriviLog($IDCircolare,$current_user->ID,"Sign",$MsgFirmaLog);
+		$wpdb->show_errors();
 		return sprintf(__("Circolare Num. %s Firmata correttamente", 'wpscuola'),wps_GetNumeroCircolare($IDCircolare))."<br />".$StatoEmail;
 	}
 }

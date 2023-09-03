@@ -116,15 +116,20 @@ class Spazi{
 	}
 // Recupero i parametri della gestione
 	$Parametri=get_Pre_Parametri();
+//	echo "<pre>";var_dump($Parametri);echo "</pre>";
 	for($giorno=1;$giorno<=7;$giorno++)	
 		for($ora=1;$ora<=24;$ora++){
-			if($ora<$Parametri['OraInizio'] or $ora>$Parametri['OraFine'] or $Parametri['Giorni'][$giorno-1]==0)
+			if(!isset($Parametri['Giorni'][$giorno-1])){
 				$Riservato[$giorno][$ora]=3;
-			else
-				if (!isset($RL[$giorno][$ora]) or $RL[$giorno][$ora]==0)
-					$Riservato[$giorno][$ora]=0;
+			}else{
+				if($ora<$Parametri['OraInizio'] or $ora>$Parametri['OraFine'] or $Parametri['Giorni'][$giorno-1]==0)
+					$Riservato[$giorno][$ora]=3;
 				else
-					$Riservato[$giorno][$ora]=1;	
+					if (!isset($RL[$giorno][$ora]) or $RL[$giorno][$ora]==0)
+						$Riservato[$giorno][$ora]=0;
+					else
+						$Riservato[$giorno][$ora]=1;
+			}
 		}
 	echo '
 	<input type="hidden" id="ColRiservato" value="'.$Parametri['ColRiservato'].'" />

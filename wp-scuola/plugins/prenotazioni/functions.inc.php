@@ -88,7 +88,7 @@ function DataVisualizza($data){
 	$dataDB=substr($data,0,10);
 	$rsl = explode ('-',$data);
 	$rsl = array_reverse($rsl);
-	return implode($rsl,'/');
+	return implode('/', $rsl);
 }
 function Pren_FormatDataItaliano($Data,$incGG=0,$incMM=0,$incAA=0){
 		$d=explode("-",$Data);
@@ -102,11 +102,18 @@ function Pren_FormatDataItaliano($Data,$incGG=0,$incMM=0,$incAA=0){
 			$Giorno=$d[2];
 		$Data=$Giorno."/".$Mese."/".$d[0];
 		if ($incAA>0)
-			$Data=$d[2]."/".$d[1]."/".$d[0]+$incAA;
+			$Data=$d[2]."/".$d[1]."/".($d[0]+$incAA);
 		if ($incGG>0)
 			$Data=date('d/m/Y', strtotime($Data. ' + '.$incGG.' days'));
 		if ($incMM>0)
 			$Data=date('d/m/Y', strtotime($Data. ' + '.$incMM.' months'));
 		return $Data;
 	}	
+function cvtDate($Data){
+	if(strlen($Data)==10){
+		$dateEle=explode("-",$Data);
+		return $dateEle[2]."/".$dateEle[1]."/".$dateEle[0];
+	}
+	return FALSE;
+}
 ?>

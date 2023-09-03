@@ -32,13 +32,14 @@
 	   $args = array(
 	        'posts_per_page' => -1,
 	        'child_of'    	 => $Partenza,
-	        'order'          => 'ASC',
-	        'orderby'        => 'post_title',
+	        'sort_order'     => 'ASC',
+	        'sort_column '   => 'menu_order,post_title',
 	        'hierarchical'	 => TRUE,
 	        'echo'			 => FALSE,
 	        'title_li'		 => "",
 	        'depth'			=>0,);
 	    $figli = wp_list_pages( $args );
+//		var_dump($figli);
 	    $figli= '<li class="page_item page-item-234 page_item_has_children current_page_item">
 	    	<a href="'.get_permalink(end($Primo_Livello)).'" aria-current="page">'.get_the_title(end($Primo_Livello)).'</a>
 				<ul class="children">

@@ -1,0 +1,10 @@
+/**
+ * Foglio di stile del tema wp-scuola di personalizzaione dei blocchi di Gutenberg
+ */
+ .editor-styles-wrapper .wp-block {
+    margin-left: 10%;
+ }
+ .wp-block {
+    width: 90%;
+    max-width: 90%;
+ }

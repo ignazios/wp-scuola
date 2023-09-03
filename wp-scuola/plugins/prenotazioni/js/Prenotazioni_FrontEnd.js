@@ -30,6 +30,63 @@ jQuery.noConflict();
 			alert($("#OraInizioPrenotazione").attr("value"));*/
 		}
 	});	
+	$(document).on("click",".DelPren",function() {
+		var NumeroPrenotazione=parseInt($(this).attr('id').substr(8,$(this).attr('id').length-8), 10);
+		var DatiPren=$( this ).attr('abr');
+		var TestoDialogo='<p style="font-size: 12px;">Questa operazione cancellerà la prenotazione<br /> n° '+NumeroPrenotazione+'<br />'+DatiPren+'<br /> Sei sicuro di voler continuare?</p>';
+		$('#dialog-confirm').html(TestoDialogo);	
+		$("#dialog-confirm").dialog( {
+			resizable: false,
+			height:300,
+			modal: true,
+			width: 350,
+			title: "Conferma Cancellazione",
+			buttons: [ { text: "Cancella la prenotazione", 
+						class:"PulsFE_Canc",
+                        click:function() {
+                            $.ajax({type: "post",
+									url: ajaxurl,
+									data: { action: 'delPren', 
+											security: prenajaxsec,
+											id: NumeroPrenotazione},
+	                            beforeSend: 
+									function() {$("#loading").fadeIn('fast');}, 
+	            				success: 
+									function(html){
+										$.ajax({type: "post",
+											url: ajaxurl ,
+											data: { action: 'FEprenSpazi', 
+													data: $('#DataPrenotazione').val(), 
+													spazio: $("#SpazioP").val(),
+													sorg: "FE",
+													security: wpscuolajaxsec
+												}, 
+											beforeSend: function() {
+															$("#loading").fadeIn('fast');
+														}, 
+											success: 	function(html){
+															$("#NumOrePren").empty();
+															$("#NumOrePren").append($('<option value="0">----</option>'));
+															$("#InizioPre").html(html);
+															$("#loading").fadeOut('fast');
+														},
+											error: 		function(xhrRequest, status, errorMessage)  {
+															alert("Errore dal server. Status: " + status);
+														}
+										});
+										$("#loading").fadeOut('fast');
+                            		},
+                            	error:function(html){alert(html);},
+                            });   	
+                            $(this).dialog( "close" ); }
+                        } ,
+                        { text: "Annulla", 
+						  class:"PulsFE_Undo",
+                          click: function() { $( this ).dialog( "close" ); } 
+                        } 
+					]
+			});
+		});
     $(document).on('change', '#SelSettimana', function(){
         var dati = $('#SelSettimana').val().split(";");
         var Settimana=dati[0];
@@ -64,54 +121,56 @@ jQuery.noConflict();
     $( "#SpazioP" ).change(function() {
  		 $( "#SpazioP option:selected" ).each(function() {
 			$("#imgSpazio").attr('src',$( this ).attr('data'));
-				$.ajax({type: "post",url: $("#UrlAjax").attr("value"),data: { 
+				$.ajax({type: "post",
+						url: ajaxurl,
+						data: { 
 								action: 'FEprenSpazi', 
-		                        data: $('#DataPrenotazione').attr("value"), 
-		                        spazio: $( "#SpazioP" ).attr("value"),
-		                        sorg: "FE"}, 
-							beforeSend: function() {
-								$("#loading").fadeIn('fast');
-							}, 
-							success: function(html){
-								$("#InizioPre").html(html);
-								$("#NumOrePren").empty();
-								$("#NumOrePren").append($('<option value="0">----</option>'));
-								$("#loading").fadeOut('fast');
-							},
-							error: function() {
-          						alert('Error occurs! action: FEprenSpazi  data: '+selectedDate+' spazio: '+ $( "#SpazioP" ).attr("value")+' sorg: "FE"');
-          						$("#loading").fadeOut('fast');
-          					}
+		                        data: $('#DataPrenotazione').val(), 
+		                        spazio: $("#SpazioP").val(),
+		                        sorg: "FE",
+								security: wpscuolajaxsec
+						}, 
+						beforeSend: function() {
+							$("#loading").fadeIn('fast');
+						}, 
+						success: function(html){
+							$("#InizioPre").html(html);
+							$("#NumOrePren").empty();
+							$("#NumOrePren").append($('<option value="0">----</option>'));
+							$("#loading").fadeOut('fast');
+						},
+						error: function() {
+							alert('Error occurs! action: FEprenSpazi  data: '+selectedDate+' spazio: '+ $( "#SpazioP" ).attr("value")+' sorg: "FE"');
+							$("#loading").fadeOut('fast');
+						}
 					});
 		});
 	});
-	
-	$.datepicker.setDefaults( $.datepicker.regional[ "it" ] );
-	$('#DataPrenotazione').datepicker({
-		firstDay: 1,
-      	dateFormat: "dd/mm/yy",
-      	onClose: function(selectedDate) {
-        			if(selectedDate!=""){
-        				//var Spazio=${"#SpazioP"}.attr('value');
- 						$.ajax({type: "post",url: $("#UrlAjax").attr("value") ,data: { action: 'FEprenSpazi', 
-                                                                                                        data: selectedDate, 
-													spazio: $( "#SpazioP" ).attr("value"),
-													sorg: "FE"}, 
-								beforeSend: function() {
-													$("#loading").fadeIn('fast');
-											}, 
-								success: function(html){
-													$("#NumOrePren").empty();
-													$("#NumOrePren").append($('<option value="0">----</option>'));
-													$("#InizioPre").html(html);
-													$("#loading").fadeOut('fast');
-											},
-								error: function(xhrRequest, status, errorMessage)  {
-                       alert("Errore dal server. Status: " + status);
-                    }
-						});
-					}
-         }
+	$('#DataPrenotazione').change(function() {
+		if($('#DataPrenotazione').val()!=""){
+			//var Spazio=${"#SpazioP"}.attr('value');
+			$.ajax({type: "post",
+					url: ajaxurl ,
+					data: { action: 'FEprenSpazi', 
+							data: $('#DataPrenotazione').val(), 
+							spazio: $("#SpazioP").val(),
+							sorg: "FE",
+							security: wpscuolajaxsec
+						  }, 
+					beforeSend: function() {
+									$("#loading").fadeIn('fast');
+								}, 
+					success: 	function(html){
+									$("#NumOrePren").empty();
+									$("#NumOrePren").append($('<option value="0">----</option>'));
+									$("#InizioPre").html(html);
+									$("#loading").fadeOut('fast');
+								},
+					error: 		function(xhrRequest, status, errorMessage)  {
+									alert("Errore dal server. Status: " + status);
+								}
+			});
+		}
     });
  });
 })(jQuery);

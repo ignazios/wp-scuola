@@ -17,7 +17,7 @@ function get_FiltriParametri($Stato=1,$cat=0,$StatoFinestra="si"){
 	$titFiltri=get_option('opt_AP_LivelloTitoloFiltri');
 	if ($titFiltri=='')
 		$titFiltri="h3";
-	$HTML='<form id="filtro-atti" action="'.htmlentities($_SERVER['REQUEST_URI']).'" method="post">';
+	$HTML='<form id="filtro-atti" action="'.htmlentities($_SERVER['REQUEST_URI']).'" method="get">';
 	if (strpos(htmlentities($_SERVER['REQUEST_URI']),'page_id')>0){
 		$HTML.= '<input type="hidden" name="page_id" value="'.ap_Estrai_PageID_Url().'" />';
 	}	

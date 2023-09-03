@@ -89,9 +89,16 @@ $Args=array('hide_empty'=> 0,
    			'echo'         => 1,
     		'title_li'		=>"");
 $Tags=get_tags($Args);
-$Anno=$search_query["year"];
-$Mese=$mesi[(int)$search_query["monthnum"]];
-
+if(isset($search_query["year"])){
+	$Anno=$search_query["year"];
+}else{
+	$Anno=0;
+}
+if(isset($search_query["monthnum"])){
+	$Mese=$mesi[(int)$search_query["monthnum"]];
+}else{
+	$Mese=0;
+}
 ?>
 <section id="content" role="main" class="container-fluid mb-3">
    <div class="container">

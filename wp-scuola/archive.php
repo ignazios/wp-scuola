@@ -22,10 +22,11 @@ function my_get_archivesAnnoMese()
 {
 	global $wpdb, $wp_locale,$mesi;
 	$Result="";
+
 	$Sql = "SELECT YEAR(post_date) AS `Anno`, MONTH(post_date) AS `Mese`, count(DISTINCT ID) as NumArt
 				FROM $wpdb->posts
 				WHERE $wpdb->posts.post_status = 'publish'
-				AND $wpdb->posts.post_type = 'post'
+				AND $wpdb->posts.post_type = '".get_post_type()."'
 				GROUP BY YEAR(post_date), MONTH(post_date)
 				ORDER BY YEAR(post_date), MONTH(post_date) DESC";
 	//		echo "<br />".$Sql;exit;
@@ -77,7 +78,7 @@ function my_get_archivesAnnoMese()
 	}
 	return $Result;
 }
-$Anno=$search_query["year"];
+$Anno=(isset($search_query["year"])?$search_query["year"]:0);
 $Mese=(isset($search_query["monthnum"])?$mesi[(int)$search_query["monthnum"]]:0);
 $Archivio=my_get_archivesAnnoMese();?>
 <section id="content" role="main" class="container-fluid mb-3">

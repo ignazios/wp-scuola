@@ -28,8 +28,8 @@ https://github.com/ignazios/wp-scuola
 ## Supporto
 facebook: https://www.facebook.com/wpscuola/
 ## Tema verificato per le seguenti versioni
- - **Wordpress** 	*5.0* - *5.9*
- - **PHP** 		*7.4*
+ - **Wordpress** 	*5.0* - *6.3*
+ - **PHP** 		*8*
 ## Shortcode
 	[articoli id_categoria=ID della categoria da cui estrarre gli articoli (=0 oppure omesso se si vogliono elencare gli articoli per tag)           
 			  id_tag=ID del tag da cui estrarre gli articoli (=0 oppure omesso se si vogliono elencare gli articoli per categoria) 		  
@@ -53,6 +53,8 @@ facebook: https://www.facebook.com/wpscuola/
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
+**1.2.9**
+  - ***Aggiornata*** l'interfaccia del plugin Albo Pretorio personalizzato per il tema.
 **1.2.8**
   - ***Aggiunta*** sezione Script in Personalizzazione. Adesso è possibile inserire degli script nell'Header come avveniva nel Footer.
 **1.2.7**

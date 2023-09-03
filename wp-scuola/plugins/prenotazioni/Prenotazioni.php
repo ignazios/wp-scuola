@@ -57,7 +57,7 @@ class Plugin_Prenotazioni {
 		add_action( 'wp_ajax_prenSpazi',        	array(&$this,'getPrenotazioniSpazi'));
 		add_action( 'wp_ajax_FEprenSpazi',      	array(&$this,'getPrenotazioniSpazi'));
 		add_action( 'wp_ajax_StampPrenSpazi',   	array(&$this,'staPrenotazioniSpazi'));
-		add_action( 'wp_ajax_nopriv_VisPrenSpazi',  array(&$this,'VisPrenotazioniSpazi'));
+//		add_action( 'wp_ajax_nopriv_VisPrenSpazi',  array(&$this,'VisPrenotazioniSpazi'));
 		add_action( 'wp_ajax_VisPrenSpazi',     	array(&$this,'VisPrenotazioniSpazi'));
 		add_action( 'wp_ajax_delPren',          	array(&$this,'deletePrenotazioniSpazi'));
 		add_action( 'wp_ajax_newPren',          	array(&$this,'nuovaPrenotazioneSpazi'));
@@ -65,7 +65,6 @@ class Plugin_Prenotazioni {
         add_action( 'manage_posts_custom_column',	array(&$this,'SpaziNuoveColonneContenuto'), 10, 2); 
 		add_shortcode('Prenotazioni',           	array(&$this, 'FrontEndPrenotazioni'));
 		add_shortcode('OccupazioneSpazio',      	array(&$this, 'FEOccupazioneSpazio'));
-//                add_filter('the_content',              array(&$this,'FiltroVisualizzaSpazio'));
 		
 		if((get_option('wps_ModuloPrenotazioni')!= 'Si'||!get_option('wps_ModuloPrenotazioni')) And get_theme_mod("scuola_prenotazioni_attiva")){
 			$this->activate();
@@ -76,22 +75,6 @@ class Plugin_Prenotazioni {
 			update_option('wps_ModuloPrenotazioni', 'No');
 		}
 	}
-        function FiltroVisualizzaSpazio( $content ){
-            global $TestiRisposte,$Testi;
-            $IDSpazio= get_the_ID();
-            /*
-             * Se l'articolo non appartiene al CustomPostType spazi rimando il contenuto
-             */
-            if (get_post_type( $IDSpazio) !="spazi")
-                    return $content;
-            $Parametri=get_Pre_Parametri();
-            $content.= '		
-
-             ';
-//            echo $IDSpazio." ".$Settimana." ".$Anno; var_dump($_REQUEST);
-             $content.= createTablePrenotazioniSpazioSettimanaFE($IDSpazio,date("W"),date("Y"));
-             return $content;
-        }
 	function FrontEndPrenotazioni($Para){
 	    ob_start();
            $Para=shortcode_atts(array('schede'=> 'nuovo,statistiche,spazi',
@@ -105,25 +88,34 @@ class Plugin_Prenotazioni {
 	}
 	
 	function getPrenotazioniSpazi(){
-		if(isset($_POST['sorg']) And $_POST['sorg']=="FE")
-			echo createTablePrenotazioniSpazio($_POST['spazio'],$_POST['data']);
+        check_ajax_referer('WPScuolaSecret','security');
+        $Data=filter_input(INPUT_POST,"data");
+        $Spazio=filter_input(INPUT_POST,"spazio");
+        $Sorgente=filter_input(INPUT_POST,"sorg");
+//       echo $Data." - ".$Spazio." - ".$Sorgente; die();
+		if($Sorgente=="FE")
+			echo createTablePrenotazioniSpazio($Spazio,$Data);
 		else
-			echo createTablePrenotazioni($_POST['data']);
+			echo createTablePrenotazioni($Data);
 		die();
 	}
 	function deletePrenotazioniSpazi(){
+        check_ajax_referer('WPScuolaSecret','security');
 		global $Gest_Prenotazioni;
-		$ris=$Gest_Prenotazioni->delPrenotazione($_POST['id']);
+        $Appuntamento=filter_input(INPUT_POST,"id");
+		$ris=$Gest_Prenotazioni->delPrenotazione($Appuntamento);
 		echo "Ho cancellato l' appuntamenti";
 		die();
 	}
 	function nuovaPrenotazioneSpazi(){
 		global $Gest_Prenotazioni;
-		$ris=$Gest_Prenotazioni->newPrenotazione($_POST['data'],$_POST['OraI'],$_POST['Ore'],$_POST['IdS'],$_POST['NSet'],$_POST['Note'],$_POST['_wpnonce']);
+        check_ajax_referer('WPScuolaSecret','security');
+		$ris=$Gest_Prenotazioni->newPrenotazione($_POST['data'],$_POST['OraI'],$_POST['Ore'],$_POST['IdS'],$_POST['NSet'],$_POST['Note']);
 		echo "<p id='TestoRisMemo'>Risultato prenotazione:<br />".$ris."</p>";
 		die();
 	}
 	function enqueue_scripts( $hook_suffix ) {
+        if($hook_suffix=="widgets.php") return;
             wp_enqueue_script('jquery');
             wp_enqueue_script( 'jquery-ui-core',		false, array('jquery'), false, false);
             wp_enqueue_script( 'jquery-ui-datepicker', 	false, array('jquery'), false, false);
@@ -134,7 +126,7 @@ class Plugin_Prenotazioni {
             wp_enqueue_script( 'wp-color-picker');         
             wp_enqueue_style( 'wp-color-picker' );
             wp_enqueue_style( 'wp-jquery-ui-dialog' );
-//            wp_enqueue_style( 'jquery.ui.theme', Prenotazioni_URL. 'css/jquery-ui-custom.css');
+            wp_enqueue_style( 'jquery.ui.theme', Prenotazioni_URL. 'css/jquery-ui-custom.css');
             wp_register_style($this->plugin_name,  Prenotazioni_URL. 'css/style.css');
             wp_enqueue_style( $this->plugin_name);
            if($hook_suffix == 'toplevel_page_Prenotazioni' And isset($_GET["PreviewPrint"])) {
@@ -142,7 +134,9 @@ class Plugin_Prenotazioni {
                 wp_enqueue_style( "Prenotazioni_AnteprimaStampa");
                 wp_enqueue_script( 'Prenotazioni_AnteprimaStampa', Prenotazioni_URL. 'js/printPre.js');
             }
-            wp_enqueue_script( 'Prenotazioni-admin-fields', Prenotazioni_URL. 'js/Prenotazioni.js');
+            wp_enqueue_script( 'Prenotazioni-admin-fields', Prenotazioni_URL. 'js/Prenotazioni.js');?>
+<script type='text/javascript'>var prenajaxsec = "<?php echo wp_create_nonce('WPScuolaSecret');?>";</script>
+<?php
 	}
 	function head_Front_End() {
 		global $post;
@@ -150,6 +144,10 @@ class Plugin_Prenotazioni {
       		wp_enqueue_script('Prenotazioni-FrontEnd', Prenotazioni_URL. 'js/Prenotazioni_FrontEnd.js');
       		wp_enqueue_style( 'prenotazioni-style', Prenotazioni_URL . "css/style.css");
       		wp_enqueue_script('Prenotazioni-FrontEnd_tooltip', Prenotazioni_URL. 'js/Prenotazioni_tooltip.js',array(),null,true);
+            wp_enqueue_style( 'jquery.ui.theme', Prenotazioni_URL. 'css/jquery-ui-custom.css');
+            wp_enqueue_script( 'jquery-ui-dialog', 		false, array('jquery'), false, false);?>
+<script type='text/javascript'>var prenajaxsec = "<?php echo wp_create_nonce('WPScuolaSecret');?>";</script>
+<?php
 		}
 	}
 	function add_menu(){
@@ -347,7 +345,7 @@ Note
             if($M!==false)
                   $Comunicazioni=unserialize($M);            
             for($i=0;$i<7;$i++)
-                   if($Parametri['Giorni'][$i]==1)
+                   if(isset($Parametri['Giorni'][$i]) And $Parametri['Giorni'][$i]==1)
                           ${"GD_".$i."_SEL"}=" checked ";
                    else
                    		  ${"GD_".$i."_SEL"}="";

@@ -76,7 +76,9 @@ add_shortcode('gfolderdrive', 				'VisualizzaCartellaDrive');
 add_shortcode('canccookies', 				'CancellaCookies');
 add_shortcode('viscookies', 				'VisualizzaCookies');
 add_shortcode('feedrss', 					'VisualizzaFeedRSS');
-
+add_filter( 'spid_filter_sp_attributeconsumingservice', function( $v ) {
+    return ["familyName","name","fiscalNumber", "email"];
+}, 10, 1 );
 function crunchify_embed_defaults($embed_size){
 	$embed_size['width'] = 10240;
 	$embed_size['height'] = 500;
@@ -180,14 +182,15 @@ function VisualizzaFeedRSS($Parametri){
 	$Parametri=shortcode_atts(array(
 		'sorgente' 	=> "Categorie",
 		'vuote' 	=> "si",
-		'id'		=> "",
+		'id'		=> 0,
 	), $Parametri,"feedrss");
+	$Parametri=sanitize_type($Parametri,array("%s","%s","%d"));
 	$args=array('orderby'	=>'name',
 				'fields'	=>'all');
 	if(strtolower($Parametri['vuote'])=="si"){
 		$args['hide_empty']=false;
 	}
-	if($Parametri['id']!=""){
+	if($Parametri['id']!=0){
 		$args['include']=$Parametri['id'];
 	}
 	$Categorie=get_categories($args);
@@ -261,6 +264,7 @@ function CancellaCookies($Parametri) {
 		'vis' 	=> "bottone",
 		'testo' => "Cancella i cookies del nostro sito",
 	), $Parametri,"canccookies");
+	$Parametri=sanitize_type($Parametri,array("%s","%s"));
 	ob_start();
 	if(strtolower($Parametri['vis'])==="bottone"):?>
 		<div><a href="#" id="cancella-cookie" class="badge badge-primary bottone bottoneBorded"> <?php echo $Parametri['testo'];?> </a>
@@ -291,9 +295,62 @@ function VisualizzaCartellaDrive($Parametri) {
 		'height'	=>"500px",
 		'scrolling' =>"auto",
 	), $Parametri,"gdrive");
+	$Parametri=sanitize_type($Parametri,array("%s","%s","%d","%s","%s","%s"));
 	ob_start();?>
 	<iframe src = "https://drive.google.com/embeddedfolderview?id=<?php echo $Parametri['idfolder'];?>#<?php echo $Parametri['tipovis'];?>" frameborder = "<?php echo $Parametri['border'];?>" width = "<?php echo $Parametri['width'];?>" height = "<?php echo $Parametri['height'];?>" scrolling = "<?php echo $Parametri['scrolling'];?>"> </iframe>
 <?php return ob_get_clean();
+}
+/**
+ * Funzione per la sanificazione e conversione dei formati 
+ * @param $Campi: Array dei valori da saniticare controllo/modifica  del formato
+ * @param $Formati: Array dei formati degli elementi dell'Array $Campi 
+ * 
+ * @return Array $Campi sanificato e convertito
+ */
+function sanitize_type($Campi=array(),$Formati=array()){
+	$NC=count($Campi);
+	if($NC!=count($Formati)){
+		return FALSE;
+	}
+	$i=0;
+	foreach($Campi as $Index=>$Value){
+		$Campi[$Index]=sanitize_text_field($Campi[$Index]);
+		switch($Formati[$i]){
+			case "%d":
+				$Campi[$Index]=intval($Campi[$Index]);
+				break;
+			default:
+			$Campi[$Index]=$Campi[$Index];
+		}
+		$i++;
+	}
+	return $Campi;
+}
+/**
+ * Funzione per la sanificazione e verifica del formato di un campo 
+ * @param $Istance: array dei valori le widget
+ * @param $Campo: campo da saniticare controllo/modifica  del formato
+ * @param $Formato: formati dell'elemento da Verificare
+ * @param $Default Valore di default se passato
+ * 
+ * @return Valore Verificato o Valore di Deult o ""
+ */
+function sanitize_field_widget($Istance,$Campo,$Formato="%s",$Default="_def_"){
+	$Stato=True;
+	if(!isset($Istance[$Campo])){
+		$Stato=False;
+	}
+	else{
+		$Istance[$Campo]=sanitize_text_field($Istance[$Campo]);
+		if($Formato=="%d" And !is_numeric($Istance[$Campo]))
+			$Stato=False;
+	}
+	if($Stato)
+		return $Istance[$Campo];
+	if(!$Stato And $Default=="_def_")
+		return "";
+	else
+		return $Default;
 }
 /****************************************************** 
 * Shortcode per visualizzare gli articoli filtrati
@@ -310,6 +367,7 @@ function GetArticoliCategoria($Parametri){
 		'numero' => 5,
 		'imgevidenza' => 'no'
 	), $Parametri,"articoli");
+	$Parametri=sanitize_type($Parametri,array("%d","%d","%d","%s"));
 	if($Parametri['id_categoria']!=0){
 		$Catargs = array( 'cat' => $Parametri['id_categoria'],
 					   'posts_per_page'  => $Parametri['numero'],
@@ -808,7 +866,8 @@ include( get_template_directory() . '/inc/class-simplepie.php' );
 function enqueue_scuola_admin() {
 	wp_enqueue_script( 'scuola-customize-controls', get_template_directory_uri() . '/static/js/customize-controls.js',array( 'jquery', 'customize-controls' ), false, true );
     wp_enqueue_style('scuola_fonts_Awesome', get_template_directory_uri() . '/static/css/all.css');
-    wp_enqueue_script('jquery-ui-tooltip');
+	wp_enqueue_style('scuola_style_admin', get_template_directory_uri() . '/static/css/backend.css');
+	wp_enqueue_script('jquery-ui-tooltip');
     if (is_front_page()) {
 		wp_enqueue_script( 'scuola-image_hover_effects_JS', get_template_directory_uri() . '/static/js/production.min.js' );
 		wp_enqueue_style( 'scuola-image_hover_effects_CSS', get_template_directory_uri() . '/static/css/image_hover_effects.css');	
@@ -853,7 +912,7 @@ if (function_exists('register_sidebar')) {
 		'name' => __('Home Widget Area', 'wpscuola') ,
 		'id' => 'home-widget-area',
 		'description'   => __( 'Widget area che compare in homepage.', 'wpscuola' ),
-		'before_widget' => '<section id=""%1$s" class="home-widget container %2$s">',
+		'before_widget' => '<section id="%1$s" class="home-widget container %2$s">',
 		'after_widget' => "</section>",
 		'before_title' => '<h3 class="widget-title">',
 		'after_title' => '</h3>',
@@ -918,18 +977,6 @@ if (function_exists('register_sidebar')) {
 		'before_title' => '<h3 class="widget-title">',
 		'after_title' => '</h3>',
 	));
-
-	if(class_exists("EM_Event")){
-		register_sidebar(array(
-			'name' => __('Event Sidebar Widget Area', 'wpscuola') ,
-			'id' => 'event-widget-area',
-			'description'   => __( 'Widget area che compare nella sidebar degli eventi.', 'wpscuola' ),
-			'before_widget' => '<div id="%1$s" class="widget-container shadow p-2 %2$s">',
-			'after_widget' => "</div>",
-			'before_title' => '<h3 class="widget-title">',
-			'after_title' => '</h3>',
-		));
-	}
 	if(function_exists("at_sezioni_shtc")){
 		register_sidebar(array(
 			'name' => __('Amministrazione Trasparente', 'wpscuola') ,
@@ -966,10 +1013,11 @@ function scuola_comments_number($count) {
 	}
 	
 function scuola_inizialize() {
- add_editor_style('bootstrap-italia/css/bootstrap-italia.min.css');
- if(!get_theme_mod("scuola_circolari_attiva"))
-	update_option('wps_Circolari_ModuloCircolari', 'No');
-
+ 	add_editor_style('bootstrap-italia/css/bootstrap-italia.min.css');
+	if(!get_theme_mod("scuola_circolari_attiva"))
+		update_option('wps_Circolari_ModuloCircolari', 'No');
+	if ( ! get_option('opt_AP_UrlSprite') ) 
+		update_option( 'opt_AP_UrlSprite', get_site_url().'/wp-content/themes/wp-scuola/static/svg/sprite.svg');
 }
 
 function scuola_register_Widget(){
@@ -980,10 +1028,6 @@ function scuola_register_Widget(){
 	register_widget( 'Link' );
 	register_widget( 'Bacheca' );
 	register_widget( 'Pulsanti' );
-	if(class_exists("EM_Event")){
-		register_widget( 'my_EM_Widget_Calendar' );
-		register_widget( 'Eventi' );
-	}
 	if(get_theme_mod('scuola_servizi_attiva'))		register_widget( 'Servizi' );
 	if(function_exists("at_sezioni_shtc"))			register_widget( 'my_ATWidget' );	
 	if(get_theme_mod("scuola_circolari_attiva"))	register_widget( 'CircolariScuola' );
@@ -991,10 +1035,6 @@ function scuola_register_Widget(){
 /**
 * Inclusione librerie dei Widget
 */
-if(class_exists("EM_Event")){
-	require get_template_directory() . '/widget/widget_calendario.php';
-	require get_template_directory() . '/widget/widget_eventi.php';
-}
 require get_template_directory() . '/widget/widget_feedRSS.php';
 require get_template_directory() . '/widget/widget_trasparenza.php';
 require get_template_directory() . '/widget/widget_articoli.php';
@@ -1176,8 +1216,8 @@ function scuola_customize_head() {
   <style type="text/css">
   <?php echo $Regole; ?>
     body,.bootstrap-select-wrapper button, .coloreTesto {color: <?php echo $ColoreTestoBody; ?>!important;}
-    .navbar .navbar-collapsable .navbar-nav li a.nav-link,#mainheader, .my-bg-primary, .it-header-navbar-wrapper, .it-header-wrapper { background-color: <?php echo $ColoreHeader; ?>!important;}
-    body, .affix-top {background-color:<?php echo $ColoreBody; ?>;}
+    .navbar .navbar-collapsable .navbar-nav li a.nav-link,#mainheader, .my-bg-primary, .it-header-navbar-wrapper, .it-header-wrapper, .collapse-header { background-color: <?php echo $ColoreHeader; ?>!important;}
+    body, .affix-top,. {background-color:<?php echo $ColoreBody; ?>;}
     #mainheader .cerca input{
 		color: <?php echo $ColoreTestoHeader; ?>;
     	border-bottom: 1px solid <?php echo $ColoreLinkHeader; ?>;
@@ -1199,8 +1239,8 @@ function scuola_customize_head() {
     button, input[type="submit"], .btn-primary, .btn-primary:hover, .btn-primary:not(:disabled):not(.disabled):active,.badge-primary, #ListaServizi a:hover, #ListaServizi a:visited,  #ListaServizi a:active, #collapseDivFAQ button.faq  { color: <?php echo $ColoreTestoBottone; ?>!Important;background-color: <?php echo $ColoreBottone; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1); }
     .bottone, a.bottone :hover, a.bottone :active  { color: <?php echo $ColoreTestoBottone; ?>!Important;background-color: <?php echo $ColoreBottone; ?>!Important;}
     a.badge-primary:active,a.badge-primary:hover{color: <?php echo $ColoreBottone; ?>;background-color: <?php echo $ColoreTestoBottone; ?>; box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1);}
-    .btn-outline-primary { color: <?php echo $ColoreLinkBody; ?>; box-shadow: inset 0 0 0 1px <?php echo $ColoreLinkBody; ?>; }
-    .btn-outline-primary:hover, .btn-outline-primary:not(:disabled):not(.disabled):active { color: <?php echo $ColoreLinkBody; ?>; box-shadow: inset 0 0 0 2px <?php echo $ColoreLinkBody; ?>; }
+    .btn-outline-primary { color: <?php echo $ColoreLinkBody; ?>!Important; box-shadow: inset 0 0 0 1px <?php echo $ColoreLinkBody; ?>; }
+    .btn-outline-primary:hover, .btn-outline-primary:not(:disabled):not(.disabled):active { color: <?php echo $ColoreLinkBody; ?>!Important; box-shadow: inset 0 0 0 2px <?php echo $ColoreLinkBody; ?>; }
     #footer, .it-footer-main { background-color: <?php echo $ColoreFooter; ?>; }
     #footer a { color: <?php echo $ColoreLinkFooter; ?>!important; }
     #footer {color: <?php echo $ColoreTestoFooter; ?>!important; 
@@ -1468,10 +1508,11 @@ function custom_breadcrumbs() {
             $taxonomy       = 'post_tag';
             $args           = 'include=' . $term_id;
             $terms          = get_terms( $taxonomy, $args );
-            $get_term_id    = $terms[0]->term_id;
-            $get_term_slug  = $terms[0]->slug;
-            $get_term_name  = $terms[0]->name;
-               
+			if(isset($terms)) {
+            	$get_term_name  = $terms[0]->name;
+			}else{
+				$get_term_name="";
+			}
             // Display the tag name
             echo '<li class="breadcrumb-item active">' . $get_term_name . '</li>';
            

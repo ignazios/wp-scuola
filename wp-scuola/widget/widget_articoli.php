@@ -39,21 +39,21 @@
 
 	        ob_start();
 	        
-	        $title = ( ! empty( $instance['title'] ) ) ? $instance['title'] : __( 'Articoli su due colonne','wpscuola' );
+	        $title =  ! empty( $instance['title'] )  ? $instance['title'] : __( 'Articoli su due colonne','wpscuola' );
         	/** This filter is documented in wp-includes/default-widgets.php */
         	$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
- 			$catprimoblocco=isset($instance['catprimoblocco'])?$instance['catprimoblocco']:"";
- 			$catsecondoblocco=isset($instance['catsecondoblocco'])?$instance['catsecondoblocco']:"";
- 			$numelementi=isset($instance['numelementi'])?$instance['numelementi']:"";
- 			$linkLT=isset($instance['leggitutto'])?$instance['leggitutto']:"";
- 			$VisImgEv=isset($instance['immagineevidenza'])?$instance['immagineevidenza']:"";
+ 			$catprimoblocco=sanitize_field_widget($instance,'catprimoblocco',$Formato="%d","");
+ 			$catsecondoblocco=sanitize_field_widget($instance,'catsecondoblocco',$Formato="%d","");
+ 			$numelementi=sanitize_field_widget($instance,'numelementi',$Formato="%d","");
+ 			$linkLT=sanitize_field_widget($instance,'leggitutto',$Formato="%s","");
+ 			$VisImgEv=isset($instance['immagineevidenza'])?sanitize_field_widget($instance,'immagineevidenza',$Formato="%s",""):"0";
 
-			$TitoloPB=isset($instance['titolosx'])?$instance['titolosx']:"";
+			$TitoloPB=sanitize_field_widget($instance,'titolosx',$Formato="%s","");
 			$Catargs = array( 'cat' => $catprimoblocco,
 				   'posts_per_page'  => $numelementi,
 				   'post_status' => (is_user_logged_in()? array('publish','private'):'publish'));
 			$ArticoliPB = get_posts( $Catargs );	   
-			$TitoloSB=isset($instance['titolodx'])?$instance['titolodx']:"";
+			$TitoloSB=sanitize_field_widget($instance,'titolodx',$Formato="%s","");
 			$Catargs = array( 'cat' => $catsecondoblocco,
 				   'posts_per_page'  => $numelementi,
 				   'post_status' => (is_user_logged_in()? array('publish','private'):'publish'));
@@ -162,14 +162,14 @@
 }
         function update( $new_instance, $old_instance ) {
             $instance = $old_instance;
-            $instance['title'] = strip_tags($new_instance['title']);
-            $instance['catprimoblocco']=strip_tags($new_instance['catprimoblocco']);   
-            $instance['catsecondoblocco']=strip_tags($new_instance['catsecondoblocco']);   
-            $instance['numelementi']=strip_tags($new_instance['numelementi']);   
-			$instance['leggitutto']=strip_tags($new_instance['leggitutto']);
-			$instance['immagineevidenza']=strip_tags($new_instance['immagineevidenza']);		
-			$instance['titolosx']=strip_tags($new_instance['titolosx']);
-			$instance['titolodx']=strip_tags($new_instance['titolodx']);
+            $instance['title'] = sanitize_text_field($new_instance['title']);
+            $instance['catprimoblocco']=sanitize_text_field($new_instance['catprimoblocco']);   
+            $instance['catsecondoblocco']=sanitize_text_field($new_instance['catsecondoblocco']);   
+            $instance['numelementi']=sanitize_text_field($new_instance['numelementi']);   
+			$instance['leggitutto']=sanitize_text_field($new_instance['leggitutto']);
+			$instance['immagineevidenza']=sanitize_text_field($new_instance['immagineevidenza']);		
+			$instance['titolosx']=sanitize_text_field($new_instance['titolosx']);
+			$instance['titolodx']=sanitize_text_field($new_instance['titolodx']);
            return $instance;
         }
 	    public function flush_widget_cache() 
@@ -179,11 +179,11 @@
         function form( $instance ) {
            // $instance = wp_parse_args( (array) $instance, array( ) ); 
             $title = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Comunicazioni', 'text_domain' );
- 			$catprimoblocco=isset($instance['catprimoblocco'])?$instance['catprimoblocco']:0;
- 			$catsecondoblocco=isset($instance['catsecondoblocco'])?$instance['catsecondoblocco']:0;
-            $numelementi=isset($instance['numelementi'])?$instance['numelementi']:5;
-            $titolosx=isset($instance['titolosx'])?$instance['titolosx']:"";
-            $titolodx=isset($instance['titolodx'])?$instance['titolodx']:"";
+ 			$catprimoblocco=sanitize_field_widget($instance,'catsecondoblocco',$Formato="%d",0);
+ 			$catsecondoblocco=sanitize_field_widget($instance,'catsecondoblocco',$Formato="%d",0);
+            $numelementi=sanitize_field_widget($instance,'numelementi',$Formato="%d",5);
+            $titolosx=sanitize_field_widget($instance,'titolosx',$Formato="%s","");
+            $titolodx=sanitize_field_widget($instance,'titolodx',$Formato="%s","");
 ?>           
 
            <p>

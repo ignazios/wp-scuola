@@ -65,10 +65,8 @@ class ScuolaEventi {
 					<label for="eventi_link_titolo" class=""> <?php _e( 'Titolo del pulsante dell\'Evento', 'wpscuola' );?> </label>
 				</th>
 				<td>
-					<input type="text" id="eventi_link_titolo" name="eventi_link_titolo" class="" placeholder="<?php esc_attr_e( 'Live', 'wpscuola' );?>" value="<?php esc_attr_e( $eventi_link_titolo );?>">
-					<p>
-						&lt;span class="fas fa-video"&gt;&lt;/span&gt; <span class="fas fa-video"></span><br />
-						&lt;span class="fas fa-external-link-alt"&gt;&lt;/span&gt; <span class="fas fa-external-link-alt"></span>
+					<input type="text" id="eventi_link_titolo" name="eventi_link_titolo" class="" placeholder="<?php esc_attr_e( 'Live', 'wpscuola' );?>" value="<?php esc_attr_e( $eventi_link_titolo );?>" style="width:50%;">
+					<p>selezionare un'icona su <a href="https://fontawesome.com/search?o=r&m=free" target="_blank">https://fontawesome.com</a> copiala ed incollala prima del Titolo
 					</p>
 				</td>
 			</tr>
@@ -139,6 +137,8 @@ class ScuolaEventi {
 		$eventi_target_evento   = isset( $_POST[ 'eventi_target_evento' ] ) ? sanitize_text_field( $_POST[ 'eventi_target_evento' ] ) : 0;
 		$eventi_scadenza_evento = isset( $_POST[ 'eventi_scadenza_evento' ] ) ? sanitize_text_field( $_POST[ 'eventi_scadenza_evento' ] ) : 0;
 		$eventi_link_titolo     = isset( $_POST[ 'eventi_link_titolo' ] ) ?  $_POST[ 'eventi_link_titolo' ] : "";
+		$eventi_link_titolo=str_replace("<i","<span",$eventi_link_titolo);
+		$eventi_link_titolo=str_replace("</i","</span",$eventi_link_titolo);
 		// Update the meta field in the database.
 		update_post_meta( $post_id, 'eventi_link_evento', 			$eventi_link_evento );
 		update_post_meta( $post_id, 'eventi_target_evento', 		$eventi_target_evento );
