@@ -53,23 +53,23 @@ facebook: https://www.facebook.com/wpscuola/
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
-**1.3.1**
+- **1.3.1**
   - ***Aggiornata*** l'interfaccia del plugin Albo Pretorio personalizzato per il tema.
-**1.2.8**
+- **1.2.8**
   - ***Aggiunta*** sezione Script in Personalizzazione. Adesso è possibile inserire degli script nell'Header come avveniva nel Footer.
-**1.2.7**
+- **1.2.7**
   - ***Corretti*** i widget Scuola  Servizi e Scuola Link che con la versione di Wordpress 5.9 non si ridimensionano le immagini
   - ***Corretto*** il widget Scuola Articoli Griglia
-**1.2.6**
+- **1.2.6**
   - ***Corretti*** alcuni elementi per compatibilità con la versione 5.9 di Wordpress
   - ***Corretto*** link leggi tutto nel widget Scuola Articoli
-**1.2.5**
+- **1.2.5**
   - ***Corretti*** alcuni Bug di cui uno di sicurezza
   - ***Sistemato*** la renderizzazione del blocco file PDF in anteprima. Nel caso in cui si attivava con i valori di defalt veniva visualizzato a dimensione ridotta
   - ***Corretti*** alcuni errori di accessibilità
-**1.2.4**
+- **1.2.4**
   - ***Corretto*** un errore nella gestione del blocco File che visualizzava il blocco anteprima di dimensione ridotta se si lasciava il vaolre di default
-**1.2.3**
+- **1.2.3**
   - ***Corretti*** alcuni bug minori
   - ***Verificata*** compatibilità con la versione 5.8 di Wordpress
   - ***Modificato*** il blocco file di Gutenberg per adeguarlo alla visualizzazione dei file Pdf
