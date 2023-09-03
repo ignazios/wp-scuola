@@ -55,6 +55,13 @@ facebook: https://www.facebook.com/wpscuola/
 ## Change log
 - **1.3.1**
   - ***Aggiornata*** l'interfaccia del plugin Albo Pretorio personalizzato per il tema.
+- **1.3**
+  - ***Aggiornamento*** della libreria Bootstrap Italia alla versione 1.6.4 
+  - ***Revisionato*** il codice del modulo Gestione Circolari
+  - ***Revisionato*** il codice del modulo Prenotazioni
+  - ***Revisionato*** il codice del modulo Orario Argo
+  - ***Revisionato*** il codice generale del tema
+  - ***Eliminato*** il widget Calendario Event-manager
 - **1.2.8**
   - ***Aggiunta*** sezione Script in Personalizzazione. Adesso è possibile inserire degli script nell'Header come avveniva nel Footer.
 - **1.2.7**
