@@ -53,7 +53,7 @@ facebook: https://www.facebook.com/wpscuola/
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
-**1.2.9**
+**1.3.1**
   - ***Aggiornata*** l'interfaccia del plugin Albo Pretorio personalizzato per il tema.
 **1.2.8**
   - ***Aggiunta*** sezione Script in Personalizzazione. Adesso è possibile inserire degli script nell'Header come avveniva nel Footer.
