@@ -53,6 +53,8 @@ facebook: https://www.facebook.com/wpscuola/
 				
 	Visualizza una finestra con i files inclusi in una cartella condivisa di Google Drive 
 ## Change log
+- **1.3.2**
+  - ***Aggiornamento*** compoatibilità con Wordpress 6.7.
 - **1.3.1**
   - ***Aggiornata*** l'interfaccia del plugin Albo Pretorio personalizzato per il tema.
 - **1.3**
